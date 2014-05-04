@@ -29,12 +29,16 @@ public:
 
 private slots:
 	void on_pushButton_clicked();
-	void finished();
+    void finished();
+    void on_pushButton_2_clicked();
+public slots:
+    void heartbeatfinished();
+
 
 private:
 	void getAPI(QString user_id, QString broad_id);
 	void getComment();
-
+    void getHeartBeatAPI(QString user_id, QString broad_id);
 	CommTcp* commtcp;
 
 	Ui::MainWindow *ui;
