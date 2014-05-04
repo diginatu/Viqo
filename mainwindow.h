@@ -24,6 +24,8 @@ class MainWindow : public QMainWindow
 public:
 	explicit MainWindow(QWidget *parent = 0);
 	~MainWindow();
+	void insComment(int num, QString user, QString comm, QString date);
+	void insLog(QString log);
 
 private slots:
 	void on_pushButton_clicked();
@@ -32,7 +34,6 @@ private slots:
 private:
 	void getAPI(QString user_id, QString broad_id);
 	void getComment();
-	void insComment(int num, QString user, QString comm, QString date);
 
 	CommTcp* commtcp;
 

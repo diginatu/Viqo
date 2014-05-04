@@ -1,4 +1,5 @@
 #include "commtcp.h"
+#include "mainwindow.h"
 
 CommTcp::CommTcp(QString domain, int port, QString thread, MainWindow* mwin)
 {
@@ -34,7 +35,7 @@ void CommTcp::connected()
 	qDebug() << "connected...";
 
 	QByteArray send;
-	send.append("<thread thread=\"" + thread + "\" version=\"20061206\" res_from=\"-1\"/>");
+	send.append("<thread thread=\"" + thread + "\" version=\"20061206\" res_from=\"1000\"/>");
 	send.append('\0');
 	socket->write(send);
 }
@@ -51,18 +52,35 @@ void CommTcp::bytesWritten(qint64 bytes)
 
 void CommTcp::readyRead()
 {
-	qDebug() << "reading...";
+	QByteArray rawcomm = socket->readAll();
 
-	rawcomm = socket->readAll();
+	mwin->insLog(QString(rawcomm));
 
 	if (rawcomm.indexOf("<thread") != -1) {
 		return;
 	}
 
-	int st = rawcomm.indexOf(">") + 1;
-	int ed = rawcomm.indexOf("</chat>");
+	int noSt = rawcomm.indexOf("no=\"") + 4;
+	int noEd = rawcomm.indexOf("\"", noSt);
+	int num = rawcomm.mid(noSt, noEd-noSt).toInt();
 
-	QByteArray comment = rawcomm.mid(st,ed-st);
+	int dateSt = rawcomm.indexOf("date=\"") + 6;
+	int dateEd = rawcomm.indexOf("\"", dateSt);
+	int udate = rawcomm.mid(dateSt, dateEd-dateSt).toInt();
 
-	qDebug() << comment;
+	QDateTime timestamp;
+	timestamp.setTime_t(udate);
+	QString date = timestamp.toString(Qt::SystemLocaleShortDate);
+
+	int userSt = rawcomm.indexOf("user_id=\"") + 9;
+	int userEd = rawcomm.indexOf("\"", userSt);
+	QString user = QString(rawcomm.mid(userSt, userEd-userSt));
+
+	int commSt = rawcomm.indexOf(">") + 1;
+	int commEd = rawcomm.indexOf("</chat>");
+	QString comm = QString(rawcomm.mid(commSt,commEd-commSt));
+
+	//"/disconnect"
+
+	mwin->insComment(num,user,comm,date);
 }

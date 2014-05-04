@@ -101,7 +101,7 @@
      <attribute name="title">
       <string>comment</string>
      </attribute>
-     <widget class="QTreeWidget" name="treeWidget">
+     <widget class="QTreeWidget" name="commentView">
       <property name="geometry">
        <rect>
         <x>10</x>

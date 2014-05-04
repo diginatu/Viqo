@@ -1,9 +1,22 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 
+void MainWindow::insLog(QString log)
+{
+	ui->logtext->append(log + "\n");
+}
+
 void MainWindow::insComment(int num, QString user, QString comm, QString date)
 {
-	ui->treeWidget
+	QStringList ls;
+
+	ls += QString::number(num);
+	ls += user;
+	ls += comm;
+	ls += date;
+
+	QTreeWidgetItem * item = new QTreeWidgetItem(ls);
+	ui->commentView->insertTopLevelItem(0, item);
 }
 
 void MainWindow::getAPI(QString user_id, QString broad_id)
@@ -48,7 +61,7 @@ void MainWindow::finished()
 
 	qDebug() << addr << "\n" << port << "\n" << thread;
 
-	commtcp = new CommTcp(addr, port, thread);
+	commtcp = new CommTcp(addr, port, thread, this);
 	commtcp->doConnect();
 }
 
@@ -59,20 +72,6 @@ MainWindow::MainWindow(QWidget *parent) :
 {
 	ui->setupUi(this);
 	ui->lineEdit->setEchoMode(QLineEdit::Password);
-
-	QList<QTreeWidgetItem *> items;
-	QStringList ls;
-	for (int i = 0; i < 10; ++i) {
-		QStringList ls;
-		ls += QString::number(i+1);
-		ls += "vivi";
-		ls += "com";
-		ls += "date";
-
-		items.append(new QTreeWidgetItem((QTreeWidget*)0, ls));
-	}
-
-	ui->treeWidget->insertTopLevelItems(0, items);
 }
 
 MainWindow::~MainWindow()
@@ -86,5 +85,3 @@ void MainWindow::on_pushButton_clicked()
 	const QString broad_id = ui->lineEdit_2->text();
 	getAPI(user_id, broad_id);
 }
-
-

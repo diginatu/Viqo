@@ -6,13 +6,13 @@
 #include <QAbstractSocket>
 #include <QDebug>
 
-#include "mainwindow.h"
+class MainWindow;
 
 class CommTcp : public QObject
 {
 	Q_OBJECT
 public:
-	explicit CommTcp(QString domain, int port, QString thread, Ui::MainWindow* mwin);
+	explicit CommTcp(QString domain, int port, QString thread, MainWindow* mwin);
 	void doConnect();
 
 signals:
@@ -24,7 +24,6 @@ public slots:
 	void readyRead();
 
 private:
-
 	MainWindow* mwin;
 	QTcpSocket *socket;
 	QString domain, thread;
