@@ -121,7 +121,7 @@ void MainWindow::on_pushButton_clicked()
 	getAPI(user_id, broad_id);
 }
 
-void MainWindow::on_pushButton_2_clicked()
+void MainWindow::on_getCommentBtn_clicked()
 {
     const QString user_id = ui->lineEdit->text();
     const QString broad_id = ui->lineEdit_2->text();
@@ -131,3 +131,4 @@ void MainWindow::on_disconnect_clicked()
 {
 	commtcp->close();
 }
+
