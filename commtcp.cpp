@@ -77,8 +77,11 @@ void CommTcp::readyRead()
 	QString user = QString(rawcomm.mid(userSt, userEd-userSt));
 
 	int premSt = rawcomm.indexOf("premium=\"");
-	if (premSt != -1) premSt += 9;
-	int premEd = rawcomm.indexOf("\"", userSt);
+	int premEd;
+	if (premSt != -1) {
+		premSt += 9;
+		premEd = rawcomm.indexOf("\"", premSt);
+	}
 	bool premium = false, broadcaster = false;
 	if (premSt != -1) {
 		int prem = rawcomm.mid(premSt, premEd-premSt).toInt();
