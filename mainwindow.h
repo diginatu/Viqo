@@ -35,6 +35,8 @@ public slots:
     void heartbeatfinished();
 
 
+	void on_disconnect_clicked();
+
 private:
 	void getAPI(QString user_id, QString broad_id);
 	void getComment();

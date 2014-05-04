@@ -127,3 +127,7 @@ void MainWindow::on_pushButton_2_clicked()
     const QString broad_id = ui->lineEdit_2->text();
     getHeartBeatAPI(user_id,broad_id);
 }
+void MainWindow::on_disconnect_clicked()
+{
+	commtcp->close();
+}

@@ -14,6 +14,7 @@ class CommTcp : public QObject
 public:
 	explicit CommTcp(QString domain, int port, QString thread, MainWindow* mwin);
 	void doConnect();
+	void close();
 
 signals:
 
@@ -25,7 +26,7 @@ public slots:
 
 private:
 	MainWindow* mwin;
-	QTcpSocket *socket;
+	QTcpSocket* socket;
 	QString domain, thread;
 	int port;
 
