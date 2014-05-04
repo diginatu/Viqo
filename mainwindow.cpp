@@ -85,3 +85,8 @@ void MainWindow::on_pushButton_clicked()
 	const QString broad_id = ui->lineEdit_2->text();
 	getAPI(user_id, broad_id);
 }
+
+void MainWindow::on_disconnect_clicked()
+{
+	commtcp->close();
+}

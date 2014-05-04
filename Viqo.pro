@@ -15,9 +15,11 @@ TEMPLATE = app
 
 SOURCES += main.cpp\
         mainwindow.cpp \
-    commtcp.cpp
+    commtcp.cpp \
+    talk.cpp
 
 HEADERS  += mainwindow.h \
-    commtcp.h
+    commtcp.h \
+    talk.h
 
 FORMS    += mainwindow.ui

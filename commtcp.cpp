@@ -70,7 +70,7 @@ void CommTcp::readyRead()
 
 	QDateTime timestamp;
 	timestamp.setTime_t(udate);
-	QString date = timestamp.toString(Qt::SystemLocaleShortDate);
+	QString date = timestamp.toString("yyyy/MM/dd hh:mm:ss");
 
 	int userSt = rawcomm.indexOf("user_id=\"") + 9;
 	int userEd = rawcomm.indexOf("\"", userSt);
@@ -80,7 +80,14 @@ void CommTcp::readyRead()
 	int commEd = rawcomm.indexOf("</chat>");
 	QString comm = QString(rawcomm.mid(commSt,commEd-commSt));
 
-	//"/disconnect"
+	if (comm == "/disconnect") {
+		close();
+	}
 
 	mwin->insComment(num,user,comm,date);
+}
+
+void CommTcp::close()
+{
+	socket->close();
 }
