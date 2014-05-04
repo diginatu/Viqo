@@ -76,11 +76,29 @@ void CommTcp::readyRead()
 	int userEd = rawcomm.indexOf("\"", userSt);
 	QString user = QString(rawcomm.mid(userSt, userEd-userSt));
 
+	int premSt = rawcomm.indexOf("premium=\"");
+	if (premSt != -1) premSt += 9;
+	int premEd = rawcomm.indexOf("\"", userSt);
+	bool premium = false, broadcaster = false;
+	if (premSt != -1) {
+		int prem = rawcomm.mid(premSt, premEd-premSt).toInt();
+		if (prem % 2) {
+			premium = true;
+		} else {
+			premium = false;
+		}
+		if ((prem/2) % 2 ) {
+			broadcaster = true;
+		} else {
+			broadcaster = false;
+		}
+	}
+
 	int commSt = rawcomm.indexOf(">") + 1;
 	int commEd = rawcomm.indexOf("</chat>");
 	QString comm = QString(rawcomm.mid(commSt,commEd-commSt));
 
-	if (comm == "/disconnect") {
+	if (comm == "/disconnect" && broadcaster) {
 		close();
 	}
 
