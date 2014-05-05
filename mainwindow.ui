@@ -14,11 +14,11 @@
    <string>MainWindow</string>
   </property>
   <widget class="QWidget" name="centralWidget">
-   <widget class="QPushButton" name="pushButton">
+   <widget class="QPushButton" name="receive">
     <property name="geometry">
      <rect>
-      <x>300</x>
-      <y>30</y>
+      <x>290</x>
+      <y>40</y>
       <width>99</width>
       <height>27</height>
      </rect>
@@ -35,6 +35,9 @@
       <width>131</width>
       <height>27</height>
      </rect>
+    </property>
+    <property name="inputMethodHints">
+     <set>Qt::ImhNone</set>
     </property>
    </widget>
    <widget class="QLineEdit" name="lineEdit_2">
@@ -95,7 +98,7 @@
      </size>
     </property>
     <property name="currentIndex">
-     <number>0</number>
+     <number>1</number>
     </property>
     <widget class="QWidget" name="comment_tab">
      <attribute name="title">
@@ -157,76 +160,24 @@
      </widget>
     </widget>
    </widget>
-   <widget class="QLabel" name="label_3">
-    <property name="geometry">
-     <rect>
-      <x>300</x>
-      <y>10</y>
-      <width>50</width>
-      <height>12</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>来場者数</string>
-    </property>
-   </widget>
-   <widget class="QLabel" name="watch_count_label">
-    <property name="geometry">
-     <rect>
-      <x>360</x>
-      <y>10</y>
-      <width>50</width>
-      <height>12</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>n</string>
-    </property>
-   </widget>
    <widget class="QPushButton" name="pushButton_2">
     <property name="geometry">
      <rect>
-      <x>480</x>
-      <y>8</y>
-      <width>81</width>
-      <height>21</height>
+      <x>290</x>
+      <y>0</y>
+      <width>111</width>
+      <height>27</height>
      </rect>
     </property>
     <property name="text">
-     <string>コメント数取得</string>
+     <string>来場者数取得</string>
     </property>
    </widget>
-   <widget class="QLabel" name="label_4">
-    <property name="geometry">
-     <rect>
-      <x>390</x>
-      <y>10</y>
-      <width>50</width>
-      <height>12</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>コメント数</string>
-    </property>
-   </widget>
-   <widget class="QLabel" name="comment_count_label">
-    <property name="geometry">
-     <rect>
-      <x>440</x>
-      <y>10</y>
-      <width>50</width>
-      <height>12</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>n</string>
-    </property>
-    </widget>
    <widget class="QPushButton" name="disconnect">
     <property name="geometry">
      <rect>
-      <x>440</x>
-      <y>30</y>
+      <x>420</x>
+      <y>40</y>
       <width>99</width>
       <height>27</height>
      </rect>
@@ -242,7 +193,7 @@
      <x>0</x>
      <y>0</y>
      <width>564</width>
-     <height>24</height>
+     <height>25</height>
     </rect>
    </property>
   </widget>
