@@ -138,7 +138,7 @@ void MainWindow::on_receive_clicked()
 	getAPI(userSession, broad_id);
 }
 
-void MainWindow::on_pushButton_2_clicked()
+void MainWindow::on_getCommentBtn_clicked()
 {
 	const QString broad_id = ui->lineEdit_2->text();
 	getHeartBeatAPI(userSession,broad_id);
