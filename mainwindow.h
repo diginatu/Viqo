@@ -12,6 +12,7 @@
 #include <QtNetwork>
 
 #include "commtcp.h"
+#include "cookieread.h"
 
 namespace Ui {
 class MainWindow;
@@ -26,6 +27,7 @@ public:
 	~MainWindow();
 	void insComment(int num, QString user, QString comm, QString date);
 	void insLog(QString log);
+	QString getCookieSetting(int n);
 
 private slots:
 	void on_receive_clicked();
@@ -45,6 +47,7 @@ private:
 	QByteArray m_data;
 	QNetworkAccessManager* mManager;
 	QString addr, thread;
+	QString userSession;
 	int port;
 };
 

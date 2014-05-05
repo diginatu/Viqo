@@ -1,6 +1,24 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 
+QString MainWindow::getCookieSetting(int n)
+{
+	switch (n) {
+		case 0:
+			return ui->cookiesetting_filename->text();
+		case 1:
+			return ui->cookiesetting_tablename->text();
+		case 2:
+			return ui->cookiesetting_column_basedomain->text();
+		case 3:
+			return ui->cookiesetting_column_name->text();
+		case 4:
+			return ui->cookiesetting_column_value->text();
+		default:
+			return "";
+	}
+}
+
 void MainWindow::insLog(QString log)
 {
 	ui->logtext->append(log + "\n");
@@ -91,8 +109,10 @@ MainWindow::MainWindow(QWidget *parent) :
 	ui(new Ui::MainWindow)
 {
 	ui->setupUi(this);
-	ui->lineEdit->setEchoMode(QLineEdit::Password);
 	ui->statusBar->showMessage("来場者数: 0");
+
+	CookieRead cr(this);
+	userSession = cr.getUserSession();
 }
 
 MainWindow::~MainWindow()
@@ -110,21 +130,18 @@ void MainWindow::heartbeatfinished(){
 	QString  watchCount= repdata.mid(adrp, adrpe-adrp);
 
 	ui->statusBar->showMessage("来場者数: " + watchCount);
-	//ui->watch_count_label->setText(watchCount);
 }
 
 void MainWindow::on_receive_clicked()
 {
-	const QString user_id = ui->lineEdit->text();
 	const QString broad_id = ui->lineEdit_2->text();
-	getAPI(user_id, broad_id);
+	getAPI(userSession, broad_id);
 }
 
 void MainWindow::on_pushButton_2_clicked()
 {
-	const QString user_id = ui->lineEdit->text();
 	const QString broad_id = ui->lineEdit_2->text();
-	getHeartBeatAPI(user_id,broad_id);
+	getHeartBeatAPI(userSession,broad_id);
 }
 
 void MainWindow::on_disconnect_clicked()

@@ -6,6 +6,7 @@
 
 QT += core gui
 QT += network
+QT += sql
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
@@ -15,9 +16,11 @@ TEMPLATE = app
 
 SOURCES += main.cpp\
         mainwindow.cpp \
-    commtcp.cpp
+    commtcp.cpp \
+    cookieread.cpp
 
 HEADERS  += mainwindow.h \
-    commtcp.h
+    commtcp.h \
+    cookieread.h
 
 FORMS    += mainwindow.ui

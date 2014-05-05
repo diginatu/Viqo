@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>564</width>
-    <height>434</height>
+    <width>566</width>
+    <height>458</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -17,8 +17,8 @@
    <widget class="QPushButton" name="receive">
     <property name="geometry">
      <rect>
-      <x>290</x>
-      <y>40</y>
+      <x>300</x>
+      <y>10</y>
       <width>99</width>
       <height>27</height>
      </rect>
@@ -27,47 +27,21 @@
      <string>receive</string>
     </property>
    </widget>
-   <widget class="QLineEdit" name="lineEdit">
-    <property name="geometry">
-     <rect>
-      <x>110</x>
-      <y>0</y>
-      <width>131</width>
-      <height>27</height>
-     </rect>
-    </property>
-    <property name="inputMethodHints">
-     <set>Qt::ImhNone</set>
-    </property>
-   </widget>
    <widget class="QLineEdit" name="lineEdit_2">
     <property name="geometry">
      <rect>
       <x>110</x>
-      <y>30</y>
+      <y>10</y>
       <width>131</width>
       <height>27</height>
      </rect>
     </property>
    </widget>
-   <widget class="QLabel" name="label">
+   <widget class="QLabel" name="housouid_label">
     <property name="geometry">
      <rect>
       <x>20</x>
-      <y>0</y>
-      <width>67</width>
-      <height>17</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>userid</string>
-    </property>
-   </widget>
-   <widget class="QLabel" name="label_2">
-    <property name="geometry">
-     <rect>
-      <x>20</x>
-      <y>30</y>
+      <y>10</y>
       <width>67</width>
       <height>17</height>
      </rect>
@@ -80,9 +54,9 @@
     <property name="geometry">
      <rect>
       <x>10</x>
-      <y>60</y>
+      <y>70</y>
       <width>541</width>
-      <height>311</height>
+      <height>321</height>
      </rect>
     </property>
     <property name="sizePolicy">
@@ -98,7 +72,7 @@
      </size>
     </property>
     <property name="currentIndex">
-     <number>1</number>
+     <number>2</number>
     </property>
     <widget class="QWidget" name="comment_tab">
      <attribute name="title">
@@ -159,12 +133,205 @@
       </property>
      </widget>
     </widget>
+    <widget class="QWidget" name="cookiesetting_tab">
+     <attribute name="title">
+      <string>setting</string>
+     </attribute>
+     <widget class="QComboBox" name="browserCombo">
+      <property name="geometry">
+       <rect>
+        <x>30</x>
+        <y>10</y>
+        <width>151</width>
+        <height>27</height>
+       </rect>
+      </property>
+      <item>
+       <property name="text">
+        <string>firefox</string>
+       </property>
+      </item>
+      <item>
+       <property name="text">
+        <string>chrome</string>
+       </property>
+      </item>
+     </widget>
+     <widget class="QLineEdit" name="cookiesetting_filename">
+      <property name="geometry">
+       <rect>
+        <x>160</x>
+        <y>50</y>
+        <width>161</width>
+        <height>27</height>
+       </rect>
+      </property>
+     </widget>
+     <widget class="QLabel" name="cookiesetting_file_label">
+      <property name="geometry">
+       <rect>
+        <x>20</x>
+        <y>50</y>
+        <width>91</width>
+        <height>17</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>cookies file</string>
+      </property>
+     </widget>
+     <widget class="QLabel" name="cookiesetting_table_label">
+      <property name="geometry">
+       <rect>
+        <x>20</x>
+        <y>80</y>
+        <width>101</width>
+        <height>17</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Table name</string>
+      </property>
+     </widget>
+     <widget class="QLineEdit" name="cookiesetting_tablename">
+      <property name="geometry">
+       <rect>
+        <x>160</x>
+        <y>80</y>
+        <width>131</width>
+        <height>27</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>moz_cookies</string>
+      </property>
+     </widget>
+     <widget class="QLabel" name="cookiesetting_column_label">
+      <property name="geometry">
+       <rect>
+        <x>20</x>
+        <y>120</y>
+        <width>101</width>
+        <height>17</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>column name</string>
+      </property>
+     </widget>
+     <widget class="QLabel" name="cookiesetting_column_basedomain_label">
+      <property name="geometry">
+       <rect>
+        <x>80</x>
+        <y>140</y>
+        <width>91</width>
+        <height>17</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>baseDomain</string>
+      </property>
+     </widget>
+     <widget class="QLabel" name="cookiesetting_column_name_label">
+      <property name="geometry">
+       <rect>
+        <x>80</x>
+        <y>170</y>
+        <width>67</width>
+        <height>17</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>name</string>
+      </property>
+     </widget>
+     <widget class="QLabel" name="cookiesetting_column_value_label">
+      <property name="geometry">
+       <rect>
+        <x>80</x>
+        <y>200</y>
+        <width>67</width>
+        <height>17</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>value</string>
+      </property>
+     </widget>
+     <widget class="QLineEdit" name="cookiesetting_column_basedomain">
+      <property name="geometry">
+       <rect>
+        <x>200</x>
+        <y>140</y>
+        <width>113</width>
+        <height>27</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>baseDomain</string>
+      </property>
+     </widget>
+     <widget class="QLineEdit" name="cookiesetting_column_name">
+      <property name="geometry">
+       <rect>
+        <x>200</x>
+        <y>170</y>
+        <width>113</width>
+        <height>27</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>name</string>
+      </property>
+     </widget>
+     <widget class="QLineEdit" name="cookiesetting_column_value">
+      <property name="geometry">
+       <rect>
+        <x>200</x>
+        <y>200</y>
+        <width>113</width>
+        <height>27</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>value</string>
+      </property>
+     </widget>
+     <widget class="QPushButton" name="cookiesetting_file_open_button">
+      <property name="geometry">
+       <rect>
+        <x>330</x>
+        <y>50</y>
+        <width>71</width>
+        <height>27</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>open...</string>
+      </property>
+     </widget>
+     <zorder>browserCombo</zorder>
+     <zorder>cookiesetting_filename</zorder>
+     <zorder>cookiesetting_file_open_button</zorder>
+     <zorder>cookiesetting_file_label</zorder>
+     <zorder>cookiesetting_file_open_button</zorder>
+     <zorder>horizontalSpacer</zorder>
+     <zorder>cookiesetting_table_label</zorder>
+     <zorder>cookiesetting_tablename</zorder>
+     <zorder>cookiesetting_column_label</zorder>
+     <zorder>cookiesetting_column_basedomain_label</zorder>
+     <zorder>cookiesetting_column_name_label</zorder>
+     <zorder>cookiesetting_column_value_label</zorder>
+     <zorder>cookiesetting_column_basedomain</zorder>
+     <zorder>cookiesetting_column_name</zorder>
+     <zorder>cookiesetting_column_value</zorder>
+    </widget>
    </widget>
    <widget class="QPushButton" name="pushButton_2">
     <property name="geometry">
      <rect>
-      <x>290</x>
-      <y>0</y>
+      <x>410</x>
+      <y>50</y>
       <width>111</width>
       <height>27</height>
      </rect>
@@ -176,8 +343,8 @@
    <widget class="QPushButton" name="disconnect">
     <property name="geometry">
      <rect>
-      <x>420</x>
-      <y>40</y>
+      <x>430</x>
+      <y>10</y>
       <width>99</width>
       <height>27</height>
      </rect>
@@ -186,13 +353,19 @@
      <string>disconnect</string>
     </property>
    </widget>
+   <zorder>receive</zorder>
+   <zorder>lineEdit_2</zorder>
+   <zorder>housouid_label</zorder>
+   <zorder>pushButton_2</zorder>
+   <zorder>disconnect</zorder>
+   <zorder>tabWidget</zorder>
   </widget>
   <widget class="QMenuBar" name="menuBar">
    <property name="geometry">
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>564</width>
+     <width>566</width>
      <height>25</height>
     </rect>
    </property>
