@@ -10,6 +10,7 @@
 #include <QNetworkReply>
 #include <QIODevice>
 #include <QtNetwork>
+#include <QFileDialog>
 
 #include "commtcp.h"
 #include "cookieread.h"
@@ -35,11 +36,15 @@ private slots:
 	void finished();
 	void heartbeatfinished();
 	void on_pushButton_2_clicked();
+	void on_cookiesetting_file_open_button_clicked();
+
+	void on_cookiesetting_apply_clicked();
 
 private:
 	void getAPI(QString user_id, QString broad_id);
 	void getComment();
 	void getHeartBeatAPI(QString user_id, QString broad_id);
+	void getSessionFromCookie();
 	CommTcp* commtcp;
 
 	Ui::MainWindow *ui;

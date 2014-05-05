@@ -5,7 +5,7 @@ CookieRead::CookieRead(MainWindow* mwin)
 {
 	this->mwin = mwin;
 	db = QSqlDatabase::addDatabase("QSQLITE");
-	db.setDatabaseName( QDir::homePath() + QDir::separator() + "testcookie" + QDir::separator() + "cookies.sqlite");
+	db.setDatabaseName(mwin->getCookieSetting(0));
 
 	if (db.open()) {
 		qDebug() << "db open succeeded";
@@ -22,8 +22,6 @@ QString CookieRead::getUserSession()
 	queryS.append(" where ").append(mwin->getCookieSetting(2));
 	queryS.append("=:baseDomain and ").append(mwin->getCookieSetting(3));
 	queryS.append("=:name");
-
-	qDebug() << queryS;
 
 	QSqlQuery query(db);
 

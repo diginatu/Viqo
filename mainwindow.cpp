@@ -103,6 +103,11 @@ void MainWindow::finished()
 	commtcp->doConnect();
 }
 
+void MainWindow::getSessionFromCookie()
+{
+	CookieRead cr(this);
+	userSession = cr.getUserSession();
+}
 
 MainWindow::MainWindow(QWidget *parent) :
 	QMainWindow(parent),
@@ -111,8 +116,7 @@ MainWindow::MainWindow(QWidget *parent) :
 	ui->setupUi(this);
 	ui->statusBar->showMessage("来場者数: 0");
 
-	CookieRead cr(this);
-	userSession = cr.getUserSession();
+	getSessionFromCookie();
 }
 
 MainWindow::~MainWindow()
@@ -149,3 +153,14 @@ void MainWindow::on_disconnect_clicked()
 	commtcp->close();
 }
 
+
+void MainWindow::on_cookiesetting_file_open_button_clicked()
+{
+	QString filePath = QFileDialog::getOpenFileName(this, tr("Open Cookies File"), "/home", tr("sqlite Files (*.sqlite)"));
+	ui->cookiesetting_filename->setText(filePath);
+}
+
+void MainWindow::on_cookiesetting_apply_clicked()
+{
+	getSessionFromCookie();
+}
