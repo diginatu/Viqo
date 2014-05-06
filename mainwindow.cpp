@@ -97,7 +97,9 @@ void MainWindow::finished()
 	port = repdata.mid(prtp, prtpe-prtp).toInt();
 	thread = QString(repdata.mid(thrp, thrpe-thrp));
 
-	qDebug() << addr << "\n" << port << "\n" << thread;
+	insLog("addr: " + addr);
+	insLog("port: " + QString::number(port));
+	insLog("thread:" + thread );
 
 	commtcp = new CommTcp(addr, port, thread, this);
 	commtcp->doConnect();
@@ -105,8 +107,12 @@ void MainWindow::finished()
 
 void MainWindow::getSessionFromCookie()
 {
-	CookieRead cr(this);
-	userSession = cr.getUserSession();
+	try {
+		CookieRead cr(this);
+		userSession = cr.getUserSession();
+	} catch (QString e) {
+		qDebug() << e;
+	}
 }
 
 MainWindow::MainWindow(QWidget *parent) :

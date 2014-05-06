@@ -10,7 +10,7 @@ CookieRead::CookieRead(MainWindow* mwin)
 	if (db.open()) {
 		qDebug() << "db open succeeded";
 	} else {
-		qDebug() << "db open error occured";
+		throw QString("db open error occured");
 	}
 }
 
@@ -35,7 +35,7 @@ QString CookieRead::getUserSession()
 			return value;
 		}
 	} else {
-		qDebug() << "usersession get error" << query.lastError();
+		throw QString("usersession get error");
 	}
 
 	return "";
