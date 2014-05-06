@@ -162,7 +162,7 @@ void MainWindow::on_disconnect_clicked()
 
 void MainWindow::on_cookiesetting_file_open_button_clicked()
 {
-	QString filePath = QFileDialog::getOpenFileName(this, tr("Open Cookies File"), "/home", tr("sqlite Files (*.sqlite)"));
+	QString filePath = QFileDialog::getOpenFileName(this, tr("Open Cookies File"), QDir::homePath(), tr("sqlite Files (*.sqlite)"));
 	if ( filePath == "" ) return;
 	ui->cookiesetting_filename->setText(filePath);
 }
