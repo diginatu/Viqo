@@ -11,7 +11,10 @@
    </rect>
   </property>
   <property name="windowTitle">
-   <string>MainWindow</string>
+   <string>Viqo</string>
+  </property>
+  <property name="windowOpacity">
+   <double>1.000000000000000</double>
   </property>
   <widget class="QWidget" name="centralWidget">
    <widget class="QPushButton" name="receive">
@@ -134,10 +137,13 @@
      </widget>
     </widget>
     <widget class="QWidget" name="cookiesetting_tab">
+     <property name="mouseTracking">
+      <bool>false</bool>
+     </property>
      <attribute name="title">
-      <string>setting</string>
+      <string>cookie setting</string>
      </attribute>
-     <widget class="QComboBox" name="browserCombo">
+     <widget class="QComboBox" name="cookiesetting_browserCombo">
       <property name="geometry">
        <rect>
         <x>40</x>
@@ -153,192 +159,234 @@
       </item>
       <item>
        <property name="text">
-        <string>chrome</string>
+        <string>direct input</string>
        </property>
       </item>
      </widget>
-     <widget class="QLineEdit" name="cookiesetting_filename">
+     <widget class="QWidget" name="cookiesetting_browserSettings_group" native="true">
+      <property name="enabled">
+       <bool>true</bool>
+      </property>
       <property name="geometry">
        <rect>
-        <x>160</x>
-        <y>50</y>
-        <width>161</width>
-        <height>27</height>
+        <x>50</x>
+        <y>40</y>
+        <width>421</width>
+        <height>241</height>
        </rect>
       </property>
+      <widget class="QLabel" name="cookiesetting_file_label">
+       <property name="geometry">
+        <rect>
+         <x>20</x>
+         <y>20</y>
+         <width>91</width>
+         <height>17</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string>cookies file</string>
+       </property>
+      </widget>
+      <widget class="QLineEdit" name="cookiesetting_filename">
+       <property name="geometry">
+        <rect>
+         <x>160</x>
+         <y>20</y>
+         <width>161</width>
+         <height>27</height>
+        </rect>
+       </property>
+      </widget>
+      <widget class="QPushButton" name="cookiesetting_file_open_button">
+       <property name="geometry">
+        <rect>
+         <x>330</x>
+         <y>20</y>
+         <width>71</width>
+         <height>27</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string>open...</string>
+       </property>
+      </widget>
+      <widget class="QLineEdit" name="cookiesetting_column_basedomain">
+       <property name="geometry">
+        <rect>
+         <x>180</x>
+         <y>110</y>
+         <width>113</width>
+         <height>27</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string>baseDomain</string>
+       </property>
+      </widget>
+      <widget class="QLabel" name="cookiesetting_table_label">
+       <property name="geometry">
+        <rect>
+         <x>20</x>
+         <y>50</y>
+         <width>101</width>
+         <height>17</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string>Table name</string>
+       </property>
+      </widget>
+      <widget class="QLabel" name="cookiesetting_column_label">
+       <property name="geometry">
+        <rect>
+         <x>20</x>
+         <y>80</y>
+         <width>101</width>
+         <height>17</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string>column name</string>
+       </property>
+      </widget>
+      <widget class="QLabel" name="cookiesetting_column_basedomain_label">
+       <property name="geometry">
+        <rect>
+         <x>60</x>
+         <y>110</y>
+         <width>91</width>
+         <height>17</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string>baseDomain</string>
+       </property>
+      </widget>
+      <widget class="QPushButton" name="cookiesetting_apply">
+       <property name="geometry">
+        <rect>
+         <x>240</x>
+         <y>210</y>
+         <width>151</width>
+         <height>27</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string>apply</string>
+       </property>
+      </widget>
+      <widget class="QLabel" name="cookiesetting_column_name_label">
+       <property name="geometry">
+        <rect>
+         <x>60</x>
+         <y>140</y>
+         <width>67</width>
+         <height>17</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string>name</string>
+       </property>
+      </widget>
+      <widget class="QLabel" name="cookiesetting_column_value_label">
+       <property name="geometry">
+        <rect>
+         <x>60</x>
+         <y>170</y>
+         <width>67</width>
+         <height>17</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string>value</string>
+       </property>
+      </widget>
+      <widget class="QLineEdit" name="cookiesetting_tablename">
+       <property name="geometry">
+        <rect>
+         <x>160</x>
+         <y>50</y>
+         <width>131</width>
+         <height>27</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string>moz_cookies</string>
+       </property>
+      </widget>
+      <widget class="QLineEdit" name="cookiesetting_column_value">
+       <property name="geometry">
+        <rect>
+         <x>180</x>
+         <y>170</y>
+         <width>113</width>
+         <height>27</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string>value</string>
+       </property>
+      </widget>
+      <widget class="QLineEdit" name="cookiesetting_column_name">
+       <property name="geometry">
+        <rect>
+         <x>180</x>
+         <y>140</y>
+         <width>113</width>
+         <height>27</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string>name</string>
+       </property>
+      </widget>
      </widget>
-     <widget class="QLabel" name="cookiesetting_file_label">
+     <widget class="QWidget" name="cookiesetting_usersession_groupe" native="true">
+      <property name="enabled">
+       <bool>false</bool>
+      </property>
       <property name="geometry">
        <rect>
-        <x>20</x>
-        <y>50</y>
-        <width>91</width>
-        <height>17</height>
+        <x>210</x>
+        <y>10</y>
+        <width>281</width>
+        <height>31</height>
        </rect>
       </property>
-      <property name="text">
-       <string>cookies file</string>
-      </property>
+      <widget class="QLineEdit" name="cookiesetting_usersession">
+       <property name="geometry">
+        <rect>
+         <x>130</x>
+         <y>0</y>
+         <width>113</width>
+         <height>27</height>
+        </rect>
+       </property>
+      </widget>
+      <widget class="QLabel" name="cookiesetting_usersession_label">
+       <property name="geometry">
+        <rect>
+         <x>10</x>
+         <y>0</y>
+         <width>101</width>
+         <height>20</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string>user_session</string>
+       </property>
+      </widget>
      </widget>
-     <widget class="QLabel" name="cookiesetting_table_label">
-      <property name="geometry">
-       <rect>
-        <x>20</x>
-        <y>80</y>
-        <width>101</width>
-        <height>17</height>
-       </rect>
-      </property>
-      <property name="text">
-       <string>Table name</string>
-      </property>
-     </widget>
-     <widget class="QLineEdit" name="cookiesetting_tablename">
-      <property name="geometry">
-       <rect>
-        <x>160</x>
-        <y>80</y>
-        <width>131</width>
-        <height>27</height>
-       </rect>
-      </property>
-      <property name="text">
-       <string>moz_cookies</string>
-      </property>
-     </widget>
-     <widget class="QLabel" name="cookiesetting_column_label">
-      <property name="geometry">
-       <rect>
-        <x>20</x>
-        <y>120</y>
-        <width>101</width>
-        <height>17</height>
-       </rect>
-      </property>
-      <property name="text">
-       <string>column name</string>
-      </property>
-     </widget>
-     <widget class="QLabel" name="cookiesetting_column_basedomain_label">
-      <property name="geometry">
-       <rect>
-        <x>80</x>
-        <y>140</y>
-        <width>91</width>
-        <height>17</height>
-       </rect>
-      </property>
-      <property name="text">
-       <string>baseDomain</string>
-      </property>
-     </widget>
-     <widget class="QLabel" name="cookiesetting_column_name_label">
-      <property name="geometry">
-       <rect>
-        <x>80</x>
-        <y>170</y>
-        <width>67</width>
-        <height>17</height>
-       </rect>
-      </property>
-      <property name="text">
-       <string>name</string>
-      </property>
-     </widget>
-     <widget class="QLabel" name="cookiesetting_column_value_label">
-      <property name="geometry">
-       <rect>
-        <x>80</x>
-        <y>200</y>
-        <width>67</width>
-        <height>17</height>
-       </rect>
-      </property>
-      <property name="text">
-       <string>value</string>
-      </property>
-     </widget>
-     <widget class="QLineEdit" name="cookiesetting_column_basedomain">
-      <property name="geometry">
-       <rect>
-        <x>200</x>
-        <y>140</y>
-        <width>113</width>
-        <height>27</height>
-       </rect>
-      </property>
-      <property name="text">
-       <string>baseDomain</string>
-      </property>
-     </widget>
-     <widget class="QLineEdit" name="cookiesetting_column_name">
-      <property name="geometry">
-       <rect>
-        <x>200</x>
-        <y>170</y>
-        <width>113</width>
-        <height>27</height>
-       </rect>
-      </property>
-      <property name="text">
-       <string>name</string>
-      </property>
-     </widget>
-     <widget class="QLineEdit" name="cookiesetting_column_value">
-      <property name="geometry">
-       <rect>
-        <x>200</x>
-        <y>200</y>
-        <width>113</width>
-        <height>27</height>
-       </rect>
-      </property>
-      <property name="text">
-       <string>value</string>
-      </property>
-     </widget>
-     <widget class="QPushButton" name="cookiesetting_apply">
-      <property name="geometry">
-       <rect>
-        <x>110</x>
-        <y>240</y>
-        <width>301</width>
-        <height>27</height>
-       </rect>
-      </property>
-      <property name="text">
-       <string>apply</string>
-      </property>
-     </widget>
-     <widget class="QPushButton" name="cookiesetting_file_open_button">
-      <property name="geometry">
-       <rect>
-        <x>330</x>
-        <y>50</y>
-        <width>71</width>
-        <height>27</height>
-       </rect>
-      </property>
-      <property name="text">
-       <string>open...</string>
-      </property>
-     </widget>
-     <zorder>browserCombo</zorder>
-     <zorder>cookiesetting_filename</zorder>
-     <zorder>cookiesetting_file_open_button</zorder>
-     <zorder>cookiesetting_file_label</zorder>
-     <zorder>cookiesetting_file_open_button</zorder>
-     <zorder>horizontalSpacer</zorder>
-     <zorder>cookiesetting_table_label</zorder>
-     <zorder>cookiesetting_tablename</zorder>
-     <zorder>cookiesetting_column_label</zorder>
-     <zorder>cookiesetting_column_basedomain_label</zorder>
-     <zorder>cookiesetting_column_name_label</zorder>
-     <zorder>cookiesetting_column_value_label</zorder>
-     <zorder>cookiesetting_column_basedomain</zorder>
-     <zorder>cookiesetting_column_name</zorder>
-     <zorder>cookiesetting_column_value</zorder>
+     <zorder>cookiesetting_browserCombo</zorder>
+     <zorder>cookiesetting_browserSettings_group</zorder>
+     <zorder>cookiesetting_usersession_groupe</zorder>
      <zorder>cookiesetting_apply</zorder>
+    </widget>
+    <widget class="QWidget" name="setting">
+     <attribute name="title">
+      <string>setting</string>
+     </attribute>
     </widget>
    </widget>
    <widget class="QPushButton" name="pushButton_2">

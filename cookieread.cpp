@@ -8,7 +8,7 @@ CookieRead::CookieRead(MainWindow* mwin)
 	db.setDatabaseName(mwin->getCookieSetting(0));
 
 	if (db.open()) {
-		qDebug() << "db open succeeded";
+		mwin->insLog("db open succeeded");
 	} else {
 		throw QString("db open error occured");
 	}

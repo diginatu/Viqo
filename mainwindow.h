@@ -37,8 +37,8 @@ private slots:
 	void heartbeatfinished();
 	void on_pushButton_2_clicked();
 	void on_cookiesetting_file_open_button_clicked();
-
 	void on_cookiesetting_apply_clicked();
+	void on_cookiesetting_browserCombo_currentIndexChanged(int index);
 
 private:
 	void getAPI(QString user_id, QString broad_id);
@@ -47,12 +47,11 @@ private:
 	void getSessionFromCookie();
 	CommTcp* commtcp;
 
-	Ui::MainWindow *ui;
+	Ui::MainWindow* ui;
 	QNetworkReply* reply;
 	QByteArray m_data;
 	QNetworkAccessManager* mManager;
 	QString addr, thread;
-	QString userSession;
 	int port;
 };
 

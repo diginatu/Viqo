@@ -109,7 +109,7 @@ void MainWindow::getSessionFromCookie()
 {
 	try {
 		CookieRead cr(this);
-		userSession = cr.getUserSession();
+		ui->cookiesetting_usersession->setText(cr.getUserSession());
 	} catch (QString e) {
 		qDebug() << e;
 	}
@@ -121,6 +121,8 @@ MainWindow::MainWindow(QWidget *parent) :
 {
 	ui->setupUi(this);
 	ui->statusBar->showMessage("来場者数: 0");
+
+	ui->cookiesetting_usersession->setEchoMode(QLineEdit::Password);
 
 	getSessionFromCookie();
 }
@@ -144,12 +146,14 @@ void MainWindow::heartbeatfinished(){
 
 void MainWindow::on_receive_clicked()
 {
+	const QString userSession = ui->cookiesetting_usersession->text();
 	const QString broad_id = ui->lineEdit_2->text();
 	getAPI(userSession, broad_id);
 }
 
 void MainWindow::on_pushButton_2_clicked()
 {
+	const QString userSession = ui->cookiesetting_usersession->text();
 	const QString broad_id = ui->lineEdit_2->text();
 	getHeartBeatAPI(userSession,broad_id);
 }
@@ -170,4 +174,18 @@ void MainWindow::on_cookiesetting_file_open_button_clicked()
 void MainWindow::on_cookiesetting_apply_clicked()
 {
 	getSessionFromCookie();
+}
+
+void MainWindow::on_cookiesetting_browserCombo_currentIndexChanged(int index)
+{
+	switch (index) {
+		case 0:
+			ui->cookiesetting_browserSettings_group->setEnabled(true);
+			ui->cookiesetting_usersession_groupe->setEnabled(false);
+			break;
+		case 1:
+			ui->cookiesetting_browserSettings_group->setEnabled(false);
+			ui->cookiesetting_usersession_groupe->setEnabled(true);
+			break;
+	}
 }
