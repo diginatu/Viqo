@@ -40,11 +40,14 @@ private slots:
 	void on_cookiesetting_apply_clicked();
 	void on_cookiesetting_browserCombo_currentIndexChanged(int index);
 
+	void on_clear_clicked();
+
 private:
 	void getAPI(QString user_id, QString broad_id);
 	void getComment();
 	void getHeartBeatAPI(QString user_id, QString broad_id);
 	void getSessionFromCookie();
+	void clearView();
 	CommTcp* commtcp;
 
 	Ui::MainWindow* ui;
