@@ -2,11 +2,31 @@ Viqo
 ====
  Viqo is a cross-platform Nico Nama comment viewer.
 
- * cross-platform gui aplication
- * written in Qt5 and C++
+ Viqoはクロスプラットフォームなニコ生コメントビューアです。
 
-Licence
--------
- the MIT Licence
+ * クロスプラットフォーム GUI アプリケーション
+ * Qt5 / C++
+ * オープンソース
 
+
+ライセンス
+----------
+ MIT ライセンス
+
+
+追加予定の機能
+--------------
+ * 設定ファイル
+ * コメント
+  + コピー
+	+ URLジャンプ
+  + IDと名前の保存
+	+ 表示方向のオプション
+
+既知のバグ
+----------
+ * 既に放送が閉じられている放送番号で受信した時の挙動が適切でない
+ * コメント
+  + premium=3 などが入っている場合でもそのとおりに認識してしまう
+  + <, > などはhtmlエンコードされて送られてくるが表示されない
 
