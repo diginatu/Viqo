@@ -131,6 +131,8 @@ MainWindow::MainWindow(QWidget *parent) :
 
 	ui->cookiesetting_usersession->setEchoMode(QLineEdit::Password);
 
+	on_actionLoad_triggered();
+
 	getSessionFromCookie();
 }
 
@@ -205,3 +207,52 @@ void MainWindow::on_clear_clicked()
 	clearView();
 }
 
+void MainWindow::on_actionSave_triggered()
+{
+	QJsonObject cookie;
+	cookie["browser"] = ui->cookiesetting_browserCombo->currentIndex();
+	cookie["user_session"] = ui->cookiesetting_usersession->text();
+	cookie["file_name"] = ui->cookiesetting_filename->text();
+	cookie["table_name"] = ui->cookiesetting_tablename->text();
+	cookie["basedomain"] = ui->cookiesetting_column_basedomain->text();
+	cookie["name"] = ui->cookiesetting_column_name->text();
+	cookie["value"] = ui->cookiesetting_column_value->text();
+
+	QJsonObject root;
+	root["cookie"] = cookie;
+
+	QJsonDocument jsd;
+	jsd.setObject(root);
+
+	QFile file("settings.json");
+	file.open(QIODevice::WriteOnly);
+
+	QTextStream out(&file);
+
+	out << jsd.toJson().data();
+
+	file.close();
+}
+
+void MainWindow::on_actionLoad_triggered()
+{
+	QFile file("settings.json");
+	file.open(QIODevice::ReadOnly | QIODevice::Text);
+
+	QJsonDocument jsd;
+
+	jsd = QJsonDocument::fromJson(file.readAll());
+
+	QJsonObject cookie;
+	cookie = jsd.object()["cookie"].toObject();
+
+	ui->cookiesetting_browserCombo->setCurrentIndex(cookie["browser"].toInt());
+	ui->cookiesetting_usersession->setText(cookie["user_session"].toString());
+	ui->cookiesetting_filename->setText(cookie["file_name"].toString());
+	ui->cookiesetting_tablename->setText(cookie["table_name"].toString());
+	ui->cookiesetting_column_basedomain->setText(cookie["basedomain"].toString());
+	ui->cookiesetting_column_name->setText(cookie["name"].toString());
+	ui->cookiesetting_column_value->setText(cookie["value"].toString());
+
+	file.close();
+}

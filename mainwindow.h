@@ -11,6 +11,7 @@
 #include <QIODevice>
 #include <QtNetwork>
 #include <QFileDialog>
+#include <QJsonObject>
 
 #include "commtcp.h"
 #include "cookieread.h"
@@ -39,8 +40,11 @@ private slots:
 	void on_cookiesetting_file_open_button_clicked();
 	void on_cookiesetting_apply_clicked();
 	void on_cookiesetting_browserCombo_currentIndexChanged(int index);
-
 	void on_clear_clicked();
+
+	void on_actionSave_triggered();
+
+	void on_actionLoad_triggered();
 
 private:
 	void getAPI(QString user_id, QString broad_id);

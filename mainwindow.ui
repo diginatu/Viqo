@@ -75,7 +75,7 @@
      </size>
     </property>
     <property name="currentIndex">
-     <number>2</number>
+     <number>0</number>
     </property>
     <widget class="QWidget" name="comment_tab">
      <attribute name="title">
@@ -441,6 +441,14 @@
      <height>25</height>
     </rect>
    </property>
+   <widget class="QMenu" name="menuSetting">
+    <property name="title">
+     <string>setting</string>
+    </property>
+    <addaction name="actionSave"/>
+    <addaction name="actionLoad"/>
+   </widget>
+   <addaction name="menuSetting"/>
   </widget>
   <widget class="QToolBar" name="mainToolBar">
    <attribute name="toolBarArea">
@@ -451,8 +459,21 @@
    </attribute>
   </widget>
   <widget class="QStatusBar" name="statusBar"/>
+  <action name="actionSave">
+   <property name="text">
+    <string>save</string>
+   </property>
+  </action>
+  <action name="actionLoad">
+   <property name="text">
+    <string>load</string>
+   </property>
+  </action>
  </widget>
  <layoutdefault spacing="6" margin="11"/>
  <resources/>
  <connections/>
+ <slots>
+  <slot>menu_triggered(QAction*)</slot>
+ </slots>
 </ui>
