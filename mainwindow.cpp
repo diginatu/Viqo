@@ -1,7 +1,6 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 
-
 void MainWindow::clearView()
 {
 	ui->commentView->clear();
@@ -83,7 +82,7 @@ void MainWindow::getAPI(QString session_id, QString broad_id)
 	QNetworkRequest rq;
 	QVariant postData = makePostData(session_id);
 	rq.setHeader(QNetworkRequest::CookieHeader, postData);
-	rq.setUrl(QUrl("http://watch.live.nicovideo.jp/api/getplayerstatus?v=" + broad_id));
+	rq.setUrl(QUrl("http://live.nicovideo.jp/api/getplayerstatus?v=" + broad_id));
 
 	reply = mManager->get(rq);
 	connect(reply,SIGNAL(finished()),this,SLOT(finished()));
@@ -104,9 +103,7 @@ void MainWindow::finished()
 	port = repdata.mid(prtp, prtpe-prtp).toInt();
 	thread = QString(repdata.mid(thrp, thrpe-thrp));
 
-	insLog("addr: " + addr);
-	insLog("port: " + QString::number(port));
-	insLog("thread:" + thread );
+	insLog("addr: "+addr+"\nport: "+QString::number(port)+"\nthread:"+thread);
 
 	commtcp = new CommTcp(addr, port, thread, this);
 	commtcp->doConnect();

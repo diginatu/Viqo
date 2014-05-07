@@ -35,7 +35,7 @@ void CommTcp::connected()
 	qDebug() << "connected...";
 
 	QByteArray send;
-	send.append("<thread thread=\"" + thread + "\" version=\"20061206\" res_from=\"1000\"/>");
+	send.append("<thread thread=\""+thread+"\" res_from=\"-0\" version=\"20061206\" />");
 	send.append('\0');
 	socket->write(send);
 }
