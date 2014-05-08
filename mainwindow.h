@@ -39,6 +39,9 @@ private slots:
 	void finished();
 	void heartbeatfinished();
 
+
+    void rawMyLivefinished();
+
 	void on_pushButton_2_clicked();
 
 	void on_cookiesetting_file_open_button_clicked();
@@ -54,11 +57,19 @@ private slots:
 
 	void on_setting_apply_clicked();
 
+    void on_broad_list_activated(int index);
+
+    void on_mylive_reflesh_clicked();
+
 private:
 	void getAPI(QString user_id, QString broad_id);
 	void getComment();
 	void getHeartBeatAPI(QString user_id, QString broad_id);
 	void getSessionFromCookie();
+    void getRawMyLiveHTML(QString user_id);
+
+    QString getUserSession();
+
 	CommTcp* commtcp;
 
 	Ui::MainWindow* ui;
@@ -67,6 +78,9 @@ private:
 	QNetworkAccessManager* mManager;
 	QString addr, thread;
 	int port;
+
+    QList<QString> broadIDList;
+
 };
 
 #endif // MAINWINDOW_H
