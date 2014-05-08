@@ -1,12 +1,6 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 
-void MainWindow::clearView()
-{
-	ui->commentView->clear();
-	ui->logtext->clear();
-}
-
 QString MainWindow::getCookieSetting(int n)
 {
 	switch (n) {
@@ -153,7 +147,7 @@ void MainWindow::heartbeatfinished(){
 void MainWindow::on_receive_clicked()
 {
 	on_disconnect_clicked();
-	clearView();
+	on_clear_clicked();
 
 	const QString userSession = ui->cookiesetting_usersession->text();
 	const QString broad_id = ui->lineEdit_2->text();
@@ -201,7 +195,8 @@ void MainWindow::on_cookiesetting_browserCombo_currentIndexChanged(int index)
 
 void MainWindow::on_clear_clicked()
 {
-	clearView();
+	ui->commentView->clear();
+	ui->logtext->clear();
 }
 
 void MainWindow::on_actionSave_triggered()

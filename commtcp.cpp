@@ -18,24 +18,17 @@ void CommTcp::doConnect()
 	connect(socket, SIGNAL(bytesWritten(qint64)),this, SLOT(bytesWritten(qint64)));
 	connect(socket, SIGNAL(readyRead()),this, SLOT(readyRead()));
 
-	qDebug() << "connecting...";
-
-	// this is not blocking call
 	socket->connectToHost(domain, port);
 
-	// we need to wait...
-	if(!socket->waitForConnected(5000))
-	{
+	if(!socket->waitForConnected(5000)) {
 		qDebug() << "Error: " << socket->errorString();
 	}
 }
 
 void CommTcp::connected()
 {
-	qDebug() << "connected...";
-
 	QByteArray send;
-	send.append("<thread thread=\""+thread+"\" res_from=\"-0\" version=\"20061206\" />");
+	send.append("<thread thread=\""+thread+"\" res_from=\"-1000\" version=\"20061206\" />");
 	send.append('\0');
 	socket->write(send);
 }
@@ -52,8 +45,18 @@ void CommTcp::bytesWritten(qint64 bytes)
 
 void CommTcp::readyRead()
 {
-	QByteArray rawcomm = socket->readAll();
+	QList<QByteArray> rawcomms( socket->readAll().split('\0') );
+	rawcomms[0].insert(0, lastRawComm);
 
+	for ( int i = 0; i < rawcomms.size()-1; ++i) {
+		readOneRawComment(rawcomms[i]);
+	}
+
+	lastRawComm = rawcomms.takeLast();
+}
+
+void CommTcp::readOneRawComment(QByteArray& rawcomm)
+{
 	mwin->insLog(QString(rawcomm));
 
 	if (rawcomm.indexOf("<thread") != -1) {

@@ -23,13 +23,14 @@ public slots:
 	void disconnected();
 	void bytesWritten(qint64 bytes);
 	void readyRead();
+	void readOneRawComment(QByteArray& rawcomm);
 
 private:
 	MainWindow* mwin;
 	QTcpSocket* socket;
 	QString domain, thread;
 	int port;
-
+	QByteArray lastRawComm;
 };
 
 #endif // COMMTCP_H
