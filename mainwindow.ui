@@ -18,14 +18,14 @@
   </property>
   <widget class="QWidget" name="centralWidget">
    <layout class="QGridLayout" name="gridLayout_3">
-    <item row="1" column="3">
+    <item row="1" column="4">
      <widget class="QPushButton" name="pushButton_2">
       <property name="text">
        <string>来場者数取得</string>
       </property>
      </widget>
     </item>
-    <item row="2" column="0" colspan="4">
+    <item row="2" column="0" colspan="5">
      <widget class="QTabWidget" name="tabWidget">
       <property name="sizePolicy">
        <sizepolicy hsizetype="Minimum" vsizetype="Minimum">
@@ -40,7 +40,7 @@
        </size>
       </property>
       <property name="currentIndex">
-       <number>3</number>
+       <number>0</number>
       </property>
       <widget class="QWidget" name="comment_tab">
        <attribute name="title">
@@ -356,14 +356,14 @@
       </property>
      </widget>
     </item>
-    <item row="0" column="2">
+    <item row="0" column="3">
      <widget class="QPushButton" name="receive">
       <property name="text">
        <string>receive</string>
       </property>
      </widget>
     </item>
-    <item row="1" column="2">
+    <item row="1" column="3">
      <widget class="QPushButton" name="clear">
       <property name="text">
        <string>Clear</string>
@@ -373,12 +373,22 @@
     <item row="0" column="1">
      <widget class="QLineEdit" name="lineEdit_2"/>
     </item>
-    <item row="0" column="3">
+    <item row="0" column="4">
      <widget class="QPushButton" name="disconnect">
       <property name="text">
        <string>disconnect</string>
       </property>
      </widget>
+    </item>
+    <item row="1" column="2">
+     <widget class="QPushButton" name="mylive_reflesh">
+      <property name="text">
+       <string>reflesh</string>
+      </property>
+     </widget>
+    </item>
+    <item row="1" column="0" colspan="2">
+     <widget class="QComboBox" name="broad_list"/>
     </item>
    </layout>
    <zorder>receive</zorder>
@@ -388,6 +398,8 @@
    <zorder>disconnect</zorder>
    <zorder>tabWidget</zorder>
    <zorder>clear</zorder>
+   <zorder>broad_list</zorder>
+   <zorder>mylive_reflesh</zorder>
   </widget>
   <widget class="QMenuBar" name="menuBar">
    <property name="geometry">
@@ -395,7 +407,7 @@
      <x>0</x>
      <y>0</y>
      <width>525</width>
-     <height>25</height>
+     <height>24</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuSetting">
