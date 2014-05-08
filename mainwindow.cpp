@@ -1,6 +1,5 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
-#include <HtmlEntities.hh>
 
 QString MainWindow::getCookieSetting(int n)
 {
@@ -160,6 +159,7 @@ MainWindow::MainWindow(QWidget *parent) :
 	ui->statusBar->showMessage("来場者数: 0");
 
 	ui->cookiesetting_usersession->setEchoMode(QLineEdit::Password);
+	ui->commentView->setWordWrap(true);
 
 	on_actionLoad_triggered();
 
