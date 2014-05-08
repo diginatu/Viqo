@@ -5,6 +5,8 @@
 #include <QTcpSocket>
 #include <QAbstractSocket>
 #include <QDebug>
+#include <QDateTime>
+#include <QProcess>
 
 class MainWindow;
 
@@ -30,6 +32,7 @@ private:
 	QTcpSocket* socket;
 	QString domain, thread;
 	int port;
+	QDateTime opentime;
 	QByteArray lastRawComm;
 };
 

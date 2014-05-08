@@ -30,6 +30,7 @@ public:
 	void insComment(int num, QString user, QString comm, QString date);
 	void insLog(QString log);
 	QString getCookieSetting(int n);
+	QString setting_commentCommand;
 
 private slots:
 	void on_receive_clicked();
@@ -48,6 +49,10 @@ private slots:
 
 	void on_actionSave_triggered();
 	void on_actionLoad_triggered();
+
+	void on_setting_commentComand_checkbox_stateChanged(int st);
+
+	void on_setting_apply_clicked();
 
 private:
 	void getAPI(QString user_id, QString broad_id);

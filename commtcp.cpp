@@ -28,6 +28,8 @@ void CommTcp::doConnect()
 void CommTcp::connected()
 {
 	QByteArray send;
+	opentime = QDateTime::currentDateTime();
+
 	send.append("<thread thread=\""+thread+"\" res_from=\"-1000\" version=\"20061206\" />");
 	send.append('\0');
 	socket->write(send);
@@ -71,9 +73,9 @@ void CommTcp::readOneRawComment(QByteArray& rawcomm)
 	int dateEd = rawcomm.indexOf("\"", dateSt);
 	int udate = rawcomm.mid(dateSt, dateEd-dateSt).toInt();
 
-	QDateTime timestamp;
-	timestamp.setTime_t(udate);
-	QString date = timestamp.toString("yyyy/MM/dd hh:mm:ss");
+	QDateTime commenttime;
+	commenttime.setTime_t(udate);
+	QString date = commenttime.toString("yyyy/MM/dd hh:mm:ss");
 
 	int userSt = rawcomm.indexOf("user_id=\"") + 9;
 	int userEd = rawcomm.indexOf("\"", userSt);
@@ -106,6 +108,15 @@ void CommTcp::readOneRawComment(QByteArray& rawcomm)
 
 	if (comm == "/disconnect" && broadcaster) {
 		close();
+	}
+
+	// notify
+	if ( !mwin->setting_commentCommand.isEmpty() && commenttime > opentime ) {
+		QProcess pr;
+		pr.start(mwin->setting_commentCommand);
+		pr.waitForFinished(3000);
+
+		qDebug() << mwin->setting_commentCommand;
 	}
 
 	mwin->insComment(num,user,comm,date);

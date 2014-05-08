@@ -75,7 +75,7 @@
      </size>
     </property>
     <property name="currentIndex">
-     <number>0</number>
+     <number>3</number>
     </property>
     <widget class="QWidget" name="comment_tab">
      <attribute name="title">
@@ -383,6 +383,48 @@
      <attribute name="title">
       <string>setting</string>
      </attribute>
+     <widget class="QCheckBox" name="setting_commentComand_checkbox">
+      <property name="geometry">
+       <rect>
+        <x>50</x>
+        <y>20</y>
+        <width>221</width>
+        <height>22</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>enable comment command</string>
+      </property>
+     </widget>
+     <widget class="QLineEdit" name="setting_commentComand">
+      <property name="enabled">
+       <bool>false</bool>
+      </property>
+      <property name="geometry">
+       <rect>
+        <x>80</x>
+        <y>50</y>
+        <width>241</width>
+        <height>27</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>alert &quot;comment&quot;</string>
+      </property>
+     </widget>
+     <widget class="QPushButton" name="setting_apply">
+      <property name="geometry">
+       <rect>
+        <x>290</x>
+        <y>240</y>
+        <width>151</width>
+        <height>27</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>apply</string>
+      </property>
+     </widget>
     </widget>
    </widget>
    <widget class="QPushButton" name="pushButton_2">

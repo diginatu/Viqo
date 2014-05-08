@@ -115,6 +115,8 @@ void MainWindow::getSessionFromCookie()
 
 MainWindow::MainWindow(QWidget *parent) :
 	QMainWindow(parent),
+	setting_commentCommand(""),
+	commtcp(NULL),
 	ui(new Ui::MainWindow)
 {
 	ui->setupUi(this);
@@ -247,4 +249,20 @@ void MainWindow::on_actionLoad_triggered()
 	ui->cookiesetting_column_value->setText(cookie["value"].toString());
 
 	file.close();
+}
+
+void MainWindow::on_setting_commentComand_checkbox_stateChanged(int st)
+{
+	bool fl = st==0?false:true;
+	ui->setting_commentComand->setEnabled( fl );
+	setting_commentCommand = fl?(ui->setting_commentComand->text()):"";
+}
+
+void MainWindow::on_setting_apply_clicked()
+{
+	if (ui->setting_commentComand_checkbox->isChecked()) {
+		setting_commentCommand = ui->setting_commentComand->text();
+	} else {
+		setting_commentCommand = "";
+	}
 }
