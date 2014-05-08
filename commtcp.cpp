@@ -110,16 +110,22 @@ void CommTcp::readOneRawComment(QByteArray& rawcomm)
 		close();
 	}
 
+	mwin->insComment(num,user,comm,date);
+
 	// notify
 	if ( !mwin->setting_commentCommand.isEmpty() && commenttime > opentime ) {
 		QProcess pr;
-		pr.start(mwin->setting_commentCommand);
-		pr.waitForFinished(3000);
+		QString cmd = mwin->setting_commentCommand;
 
-		qDebug() << mwin->setting_commentCommand;
+		cmd.replace("%comment%",comm);
+		QString escmd = comm;
+		escmd.replace("\"", "\\\"");
+		escmd.replace("\\", "\\\\");
+		cmd.replace("%comment_escaped%",escmd);
+
+		pr.start(cmd);
+		pr.waitForFinished(30000);
 	}
-
-	mwin->insComment(num,user,comm,date);
 }
 
 void CommTcp::close()
