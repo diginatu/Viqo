@@ -324,6 +324,8 @@ void MainWindow::on_broad_list_activated(int index)
 
 void MainWindow::on_mylive_reflesh_clicked()
 {
+    ui->broad_list->clear();
+    broadIDList.clear();
     QString session= getUserSession();
     if (session.length()>0){
         getRawMyLiveHTML(session);
