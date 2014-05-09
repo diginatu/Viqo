@@ -1,8 +1,10 @@
 Viqo
 ====
- Viqo is a cross-platform Nico Nama comment viewer.
+ Viqo is a cross-platform "Nico Nama" comment viewer.
 
- Viqoはクロスプラットフォームなニコ生コメントビューアです。
+ Viqo 是跨平台"nico生放"留言查看程序。
+
+ Viqo はクロスプラットフォームなニコ生コメントビューアです。
 
  * クロスプラットフォーム GUI アプリケーション
  * Qt5 / C++

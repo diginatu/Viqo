@@ -31,8 +31,7 @@ QString CookieRead::getUserSession()
 
 	if (query.exec()) {
 		if (query.next()) {
-			QString value = query.value(0).toString();
-			return value;
+			return query.value(0).toString();
 		}
 	} else {
 		throw QString("usersession get error");

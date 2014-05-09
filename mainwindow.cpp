@@ -78,9 +78,11 @@ void MainWindow::rawMyLivefinished(){
 
 	QList<QByteArray> byteArrayList = repdata.split('\n');
 
-	for (int i=0; i<byteArrayList.length(); i++){
+	ui->broad_list->clear();
+	broadIDList.clear();
 
-		QRegExp rx("\\s+<h5><a href=\"http://live.nicovideo.jp/watch/(lv\\d+)\\?ref=zero_mysubscribe\">(.*)</a></h5>");
+	QRegExp rx("\\s+<h5><a href=\"http://live.nicovideo.jp/watch/(lv\\d+)\\?ref=zero_mysubscribe\">(.*)</a></h5>");
+	for (int i=0; i<byteArrayList.length(); i++){
 		if (-1!=rx.indexIn(QString(byteArrayList.at(i)))){
 			insLog(QString(rx.cap(2)));
 
@@ -88,10 +90,7 @@ void MainWindow::rawMyLivefinished(){
 			broadIDList.append(rx.cap(1));
 		}
 	}
-
 }
-
-
 
 void MainWindow::getHeartBeatAPI(QString session_id, QString broad_id)
 {
@@ -164,12 +163,10 @@ MainWindow::MainWindow(QWidget *parent) :
 	ui->cookiesetting_usersession->setEchoMode(QLineEdit::Password);
 	ui->commentView->setWordWrap(true);
 
+	if ( ui->cookiesetting_browserCombo->currentIndex() == 0 )
+		getUserSession();
+
 	on_actionLoad_triggered();
-
-	getSessionFromCookie();
-
-
-
 }
 
 MainWindow::~MainWindow()
@@ -262,8 +259,12 @@ void MainWindow::on_actionSave_triggered()
 	cookie["name"] = ui->cookiesetting_column_name->text();
 	cookie["value"] = ui->cookiesetting_column_value->text();
 
+	QJsonObject other;
+	other["comment_command"] = ui->setting_commentComand->text();
+
 	QJsonObject root;
 	root["cookie"] = cookie;
+	root["other"] = other;
 
 	QJsonDocument jsd;
 	jsd.setObject(root);
@@ -281,6 +282,8 @@ void MainWindow::on_actionSave_triggered()
 void MainWindow::on_actionLoad_triggered()
 {
 	QFile file("settings.json");
+	if ( !file.exists() ) return;
+
 	file.open(QIODevice::ReadOnly | QIODevice::Text);
 
 	QJsonDocument jsd;
@@ -289,7 +292,6 @@ void MainWindow::on_actionLoad_triggered()
 
 	QJsonObject cookie;
 	cookie = jsd.object()["cookie"].toObject();
-
 	ui->cookiesetting_browserCombo->setCurrentIndex(cookie["browser"].toInt());
 	ui->cookiesetting_usersession->setText(cookie["user_session"].toString());
 	ui->cookiesetting_filename->setText(cookie["file_name"].toString());
@@ -297,6 +299,11 @@ void MainWindow::on_actionLoad_triggered()
 	ui->cookiesetting_column_basedomain->setText(cookie["basedomain"].toString());
 	ui->cookiesetting_column_name->setText(cookie["name"].toString());
 	ui->cookiesetting_column_value->setText(cookie["value"].toString());
+
+
+	QJsonObject other;
+	other = jsd.object()["other"].toObject();
+	ui->setting_commentComand->setText(other["comment_command"].toString());
 
 	file.close();
 
@@ -329,8 +336,6 @@ void MainWindow::on_broad_list_activated(int index)
 
 void MainWindow::on_mylive_reflesh_clicked()
 {
-	ui->broad_list->clear();
-	broadIDList.clear();
 	QString session = getUserSession();
 
 	if (!session.isEmpty()){
