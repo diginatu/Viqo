@@ -45,46 +45,49 @@ QVariant makePostData(QString session_id){
 	QNetworkCookie ck;
 	ck.toRawForm(QNetworkCookie::NameAndValueOnly);
 	ck.setName("user_session");
+
 	QByteArray user_id_ba;
-    user_id_ba.append(session_id);
+	user_id_ba.append(session_id);
+
 	ck.setValue(user_id_ba);
 	cookies.append(ck);
 
 	postData.setValue(cookies);
 	return postData;
 }
+
 void MainWindow::getRawMyLiveHTML(QString session_id)
 {
-    mManager = new QNetworkAccessManager(this);
+	mManager = new QNetworkAccessManager(this);
 
-    // make request
-    QNetworkRequest rq;
-    QVariant postData = makePostData(session_id);
-    rq.setHeader(QNetworkRequest::CookieHeader, postData);
-    rq.setUrl(QUrl("http://www.nicovideo.jp/my/live"));
+	// make request
+	QNetworkRequest rq;
+	QVariant postData = makePostData(session_id);
+	rq.setHeader(QNetworkRequest::CookieHeader, postData);
+	rq.setUrl(QUrl("http://www.nicovideo.jp/my/live"));
 
-    reply = mManager->get(rq);
-    connect(reply,SIGNAL(finished()),this,SLOT(rawMyLivefinished()));
+	reply = mManager->get(rq);
+	connect(reply,SIGNAL(finished()),this,SLOT(rawMyLivefinished()));
 }
 /**
  * マイページのHTMLを解析して、自分が参加しているコミュリスト一覧を作成します。
  * @brief MainWindow::rawMyLivefinished
  */
 void MainWindow::rawMyLivefinished(){
-    QByteArray repdata = reply->readAll();
+	QByteArray repdata = reply->readAll();
 
-    QList<QByteArray>byteArrayList= repdata.split('\n');
+	QList<QByteArray> byteArrayList = repdata.split('\n');
 
-    for (int i=0;i<byteArrayList.length();i++){
+	for (int i=0; i<byteArrayList.length(); i++){
 
-        QRegExp rx("\\s+<h5><a href=\"http://live.nicovideo.jp/watch/(lv\\d+)\\?ref=zero_mysubscribe\">(.*)</a></h5>");
-        if (-1!=rx.indexIn(QString(byteArrayList.at(i)))){
-            insLog(QString(rx.cap(2)));
+		QRegExp rx("\\s+<h5><a href=\"http://live.nicovideo.jp/watch/(lv\\d+)\\?ref=zero_mysubscribe\">(.*)</a></h5>");
+		if (-1!=rx.indexIn(QString(byteArrayList.at(i)))){
+			insLog(QString(rx.cap(2)));
 
-            ui->broad_list->addItem(rx.cap(2));
-            broadIDList.append(rx.cap(1));
-        }
-    }
+			ui->broad_list->addItem(rx.cap(2));
+			broadIDList.append(rx.cap(1));
+		}
+	}
 
 }
 
@@ -187,23 +190,26 @@ void MainWindow::heartbeatfinished(){
 }
 
 QString MainWindow::getUserSession(){
-   return ui->cookiesetting_usersession->text();
+	return ui->cookiesetting_usersession->text();
 }
 
 void MainWindow::on_receive_clicked()
 {
+	const QString userSession = getUserSession();
+	const QString broad_id = ui->housouId->text();
+
+	if ( userSession.isEmpty() ) return;
+
 	on_disconnect_clicked();
 	on_clear_clicked();
 
-    const QString userSession = getUserSession();
-	const QString broad_id = ui->lineEdit_2->text();
 	getAPI(userSession, broad_id);
 }
 
 void MainWindow::on_pushButton_2_clicked()
 {
-    const QString userSession = getUserSession();
-	const QString broad_id = ui->lineEdit_2->text();
+	const QString userSession = getUserSession();
+	const QString broad_id = ui->housouId->text();
 	getHeartBeatAPI(userSession,broad_id);
 }
 
@@ -294,7 +300,7 @@ void MainWindow::on_actionLoad_triggered()
 
 	file.close();
 
-    on_mylive_reflesh_clicked();
+	on_mylive_reflesh_clicked();
 }
 
 void MainWindow::on_setting_commentComand_checkbox_stateChanged(int st)
@@ -315,20 +321,19 @@ void MainWindow::on_setting_apply_clicked()
 
 void MainWindow::on_broad_list_activated(int index)
 {
-    QString broad_id=broadIDList.at(index);
-    QString userSession=getUserSession();
-    ui->lineEdit_2->setText(broad_id);
+	QString broad_id=broadIDList.at(index);
+	ui->housouId->setText(broad_id);
 
-    on_receive_clicked();
+	on_receive_clicked();
 }
 
 void MainWindow::on_mylive_reflesh_clicked()
 {
-    ui->broad_list->clear();
-    broadIDList.clear();
-    QString session= getUserSession();
-    if (session.length()>0){
-        getRawMyLiveHTML(session);
-    }
+	ui->broad_list->clear();
+	broadIDList.clear();
+	QString session = getUserSession();
 
+	if (!session.isEmpty()){
+		getRawMyLiveHTML(session);
+	}
 }
