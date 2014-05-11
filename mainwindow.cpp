@@ -76,20 +76,62 @@ void MainWindow::getRawMyLiveHTML(QString session_id)
 void MainWindow::rawMyLivefinished(){
 	QByteArray repdata = reply->readAll();
 
-	QList<QByteArray> byteArrayList = repdata.split('\n');
-
 	ui->broad_list->clear();
 	broadIDList.clear();
 
-	QRegExp rx("\\s+<h5><a href=\"http://live.nicovideo.jp/watch/(lv\\d+)\\?ref=zero_mysubscribe\">(.*)</a></h5>");
-	for (int i=0; i<byteArrayList.length(); i++){
-		if (-1!=rx.indexIn(QString(byteArrayList.at(i)))){
-			insLog(QString(rx.cap(2)));
+    //cap(1)はコミュID、cap(2)は配信ID,cap(3)はタイトル
+    QRegExp rx("<a href=\"http://com.nicovideo.jp/community/(co\\d+)\">.*<h5><a href=\"http://live.nicovideo.jp/watch/(lv\\d+)\\?ref=zero_mysubscribe\">(.*)</a></h5>");
+    rx.setMinimal(true);
+    int currentIndex=0;
+    insLog("rawMyLivefinished");
+    QList<LiveData*> tmpDataList;
 
-			ui->broad_list->addItem(rx.cap(2));
-			broadIDList.append(rx.cap(1));
-		}
-	}
+    while ((currentIndex=rx.indexIn(QString(repdata),currentIndex))!=-1){
+        // 見つけた文字列分だけずらす
+        currentIndex+=rx.cap(0).length();
+        //内部のデータ構造に格納　メモリ解放をしないといけないかも・・？
+        //３つ目のデータは将来的に利用予定
+        LiveData *data=new LiveData(rx.cap(2),rx.cap(3),rx.cap(1));
+        tmpDataList.append(data);
+    }
+    //現在見ている番組を一番上にしたい
+    if (NULL!=currentSelectLive){
+        for (int i=0;i<tmpDataList.length();i++){
+            //文字列が一緒がどうか・・Java勢でごめんなさい
+            //同じコミュニティなら選択する
+            //配信IDじゃなくていいのかな・・？
+            LiveData *data=tmpDataList.at(i);
+            if (currentSelectLive->getCommunityID().compare(data->getCommunityID())==0){
+                ui->broad_list->addItem(data->getTitle());
+                broadIDList.append(data);
+                //コミュIDが同じで配信IDが異なる場合、新しい配信があると判断
+                if (currentSelectLive->getLiveID().compare(data->getLiveID())!=0){
+                    //このIDで自動的に再接続
+                    on_broad_list_activated(0);
+                }
+
+                break;
+            }
+        }
+    }
+
+    for (int i=0;i<tmpDataList.length();i++){
+        LiveData *data=tmpDataList.at(i);
+        //文字列が一緒がどうか・・Java勢でごめんなさい
+
+        if (NULL!=currentSelectLive){
+            if (currentSelectLive->getCommunityID().compare(data->getCommunityID())==0){
+                //すでに上で挿入済み
+                continue;
+            }
+        }
+        ui->broad_list->addItem(data->getTitle());
+        broadIDList.append(data);
+
+    }
+
+
+
 }
 
 void MainWindow::getHeartBeatAPI(QString session_id, QString broad_id)
@@ -307,6 +349,13 @@ void MainWindow::on_actionLoad_triggered()
 
 	file.close();
 
+
+    liveDataReloadtimer = new QTimer(this); //タイマー
+    liveDataReloadtimer->setInterval(60000);
+    liveDataReloadtimer->start();
+
+    connect(liveDataReloadtimer,SIGNAL(timeout()),this,SLOT(on_mylive_reflesh_clicked()));
+
 	on_mylive_reflesh_clicked();
 }
 
@@ -328,8 +377,8 @@ void MainWindow::on_setting_apply_clicked()
 
 void MainWindow::on_broad_list_activated(int index)
 {
-	QString broad_id=broadIDList.at(index);
-	ui->housouId->setText(broad_id);
+    currentSelectLive=broadIDList.at(index);
+    ui->housouId->setText(currentSelectLive->getLiveID());
 
 	on_receive_clicked();
 }

@@ -17,10 +17,12 @@ TEMPLATE = app
 SOURCES += main.cpp\
         mainwindow.cpp \
     commtcp.cpp \
-    cookieread.cpp
+    cookieread.cpp \
+    livedata.cpp
 
 HEADERS  += mainwindow.h \
     commtcp.h \
-    cookieread.h
+    cookieread.h \
+    livedata.h
 
 FORMS    += mainwindow.ui
