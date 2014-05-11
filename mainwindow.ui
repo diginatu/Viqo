@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>525</width>
-    <height>496</height>
+    <width>533</width>
+    <height>388</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -78,19 +78,6 @@
             <string>date</string>
            </property>
           </column>
-          <item>
-           <property name="text">
-            <string extracomment="hkhjkhjkhjkhjkh">新しいアイテム</string>
-           </property>
-           <property name="text">
-            <string extracomment="ghhhhhhhhhhhhhhhhhh"/>
-           </property>
-           <property name="text">
-            <string>asd
-sdtg
-</string>
-           </property>
-          </item>
          </widget>
         </item>
        </layout>
@@ -419,7 +406,7 @@ sdtg
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>525</width>
+     <width>533</width>
      <height>25</height>
     </rect>
    </property>

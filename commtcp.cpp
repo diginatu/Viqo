@@ -112,7 +112,7 @@ void CommTcp::readOneRawComment(QByteArray& rawcomm)
 
 	mwin->insComment(num,user,comm,date);
 
-	// notify
+	// comment command
 	if ( !mwin->setting_commentCommand.isEmpty() && commenttime > opentime ) {
 		QProcess pr;
 		QString cmd = mwin->setting_commentCommand;

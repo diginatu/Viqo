@@ -81,7 +81,7 @@ void MainWindow::rawMyLivefinished(){
 	ui->broad_list->clear();
 	broadIDList.clear();
 
-	QRegExp rx("\\s+<h5><a href=\"http://live.nicovideo.jp/watch/(lv\\d+)\\?ref=zero_mysubscribe\">(.*)</a></h5>");
+	QRegExp rx("^\\s+<h5><a href=\"http://live.nicovideo.jp/watch/(lv\\d+)\\?ref=zero_mysubscribe\">(.*)</a></h5>");
 	for (int i=0; i<byteArrayList.length(); i++){
 		if (-1!=rx.indexIn(QString(byteArrayList.at(i)))){
 			insLog(QString(rx.cap(2)));
@@ -167,6 +167,10 @@ MainWindow::MainWindow(QWidget *parent) :
 		getUserSession();
 
 	on_actionLoad_triggered();
+
+	// test
+	UserManager um(this);
+	um.getUserName(0,"11246304");
 }
 
 MainWindow::~MainWindow()

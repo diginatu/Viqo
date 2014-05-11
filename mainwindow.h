@@ -15,6 +15,7 @@
 
 #include "commtcp.h"
 #include "cookieread.h"
+#include "usermanager.h"
 
 namespace Ui {
 class MainWindow;
@@ -29,6 +30,7 @@ public:
 	~MainWindow();
 	void insComment(int num, QString user, QString comm, QString date);
 	void insLog(QString log);
+//	void setUsername(int num, QString string);
 	QString getCookieSetting(int n);
 	QString getUserSession();
 	QString setting_commentCommand;
