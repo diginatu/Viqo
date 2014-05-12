@@ -72,6 +72,8 @@ private:
 	void getSessionFromCookie();
 	void getRawMyLiveHTML(QString user_id);
 
+	void afterLoad();
+
 	CommTcp* commtcp;
 
 	Ui::MainWindow* ui;

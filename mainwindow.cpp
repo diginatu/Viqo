@@ -348,14 +348,18 @@ void MainWindow::on_actionLoad_triggered()
 
 	file.close();
 
+	afterLoad();
+}
+
+void MainWindow::afterLoad()
+{
 	on_mylive_reflesh_clicked();
 
-		liveDataReloadtimer = new QTimer(this); //タイマー
-		liveDataReloadtimer->setInterval(60000);
-		liveDataReloadtimer->start();
+	liveDataReloadtimer = new QTimer(this); //タイマー
+	liveDataReloadtimer->setInterval(60000);
+	liveDataReloadtimer->start();
 
-		connect(liveDataReloadtimer,SIGNAL(timeout()),this,SLOT(on_mylive_reflesh_clicked()));
-
+	connect(liveDataReloadtimer,SIGNAL(timeout()),this,SLOT(on_mylive_reflesh_clicked()));
 }
 
 void MainWindow::on_setting_commentComand_checkbox_stateChanged(int st)
