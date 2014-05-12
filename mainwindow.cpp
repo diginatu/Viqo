@@ -193,8 +193,8 @@ MainWindow::MainWindow(QWidget *parent) :
 	QMainWindow(parent),
 	setting_commentCommand(""),
 	commtcp(NULL),
-	currentSelectLive(NULL),
-	ui(new Ui::MainWindow)
+	ui(new Ui::MainWindow),
+	currentSelectLive(NULL)
 {
 	ui->setupUi(this);
 	ui->statusBar->showMessage("来場者数: 0");

@@ -43,6 +43,7 @@ void UserManager::getUserName(QTreeWidgetItem* item, QString userID)
 
 void UserManager::finished(){
 	QByteArray repdata = reply->readAll();
+	qDebug() << "2";
 	qDebug() << repdata;
 
 	int st = repdata.indexOf("<title>") + 7;
