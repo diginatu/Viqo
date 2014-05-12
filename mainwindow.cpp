@@ -207,9 +207,7 @@ MainWindow::MainWindow(QWidget *parent) :
 
 	on_actionLoad_triggered();
 
-	// test
-	UserManager um(this);
-	um.getUserName(0,"11246304");
+	userManager = new UserManager(this);
 }
 
 MainWindow::~MainWindow()
@@ -390,5 +388,20 @@ void MainWindow::on_mylive_reflesh_clicked()
 
 	if (!session.isEmpty()){
 		getRawMyLiveHTML(session);
+	}
+}
+
+void MainWindow::on_commentView_itemDoubleClicked(QTreeWidgetItem *item, int column)
+{
+	if (column == 1) {
+		QString userid = item->text(1);
+
+		bool isAllNum = true;
+		for ( int i = 0; i < userid.length(); ++i)
+			if ( !userid.at(i).isNumber() )
+				isAllNum = false;
+
+		if ( isAllNum )
+			userManager->getUserName(item, userid);
 	}
 }

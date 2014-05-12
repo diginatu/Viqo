@@ -63,6 +63,8 @@ private slots:
 	void heartbeatfinished();
 	void rawMyLivefinished();
 
+	void on_commentView_itemDoubleClicked(QTreeWidgetItem *item, int column);
+
 private:
 	void getAPI(QString user_id, QString broad_id);
 	void getComment();
@@ -78,10 +80,11 @@ private:
 	QNetworkAccessManager* mManager;
 	QString addr, thread; int port;
 
-    QList<LiveData*> broadIDList;
-    LiveData* currentSelectLive;
-    QTimer *liveDataReloadtimer;
+	QList<LiveData*> broadIDList;
+	LiveData* currentSelectLive;
+	QTimer *liveDataReloadtimer;
 
+	UserManager* userManager;
 };
 
 #endif // MAINWINDOW_H
