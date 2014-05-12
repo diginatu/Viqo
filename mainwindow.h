@@ -29,7 +29,7 @@ class MainWindow : public QMainWindow
 public:
 	explicit MainWindow(QWidget *parent = 0);
 	~MainWindow();
-	void insComment(int num, QString user, QString comm, QString date);
+	void insComment(int num, QString prem, QString user, QString comm, QString date);
 	void insLog(QString log);
 //	void setUsername(int num, QString string);
 	QString getCookieSetting(int n);
