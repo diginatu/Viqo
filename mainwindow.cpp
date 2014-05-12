@@ -127,11 +127,7 @@ void MainWindow::rawMyLivefinished(){
         }
         ui->broad_list->addItem(data->getTitle());
         broadIDList.append(data);
-
     }
-
-
-
 }
 
 void MainWindow::getHeartBeatAPI(QString session_id, QString broad_id)
@@ -197,6 +193,7 @@ MainWindow::MainWindow(QWidget *parent) :
 	QMainWindow(parent),
 	setting_commentCommand(""),
 	commtcp(NULL),
+	currentSelectLive(NULL),
 	ui(new Ui::MainWindow)
 {
 	ui->setupUi(this);
@@ -349,14 +346,14 @@ void MainWindow::on_actionLoad_triggered()
 
 	file.close();
 
-
-    liveDataReloadtimer = new QTimer(this); //タイマー
-    liveDataReloadtimer->setInterval(60000);
-    liveDataReloadtimer->start();
-
-    connect(liveDataReloadtimer,SIGNAL(timeout()),this,SLOT(on_mylive_reflesh_clicked()));
-
 	on_mylive_reflesh_clicked();
+
+		liveDataReloadtimer = new QTimer(this); //タイマー
+		liveDataReloadtimer->setInterval(60000);
+		liveDataReloadtimer->start();
+
+		connect(liveDataReloadtimer,SIGNAL(timeout()),this,SLOT(on_mylive_reflesh_clicked()));
+
 }
 
 void MainWindow::on_setting_commentComand_checkbox_stateChanged(int st)
