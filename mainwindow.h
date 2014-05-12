@@ -16,6 +16,7 @@
 #include "commtcp.h"
 #include "cookieread.h"
 #include "usermanager.h"
+#include "livedata.h"
 
 namespace Ui {
 class MainWindow;
@@ -77,7 +78,10 @@ private:
 	QNetworkAccessManager* mManager;
 	QString addr, thread; int port;
 
-	QList<QString> broadIDList;
+    QList<LiveData*> broadIDList;
+    LiveData* currentSelectLive;
+    QTimer *liveDataReloadtimer;
+
 };
 
 #endif // MAINWINDOW_H
