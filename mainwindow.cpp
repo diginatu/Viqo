@@ -105,7 +105,7 @@ void MainWindow::rawMyLivefinished(){
                 ui->broad_list->addItem(data->getTitle());
                 broadIDList.append(data);
                 //コミュIDが同じで配信IDが異なる場合、新しい配信があると判断
-                if (data->getLiveID().compare(data->getLiveID())!=0){
+                if (currentSelectLive->getLiveID().compare(data->getLiveID())!=0){
                     //このIDで自動的に再接続
                     on_broad_list_activated(0);
                 }
