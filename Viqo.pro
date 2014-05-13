@@ -19,12 +19,14 @@ SOURCES += main.cpp\
     commtcp.cpp \
     cookieread.cpp \
 	usermanager.cpp \
-    livedata.cpp
+    livedata.cpp \
+    htmlutil.cpp
 
 HEADERS  += mainwindow.h \
     commtcp.h \
     cookieread.h \
 	usermanager.h \
-    livedata.h
+    livedata.h \
+    htmlutil.h
 
 FORMS    += mainwindow.ui

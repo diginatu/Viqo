@@ -6,6 +6,8 @@
 #include <QNetworkRequest>
 #include <QNetworkCookie>
 #include <QList>
+#include <QPair>
+
 #include <QVariant>
 #include <QNetworkReply>
 #include <QIODevice>
@@ -17,6 +19,7 @@
 #include "cookieread.h"
 #include "usermanager.h"
 #include "livedata.h"
+#include "htmlutil.h"
 
 namespace Ui {
 class MainWindow;

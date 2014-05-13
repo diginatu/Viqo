@@ -1,6 +1,7 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 
+
 QString MainWindow::getCookieSetting(int n)
 {
 	switch (n) {
@@ -160,17 +161,14 @@ void MainWindow::getAPI(QString session_id, QString broad_id)
 void MainWindow::finished()
 {
 	QByteArray repdata = reply->readAll();
-	QString name[3] = {"addr","port","thread"};
-	int adrp  = repdata.indexOf("<"+name[0]+">") + name[0].length() + 2;
-	int adrpe = repdata.indexOf("</"+name[0]+">",adrp);
-	int prtp  = repdata.indexOf("<"+name[1]+">",adrpe) + name[1].length() + 2;
-	int prtpe = repdata.indexOf("</"+name[1]+">",prtp);
-	int thrp  = repdata.indexOf("<"+name[2]+">",prtpe) + name[2].length() + 2;
-	int thrpe = repdata.indexOf("</"+name[2]+">",thrp);
+    QList<QString> name;
+    name<<"addr"<<"port"<<"thread";
 
-	addr = QString(repdata.mid(adrp, adrpe-adrp));
-	port = repdata.mid(prtp, prtpe-prtp).toInt();
-	thread = QString(repdata.mid(thrp, thrpe-thrp));
+    QList<QString> result=HTMLUtil::getSimpleTagParser(repdata,name,0);
+
+    addr = result.at(0);
+    port = result.at(1).toInt();
+    thread = result.at(2);
 
 	insLog("addr: "+addr+"\nport: "+QString::number(port)+"\nthread:"+thread);
 
@@ -216,12 +214,9 @@ MainWindow::~MainWindow()
 
 void MainWindow::heartbeatfinished(){
 	QByteArray repdata = reply->readAll();
-	QString wachSt = "watchCount";
 
-	int adrp  = repdata.indexOf("<"+wachSt+">") + wachSt.length() + 2;
-	int adrpe = repdata.indexOf("</"+wachSt+">",adrp);
 
-	QString  watchCount= repdata.mid(adrp, adrpe-adrp);
+    QString watchCount= HTMLUtil::getSimpleTagParser(repdata,"watchCount",0);
 
 	ui->statusBar->showMessage("来場者数: " + watchCount);
 }
@@ -349,11 +344,11 @@ void MainWindow::on_actionLoad_triggered()
 
 	on_mylive_reflesh_clicked();
 
-		liveDataReloadtimer = new QTimer(this); //タイマー
-		liveDataReloadtimer->setInterval(60000);
-		liveDataReloadtimer->start();
+    liveDataReloadtimer = new QTimer(this); //タイマー
+    liveDataReloadtimer->setInterval(60000);
+    liveDataReloadtimer->start();
 
-		connect(liveDataReloadtimer,SIGNAL(timeout()),this,SLOT(on_mylive_reflesh_clicked()));
+    connect(liveDataReloadtimer,SIGNAL(timeout()),this,SLOT(on_mylive_reflesh_clicked()));
 
 }
 
