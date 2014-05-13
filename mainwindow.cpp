@@ -90,8 +90,7 @@ void MainWindow::rawMyLivefinished(){
     while ((currentIndex=rx.indexIn(QString(repdata),currentIndex))!=-1){
         // 見つけた文字列分だけずらす
         currentIndex+=rx.cap(0).length();
-        //内部のデータ構造に格納　メモリ解放をしないといけないかも・・？
-        //３つ目のデータは将来的に利用予定
+        //内部のデータ構造に格納　newでしてるのでメモリ解放をしないといけないかも・・？
         LiveData *data=new LiveData(rx.cap(2),rx.cap(3),rx.cap(1));
         tmpDataList.append(data);
     }
