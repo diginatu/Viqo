@@ -110,7 +110,7 @@ void CommTcp::readOneRawComment(QByteArray& rawcomm)
 		close();
 	}
 
-	mwin->insComment(num,user,comm,date);
+	mwin->insComment(num,premium?"@":" ",broadcaster?"放送主":user,comm,date);
 
 	// comment command
 	if ( !mwin->setting_commentCommand.isEmpty() && commenttime > opentime ) {

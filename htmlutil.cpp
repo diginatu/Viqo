@@ -25,9 +25,9 @@ QString HTMLUtil::getSimpleTagParser(QByteArray html,QString tag,int start){
  * @return valueと最後の文字位置
  */
 QPair<QString,int> HTMLUtil::getTagParser(QByteArray html,QString tag,int start=0){
-    int adrp  = html.indexOf("<"+tag+">",start) + tag.length() + 2;
+    int adrp  = html.indexOf("<"+tag+">",start)+  tag.length() + 2;
     int adrpe = html.indexOf("</"+tag+">",adrp);
-    return QPair<QString,int>(html.mid(adrp,adrpe),adrpe+tag.length()+3);
+    return QPair<QString,int>(html.mid(adrp,adrpe-adrp),adrpe+tag.length()+3);
 }
 
 
@@ -40,7 +40,7 @@ QPair<QString,int> HTMLUtil::getTagParser(QByteArray html,QString tag,int start=
  * @param start　解析開始文字列
  * @return valueのリスト
  */
-QList<QString>HTMLUtil::getSimpleTagParser(QByteArray html,QList<QString> tags,int start=0){
+QList<QString>HTMLUtil::getSimpleTagParser(QByteArray html,QList<QString> tags,int start){
 
     return getTagParser(html,tags,start).first;
 }
@@ -59,7 +59,7 @@ QPair<QList<QString>,int> HTMLUtil::getTagParser(QByteArray html,QList<QString> 
     QList<QString> valueResult;
 
     for (int i=0;i<tags.length();i++){
-        QPair<QString,int> tmpResult=getTagParser(html,tags[0],current);
+        QPair<QString,int> tmpResult=getTagParser(html,tags[i],current);
         current=tmpResult.second;
         valueResult.append(tmpResult.first);
     }

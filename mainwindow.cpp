@@ -25,11 +25,12 @@ void MainWindow::insLog(QString log)
 	ui->logtext->append(log + "\n");
 }
 
-void MainWindow::insComment(int num, QString user, QString comm, QString date)
+void MainWindow::insComment(int num, QString prem, QString user, QString comm, QString date)
 {
 	QStringList ls;
 
 	ls += QString::number(num);
+	ls += prem;
 	ls += user;
 	ls += comm;
 	ls += date;
@@ -342,14 +343,18 @@ void MainWindow::on_actionLoad_triggered()
 
 	file.close();
 
+	afterLoad();
+}
+
+void MainWindow::afterLoad()
+{
 	on_mylive_reflesh_clicked();
 
-    liveDataReloadtimer = new QTimer(this); //タイマー
-    liveDataReloadtimer->setInterval(60000);
-    liveDataReloadtimer->start();
+	liveDataReloadtimer = new QTimer(this); //タイマー
+	liveDataReloadtimer->setInterval(60000);
+	liveDataReloadtimer->start();
 
-    connect(liveDataReloadtimer,SIGNAL(timeout()),this,SLOT(on_mylive_reflesh_clicked()));
-
+	connect(liveDataReloadtimer,SIGNAL(timeout()),this,SLOT(on_mylive_reflesh_clicked()));
 }
 
 void MainWindow::on_setting_commentComand_checkbox_stateChanged(int st)
@@ -387,8 +392,8 @@ void MainWindow::on_mylive_reflesh_clicked()
 
 void MainWindow::on_commentView_itemDoubleClicked(QTreeWidgetItem *item, int column)
 {
-	if (column == 1) {
-		QString userid = item->text(1);
+	if (column == 2) {
+		QString userid = item->text(2);
 
 		bool isAllNum = true;
 		for ( int i = 0; i < userid.length(); ++i)
