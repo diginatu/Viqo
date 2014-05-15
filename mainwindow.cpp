@@ -254,8 +254,11 @@ void MainWindow::on_pushButton_2_clicked()
 
 void MainWindow::on_disconnect_clicked()
 {
-	if (commtcp != NULL)
+	if (commtcp != NULL && commtcp->isConnected() ) {
 		commtcp->close();
+		commtcp->deleteLater();
+		commtcp = NULL;
+	}
 }
 
 void MainWindow::on_cookiesetting_file_open_button_clicked()

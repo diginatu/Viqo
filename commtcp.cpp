@@ -132,3 +132,8 @@ void CommTcp::close()
 {
 	socket->close();
 }
+
+bool CommTcp::isConnected()
+{
+	return socket->state() != QAbstractSocket::UnconnectedState;
+}

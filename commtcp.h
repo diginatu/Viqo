@@ -26,6 +26,7 @@ public slots:
 	void bytesWritten(qint64 bytes);
 	void readyRead();
 	void readOneRawComment(QByteArray& rawcomm);
+	bool isConnected();
 
 private:
 	MainWindow* mwin;
