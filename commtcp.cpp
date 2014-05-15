@@ -61,53 +61,42 @@ void CommTcp::readOneRawComment(QByteArray& rawcomm)
 {
 	mwin->insLog(QString(rawcomm));
 
-	if (rawcomm.indexOf("<thread") != -1) {
+	if (rawcomm.startsWith("<thread")) {
 		return;
 	}
 
-	int noSt = rawcomm.indexOf("no=\"") + 4;
-	int noEd = rawcomm.indexOf("\"", noSt);
-	int num = rawcomm.mid(noSt, noEd-noSt).toInt();
+	int commSt = rawcomm.indexOf(">") + 1;
+	int commEd = rawcomm.lastIndexOf("</chat>");
 
-	int dateSt = rawcomm.indexOf("date=\"") + 6;
-	int dateEd = rawcomm.indexOf("\"", dateSt);
-	int udate = rawcomm.mid(dateSt, dateEd-dateSt).toInt();
+	QString comm = QString(rawcomm.mid(commSt,commEd-commSt));
+	rawcomm.truncate(commSt);
 
+	StrAbstractor comminfo(rawcomm);
+
+	int num = comminfo.midStr("no=\"", "\"", false).toInt();
+
+	int udate = comminfo.midStr("date=\"", "\"", false).toInt();
 	QDateTime commenttime;
 	commenttime.setTime_t(udate);
 	QString date = commenttime.toString("yyyy/MM/dd hh:mm:ss");
 
-	int userSt = rawcomm.indexOf("user_id=\"") + 9;
-	int userEd = rawcomm.indexOf("\"", userSt);
-	QString user = QString(rawcomm.mid(userSt, userEd-userSt));
+	QString user = comminfo.midStr("user_id=\"", "\"", false);
 
-	int premSt = rawcomm.indexOf("premium=\"");
-	int premEd;
-	if (premSt != -1) {
-		premSt += 9;
-		premEd = rawcomm.indexOf("\"", premSt);
-	}
 	bool premium = false, broadcaster = false;
-	if (premSt != -1) {
-		int prem = rawcomm.mid(premSt, premEd-premSt).toInt();
+	QString premS = comminfo.midStr("premium=\"", "\"", false);
+	if ( !premS.isEmpty() ) {
+		int prem = premS.toInt();
 		if (prem % 2) {
 			premium = true;
-		} else {
-			premium = false;
 		}
-		if ((prem/2) % 2 ) {
+		if ((prem >> 1) % 2 ) {
 			broadcaster = true;
-		} else {
-			broadcaster = false;
 		}
 	}
 
-	int commSt = rawcomm.indexOf(">") + 1;
-	int commEd = rawcomm.indexOf("</chat>");
-	QString comm = QString(rawcomm.mid(commSt,commEd-commSt));
-
 	if (comm == "/disconnect" && broadcaster) {
-		close();
+//		close();
+		mwin->on_disconnect_clicked();
 	}
 
 	mwin->insComment(num,premium?"@":" ",broadcaster?"放送主":user,comm,date);

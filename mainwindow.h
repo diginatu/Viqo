@@ -17,6 +17,7 @@
 #include "cookieread.h"
 #include "usermanager.h"
 #include "livedata.h"
+#include "strabstractor.h"
 
 namespace Ui {
 class MainWindow;
@@ -36,7 +37,7 @@ public:
 	QString getUserSession();
 	QString setting_commentCommand;
 
-private slots:
+public slots:
 	// ui slots
 	void on_receive_clicked();
 	void on_disconnect_clicked();
@@ -58,6 +59,7 @@ private slots:
 	void on_broad_list_activated(int index);
 	void on_mylive_reflesh_clicked();
 
+private slots:
 	// connect slot
 	void finished();
 	void heartbeatfinished();

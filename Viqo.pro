@@ -19,12 +19,16 @@ SOURCES += main.cpp\
     commtcp.cpp \
     cookieread.cpp \
 	usermanager.cpp \
-    livedata.cpp
+    livedata.cpp \
+    strabstractor.cpp \
+    nicohttp.cpp
 
 HEADERS  += mainwindow.h \
     commtcp.h \
     cookieread.h \
 	usermanager.h \
-    livedata.h
+    livedata.h \
+    strabstractor.h \
+    nicohttp.h
 
 FORMS    += mainwindow.ui

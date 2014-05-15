@@ -5,7 +5,6 @@ LiveData:: LiveData(QString liveID,  QString title,QString communityID)
    this->liveID=liveID;
    this->communityID=communityID;
    this->title=title;
-
 }
 
 QString LiveData::getLiveID(){

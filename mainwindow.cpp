@@ -162,17 +162,12 @@ void MainWindow::getAPI(QString session_id, QString broad_id)
 void MainWindow::finished()
 {
 	QByteArray repdata = reply->readAll();
-	QString name[3] = {"addr","port","thread"};
-	int adrp  = repdata.indexOf("<"+name[0]+">") + name[0].length() + 2;
-	int adrpe = repdata.indexOf("</"+name[0]+">",adrp);
-	int prtp  = repdata.indexOf("<"+name[1]+">",adrpe) + name[1].length() + 2;
-	int prtpe = repdata.indexOf("</"+name[1]+">",prtp);
-	int thrp  = repdata.indexOf("<"+name[2]+">",prtpe) + name[2].length() + 2;
-	int thrpe = repdata.indexOf("</"+name[2]+">",thrp);
 
-	addr = QString(repdata.mid(adrp, adrpe-adrp));
-	port = repdata.mid(prtp, prtpe-prtp).toInt();
-	thread = QString(repdata.mid(thrp, thrpe-thrp));
+	StrAbstractor commTcpi(repdata);
+
+	addr = commTcpi.midStr("<addr>", "</addr>");
+	port = commTcpi.midStr("<port>", "</port>").toInt();
+	thread = commTcpi.midStr("<thread>", "</thread>");
 
 	insLog("addr: "+addr+"\nport: "+QString::number(port)+"\nthread:"+thread);
 
