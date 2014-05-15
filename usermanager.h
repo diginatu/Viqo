@@ -2,32 +2,23 @@
 #define USERMANAGER_H
 
 #include <QObject>
-#include <QNetworkAccessManager>
 #include <QTreeWidgetItem>
 
-class MainWindow;
+#include "nicohttp.h"
 
-class UserManager : public QObject
+class UserManager : public NicoHttp
 {
 	Q_OBJECT
 public:
-	UserManager(MainWindow* mwin);
+	UserManager(MainWindow* mwin, QObject* parent = 0);
 	void getUserName(QTreeWidgetItem* item, QString userID);
 
 private:
 	MainWindow* mwin;
-	QNetworkReply* reply;
-	QNetworkAccessManager* mManager;
 	QTreeWidgetItem* item;
-
-	QVariant makePostData();
-
-public slots:
 
 private slots:
 	void finished();
-
-signals:
 
 };
 
