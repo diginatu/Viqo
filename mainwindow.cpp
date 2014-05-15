@@ -164,7 +164,7 @@ void MainWindow::finished()
     QList<QString> name;
     name<<"addr"<<"port"<<"thread";
 
-    QList<QString> result=HTMLUtil::getSimpleTagParser(repdata,name,0);
+    QList<QString> result=HTMLUtil::getSimpleTagParse(repdata,name,0);
 
     addr = result.at(0);
     port = result.at(1).toInt();
@@ -216,7 +216,7 @@ void MainWindow::heartbeatfinished(){
 	QByteArray repdata = reply->readAll();
 
 
-    QString watchCount= HTMLUtil::getSimpleTagParser(repdata,"watchCount",0);
+    QString watchCount= HTMLUtil::getSimpleTagParse(repdata,"watchCount",0);
 
 	ui->statusBar->showMessage("来場者数: " + watchCount);
 }

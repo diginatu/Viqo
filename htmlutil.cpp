@@ -11,8 +11,8 @@ HTMLUtil::HTMLUtil()
  * @param start　解析開始文字列
  * @return value
  */
-QString HTMLUtil::getSimpleTagParser(QByteArray html,QString tag,int start){
-    return getTagParser(html,tag,start).first;
+QString HTMLUtil::getSimpleTagParse(QByteArray& html,QString tag,int start){
+    return getTagParse(html,tag,start).first;
 }
 
 /**
@@ -24,10 +24,10 @@ QString HTMLUtil::getSimpleTagParser(QByteArray html,QString tag,int start){
  * @param start　解析開始文字列
  * @return valueと最後の文字位置
  */
-QPair<QString,int> HTMLUtil::getTagParser(QByteArray html,QString tag,int start=0){
-    int adrp  = html.indexOf("<"+tag+">",start) + tag.length() + 2;
+QPair<QString,int> HTMLUtil::getTagParse(QByteArray& html,QString tag,int start=0){
+    int adrp  = html.indexOf("<"+tag+">",start)+  tag.length() + 2;
     int adrpe = html.indexOf("</"+tag+">",adrp);
-    return QPair<QString,int>(html.mid(adrp,adrpe),adrpe+tag.length()+3);
+    return QPair<QString,int>(html.mid(adrp,adrpe-adrp),adrpe+tag.length()+3);
 }
 
 
@@ -40,9 +40,9 @@ QPair<QString,int> HTMLUtil::getTagParser(QByteArray html,QString tag,int start=
  * @param start　解析開始文字列
  * @return valueのリスト
  */
-QList<QString>HTMLUtil::getSimpleTagParser(QByteArray html,QList<QString> tags,int start=0){
+QList<QString>HTMLUtil::getSimpleTagParse(QByteArray& html,QList<QString> tags,int start){
 
-    return getTagParser(html,tags,start).first;
+    return getTagParse(html,tags,start).first;
 }
 
 /**
@@ -54,12 +54,12 @@ QList<QString>HTMLUtil::getSimpleTagParser(QByteArray html,QList<QString> tags,i
  * @param start　解析開始文字列
  * @return valueのリストと解析終了位置のQPair
  */
-QPair<QList<QString>,int> HTMLUtil::getTagParser(QByteArray html,QList<QString> tags,int start=0){
+QPair<QList<QString>,int> HTMLUtil::getTagParse(QByteArray& html,QList<QString>& tags,int start=0){
     int current=start;
     QList<QString> valueResult;
 
     for (int i=0;i<tags.length();i++){
-        QPair<QString,int> tmpResult=getTagParser(html,tags[0],current);
+        QPair<QString,int> tmpResult=getTagParse(html,tags[i],current);
         current=tmpResult.second;
         valueResult.append(tmpResult.first);
     }

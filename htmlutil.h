@@ -9,11 +9,11 @@ class HTMLUtil
 {
 public:
     HTMLUtil();
-    static QString getSimpleTagParser(QByteArray html, QString tag,int start);
-    static QPair<QString,int> getTagParser(QByteArray html,QString tag,int start);
+    static QString getSimpleTagParse(QByteArray& html, QString tag,int start);
+    static QPair<QString,int> getTagParse(QByteArray &html, QString tag, int start);
 
-    static QList<QString>getSimpleTagParser(QByteArray html,QList<QString> tags,int start);
-    static QPair<QList<QString>,int> getTagParser(QByteArray html,QList<QString> tags,int start);
+    static QList<QString>getSimpleTagParse(QByteArray &html,QList<QString> tags,int start);
+    static QPair<QList<QString>,int> getTagParse(QByteArray &html,QList<QString>& tags,int start);
 
 };
 
