@@ -21,7 +21,8 @@ SOURCES += main.cpp\
 	usermanager.cpp \
     livedata.cpp \
     strabstractor.cpp \
-    nicohttp.cpp
+    nicohttp.cpp \
+    usergetter.cpp
 
 HEADERS  += mainwindow.h \
     commtcp.h \
@@ -29,6 +30,7 @@ HEADERS  += mainwindow.h \
 	usermanager.h \
     livedata.h \
     strabstractor.h \
-    nicohttp.h
+    nicohttp.h \
+    usergetter.h
 
 FORMS    += mainwindow.ui

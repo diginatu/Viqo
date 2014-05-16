@@ -3,8 +3,10 @@
 
 #include <QObject>
 #include <QTreeWidgetItem>
+#include <QtSql/QtSql>
 
 #include "nicohttp.h"
+#include "usergetter.h"
 
 class UserManager : public NicoHttp
 {
@@ -15,10 +17,7 @@ public:
 
 private:
 	MainWindow* mwin;
-	QTreeWidgetItem* item;
-
-private slots:
-	void finished();
+	QSqlDatabase db;
 
 };
 
