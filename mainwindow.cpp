@@ -300,6 +300,7 @@ void MainWindow::on_actionSave_triggered()
 	cookie["value"] = ui->cookiesetting_column_value->text();
 
 	QJsonObject other;
+	other["comment_command_check"] = ui->setting_commentComand_checkbox->isChecked();
 	other["comment_command"] = ui->setting_commentComand->text();
 
 	QJsonObject root;
@@ -344,6 +345,7 @@ void MainWindow::on_actionLoad_triggered()
 	QJsonObject other;
 	other = jsd.object()["other"].toObject();
 	ui->setting_commentComand->setText(other["comment_command"].toString());
+	ui->setting_commentComand_checkbox->setChecked(other["comment_command_check"].toBool());
 
 	file.close();
 
