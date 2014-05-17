@@ -30,12 +30,15 @@ class MainWindow : public QMainWindow
 public:
 	explicit MainWindow(QWidget *parent = 0);
 	~MainWindow();
-	void insComment(int num, QString prem, QString user, QString comm, QString date);
+	QTreeWidgetItem* insComment(int num, QString prem, QString user, QString comm, QString date);
 	void insLog(QString log);
-//	void setUsername(int num, QString string);
+	void getUserNameAndSet(QTreeWidgetItem* item, QString userid);
+
 	QString getCookieSetting(int n);
 	QString getUserSession();
 	QString setting_commentCommand;
+
+	UserManager* userManager;
 
 public slots:
 	// ui slots
@@ -88,7 +91,6 @@ private:
 	LiveData* currentSelectLive;
 	QTimer *liveDataReloadtimer;
 
-	UserManager* userManager;
 };
 
 #endif // MAINWINDOW_H

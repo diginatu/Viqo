@@ -22,12 +22,25 @@ UserManager::UserManager(MainWindow* mwin, QObject *parent) :
 	if (!query.exec()) {
 		throw QString("user db get error");
 	}
+
 }
 
 void UserManager::getUserName(QTreeWidgetItem* item, QString userID)
 {
-	UserGetter* ug = new UserGetter(mwin,this);
-	ug->getUserName(item, userID, db);
 
-//	ug->deleteLater();
+	QSqlQuery query(db);
+	query.prepare("select distinct name from user where id=" + userID);
+
+	if (query.exec()) {
+		if (query.next()) {
+			item->setText(2, query.value(0).toString());
+		} else {
+			UserGetter* ug = new UserGetter(mwin,this);
+			ug->getUserName(item, userID, db);
+		}
+	} else {
+		throw QString("user db get error");
+	}
+
 }
+

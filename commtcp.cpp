@@ -99,7 +99,11 @@ void CommTcp::readOneRawComment(QByteArray& rawcomm)
 		mwin->on_disconnect_clicked();
 	}
 
-	mwin->insComment(num,premium?"@":" ",broadcaster?"放送主":user,comm,date);
+	QTreeWidgetItem* item = mwin->insComment(num,premium?"@":" ",broadcaster?"放送主":user,comm,date);
+
+	if (!broadcaster && commenttime > opentime) {
+		mwin->getUserNameAndSet(item, user);
+	}
 
 	// comment command
 	if ( !mwin->setting_commentCommand.isEmpty() && commenttime > opentime ) {

@@ -24,7 +24,7 @@ void MainWindow::insLog(QString log)
 	ui->logtext->append(log + "\n");
 }
 
-void MainWindow::insComment(int num, QString prem, QString user, QString comm, QString date)
+QTreeWidgetItem* MainWindow::insComment(int num, QString prem, QString user, QString comm, QString date)
 {
 	QStringList ls;
 
@@ -34,8 +34,9 @@ void MainWindow::insComment(int num, QString prem, QString user, QString comm, Q
 	ls += comm;
 	ls += date;
 
-	QTreeWidgetItem * item = new QTreeWidgetItem(ls);
+	QTreeWidgetItem* item = new QTreeWidgetItem(ls);
 	ui->commentView->insertTopLevelItem(0, item);
+	return item;
 }
 
 QVariant makePostData(QString session_id){
@@ -203,7 +204,11 @@ MainWindow::MainWindow(QWidget *parent) :
 
 	on_actionLoad_triggered();
 
-	userManager = new UserManager(this);
+	try {
+		userManager = new UserManager(this);
+	} catch(QString e) {
+		qDebug() << e;
+	}
 }
 
 MainWindow::~MainWindow()
@@ -400,13 +405,17 @@ void MainWindow::on_commentView_itemDoubleClicked(QTreeWidgetItem *item, int col
 {
 	if (column == 2) {
 		QString userid = item->text(2);
-
-		bool isAllNum = true;
-		for ( int i = 0; i < userid.length(); ++i)
-			if ( !userid.at(i).isNumber() )
-				isAllNum = false;
-
-		if ( isAllNum )
-			userManager->getUserName(item, userid);
+		getUserNameAndSet(item, userid);
 	}
+}
+
+void MainWindow::getUserNameAndSet(QTreeWidgetItem* item, QString userid)
+{
+	bool isAllNum = true;
+	for ( int i = 0; i < userid.length(); ++i)
+		if ( !userid.at(i).isNumber() )
+			isAllNum = false;
+
+	if ( isAllNum )
+		userManager->getUserName(item, userid);
 }
