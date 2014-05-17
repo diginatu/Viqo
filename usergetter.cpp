@@ -25,10 +25,12 @@ void UserGetter::finished()
 
 
 	QSqlQuery query(*db);
-	query.prepare("insert or replace into user (id, name)\
-								values (" + userID + ", '" + username + "')");
+	query.prepare("insert or replace into user (id, name) values ("
+								+ userID + ", '" + username + "')");
 
 	if (!query.exec()) {
 		throw QString("user db get error");
 	}
+
+	this->deleteLater();
 }

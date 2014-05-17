@@ -15,9 +15,7 @@ UserManager::UserManager(MainWindow* mwin, QObject *parent) :
 
 	QSqlQuery query(db);
 
-	query.prepare("create table if not exists user \
-								(id integer unique primary key,\
-								 name varchar(60))");
+	query.prepare("create table if not exists user (id integer unique primary key, name varchar(60))");
 
 	if (!query.exec()) {
 		throw QString("user db get error");
