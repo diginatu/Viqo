@@ -5,7 +5,6 @@
 #include <QTreeWidgetItem>
 #include <QtSql/QtSql>
 
-#include "nicohttp.h"
 #include "usergetter.h"
 
 class UserManager : public NicoHttp
@@ -16,7 +15,7 @@ public:
 	void getUserName(QTreeWidgetItem* item, QString userID);
 
 private:
-	MainWindow* mwin;
+//	MainWindow* mwin;
 	QSqlDatabase db;
 
 };

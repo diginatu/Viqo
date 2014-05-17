@@ -25,7 +25,7 @@ void UserGetter::finished()
 
 
 	QSqlQuery query(*db);
-	query.prepare("insert into names (id, name)\
+	query.prepare("insert or replace into user (id, name)\
 								values (" + userID + ", '" + username + "')");
 
 	if (!query.exec()) {

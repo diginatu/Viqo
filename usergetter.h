@@ -15,7 +15,7 @@ public:
 	void getUserName(QTreeWidgetItem* item, QString userID, QSqlDatabase& db);
 
 private:
-	MainWindow* mwin;
+//	MainWindow* mwin;
 	QTreeWidgetItem* item;
 	QSqlDatabase* db;
 	QString userID;
