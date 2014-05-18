@@ -1,6 +1,11 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 
+bool MainWindow::isCheckedAutoGettingUserName()
+{
+	return ui->auto_getting_user_name->isChecked();
+}
+
 QString MainWindow::getCookieSetting(int n)
 {
 	switch (n) {
@@ -305,6 +310,7 @@ void MainWindow::on_actionSave_triggered()
 	cookie["value"] = ui->cookiesetting_column_value->text();
 
 	QJsonObject other;
+	other["auto_getting_user_name"] = ui->auto_getting_user_name->isChecked();
 	other["comment_command_check"] = ui->setting_commentComand_checkbox->isChecked();
 	other["comment_command"] = ui->setting_commentComand->text();
 
@@ -349,6 +355,7 @@ void MainWindow::on_actionLoad_triggered()
 
 	QJsonObject other;
 	other = jsd.object()["other"].toObject();
+	ui->auto_getting_user_name->setChecked(other["auto_getting_user_name"].toBool());
 	ui->setting_commentComand->setText(other["comment_command"].toString());
 	ui->setting_commentComand_checkbox->setChecked(other["comment_command_check"].toBool());
 

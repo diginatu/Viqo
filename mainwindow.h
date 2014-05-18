@@ -38,6 +38,8 @@ public:
 	QString getUserSession();
 	QString setting_commentCommand;
 
+	bool isCheckedAutoGettingUserName();
+
 	UserManager* userManager;
 
 public slots:

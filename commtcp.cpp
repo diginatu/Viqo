@@ -101,7 +101,7 @@ void CommTcp::readOneRawComment(QByteArray& rawcomm)
 
 	QTreeWidgetItem* item = mwin->insComment(num,premium?"@":" ",broadcaster?"放送主":user,comm,date);
 
-	if (!broadcaster && commenttime > opentime) {
+	if ( mwin->isCheckedAutoGettingUserName() && !broadcaster && commenttime > opentime) {
 		mwin->getUserNameAndSet(item, user);
 	}
 

@@ -85,6 +85,13 @@
           </column>
          </widget>
         </item>
+        <item row="1" column="0">
+         <widget class="QCheckBox" name="auto_getting_user_name">
+          <property name="text">
+           <string>auto getting user name and saving</string>
+          </property>
+         </widget>
+        </item>
        </layout>
       </widget>
       <widget class="QWidget" name="log_tab">
