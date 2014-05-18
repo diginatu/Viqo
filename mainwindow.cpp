@@ -412,17 +412,6 @@ void MainWindow::on_commentView_itemDoubleClicked(QTreeWidgetItem *item, int col
 {
 	if (column == 2) {
 		QString userid = item->text(2);
-		getUserNameAndSet(item, userid);
-	}
-}
-
-void MainWindow::getUserNameAndSet(QTreeWidgetItem* item, QString userid)
-{
-	bool isAllNum = true;
-	for ( int i = 0; i < userid.length(); ++i)
-		if ( !userid.at(i).isNumber() )
-			isAllNum = false;
-
-	if ( isAllNum )
 		userManager->getUserName(item, userid);
+	}
 }

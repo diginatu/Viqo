@@ -32,7 +32,6 @@ public:
 	~MainWindow();
 	QTreeWidgetItem* insComment(int num, QString prem, QString user, QString comm, QString date);
 	void insLog(QString log);
-	void getUserNameAndSet(QTreeWidgetItem* item, QString userid);
 
 	QString getCookieSetting(int n);
 	QString getUserSession();

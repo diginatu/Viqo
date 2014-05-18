@@ -101,8 +101,9 @@ void CommTcp::readOneRawComment(QByteArray& rawcomm)
 
 	QTreeWidgetItem* item = mwin->insComment(num,premium?"@":" ",broadcaster?"放送主":user,comm,date);
 
-	if ( mwin->isCheckedAutoGettingUserName() && !broadcaster && commenttime > opentime) {
-		mwin->getUserNameAndSet(item, user);
+	if ( mwin->isCheckedAutoGettingUserName() && !broadcaster ) {
+		// use HTTP connection for only received comment after started.
+		mwin->userManager->getUserName(item, user, commenttime > opentime);
 	}
 
 	// comment command

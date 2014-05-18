@@ -23,8 +23,12 @@ UserManager::UserManager(MainWindow* mwin, QObject *parent) :
 
 }
 
-void UserManager::getUserName(QTreeWidgetItem* item, QString userID)
+void UserManager::getUserName(QTreeWidgetItem* item, QString userID, bool useHTTP)
 {
+	// return if userID is 184 name.
+	for ( int i = 0; i < userID.length(); ++i)
+		if ( !userID.at(i).isNumber() ) return;
+
 
 	QSqlQuery query(db);
 	query.prepare("select distinct name from user where id=" + userID);
@@ -32,7 +36,7 @@ void UserManager::getUserName(QTreeWidgetItem* item, QString userID)
 	if (query.exec()) {
 		if (query.next()) {
 			item->setText(2, query.value(0).toString());
-		} else {
+		} else if (useHTTP) {
 			UserGetter* ug = new UserGetter(mwin,this);
 			ug->getUserName(item, userID, db);
 		}
