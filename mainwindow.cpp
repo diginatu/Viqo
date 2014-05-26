@@ -1,6 +1,16 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 
+void MainWindow::onReceiveStarted()
+{
+	qDebug() << "-----------st-------------";
+}
+
+void MainWindow::onReceiveEnded()
+{
+	qDebug() << "-----------ed-------------";
+}
+
 bool MainWindow::isCheckedAutoGettingUserName()
 {
 	return ui->auto_getting_user_name->isChecked();
@@ -178,8 +188,13 @@ void MainWindow::finished()
 
 	insLog("addr: "+addr+"\nport: "+QString::number(port)+"\nthread:"+thread);
 
-	commtcp = new CommTcp(addr, port, thread, this);
-	commtcp->doConnect();
+	try {
+		commtcp = new CommTcp(addr, port, thread, this);
+		commtcp->doConnect();
+	} catch(QString e) {
+		qDebug() << e;
+	}
+
 }
 
 void MainWindow::getSessionFromCookie()

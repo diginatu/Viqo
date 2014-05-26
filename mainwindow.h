@@ -3,13 +3,10 @@
 
 #include <QMainWindow>
 #include <QNetworkAccessManager>
-#include <QNetworkRequest>
-#include <QNetworkCookie>
+#include <QtNetwork>
 #include <QList>
 #include <QVariant>
-#include <QNetworkReply>
 #include <QIODevice>
-#include <QtNetwork>
 #include <QFileDialog>
 #include <QJsonObject>
 
@@ -28,6 +25,9 @@ class MainWindow : public QMainWindow
 	Q_OBJECT
 
 public:
+	void onReceiveStarted();
+	void onReceiveEnded();
+
 	explicit MainWindow(QWidget *parent = 0);
 	~MainWindow();
 	QTreeWidgetItem* insComment(int num, QString prem, QString user, QString comm, QString date);
@@ -90,7 +90,7 @@ private:
 
 	QList<LiveData*> broadIDList;
 	LiveData* currentSelectLive;
-	QTimer *liveDataReloadtimer;
+	QTimer* liveDataReloadtimer;
 
 };
 

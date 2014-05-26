@@ -7,6 +7,7 @@
 #include <QDebug>
 #include <QDateTime>
 #include <QProcess>
+#include <QTimer>
 
 class MainWindow;
 
@@ -27,6 +28,7 @@ public slots:
 	void readyRead();
 	void readOneRawComment(QByteArray& rawcomm);
 	bool isConnected();
+	void sendNull();
 
 private:
 	MainWindow* mwin;
@@ -35,6 +37,8 @@ private:
 	int port;
 	QDateTime opentime;
 	QByteArray lastRawComm;
+	QTimer* nullDataTimer;
+
 };
 
 #endif // COMMTCP_H

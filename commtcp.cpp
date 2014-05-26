@@ -21,7 +21,7 @@ void CommTcp::doConnect()
 	socket->connectToHost(domain, port);
 
 	if(!socket->waitForConnected(5000)) {
-		qDebug() << "Error: " << socket->errorString();
+		throw QString("Error: ").append(socket->errorString());
 	}
 }
 
@@ -32,12 +32,33 @@ void CommTcp::connected()
 
 	send.append("<thread thread=\""+thread+"\" res_from=\"-1000\" version=\"20061206\" />");
 	send.append('\0');
-	socket->write(send);
+
+	if (socket->write(send) == -1) {
+		throw QString("Error: ").append(socket->errorString());
+	}
+
+	mwin->onReceiveStarted();
+
+	// set timer to send NULL data.
+	nullDataTimer = new QTimer(this);
+	nullDataTimer->setInterval(60000);
+
+	connect(nullDataTimer, SIGNAL(timeout()), this, SLOT(sendNull()));
+	nullDataTimer->start();
 }
 
 void CommTcp::disconnected()
 {
-	qDebug() << "disconnected...";
+	mwin->onReceiveEnded();
+}
+
+void CommTcp::sendNull()
+{
+	QByteArray send(1, '\0');
+
+	if (socket->write(send) == -1)
+		throw QString("Error: ").append(socket->errorString());
+
 }
 
 void CommTcp::bytesWritten(qint64 bytes)
