@@ -19,7 +19,9 @@ void UserGetter::finished()
 	QByteArray repdata = reply->readAll();
 	StrAbstractor userinfo(repdata);
 
-	QString username = userinfo.midStr("<title>", "さんのユーザーページ");
+	userinfo.midStr("class=\"userDetail\"","class=\"avatar\""); //set position
+	QString username = userinfo.midStr("alt=\"", "\"");
+	mwin->insLog("user name (http) :" + username);
 
 	item->setText(2, username);
 

@@ -25,6 +25,8 @@ UserManager::UserManager(MainWindow* mwin, QObject *parent) :
 
 void UserManager::getUserName(QTreeWidgetItem* item, QString userID, bool useHTTP)
 {
+	// return if empty
+	if (userID.isEmpty()) return;
 	// return if userID is 184 name.
 	for ( int i = 0; i < userID.length(); ++i)
 		if ( !userID.at(i).isNumber() ) return;

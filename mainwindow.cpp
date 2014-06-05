@@ -48,6 +48,7 @@ QTreeWidgetItem* MainWindow::insComment(int num, QString prem, QString user, QSt
 	ls += user;
 	ls += comm;
 	ls += date;
+	ls += user;
 
 	QTreeWidgetItem* item = new QTreeWidgetItem(ls);
 	item->setToolTip(3, comm);
@@ -427,7 +428,7 @@ void MainWindow::on_mylive_reflesh_clicked()
 void MainWindow::on_commentView_itemDoubleClicked(QTreeWidgetItem *item, int column)
 {
 	if (column == 2) {
-		QString userid = item->text(2);
+		QString userid = item->text(5);
 		userManager->getUserName(item, userid);
 	}
 }

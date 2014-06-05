@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>533</width>
-    <height>388</height>
+    <height>416</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -56,7 +56,7 @@
            </sizepolicy>
           </property>
           <property name="columnCount">
-           <number>5</number>
+           <number>6</number>
           </property>
           <column>
            <property name="text">
@@ -81,6 +81,11 @@
           <column>
            <property name="text">
             <string>date</string>
+           </property>
+          </column>
+          <column>
+           <property name="text">
+            <string>user_num</string>
            </property>
           </column>
          </widget>
