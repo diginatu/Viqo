@@ -429,6 +429,6 @@ void MainWindow::on_commentView_itemDoubleClicked(QTreeWidgetItem *item, int col
 {
 	if (column == 2) {
 		QString userid = item->text(5);
-		userManager->getUserName(item, userid);
+		userManager->getUserName(item, userid, true, false);
 	}
 }

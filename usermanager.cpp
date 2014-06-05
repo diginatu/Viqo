@@ -23,7 +23,7 @@ UserManager::UserManager(MainWindow* mwin, QObject *parent) :
 
 }
 
-void UserManager::getUserName(QTreeWidgetItem* item, QString userID, bool useHTTP)
+void UserManager::getUserName(QTreeWidgetItem* item, QString userID, bool useHTTP, bool useDB)
 {
 	// return if empty
 	if (userID.isEmpty()) return;
@@ -32,18 +32,23 @@ void UserManager::getUserName(QTreeWidgetItem* item, QString userID, bool useHTT
 		if ( !userID.at(i).isNumber() ) return;
 
 
-	QSqlQuery query(db);
-	query.prepare("select distinct name from user where id=" + userID);
+	if (useDB) {
+		QSqlQuery query(db);
+		query.prepare("select distinct name from user where id=" + userID);
 
-	if (query.exec()) {
-		if (query.next()) {
-			item->setText(2, query.value(0).toString());
-		} else if (useHTTP) {
-			UserGetter* ug = new UserGetter(mwin,this);
-			ug->getUserName(item, userID, db);
+		if (query.exec()) {
+			if (query.next()) {
+				item->setText(2, query.value(0).toString());
+			} else if (useHTTP) {
+				UserGetter* ug = new UserGetter(mwin,this);
+				ug->getUserName(item, userID, db);
+			}
+		} else {
+			throw QString("user db get error");
 		}
-	} else {
-		throw QString("user db get error");
+	} else if (useHTTP) {
+		UserGetter* ug = new UserGetter(mwin,this);
+		ug->getUserName(item, userID, db);
 	}
 
 }
