@@ -116,9 +116,13 @@ void CommTcp::readOneRawComment(QByteArray& rawcomm)
 	}
 
 	if (comm == "/disconnect" && broadcaster) {
-//		close();
 		mwin->on_disconnect_clicked();
 	}
+
+	// html code decode
+	comm.replace("&amp;", "&");
+	comm.replace("&lt;", "<");
+	comm.replace("&gt;", ">");
 
 	QTreeWidgetItem* item = mwin->insComment(num,premium?"@":" ",broadcaster?"放送主":user,comm,date);
 
