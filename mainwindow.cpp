@@ -4,11 +4,31 @@
 void MainWindow::onReceiveStarted()
 {
 	qDebug() << "-----------st-------------";
+
+
+	// set audiences num timer
+	getNumOfAudiences();
+
+	num_audience_timer = new QTimer(this);
+	num_audience_timer->setInterval(60000);
+	num_audience_timer->start();
+
+	connect(num_audience_timer,SIGNAL(timeout()),this,SLOT(getNumOfAudiences()));
 }
 
 void MainWindow::onReceiveEnded()
 {
 	qDebug() << "-----------ed-------------";
+
+	num_audience_timer->stop();
+	num_audience_timer->deleteLater();
+}
+
+void MainWindow::getNumOfAudiences()
+{
+	const QString userSession = getUserSession();
+	const QString broad_id = ui->housouId->text();
+	getHeartBeatAPI(userSession,broad_id);
 }
 
 bool MainWindow::isCheckedAutoGettingUserName()
@@ -102,7 +122,6 @@ void MainWindow::rawMyLivefinished(){
     QRegExp rx("<a href=\"http://com.nicovideo.jp/community/(co\\d+)\">.*<h5><a href=\"http://live.nicovideo.jp/watch/(lv\\d+)\\?ref=zero_mysubscribe\">(.*)</a></h5>");
     rx.setMinimal(true);
     int currentIndex=0;
-    insLog("rawMyLivefinished");
     QList<LiveData*> tmpDataList;
 
     while ((currentIndex=rx.indexIn(QString(repdata),currentIndex))!=-1){
@@ -162,6 +181,17 @@ void MainWindow::getHeartBeatAPI(QString session_id, QString broad_id)
 	reply = mManager->get(rq);
 	connect(reply,SIGNAL(finished()),this,SLOT(heartbeatfinished()));
 }
+void MainWindow::heartbeatfinished(){
+	QByteArray repdata = reply->readAll();
+	QString wachSt = "watchCount";
+
+	int adrp  = repdata.indexOf("<"+wachSt+">") + wachSt.length() + 2;
+	int adrpe = repdata.indexOf("</"+wachSt+">",adrp);
+
+	QString  watchCount= repdata.mid(adrp, adrpe-adrp);
+
+	ui->statusBar->showMessage("来場者数: " + watchCount);
+}
 
 void MainWindow::getAPI(QString session_id, QString broad_id)
 {
@@ -176,7 +206,6 @@ void MainWindow::getAPI(QString session_id, QString broad_id)
 	reply = mManager->get(rq);
 	connect(reply,SIGNAL(finished()),this,SLOT(finished()));
 }
-
 void MainWindow::finished()
 {
 	QByteArray repdata = reply->readAll();
@@ -213,7 +242,8 @@ MainWindow::MainWindow(QWidget *parent) :
 	setting_commentCommand(""),
 	commtcp(NULL),
 	ui(new Ui::MainWindow),
-	currentSelectLive(NULL)
+	currentSelectLive(NULL),
+	liveDataReloadtimer(NULL)
 {
 	ui->setupUi(this);
 	ui->statusBar->showMessage("来場者数: 0");
@@ -238,18 +268,6 @@ MainWindow::~MainWindow()
 	delete ui;
 }
 
-void MainWindow::heartbeatfinished(){
-	QByteArray repdata = reply->readAll();
-	QString wachSt = "watchCount";
-
-	int adrp  = repdata.indexOf("<"+wachSt+">") + wachSt.length() + 2;
-	int adrpe = repdata.indexOf("</"+wachSt+">",adrp);
-
-	QString  watchCount= repdata.mid(adrp, adrpe-adrp);
-
-	ui->statusBar->showMessage("来場者数: " + watchCount);
-}
-
 QString MainWindow::getUserSession(){
 	return ui->cookiesetting_usersession->text();
 }
@@ -267,12 +285,6 @@ void MainWindow::on_receive_clicked()
 	getAPI(userSession, broad_id);
 }
 
-void MainWindow::on_pushButton_2_clicked()
-{
-	const QString userSession = getUserSession();
-	const QString broad_id = ui->housouId->text();
-	getHeartBeatAPI(userSession,broad_id);
-}
 
 void MainWindow::on_disconnect_clicked()
 {
@@ -377,19 +389,6 @@ void MainWindow::on_actionLoad_triggered()
 	ui->setting_commentComand_checkbox->setChecked(other["comment_command_check"].toBool());
 
 	file.close();
-
-	afterLoad();
-}
-
-void MainWindow::afterLoad()
-{
-	on_mylive_reflesh_clicked();
-
-	liveDataReloadtimer = new QTimer(this); //タイマー
-	liveDataReloadtimer->setInterval(60000);
-	liveDataReloadtimer->start();
-
-	connect(liveDataReloadtimer,SIGNAL(timeout()),this,SLOT(on_mylive_reflesh_clicked()));
 }
 
 void MainWindow::on_setting_commentComand_checkbox_stateChanged(int st)
@@ -431,4 +430,18 @@ void MainWindow::on_commentView_itemDoubleClicked(QTreeWidgetItem *item, int col
 		QString userid = item->text(5);
 		userManager->getUserName(item, userid, true, false);
 	}
+}
+
+void MainWindow::on_cookiesetting_usersession_textChanged()
+{
+	if ( liveDataReloadtimer != NULL )
+		liveDataReloadtimer->deleteLater();
+
+	on_mylive_reflesh_clicked();
+
+	liveDataReloadtimer = new QTimer(this); //タイマー
+	liveDataReloadtimer->setInterval(60000);
+	liveDataReloadtimer->start();
+
+	connect(liveDataReloadtimer,SIGNAL(timeout()),this,SLOT(on_mylive_reflesh_clicked()));
 }

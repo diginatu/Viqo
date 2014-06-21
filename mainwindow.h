@@ -46,7 +46,7 @@ public slots:
 	void on_receive_clicked();
 	void on_disconnect_clicked();
 
-	void on_pushButton_2_clicked();
+	void getNumOfAudiences();
 
 	void on_cookiesetting_file_open_button_clicked();
 	void on_cookiesetting_apply_clicked();
@@ -71,14 +71,14 @@ private slots:
 
 	void on_commentView_itemDoubleClicked(QTreeWidgetItem *item, int column);
 
+	void on_cookiesetting_usersession_textChanged();
+
 private:
 	void getAPI(QString user_id, QString broad_id);
 	void getComment();
 	void getHeartBeatAPI(QString user_id, QString broad_id);
 	void getSessionFromCookie();
 	void getRawMyLiveHTML(QString user_id);
-
-	void afterLoad();
 
 	CommTcp* commtcp;
 
@@ -91,6 +91,7 @@ private:
 	QList<LiveData*> broadIDList;
 	LiveData* currentSelectLive;
 	QTimer* liveDataReloadtimer;
+	QTimer* num_audience_timer;
 
 };
 
