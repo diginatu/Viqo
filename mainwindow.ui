@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>533</width>
-    <height>416</height>
+    <width>565</width>
+    <height>519</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -18,7 +18,21 @@
   </property>
   <widget class="QWidget" name="centralWidget">
    <layout class="QGridLayout" name="gridLayout_3">
-    <item row="2" column="0" colspan="5">
+    <item row="1" column="3">
+     <widget class="QPushButton" name="mylive_reflesh">
+      <property name="text">
+       <string>reflesh</string>
+      </property>
+     </widget>
+    </item>
+    <item row="0" column="4">
+     <widget class="QPushButton" name="disconnect">
+      <property name="text">
+       <string>disconnect</string>
+      </property>
+     </widget>
+    </item>
+    <item row="3" column="0" colspan="5">
      <widget class="QTabWidget" name="tabWidget">
       <property name="sizePolicy">
        <sizepolicy hsizetype="Minimum" vsizetype="Minimum">
@@ -376,16 +390,6 @@
     <item row="0" column="1">
      <widget class="QLineEdit" name="housouId"/>
     </item>
-    <item row="0" column="4">
-     <widget class="QPushButton" name="disconnect">
-      <property name="text">
-       <string>disconnect</string>
-      </property>
-     </widget>
-    </item>
-    <item row="1" column="0" colspan="2">
-     <widget class="QComboBox" name="broad_list"/>
-    </item>
     <item row="1" column="4">
      <widget class="QPushButton" name="clear">
       <property name="text">
@@ -393,12 +397,11 @@
       </property>
      </widget>
     </item>
-    <item row="1" column="3">
-     <widget class="QPushButton" name="mylive_reflesh">
-      <property name="text">
-       <string>reflesh</string>
-      </property>
-     </widget>
+    <item row="1" column="0" colspan="2">
+     <widget class="QComboBox" name="broad_list"/>
+    </item>
+    <item row="2" column="0" colspan="5">
+     <widget class="QTextBrowser" name="comment_view"/>
     </item>
    </layout>
    <zorder>receive</zorder>
@@ -409,13 +412,14 @@
    <zorder>broad_list</zorder>
    <zorder>clear</zorder>
    <zorder>mylive_reflesh</zorder>
+   <zorder>comment_view</zorder>
   </widget>
   <widget class="QMenuBar" name="menuBar">
    <property name="geometry">
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>533</width>
+     <width>565</width>
      <height>25</height>
     </rect>
    </property>
@@ -426,7 +430,14 @@
     <addaction name="actionSave"/>
     <addaction name="actionLoad"/>
    </widget>
+   <widget class="QMenu" name="menuWindow">
+    <property name="title">
+     <string>window</string>
+    </property>
+    <addaction name="actionComment_View"/>
+   </widget>
    <addaction name="menuSetting"/>
+   <addaction name="menuWindow"/>
   </widget>
   <widget class="QToolBar" name="mainToolBar">
    <attribute name="toolBarArea">
@@ -445,6 +456,14 @@
   <action name="actionLoad">
    <property name="text">
     <string>load</string>
+   </property>
+  </action>
+  <action name="actionComment_View">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>Comment View</string>
    </property>
   </action>
  </widget>

@@ -70,8 +70,13 @@ private slots:
 	void rawMyLivefinished();
 
 	void on_commentView_itemDoubleClicked(QTreeWidgetItem *item, int column);
-
 	void on_cookiesetting_usersession_textChanged();
+	void on_actionComment_View_toggled(bool com_show);
+
+
+
+
+	void on_commentView_currentItemChanged(QTreeWidgetItem *current, QTreeWidgetItem *previous);
 
 private:
 	void getAPI(QString user_id, QString broad_id);

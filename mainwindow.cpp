@@ -246,6 +246,7 @@ MainWindow::MainWindow(QWidget *parent) :
 	liveDataReloadtimer(NULL)
 {
 	ui->setupUi(this);
+	ui->comment_view->hide();
 	ui->statusBar->showMessage("来場者数: 0");
 
 	ui->cookiesetting_usersession->setEchoMode(QLineEdit::Password);
@@ -444,4 +445,21 @@ void MainWindow::on_cookiesetting_usersession_textChanged()
 	liveDataReloadtimer->start();
 
 	connect(liveDataReloadtimer,SIGNAL(timeout()),this,SLOT(on_mylive_reflesh_clicked()));
+}
+
+void MainWindow::on_actionComment_View_toggled(bool com_show)
+{
+	if (com_show) {
+		ui->comment_view->show();
+	} else {
+		ui->comment_view->hide();
+	}
+}
+
+void MainWindow::on_commentView_currentItemChanged(QTreeWidgetItem *current, QTreeWidgetItem *previous)
+{
+	if (!ui->actionComment_View->isChecked())
+		return;
+
+	ui->comment_view->setHtml( current->text(3) );
 }
