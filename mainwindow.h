@@ -76,7 +76,7 @@ private slots:
 
 
 
-	void on_commentView_currentItemChanged(QTreeWidgetItem *current, QTreeWidgetItem *previous);
+	void on_commentView_currentItemChanged(QTreeWidgetItem *current);
 
 private:
 	void getAPI(QString user_id, QString broad_id);

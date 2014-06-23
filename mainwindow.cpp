@@ -456,9 +456,9 @@ void MainWindow::on_actionComment_View_toggled(bool com_show)
 	}
 }
 
-void MainWindow::on_commentView_currentItemChanged(QTreeWidgetItem *current, QTreeWidgetItem *previous)
+void MainWindow::on_commentView_currentItemChanged(QTreeWidgetItem *current)
 {
-	if (!ui->actionComment_View->isChecked())
+	if (!ui->actionComment_View->isChecked() || current == NULL)
 		return;
 
 	ui->comment_view->setHtml( current->text(3) );
