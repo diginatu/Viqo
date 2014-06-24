@@ -183,14 +183,10 @@ void MainWindow::getHeartBeatAPI(QString session_id, QString broad_id)
 }
 void MainWindow::heartbeatfinished(){
 	QByteArray repdata = reply->readAll();
-	QString wachSt = "watchCount";
+	StrAbstractor heartbeat_data(repdata);
+	const QString  watchCount = heartbeat_data.midStr("<watchCount>","</watchCount>");
 
-	int adrp  = repdata.indexOf("<"+wachSt+">") + wachSt.length() + 2;
-	int adrpe = repdata.indexOf("</"+wachSt+">",adrp);
-
-	QString  watchCount= repdata.mid(adrp, adrpe-adrp);
-
-	ui->statusBar->showMessage("来場者数: " + watchCount);
+	ui->num_audience->setText("来場者数: " + watchCount);
 }
 
 void MainWindow::getAPI(QString session_id, QString broad_id)
@@ -246,8 +242,6 @@ MainWindow::MainWindow(QWidget *parent) :
 	liveDataReloadtimer(NULL)
 {
 	ui->setupUi(this);
-	ui->comment_view->hide();
-	ui->statusBar->showMessage("来場者数: 0");
 
 	ui->cookiesetting_usersession->setEchoMode(QLineEdit::Password);
 	ui->commentView->setWordWrap(true);
@@ -326,6 +320,7 @@ void MainWindow::on_clear_clicked()
 {
 	ui->commentView->clear();
 	ui->logtext->clear();
+	ui->comment_view->clear();
 }
 
 void MainWindow::on_actionSave_triggered()
@@ -447,19 +442,10 @@ void MainWindow::on_cookiesetting_usersession_textChanged()
 	connect(liveDataReloadtimer,SIGNAL(timeout()),this,SLOT(on_mylive_reflesh_clicked()));
 }
 
-void MainWindow::on_actionComment_View_toggled(bool com_show)
-{
-	if (com_show) {
-		ui->comment_view->show();
-	} else {
-		ui->comment_view->hide();
-	}
-}
-
 void MainWindow::on_commentView_currentItemChanged(QTreeWidgetItem *current)
 {
-	if (!ui->actionComment_View->isChecked() || current == NULL)
+	if (current == NULL)
 		return;
-
-	ui->comment_view->setHtml( current->text(3) );
+	ui->comment_view->setHtml( "<a href=\"http://www.nicovideo.jp/user/"+current->text(5)+"\">"+current->text(2)+"</a>"+
+														 "<pre>"+current->text(3)+"</pre>" );
 }

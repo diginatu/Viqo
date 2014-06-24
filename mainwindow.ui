@@ -6,371 +6,53 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>565</width>
-    <height>519</height>
+    <width>585</width>
+    <height>614</height>
    </rect>
+  </property>
+  <property name="sizePolicy">
+   <sizepolicy hsizetype="Preferred" vsizetype="MinimumExpanding">
+    <horstretch>0</horstretch>
+    <verstretch>0</verstretch>
+   </sizepolicy>
   </property>
   <property name="windowTitle">
    <string>Viqo</string>
   </property>
-  <property name="windowOpacity">
-   <double>1.000000000000000</double>
-  </property>
   <widget class="QWidget" name="centralWidget">
-   <layout class="QGridLayout" name="gridLayout_3">
+   <layout class="QGridLayout" name="gridLayout">
+    <item row="0" column="1">
+     <widget class="QLineEdit" name="housouId"/>
+    </item>
     <item row="1" column="3">
+     <widget class="QPushButton" name="clear">
+      <property name="text">
+       <string>Clear</string>
+      </property>
+     </widget>
+    </item>
+    <item row="1" column="2">
      <widget class="QPushButton" name="mylive_reflesh">
       <property name="text">
        <string>reflesh</string>
       </property>
      </widget>
     </item>
-    <item row="0" column="4">
+    <item row="1" column="0" colspan="2">
+     <widget class="QComboBox" name="broad_list"/>
+    </item>
+    <item row="0" column="3">
      <widget class="QPushButton" name="disconnect">
       <property name="text">
        <string>disconnect</string>
       </property>
      </widget>
     </item>
-    <item row="3" column="0" colspan="5">
-     <widget class="QTabWidget" name="tabWidget">
-      <property name="sizePolicy">
-       <sizepolicy hsizetype="Minimum" vsizetype="Minimum">
-        <horstretch>0</horstretch>
-        <verstretch>0</verstretch>
-       </sizepolicy>
+    <item row="0" column="2">
+     <widget class="QPushButton" name="receive">
+      <property name="text">
+       <string>receive</string>
       </property>
-      <property name="maximumSize">
-       <size>
-        <width>16777215</width>
-        <height>16777215</height>
-       </size>
-      </property>
-      <property name="currentIndex">
-       <number>0</number>
-      </property>
-      <widget class="QWidget" name="comment_tab">
-       <attribute name="title">
-        <string>comment</string>
-       </attribute>
-       <layout class="QGridLayout" name="gridLayout">
-        <item row="0" column="0">
-         <widget class="QTreeWidget" name="commentView">
-          <property name="sizePolicy">
-           <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
-            <horstretch>0</horstretch>
-            <verstretch>0</verstretch>
-           </sizepolicy>
-          </property>
-          <property name="columnCount">
-           <number>6</number>
-          </property>
-          <column>
-           <property name="text">
-            <string>num</string>
-           </property>
-          </column>
-          <column>
-           <property name="text">
-            <string>prem</string>
-           </property>
-          </column>
-          <column>
-           <property name="text">
-            <string>user</string>
-           </property>
-          </column>
-          <column>
-           <property name="text">
-            <string>comment</string>
-           </property>
-          </column>
-          <column>
-           <property name="text">
-            <string>date</string>
-           </property>
-          </column>
-          <column>
-           <property name="text">
-            <string>user_num</string>
-           </property>
-          </column>
-         </widget>
-        </item>
-        <item row="1" column="0">
-         <widget class="QCheckBox" name="auto_getting_user_name">
-          <property name="text">
-           <string>auto getting user name and saving</string>
-          </property>
-         </widget>
-        </item>
-       </layout>
-      </widget>
-      <widget class="QWidget" name="log_tab">
-       <attribute name="title">
-        <string>log</string>
-       </attribute>
-       <layout class="QGridLayout" name="gridLayout_2">
-        <item row="0" column="0">
-         <widget class="QTextBrowser" name="logtext"/>
-        </item>
-       </layout>
-      </widget>
-      <widget class="QWidget" name="cookiesetting_tab">
-       <property name="mouseTracking">
-        <bool>false</bool>
-       </property>
-       <attribute name="title">
-        <string>cookie setting</string>
-       </attribute>
-       <widget class="QComboBox" name="cookiesetting_browserCombo">
-        <property name="geometry">
-         <rect>
-          <x>40</x>
-          <y>10</y>
-          <width>151</width>
-          <height>27</height>
-         </rect>
-        </property>
-        <item>
-         <property name="text">
-          <string>firefox</string>
-         </property>
-        </item>
-        <item>
-         <property name="text">
-          <string>direct input</string>
-         </property>
-        </item>
-       </widget>
-       <widget class="QWidget" name="cookiesetting_browserSettings_group" native="true">
-        <property name="enabled">
-         <bool>true</bool>
-        </property>
-        <property name="geometry">
-         <rect>
-          <x>60</x>
-          <y>60</y>
-          <width>421</width>
-          <height>261</height>
-         </rect>
-        </property>
-        <widget class="QLabel" name="cookiesetting_file_label">
-         <property name="geometry">
-          <rect>
-           <x>20</x>
-           <y>20</y>
-           <width>91</width>
-           <height>17</height>
-          </rect>
-         </property>
-         <property name="text">
-          <string>cookies file</string>
-         </property>
-        </widget>
-        <widget class="QLineEdit" name="cookiesetting_filename">
-         <property name="geometry">
-          <rect>
-           <x>160</x>
-           <y>20</y>
-           <width>161</width>
-           <height>27</height>
-          </rect>
-         </property>
-        </widget>
-        <widget class="QPushButton" name="cookiesetting_file_open_button">
-         <property name="geometry">
-          <rect>
-           <x>330</x>
-           <y>20</y>
-           <width>71</width>
-           <height>27</height>
-          </rect>
-         </property>
-         <property name="text">
-          <string>open...</string>
-         </property>
-        </widget>
-        <widget class="QLabel" name="cookiesetting_table_label">
-         <property name="geometry">
-          <rect>
-           <x>20</x>
-           <y>50</y>
-           <width>101</width>
-           <height>17</height>
-          </rect>
-         </property>
-         <property name="text">
-          <string>Table name</string>
-         </property>
-        </widget>
-        <widget class="QLabel" name="cookiesetting_column_label">
-         <property name="geometry">
-          <rect>
-           <x>20</x>
-           <y>80</y>
-           <width>101</width>
-           <height>17</height>
-          </rect>
-         </property>
-         <property name="text">
-          <string>column name</string>
-         </property>
-        </widget>
-        <widget class="QPushButton" name="cookiesetting_apply">
-         <property name="geometry">
-          <rect>
-           <x>240</x>
-           <y>220</y>
-           <width>151</width>
-           <height>27</height>
-          </rect>
-         </property>
-         <property name="text">
-          <string>apply</string>
-         </property>
-        </widget>
-        <widget class="QLineEdit" name="cookiesetting_tablename">
-         <property name="geometry">
-          <rect>
-           <x>160</x>
-           <y>50</y>
-           <width>131</width>
-           <height>27</height>
-          </rect>
-         </property>
-         <property name="text">
-          <string>moz_cookies</string>
-         </property>
-        </widget>
-        <widget class="QWidget" name="widget" native="true">
-         <property name="geometry">
-          <rect>
-           <x>60</x>
-           <y>100</y>
-           <width>255</width>
-           <height>111</height>
-          </rect>
-         </property>
-         <layout class="QFormLayout" name="formLayout_2">
-          <item row="0" column="0">
-           <widget class="QLabel" name="cookiesetting_column_basedomain_label">
-            <property name="text">
-             <string>baseDomain</string>
-            </property>
-           </widget>
-          </item>
-          <item row="0" column="1">
-           <widget class="QLineEdit" name="cookiesetting_column_basedomain">
-            <property name="text">
-             <string>baseDomain</string>
-            </property>
-           </widget>
-          </item>
-          <item row="1" column="0">
-           <widget class="QLabel" name="cookiesetting_column_name_label">
-            <property name="text">
-             <string>name</string>
-            </property>
-           </widget>
-          </item>
-          <item row="1" column="1">
-           <widget class="QLineEdit" name="cookiesetting_column_name">
-            <property name="text">
-             <string>name</string>
-            </property>
-           </widget>
-          </item>
-          <item row="2" column="0">
-           <widget class="QLabel" name="cookiesetting_column_value_label">
-            <property name="text">
-             <string>value</string>
-            </property>
-           </widget>
-          </item>
-          <item row="2" column="1">
-           <widget class="QLineEdit" name="cookiesetting_column_value">
-            <property name="text">
-             <string>value</string>
-            </property>
-           </widget>
-          </item>
-         </layout>
-        </widget>
-       </widget>
-       <widget class="QWidget" name="cookiesetting_usersession_groupe" native="true">
-        <property name="enabled">
-         <bool>false</bool>
-        </property>
-        <property name="geometry">
-         <rect>
-          <x>210</x>
-          <y>10</y>
-          <width>257</width>
-          <height>45</height>
-         </rect>
-        </property>
-        <layout class="QFormLayout" name="formLayout">
-         <item row="0" column="0">
-          <widget class="QLabel" name="cookiesetting_usersession_label">
-           <property name="text">
-            <string>user_session</string>
-           </property>
-          </widget>
-         </item>
-         <item row="0" column="1">
-          <widget class="QLineEdit" name="cookiesetting_usersession"/>
-         </item>
-        </layout>
-       </widget>
-      </widget>
-      <widget class="QWidget" name="setting">
-       <attribute name="title">
-        <string>setting</string>
-       </attribute>
-       <widget class="QCheckBox" name="setting_commentComand_checkbox">
-        <property name="geometry">
-         <rect>
-          <x>50</x>
-          <y>20</y>
-          <width>221</width>
-          <height>22</height>
-         </rect>
-        </property>
-        <property name="text">
-         <string>enable comment command</string>
-        </property>
-       </widget>
-       <widget class="QLineEdit" name="setting_commentComand">
-        <property name="enabled">
-         <bool>false</bool>
-        </property>
-        <property name="geometry">
-         <rect>
-          <x>80</x>
-          <y>50</y>
-          <width>241</width>
-          <height>27</height>
-         </rect>
-        </property>
-        <property name="text">
-         <string>aplay p.wav</string>
-        </property>
-       </widget>
-       <widget class="QPushButton" name="setting_apply">
-        <property name="geometry">
-         <rect>
-          <x>330</x>
-          <y>260</y>
-          <width>151</width>
-          <height>27</height>
-         </rect>
-        </property>
-        <property name="text">
-         <string>apply</string>
-        </property>
-       </widget>
-      </widget>
      </widget>
     </item>
     <item row="0" column="0">
@@ -380,46 +62,410 @@
       </property>
      </widget>
     </item>
-    <item row="0" column="3">
-     <widget class="QPushButton" name="receive">
-      <property name="text">
-       <string>receive</string>
+    <item row="2" column="0" colspan="4">
+     <widget class="QSplitter" name="splitter">
+      <property name="orientation">
+       <enum>Qt::Vertical</enum>
       </property>
+      <widget class="QTextBrowser" name="comment_view">
+       <property name="sizePolicy">
+        <sizepolicy hsizetype="Expanding" vsizetype="Minimum">
+         <horstretch>0</horstretch>
+         <verstretch>0</verstretch>
+        </sizepolicy>
+       </property>
+       <property name="openExternalLinks">
+        <bool>true</bool>
+       </property>
+      </widget>
+      <widget class="QTabWidget" name="tabWidget">
+       <property name="sizePolicy">
+        <sizepolicy hsizetype="Minimum" vsizetype="Minimum">
+         <horstretch>0</horstretch>
+         <verstretch>0</verstretch>
+        </sizepolicy>
+       </property>
+       <property name="maximumSize">
+        <size>
+         <width>16777215</width>
+         <height>16777215</height>
+        </size>
+       </property>
+       <property name="currentIndex">
+        <number>0</number>
+       </property>
+       <widget class="QWidget" name="comment_tab">
+        <attribute name="title">
+         <string>comment</string>
+        </attribute>
+        <layout class="QGridLayout" name="gridLayout_3">
+         <item row="0" column="0" colspan="3">
+          <widget class="QTreeWidget" name="commentView">
+           <property name="sizePolicy">
+            <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+             <horstretch>0</horstretch>
+             <verstretch>0</verstretch>
+            </sizepolicy>
+           </property>
+           <property name="columnCount">
+            <number>7</number>
+           </property>
+           <column>
+            <property name="text">
+             <string>num</string>
+            </property>
+           </column>
+           <column>
+            <property name="text">
+             <string>prem</string>
+            </property>
+           </column>
+           <column>
+            <property name="text">
+             <string>user</string>
+            </property>
+           </column>
+           <column>
+            <property name="text">
+             <string>comment</string>
+            </property>
+           </column>
+           <column>
+            <property name="text">
+             <string>date</string>
+            </property>
+           </column>
+           <column>
+            <property name="text">
+             <string>user_num</string>
+            </property>
+           </column>
+           <column>
+            <property name="text">
+             <string>184</string>
+            </property>
+           </column>
+          </widget>
+         </item>
+         <item row="1" column="0">
+          <widget class="QCheckBox" name="auto_getting_user_name">
+           <property name="toolTip">
+            <string>auto getting user name and saving</string>
+           </property>
+           <property name="whatsThis">
+            <string/>
+           </property>
+           <property name="text">
+            <string>auto get name</string>
+           </property>
+          </widget>
+         </item>
+         <item row="1" column="1">
+          <spacer name="horizontalSpacer">
+           <property name="orientation">
+            <enum>Qt::Horizontal</enum>
+           </property>
+           <property name="sizeHint" stdset="0">
+            <size>
+             <width>325</width>
+             <height>20</height>
+            </size>
+           </property>
+          </spacer>
+         </item>
+         <item row="1" column="2">
+          <widget class="QLabel" name="num_audience">
+           <property name="text">
+            <string>来場者数: 0</string>
+           </property>
+          </widget>
+         </item>
+        </layout>
+       </widget>
+       <widget class="QWidget" name="log_tab">
+        <attribute name="title">
+         <string>log</string>
+        </attribute>
+        <layout class="QGridLayout" name="gridLayout_2">
+         <item row="0" column="0">
+          <widget class="QTextBrowser" name="logtext"/>
+         </item>
+        </layout>
+       </widget>
+       <widget class="QWidget" name="cookiesetting_tab">
+        <property name="mouseTracking">
+         <bool>false</bool>
+        </property>
+        <attribute name="title">
+         <string>cookie setting</string>
+        </attribute>
+        <widget class="QComboBox" name="cookiesetting_browserCombo">
+         <property name="geometry">
+          <rect>
+           <x>40</x>
+           <y>10</y>
+           <width>151</width>
+           <height>27</height>
+          </rect>
+         </property>
+         <item>
+          <property name="text">
+           <string>firefox</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>direct input</string>
+          </property>
+         </item>
+        </widget>
+        <widget class="QWidget" name="cookiesetting_browserSettings_group" native="true">
+         <property name="enabled">
+          <bool>true</bool>
+         </property>
+         <property name="geometry">
+          <rect>
+           <x>60</x>
+           <y>60</y>
+           <width>421</width>
+           <height>261</height>
+          </rect>
+         </property>
+         <widget class="QLabel" name="cookiesetting_file_label">
+          <property name="geometry">
+           <rect>
+            <x>20</x>
+            <y>20</y>
+            <width>91</width>
+            <height>17</height>
+           </rect>
+          </property>
+          <property name="text">
+           <string>cookies file</string>
+          </property>
+         </widget>
+         <widget class="QLineEdit" name="cookiesetting_filename">
+          <property name="geometry">
+           <rect>
+            <x>160</x>
+            <y>20</y>
+            <width>161</width>
+            <height>27</height>
+           </rect>
+          </property>
+         </widget>
+         <widget class="QPushButton" name="cookiesetting_file_open_button">
+          <property name="geometry">
+           <rect>
+            <x>330</x>
+            <y>20</y>
+            <width>71</width>
+            <height>27</height>
+           </rect>
+          </property>
+          <property name="text">
+           <string>open...</string>
+          </property>
+         </widget>
+         <widget class="QLabel" name="cookiesetting_table_label">
+          <property name="geometry">
+           <rect>
+            <x>20</x>
+            <y>50</y>
+            <width>101</width>
+            <height>17</height>
+           </rect>
+          </property>
+          <property name="text">
+           <string>Table name</string>
+          </property>
+         </widget>
+         <widget class="QLabel" name="cookiesetting_column_label">
+          <property name="geometry">
+           <rect>
+            <x>20</x>
+            <y>80</y>
+            <width>101</width>
+            <height>17</height>
+           </rect>
+          </property>
+          <property name="text">
+           <string>column name</string>
+          </property>
+         </widget>
+         <widget class="QPushButton" name="cookiesetting_apply">
+          <property name="geometry">
+           <rect>
+            <x>240</x>
+            <y>220</y>
+            <width>151</width>
+            <height>27</height>
+           </rect>
+          </property>
+          <property name="text">
+           <string>apply</string>
+          </property>
+         </widget>
+         <widget class="QLineEdit" name="cookiesetting_tablename">
+          <property name="geometry">
+           <rect>
+            <x>160</x>
+            <y>50</y>
+            <width>131</width>
+            <height>27</height>
+           </rect>
+          </property>
+          <property name="text">
+           <string>moz_cookies</string>
+          </property>
+         </widget>
+         <widget class="QWidget" name="widget" native="true">
+          <property name="geometry">
+           <rect>
+            <x>60</x>
+            <y>100</y>
+            <width>255</width>
+            <height>111</height>
+           </rect>
+          </property>
+          <layout class="QFormLayout" name="formLayout_2">
+           <item row="0" column="0">
+            <widget class="QLabel" name="cookiesetting_column_basedomain_label">
+             <property name="text">
+              <string>baseDomain</string>
+             </property>
+            </widget>
+           </item>
+           <item row="0" column="1">
+            <widget class="QLineEdit" name="cookiesetting_column_basedomain">
+             <property name="text">
+              <string>baseDomain</string>
+             </property>
+            </widget>
+           </item>
+           <item row="1" column="0">
+            <widget class="QLabel" name="cookiesetting_column_name_label">
+             <property name="text">
+              <string>name</string>
+             </property>
+            </widget>
+           </item>
+           <item row="1" column="1">
+            <widget class="QLineEdit" name="cookiesetting_column_name">
+             <property name="text">
+              <string>name</string>
+             </property>
+            </widget>
+           </item>
+           <item row="2" column="0">
+            <widget class="QLabel" name="cookiesetting_column_value_label">
+             <property name="text">
+              <string>value</string>
+             </property>
+            </widget>
+           </item>
+           <item row="2" column="1">
+            <widget class="QLineEdit" name="cookiesetting_column_value">
+             <property name="text">
+              <string>value</string>
+             </property>
+            </widget>
+           </item>
+          </layout>
+         </widget>
+        </widget>
+        <widget class="QWidget" name="cookiesetting_usersession_groupe" native="true">
+         <property name="enabled">
+          <bool>false</bool>
+         </property>
+         <property name="geometry">
+          <rect>
+           <x>210</x>
+           <y>10</y>
+           <width>257</width>
+           <height>45</height>
+          </rect>
+         </property>
+         <layout class="QFormLayout" name="formLayout">
+          <item row="0" column="0">
+           <widget class="QLabel" name="cookiesetting_usersession_label">
+            <property name="text">
+             <string>user_session</string>
+            </property>
+           </widget>
+          </item>
+          <item row="0" column="1">
+           <widget class="QLineEdit" name="cookiesetting_usersession"/>
+          </item>
+         </layout>
+        </widget>
+       </widget>
+       <widget class="QWidget" name="setting">
+        <attribute name="title">
+         <string>setting</string>
+        </attribute>
+        <widget class="QCheckBox" name="setting_commentComand_checkbox">
+         <property name="geometry">
+          <rect>
+           <x>50</x>
+           <y>20</y>
+           <width>221</width>
+           <height>22</height>
+          </rect>
+         </property>
+         <property name="text">
+          <string>enable comment command</string>
+         </property>
+        </widget>
+        <widget class="QLineEdit" name="setting_commentComand">
+         <property name="enabled">
+          <bool>false</bool>
+         </property>
+         <property name="geometry">
+          <rect>
+           <x>80</x>
+           <y>50</y>
+           <width>241</width>
+           <height>27</height>
+          </rect>
+         </property>
+         <property name="text">
+          <string>aplay p.wav</string>
+         </property>
+        </widget>
+        <widget class="QPushButton" name="setting_apply">
+         <property name="geometry">
+          <rect>
+           <x>330</x>
+           <y>260</y>
+           <width>151</width>
+           <height>27</height>
+          </rect>
+         </property>
+         <property name="text">
+          <string>apply</string>
+         </property>
+        </widget>
+       </widget>
+      </widget>
      </widget>
-    </item>
-    <item row="0" column="1">
-     <widget class="QLineEdit" name="housouId"/>
-    </item>
-    <item row="1" column="4">
-     <widget class="QPushButton" name="clear">
-      <property name="text">
-       <string>Clear</string>
-      </property>
-     </widget>
-    </item>
-    <item row="1" column="0" colspan="2">
-     <widget class="QComboBox" name="broad_list"/>
-    </item>
-    <item row="2" column="0" colspan="5">
-     <widget class="QTextBrowser" name="comment_view"/>
     </item>
    </layout>
    <zorder>receive</zorder>
    <zorder>housouId</zorder>
    <zorder>housouId_label</zorder>
    <zorder>disconnect</zorder>
-   <zorder>tabWidget</zorder>
    <zorder>broad_list</zorder>
    <zorder>clear</zorder>
    <zorder>mylive_reflesh</zorder>
-   <zorder>comment_view</zorder>
+   <zorder>splitter</zorder>
   </widget>
   <widget class="QMenuBar" name="menuBar">
    <property name="geometry">
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>565</width>
+     <width>585</width>
      <height>25</height>
     </rect>
    </property>
@@ -430,14 +476,7 @@
     <addaction name="actionSave"/>
     <addaction name="actionLoad"/>
    </widget>
-   <widget class="QMenu" name="menuWindow">
-    <property name="title">
-     <string>window</string>
-    </property>
-    <addaction name="actionComment_View"/>
-   </widget>
    <addaction name="menuSetting"/>
-   <addaction name="menuWindow"/>
   </widget>
   <widget class="QToolBar" name="mainToolBar">
    <attribute name="toolBarArea">

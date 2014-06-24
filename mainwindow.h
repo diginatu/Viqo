@@ -71,10 +71,6 @@ private slots:
 
 	void on_commentView_itemDoubleClicked(QTreeWidgetItem *item, int column);
 	void on_cookiesetting_usersession_textChanged();
-	void on_actionComment_View_toggled(bool com_show);
-
-
-
 
 	void on_commentView_currentItemChanged(QTreeWidgetItem *current);
 
