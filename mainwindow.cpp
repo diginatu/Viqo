@@ -185,7 +185,11 @@ void MainWindow::getHeartBeatAPI(QString session_id, QString broad_id)
 void MainWindow::heartbeatfinished(){
 	QByteArray repdata = reply->readAll();
 	StrAbstractor heartbeat_data(repdata);
-	const QString  watchCount = heartbeat_data.midStr("<watchCount>","</watchCount>");
+	const QString status = heartbeat_data.midStr("status=\"", "\"");
+	if ( status == "fail" ) {
+		return;
+	}
+	const QString watchCount = heartbeat_data.midStr("<watchCount>","</watchCount>");
 
 	ui->num_audience->setText("来場者数: " + watchCount);
 }
