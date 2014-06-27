@@ -27,10 +27,8 @@ void UserManager::getUserName(QTreeWidgetItem* item, QString userID, bool useHTT
 {
 	// return if empty
 	if (userID.isEmpty()) return;
-	// return if userID is 184 name.
-	for ( int i = 0; i < userID.length(); ++i)
-		if ( !userID.at(i).isNumber() ) return;
-
+	// return if 184 comment.
+	if (item->text(6) == "@") return;
 
 	if (useDB) {
 		QSqlQuery query(db);

@@ -30,7 +30,7 @@ public:
 
 	explicit MainWindow(QWidget *parent = 0);
 	~MainWindow();
-	QTreeWidgetItem* insComment(int num, QString prem, QString user, QString comm, QString date);
+	QTreeWidgetItem* insComment(int num, QString prem, QString user, QString comm, QString date, bool is_184);
 	void insLog(QString log);
 
 	QString getCookieSetting(int n);

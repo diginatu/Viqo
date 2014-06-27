@@ -59,7 +59,7 @@ void MainWindow::insLog(QString log)
 	ui->logtext->append(log + "\n");
 }
 
-QTreeWidgetItem* MainWindow::insComment(int num, QString prem, QString user, QString comm, QString date)
+QTreeWidgetItem* MainWindow::insComment(int num, QString prem, QString user, QString comm, QString date, bool is_184)
 {
 	QStringList ls;
 
@@ -69,6 +69,7 @@ QTreeWidgetItem* MainWindow::insComment(int num, QString prem, QString user, QSt
 	ls += comm;
 	ls += date;
 	ls += user;
+	ls += is_184?"@":"";
 
 	QTreeWidgetItem* item = new QTreeWidgetItem(ls);
 	item->setToolTip(3, comm);
@@ -444,8 +445,17 @@ void MainWindow::on_cookiesetting_usersession_textChanged()
 
 void MainWindow::on_commentView_currentItemChanged(QTreeWidgetItem *current)
 {
-	if (current == NULL)
-		return;
-	ui->comment_view->setHtml( "<a href=\"http://www.nicovideo.jp/user/"+current->text(5)+"\">"+current->text(2)+"</a>"+
-														 "<pre>"+current->text(3)+"</pre>" );
+	if (current == NULL) return;
+
+
+	QString commentView;
+	if (current->text(6) == "@") {
+		commentView += current->text(2);
+	} else {
+		commentView += "<a href=\"http://www.nicovideo.jp/user/"+current->text(5)+"\">"+current->text(2)+"</a>";
+	}
+
+	commentView += "<pre style=\"white-space:normal;\">"+current->text(3)+"</pre>";
+
+	ui->comment_view->setHtml( commentView );
 }

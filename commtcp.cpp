@@ -58,7 +58,6 @@ void CommTcp::sendNull()
 
 	if (socket->write(send) == -1)
 		throw QString("Error: ").append(socket->errorString());
-
 }
 
 void CommTcp::bytesWritten(qint64 bytes)
@@ -101,6 +100,9 @@ void CommTcp::readOneRawComment(QByteArray& rawcomm)
 	commenttime.setTime_t(udate);
 	QString date = commenttime.toString("yyyy/MM/dd hh:mm:ss");
 
+	QString mail = comminfo.midStr("mail=\"", "\"", false);
+	bool is_184 = (mail.indexOf("184")!=-1) ? true : false;
+
 	QString user = comminfo.midStr("user_id=\"", "\"", false);
 
 	bool premium = false, broadcaster = false;
@@ -124,7 +126,8 @@ void CommTcp::readOneRawComment(QByteArray& rawcomm)
 	comm.replace("&lt;", "<");
 	comm.replace("&gt;", ">");
 
-	QTreeWidgetItem* item = mwin->insComment(num,premium?"@":" ",broadcaster?"放送主":user,comm,date);
+	QTreeWidgetItem* item = mwin->insComment( num,premium?"@":" ",
+			broadcaster?"放送主":user, comm, date, is_184 );
 
 	if ( mwin->isCheckedAutoGettingUserName() && !broadcaster ) {
 		// use HTTP connection for only received comment after started.
