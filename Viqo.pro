@@ -14,23 +14,26 @@ TARGET = Viqo
 TEMPLATE = app
 
 
-SOURCES += main.cpp\
-        mainwindow.cpp \
-    commtcp.cpp \
-    cookieread.cpp \
-	usermanager.cpp \
-    livedata.cpp \
-    strabstractor.cpp \
-    nicohttp.cpp \
-    usergetter.cpp
+SOURCES += src/main.cpp\
+    src/NicoLiveManager/nicolivemanager.cpp \
+    src/commtcp.cpp \
+    src/cookieread.cpp \
+    src/livedata.cpp \
+    src/mainwindow.cpp \
+    src/nicohttp.cpp \
+    src/strabstractor.cpp \
+    src/usergetter.cpp \
+    src/usermanager.cpp
 
-HEADERS  += mainwindow.h \
-    commtcp.h \
-    cookieread.h \
-	usermanager.h \
-    livedata.h \
-    strabstractor.h \
-    nicohttp.h \
-    usergetter.h
+HEADERS  += src/main.h\
+    src/NicoLiveManager/nicolivemanager.h \
+    src/commtcp.h \
+    src/cookieread.h \
+    src/livedata.h \
+    src/mainwindow.h \
+    src/nicohttp.h \
+    src/strabstractor.h \
+    src/usergetter.h \
+    src/usermanager.h
 
-FORMS    += mainwindow.ui
+FORMS    += ui/mainwindow.ui
