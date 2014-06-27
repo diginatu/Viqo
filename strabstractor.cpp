@@ -11,9 +11,11 @@ StrAbstractor::StrAbstractor(QByteArray& doc, QObject *parent) :
 // Set current position to the next one of "end" found if foward is true (default).
 QString StrAbstractor::midStr(QString start, QString end, bool foward)
 {
-	int st = doc->indexOf(start,pos) + start.length();
+	int st = doc->indexOf(start,pos);
 	if ( st == -1 ) return "";
-	int ed = doc->indexOf(end,st);
+	st += start.length();
+
+	const int ed = doc->indexOf(end,st);
 	if ( ed == -1 ) return "";
 
 	if (foward)
