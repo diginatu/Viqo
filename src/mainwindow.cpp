@@ -5,30 +5,35 @@ void MainWindow::onReceiveStarted()
 {
 	qDebug() << "-----------st-------------";
 
-
 	// set audiences num timer
-	getNumOfAudiences();
+	getWatchCount();
 
-	num_audience_timer = new QTimer(this);
-	num_audience_timer->setInterval(60000);
-	num_audience_timer->start();
+	watch_count_timer = new QTimer(this);
+	watch_count_timer->setInterval(60000);
+	watch_count_timer->start();
 
-	connect(num_audience_timer,SIGNAL(timeout()),this,SLOT(getNumOfAudiences()));
+	connect(watch_count_timer,SIGNAL(timeout()),this,SLOT(getWatchCount()));
 }
 
 void MainWindow::onReceiveEnded()
 {
 	qDebug() << "-----------ed-------------";
 
-	num_audience_timer->stop();
-	num_audience_timer->deleteLater();
+	watch_count_timer->stop();
+	watch_count_timer->deleteLater();
 }
 
-void MainWindow::getNumOfAudiences()
+void MainWindow::getWatchCount()
 {
 	const QString userSession = getUserSession();
 	const QString broad_id = ui->housouId->text();
-	getHeartBeatAPI(userSession,broad_id);
+
+	nicolivemanager->getHeartBeatAPI(userSession,broad_id);
+}
+
+void MainWindow::setWatchCount()
+{
+	ui->num_audience->setText("来場者数: " + nicolivemanager->getWatchCount());
 }
 
 bool MainWindow::isCheckedAutoGettingUserName()
@@ -169,64 +174,6 @@ void MainWindow::rawMyLivefinished(){
     }
 }
 
-void MainWindow::getHeartBeatAPI(QString session_id, QString broad_id)
-{
-	mManager = new QNetworkAccessManager(this);
-
-	// make request
-	QNetworkRequest rq;
-	QVariant postData = makePostData(session_id);
-	rq.setHeader(QNetworkRequest::CookieHeader, postData);
-	rq.setUrl(QUrl("http://live.nicovideo.jp/api/heartbeat?v=" + broad_id));
-
-	reply = mManager->get(rq);
-	connect(reply,SIGNAL(finished()),this,SLOT(heartbeatfinished()));
-}
-void MainWindow::heartbeatfinished(){
-	QByteArray repdata = reply->readAll();
-	StrAbstractor heartbeat_data(repdata);
-	const QString status = heartbeat_data.midStr("status=\"", "\"");
-	if ( status == "fail" ) {
-		return;
-	}
-	const QString watchCount = heartbeat_data.midStr("<watchCount>","</watchCount>");
-
-	ui->num_audience->setText("来場者数: " + watchCount);
-}
-
-void MainWindow::getAPI(QString session_id, QString broad_id)
-{
-	mManager = new QNetworkAccessManager(this);
-
-	// make request
-	QNetworkRequest rq;
-	QVariant postData = makePostData(session_id);
-	rq.setHeader(QNetworkRequest::CookieHeader, postData);
-	rq.setUrl(QUrl("http://live.nicovideo.jp/api/getplayerstatus?v=" + broad_id));
-
-	reply = mManager->get(rq);
-	connect(reply,SIGNAL(finished()),this,SLOT(finished()));
-}
-void MainWindow::finished()
-{
-	QByteArray repdata = reply->readAll();
-
-	StrAbstractor commTcpi(repdata);
-
-	addr = commTcpi.midStr("<addr>", "</addr>");
-	port = commTcpi.midStr("<port>", "</port>").toInt();
-	thread = commTcpi.midStr("<thread>", "</thread>");
-
-	insLog("addr: "+addr+"\nport: "+QString::number(port)+"\nthread:"+thread);
-
-	try {
-		commtcp = new CommTcp(addr, port, thread, this);
-		commtcp->doConnect();
-	} catch(QString e) {
-		qDebug() << e;
-	}
-
-}
 
 void MainWindow::getSessionFromCookie()
 {
@@ -250,6 +197,8 @@ MainWindow::MainWindow(QWidget *parent) :
 
 	ui->cookiesetting_usersession->setEchoMode(QLineEdit::Password);
 	ui->commentView->setWordWrap(true);
+
+	nicolivemanager = new NicoLiveManager(this, &commtcp, this);
 
 	if ( ui->cookiesetting_browserCombo->currentIndex() == 0 )
 		getUserSession();
@@ -282,7 +231,7 @@ void MainWindow::on_receive_clicked()
 	on_disconnect_clicked();
 	on_clear_clicked();
 
-	getAPI(userSession, broad_id);
+	nicolivemanager->getPlayyerStatusAPI(userSession, broad_id);
 }
 
 

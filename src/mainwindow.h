@@ -2,7 +2,6 @@
 #define MAINWINDOW_H
 
 #include <QMainWindow>
-#include <QNetworkAccessManager>
 #include <QtNetwork>
 #include <QList>
 #include <QVariant>
@@ -15,6 +14,7 @@
 #include "usermanager.h"
 #include "livedata.h"
 #include "strabstractor.h"
+#include "NicoLiveManager/nicolivemanager.h"
 
 namespace Ui {
 class MainWindow;
@@ -36,6 +36,7 @@ public:
 	QString getCookieSetting(int n);
 	QString getUserSession();
 	QString setting_commentCommand;
+	void setWatchCount();
 
 	bool isCheckedAutoGettingUserName();
 
@@ -46,7 +47,7 @@ public slots:
 	void on_receive_clicked();
 	void on_disconnect_clicked();
 
-	void getNumOfAudiences();
+	void getWatchCount();
 
 	void on_cookiesetting_file_open_button_clicked();
 	void on_cookiesetting_apply_clicked();
@@ -65,8 +66,6 @@ public slots:
 
 private slots:
 	// connect slot
-	void finished();
-	void heartbeatfinished();
 	void rawMyLivefinished();
 
 	void on_commentView_itemDoubleClicked(QTreeWidgetItem *item, int column);
@@ -75,24 +74,24 @@ private slots:
 	void on_commentView_currentItemChanged(QTreeWidgetItem *current);
 
 private:
-	void getAPI(QString user_id, QString broad_id);
-	void getComment();
-	void getHeartBeatAPI(QString user_id, QString broad_id);
-	void getSessionFromCookie();
 	void getRawMyLiveHTML(QString user_id);
+	void getComment();
+	void getSessionFromCookie();
 
 	CommTcp* commtcp;
 
 	Ui::MainWindow* ui;
-	QNetworkReply* reply;
 	QByteArray m_data;
+
 	QNetworkAccessManager* mManager;
-	QString addr, thread; int port;
+	QNetworkReply* reply;
+
+	NicoLiveManager* nicolivemanager;
 
 	QList<LiveData*> broadIDList;
 	LiveData* currentSelectLive;
 	QTimer* liveDataReloadtimer;
-	QTimer* num_audience_timer;
+	QTimer* watch_count_timer;
 
 };
 

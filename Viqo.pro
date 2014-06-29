@@ -23,7 +23,9 @@ SOURCES += src/main.cpp\
     src/nicohttp.cpp \
     src/strabstractor.cpp \
     src/usergetter.cpp \
-    src/usermanager.cpp
+    src/usermanager.cpp \
+    src/NicoLiveManager/playyerstatusapi.cpp \
+    src/NicoLiveManager/heartbeatapi.cpp
 
 HEADERS  += src/main.h\
     src/NicoLiveManager/nicolivemanager.h \
