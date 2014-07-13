@@ -15,7 +15,6 @@ TEMPLATE = app
 
 
 SOURCES += src/main.cpp\
-    src/NicoLiveManager/nicolivemanager.cpp \
     src/commtcp.cpp \
     src/cookieread.cpp \
     src/livedata.cpp \
@@ -24,8 +23,11 @@ SOURCES += src/main.cpp\
     src/strabstractor.cpp \
     src/usergetter.cpp \
     src/usermanager.cpp \
+		src/NicoLiveManager/nicolivemanager.cpp \
     src/NicoLiveManager/playyerstatusapi.cpp \
-    src/NicoLiveManager/heartbeatapi.cpp
+    src/NicoLiveManager/heartbeatapi.cpp \
+    src/NicoLiveManager/Alert/alert.cpp \
+    src/NicoLiveManager/Alert/wakutcp.cpp
 
 HEADERS  += src/main.h\
     src/NicoLiveManager/nicolivemanager.h \
@@ -36,6 +38,7 @@ HEADERS  += src/main.h\
     src/nicohttp.h \
     src/strabstractor.h \
     src/usergetter.h \
-    src/usermanager.h
+    src/usermanager.h \
+    src/NicoLiveManager/Alert/wakutcp.h
 
 FORMS    += ui/mainwindow.ui

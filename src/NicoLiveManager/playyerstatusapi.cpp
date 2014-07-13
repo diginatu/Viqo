@@ -3,21 +3,21 @@
 
 void NicoLiveManager::getPlayyerStatusAPI(QString session_id, QString broad_id)
 {
-	mManager = new QNetworkAccessManager(this);
+	QNetworkAccessManager* mManager = new QNetworkAccessManager(this);
 	// make request
 	QNetworkRequest rq;
 	QVariant postData = makePostData(session_id);
 	rq.setHeader(QNetworkRequest::CookieHeader, postData);
 	rq.setUrl(QUrl("http://live.nicovideo.jp/api/getplayerstatus?v=" + broad_id));
 
-	playyerStatusReply = mManager->get(rq);
-	connect(playyerStatusReply,SIGNAL(finished()),this,SLOT(playerStatusFinished()));
+	connect(mManager, SIGNAL(finished(QNetworkReply*)), this,
+					SLOT(playerStatusFinished(QNetworkReply*)));
+	mManager->get(rq);
 }
 
-void NicoLiveManager::playerStatusFinished()
+void NicoLiveManager::playerStatusFinished(QNetworkReply* reply)
 {
-	QByteArray repdata = playyerStatusReply->readAll();
-	mManager->deleteLater();
+	QByteArray repdata = reply->readAll();
 
 	StrAbstractor commTcpi(repdata);
 
@@ -28,6 +28,8 @@ void NicoLiveManager::playerStatusFinished()
 		addr = ""; port = 0; thread = "";
 		return;
 	}
+
+	community = commTcpi.midStr("<default_community>", "</default_community>");
 
 	addr = commTcpi.midStr("<addr>", "</addr>");
 	port = commTcpi.midStr("<port>", "</port>").toInt();
@@ -44,14 +46,14 @@ void NicoLiveManager::playerStatusFinished()
 
 }
 
-QString NicoLiveManager::getAddr() {
+QString NicoLiveManager::getAddr() const {
 	return this->addr;
 }
 
-QString NicoLiveManager::getThread() {
+QString NicoLiveManager::getThread() const {
 	return this->thread;
 }
 
-int NicoLiveManager::getPort() {
+int NicoLiveManager::getPort() const {
 	return this->port;
 }

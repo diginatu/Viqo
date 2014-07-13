@@ -139,11 +139,9 @@ void CommTcp::readOneRawComment(QByteArray& rawcomm)
 		QProcess pr;
 		QString cmd = mwin->setting_commentCommand;
 
-		cmd.replace("%comment%",comm);
 		QString escmd = comm;
-		escmd.replace("\"", "\\\"");
-		escmd.replace("\\", "\\\\");
-		cmd.replace("%comment_escaped%",escmd);
+		escmd.replace("'", "");
+		cmd.replace("%comment%",'"' + escmd + '"');
 
 		pr.start(cmd);
 		pr.waitForFinished(30000);

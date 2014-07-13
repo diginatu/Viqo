@@ -36,9 +36,12 @@ public:
 	QString getCookieSetting(int n);
 	QString getUserSession();
 	QString setting_commentCommand;
+
 	void setWatchCount();
+	void setHousouID(QString text);
 
 	bool isCheckedAutoGettingUserName();
+	bool is_next_waku();
 
 	UserManager* userManager;
 

@@ -31,6 +31,11 @@ void MainWindow::getWatchCount()
 	nicolivemanager->getHeartBeatAPI(userSession,broad_id);
 }
 
+void MainWindow::setHousouID(QString text)
+{
+	ui->housouId->setText(text);
+}
+
 void MainWindow::setWatchCount()
 {
 	ui->num_audience->setText("来場者数: " + nicolivemanager->getWatchCount());
@@ -139,25 +144,25 @@ void MainWindow::rawMyLivefinished(){
         tmpDataList.append(data);
     }
     //現在見ている番組を一番上にしたい
-    if (NULL!=currentSelectLive){
-        for (int i=0;i<tmpDataList.length();i++){
-            //文字列が一緒がどうか・・Java勢でごめんなさい
-            //同じコミュニティなら選択する
-            //配信IDじゃなくていいのかな・・？
-            LiveData *data=tmpDataList.at(i);
-            if (currentSelectLive->getCommunityID().compare(data->getCommunityID())==0){
-                ui->broad_list->addItem(data->getTitle());
-                broadIDList.append(data);
-                //コミュIDが同じで配信IDが異なる場合、新しい配信があると判断
-                if (currentSelectLive->getLiveID().compare(data->getLiveID())!=0){
-                    //このIDで自動的に再接続
-                    on_broad_list_activated(0);
-                }
+		if (NULL!=currentSelectLive){
+			for (int i=0;i<tmpDataList.length();i++){
+				//文字列が一緒がどうか・・Java勢でごめんなさい
+				//同じコミュニティなら選択する
+				//配信IDじゃなくていいのかな・・？
+				LiveData *data=tmpDataList.at(i);
+				if (currentSelectLive->getCommunityID().compare(data->getCommunityID())==0){
+					ui->broad_list->addItem(data->getTitle());
+					broadIDList.append(data);
+					//コミュIDが同じで配信IDが異なる場合、新しい配信があると判断
+//          if (currentSelectLive->getLiveID().compare(data->getLiveID())!=0){
+//            //このIDで自動的に再接続
+//            on_broad_list_activated(0);
+//          }
 
-                break;
-            }
-        }
-    }
+					break;
+				}
+			}
+		}
 
     for (int i=0;i<tmpDataList.length();i++){
         LiveData *data=tmpDataList.at(i);
@@ -196,7 +201,8 @@ MainWindow::MainWindow(QWidget *parent) :
 	ui->setupUi(this);
 
 	ui->cookiesetting_usersession->setEchoMode(QLineEdit::Password);
-	ui->commentView->setWordWrap(true);
+	ui->userdata_mail->setEchoMode(QLineEdit::Password);
+	ui->userdata_pass->setEchoMode(QLineEdit::Password);
 
 	nicolivemanager = new NicoLiveManager(this, &commtcp, this);
 
@@ -210,6 +216,10 @@ MainWindow::MainWindow(QWidget *parent) :
 	} catch(QString e) {
 		qDebug() << e;
 	}
+
+	const QString mail = ui->userdata_mail->text();
+	const QString pass = ui->userdata_pass->text();
+	nicolivemanager->loginAlertAPI(mail, pass);
 }
 
 MainWindow::~MainWindow()
@@ -290,12 +300,19 @@ void MainWindow::on_actionSave_triggered()
 
 	QJsonObject other;
 	other["auto_getting_user_name"] = ui->auto_getting_user_name->isChecked();
+
 	other["comment_command_check"] = ui->setting_commentComand_checkbox->isChecked();
 	other["comment_command"] = ui->setting_commentComand->text();
+
+	QJsonObject user_data;
+	user_data["mail"] = ui->userdata_mail->text();
+	user_data["pass"] = ui->userdata_pass->text();
+
 
 	QJsonObject root;
 	root["cookie"] = cookie;
 	root["other"] = other;
+	root["user_data"] = user_data;
 
 	QJsonDocument jsd;
 	jsd.setObject(root);
@@ -337,6 +354,11 @@ void MainWindow::on_actionLoad_triggered()
 	ui->auto_getting_user_name->setChecked(other["auto_getting_user_name"].toBool());
 	ui->setting_commentComand->setText(other["comment_command"].toString());
 	ui->setting_commentComand_checkbox->setChecked(other["comment_command_check"].toBool());
+
+	QJsonObject user_data;
+	user_data = jsd.object()["user_data"].toObject();
+	ui->userdata_mail->setText(user_data["mail"].toString());
+	ui->userdata_pass->setText(user_data["pass"].toString());
 
 	file.close();
 }
@@ -408,7 +430,12 @@ void MainWindow::on_commentView_currentItemChanged(QTreeWidgetItem *current)
 		commentView += "<a href=\"http://www.nicovideo.jp/user/"+current->text(5)+"\">"+current->text(2)+"</a>";
 	}
 
-	commentView += "<pre style=\"white-space:normal;\">"+current->text(3)+"</pre>";
+	commentView += "<pre style=\"white-space:normal;\">"+current->text(3).toHtmlEscaped()+"</pre>";
 
 	ui->comment_view->setHtml( commentView );
+}
+
+bool MainWindow::is_next_waku()
+{
+	return ui->auto_next_waku->isChecked();
 }
