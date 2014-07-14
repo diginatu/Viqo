@@ -29,8 +29,7 @@ SOURCES += src/main.cpp\
     src/NicoLiveManager/Alert/alert.cpp \
     src/NicoLiveManager/Alert/wakutcp.cpp
 
-HEADERS  += src/main.h\
-    src/NicoLiveManager/nicolivemanager.h \
+HEADERS  += src/NicoLiveManager/nicolivemanager.h \
     src/commtcp.h \
     src/cookieread.h \
     src/livedata.h \
