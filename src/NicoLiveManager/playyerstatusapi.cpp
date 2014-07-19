@@ -33,10 +33,10 @@ void NicoLiveManager::playerStatusFinished(QNetworkReply* reply)
 
 	nowWaku.setTitle(commTcpi.midStr("<title>", "</title>"));
 
+	nowWaku.setCommunity(commTcpi.midStr("<default_community>", "</default_community>"));
+
 	nowWaku.setSt(commTcpi.midStr("<start_time>","</start_time>").toUInt());
 	nowWaku.setEd(commTcpi.midStr("<end_time>","</end_time>").toUInt());
-
-	nowWaku.setCommunity(commTcpi.midStr("<default_community>", "</default_community>"));
 
 	addr = commTcpi.midStr("<addr>", "</addr>");
 	port = commTcpi.midStr("<port>", "</port>").toInt();

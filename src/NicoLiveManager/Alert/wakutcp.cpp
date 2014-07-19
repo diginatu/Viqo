@@ -64,7 +64,6 @@ void WakuTcp::readyRead()
 
 void WakuTcp::readOneRawWaku(QByteArray& rawwaku)
 {
-
 	if (rawwaku.startsWith("<thread")) {
 		return;
 	}
@@ -77,17 +76,18 @@ void WakuTcp::readOneRawWaku(QByteArray& rawwaku)
 	const QString& CommunityID = wakur.at(1);
 //	const QString& nushiID = wakur.at(2);
 
+//	qDebug() << CommunityID << "," << broadID;
+
 	if(wakur.size() != 3) {
 		return;
 	}
 
+
 	if ( mwin->isNextWaku() ){
-		if ( nicolivemanager->nowWaku.getCommunity() == CommunityID) {
-			qDebug() << CommunityID << ":" << nicolivemanager->nowWaku.getBroadID() << "<>" << broadID;
-			if(nicolivemanager->nowWaku.getBroadID() != broadID){
-				mwin->setHousouID("lv" + broadID);
-				mwin->on_receive_clicked();
-			}
+		if ( nicolivemanager->nowWaku.getCommunity() == CommunityID &&
+				 nicolivemanager->nowWaku.getBroadID() != broadID){
+			mwin->setHousouID("lv" + broadID);
+			mwin->on_receive_clicked();
 		}
 	}
 
