@@ -7,7 +7,7 @@
 #include <QNetworkRequest>
 
 #include "../strabstractor.h"
-#include "../commtcp.h"
+#include "commtcp.h"
 #include "Alert/wakutcp.h"
 #include "Alert/livewaku.h"
 
@@ -20,7 +20,7 @@ class NicoLiveManager : public QObject
 {
 	Q_OBJECT
 public:
-	explicit NicoLiveManager(MainWindow* mwin, CommTcp** comtcp, QObject *parent = 0);
+	explicit NicoLiveManager(MainWindow* mwin, QObject *parent = 0);
 
 	QString getWatchCount() const;
 
@@ -40,13 +40,14 @@ public:
 
 	QList<LiveWaku*> liveWakuList;
 
+	void broadDisconnect();
 signals:
 
 public slots:
 
 private:
 	MainWindow* mwin;
-	CommTcp** commtcp;
+	CommTcp* commtcp;
 	WakuTcp* wakutcp;
 
 	QString addr;
@@ -57,7 +58,6 @@ private:
 	QString waku_addr;
 	QString waku_thread;
 	int waku_port;
-
 
 	QVariant makePostData(QString session_id);
 

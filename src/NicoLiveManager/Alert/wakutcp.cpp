@@ -82,10 +82,12 @@ void WakuTcp::readOneRawWaku(QByteArray& rawwaku)
 	}
 
 	if ( mwin->isNextWaku() ){
-		if ( nicolivemanager->nowWaku.getCommunity() == CommunityID &&
-				 nicolivemanager->nowWaku.getBroadID() != "lv"+broadID){
-			mwin->setHousouID("lv" + broadID);
-			mwin->on_receive_clicked();
+		if ( nicolivemanager->nowWaku.getCommunity() == CommunityID) {
+			qDebug() << CommunityID << ":" << nicolivemanager->nowWaku.getBroadID() << "<>" << broadID;
+			if(nicolivemanager->nowWaku.getBroadID() != broadID){
+				mwin->setHousouID("lv" + broadID);
+				mwin->on_receive_clicked();
+			}
 		}
 	}
 

@@ -5,6 +5,8 @@ void MainWindow::onReceiveStarted()
 {
 	qDebug() << "-----------st-------------";
 
+	QWidget::setWindowTitle("- " + nicolivemanager->nowWaku.getTitle() + " - Viqo");
+
 	// set audiences num timer
 	elapsed_time_timer = new QTimer(this);
 	elapsed_time_timer->setInterval(1000);
@@ -22,6 +24,8 @@ void MainWindow::onReceiveStarted()
 void MainWindow::onReceiveEnded()
 {
 	qDebug() << "-----------ed-------------";
+
+	QWidget::setWindowTitle("Viqo");
 
 	// delete audiences num timer
 	elapsed_time_timer->stop();
@@ -126,7 +130,6 @@ void MainWindow::getSessionFromCookie()
 MainWindow::MainWindow(QWidget *parent) :
 	QMainWindow(parent),
 	setting_commentCommand(""),
-	commtcp(NULL),
 	ui(new Ui::MainWindow)
 {
 	ui->setupUi(this);
@@ -143,7 +146,7 @@ MainWindow::MainWindow(QWidget *parent) :
 
 	try {
 		userManager = new UserManager(this);
-		nicolivemanager = new NicoLiveManager(this, &commtcp, this);
+		nicolivemanager = new NicoLiveManager(this, this);
 	} catch(QString e) {
 		qDebug() << e;
 	}
@@ -183,11 +186,7 @@ void MainWindow::on_receive_clicked()
 
 void MainWindow::on_disconnect_clicked()
 {
-	if (commtcp != NULL && commtcp->isConnected() ) {
-		commtcp->close();
-		commtcp->deleteLater();
-		commtcp = NULL;
-	}
+	nicolivemanager->broadDisconnect();
 }
 
 void MainWindow::on_cookiesetting_file_open_button_clicked()
@@ -351,8 +350,7 @@ bool MainWindow::isNextWaku()
 
 void MainWindow::on_live_waku_list_activated(int index)
 {
-	ui->housouId->setText(nicolivemanager->liveWakuList.at(index)->getBroadID());
-
+	ui->housouId->setText("lv"+nicolivemanager->liveWakuList.at(index)->getBroadID());
 	on_receive_clicked();
 }
 

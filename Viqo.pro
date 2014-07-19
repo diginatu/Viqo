@@ -15,7 +15,6 @@ TEMPLATE = app
 
 
 SOURCES += src/main.cpp\
-    src/commtcp.cpp \
     src/cookieread.cpp \
     src/livedata.cpp \
     src/mainwindow.cpp \
@@ -29,10 +28,10 @@ SOURCES += src/main.cpp\
     src/NicoLiveManager/Alert/alert.cpp \
     src/NicoLiveManager/Alert/wakutcp.cpp \
     src/NicoLiveManager/Alert/livewaku.cpp \
-    src/NicoLiveManager/rawmylivewaku.cpp
+    src/NicoLiveManager/rawmylivewaku.cpp \
+    src/NicoLiveManager/commtcp.cpp
 
 HEADERS  += src/NicoLiveManager/nicolivemanager.h \
-    src/commtcp.h \
     src/cookieread.h \
     src/livedata.h \
     src/mainwindow.h \
@@ -41,6 +40,7 @@ HEADERS  += src/NicoLiveManager/nicolivemanager.h \
     src/usergetter.h \
     src/usermanager.h \
     src/NicoLiveManager/Alert/wakutcp.h \
-    src/NicoLiveManager/Alert/livewaku.h
+    src/NicoLiveManager/Alert/livewaku.h \
+    src/NicoLiveManager/commtcp.h
 
 FORMS    += ui/mainwindow.ui

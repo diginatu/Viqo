@@ -1,12 +1,12 @@
 #include "nicolivemanager.h"
 #include "../mainwindow.h"
 
-NicoLiveManager::NicoLiveManager(MainWindow* mwin, CommTcp** commtcp, QObject *parent) :
+NicoLiveManager::NicoLiveManager(MainWindow* mwin, QObject *parent) :
 	QObject(parent),
+	commtcp(NULL),
 	wakutcp(NULL)
 {
 	this->mwin = mwin;
-	this->commtcp = commtcp;
 }
 
 QVariant NicoLiveManager::makePostData(QString session_id)
@@ -38,5 +38,13 @@ void NicoLiveManager::insertLiveWakuList(LiveWaku* livewaku)
 	}
 
 	liveWakuList << livewaku;
+}
+
+void NicoLiveManager::broadDisconnect(){
+	if (commtcp != NULL && commtcp->isConnected() ) {
+		commtcp->close();
+		commtcp->deleteLater();
+		commtcp = NULL;
+	}
 }
 

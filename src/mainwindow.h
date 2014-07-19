@@ -1,6 +1,7 @@
 #ifndef MAINWINDOW_H
 #define MAINWINDOW_H
 
+#include <QWidget>
 #include <QMainWindow>
 #include <QtNetwork>
 #include <QList>
@@ -9,7 +10,6 @@
 #include <QFileDialog>
 #include <QJsonObject>
 
-#include "commtcp.h"
 #include "cookieread.h"
 #include "usermanager.h"
 #include "livedata.h"
@@ -76,8 +76,6 @@ private slots:
 private:
 	void getComment();
 	void getSessionFromCookie();
-
-	CommTcp* commtcp;
 
 	Ui::MainWindow* ui;
 	QByteArray m_data;

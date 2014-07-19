@@ -29,6 +29,10 @@ void NicoLiveManager::playerStatusFinished(QNetworkReply* reply)
 		return;
 	}
 
+	nowWaku.setBroadID(commTcpi.midStr("<id>lv", "</id>"));
+
+	nowWaku.setTitle(commTcpi.midStr("<title>", "</title>"));
+
 	nowWaku.setSt(commTcpi.midStr("<start_time>","</start_time>").toUInt());
 	nowWaku.setEd(commTcpi.midStr("<end_time>","</end_time>").toUInt());
 
@@ -41,8 +45,8 @@ void NicoLiveManager::playerStatusFinished(QNetworkReply* reply)
 	mwin->insLog("addr: "+addr+"\nport: "+QString::number(port)+"\nthread:"+thread);
 
 	try {
-		*commtcp = new CommTcp(addr, port, thread, mwin);
-		(*commtcp)->doConnect();
+		commtcp = new CommTcp(addr, port, thread, mwin);
+		commtcp->doConnect();
 	} catch(QString e) {
 		qDebug() << e;
 	}

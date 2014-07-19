@@ -1,5 +1,5 @@
 #include "commtcp.h"
-#include "mainwindow.h"
+#include "../mainwindow.h"
 
 CommTcp::CommTcp(QString domain, int port, QString thread, MainWindow* mwin)
 {
