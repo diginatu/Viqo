@@ -29,7 +29,10 @@ void NicoLiveManager::playerStatusFinished(QNetworkReply* reply)
 		return;
 	}
 
-	community = commTcpi.midStr("<default_community>", "</default_community>");
+	nowWaku.setSt(commTcpi.midStr("<start_time>","</start_time>").toUInt());
+	nowWaku.setEd(commTcpi.midStr("<end_time>","</end_time>").toUInt());
+
+	nowWaku.setCommunity(commTcpi.midStr("<default_community>", "</default_community>"));
 
 	addr = commTcpi.midStr("<addr>", "</addr>");
 	port = commTcpi.midStr("<port>", "</port>").toInt();
@@ -44,16 +47,4 @@ void NicoLiveManager::playerStatusFinished(QNetworkReply* reply)
 		qDebug() << e;
 	}
 
-}
-
-QString NicoLiveManager::getAddr() const {
-	return this->addr;
-}
-
-QString NicoLiveManager::getThread() const {
-	return this->thread;
-}
-
-int NicoLiveManager::getPort() const {
-	return this->port;
 }

@@ -6,12 +6,16 @@ void MainWindow::onReceiveStarted()
 	qDebug() << "-----------st-------------";
 
 	// set audiences num timer
-	getWatchCount();
+	elapsed_time_timer = new QTimer(this);
+	elapsed_time_timer->setInterval(1000);
+	elapsed_time_timer->start();
+	connect(elapsed_time_timer,SIGNAL(timeout()),this,SLOT(updateElapsedTime()));
 
+	// set audiences num timer
+	getWatchCount();
 	watch_count_timer = new QTimer(this);
 	watch_count_timer->setInterval(60000);
 	watch_count_timer->start();
-
 	connect(watch_count_timer,SIGNAL(timeout()),this,SLOT(getWatchCount()));
 }
 
@@ -19,6 +23,12 @@ void MainWindow::onReceiveEnded()
 {
 	qDebug() << "-----------ed-------------";
 
+	// delete audiences num timer
+	elapsed_time_timer->stop();
+	elapsed_time_timer->deleteLater();
+	ui->elapsed_time->setText("00:00:00");
+
+	// delete audiences num timer
 	watch_count_timer->stop();
 	watch_count_timer->deleteLater();
 }
@@ -31,9 +41,25 @@ void MainWindow::getWatchCount()
 	nicolivemanager->getHeartBeatAPI(userSession,broad_id);
 }
 
+void MainWindow::updateElapsedTime()
+{
+	QTime el_time(QTime(0,0).addSecs(QDateTime::currentDateTimeUtc().toTime_t() -
+			nicolivemanager->nowWaku.getSt().toTime_t()));
+
+	ui->elapsed_time->setText(el_time.toString("hh:mm:ss"));
+}
+
 void MainWindow::setHousouID(QString text)
 {
 	ui->housouId->setText(text);
+}
+
+void MainWindow::refleshLiveWaku()
+{
+	ui->live_waku_list->clear();
+	for(int i = 0; i < nicolivemanager->liveWakuList.size(); ++i) {
+		ui->live_waku_list->addItem(nicolivemanager->liveWakuList.at(i)->getTitle());
+	}
 }
 
 void MainWindow::setWatchCount()
@@ -87,99 +113,6 @@ QTreeWidgetItem* MainWindow::insComment(int num, QString prem, QString user, QSt
 	return item;
 }
 
-QVariant makePostData(QString session_id){
-	QVariant postData;
-
-	// make cookies
-	QList <QNetworkCookie> cookies;
-	QNetworkCookie ck;
-	ck.toRawForm(QNetworkCookie::NameAndValueOnly);
-	ck.setName("user_session");
-
-	QByteArray user_id_ba;
-	user_id_ba.append(session_id);
-
-	ck.setValue(user_id_ba);
-	cookies.append(ck);
-
-	postData.setValue(cookies);
-	return postData;
-}
-
-void MainWindow::getRawMyLiveHTML(QString session_id)
-{
-	mManager = new QNetworkAccessManager(this);
-
-	// make request
-	QNetworkRequest rq;
-	QVariant postData = makePostData(session_id);
-	rq.setHeader(QNetworkRequest::CookieHeader, postData);
-	rq.setUrl(QUrl("http://www.nicovideo.jp/my/live"));
-
-	reply = mManager->get(rq);
-	connect(reply,SIGNAL(finished()),this,SLOT(rawMyLivefinished()));
-}
-/**
- * マイページのHTMLを解析して、自分が参加しているコミュリスト一覧を作成します。
- * @brief MainWindow::rawMyLivefinished
- */
-void MainWindow::rawMyLivefinished(){
-	QByteArray repdata = reply->readAll();
-
-	ui->broad_list->clear();
-	broadIDList.clear();
-
-    //cap(1)はコミュID、cap(2)は配信ID,cap(3)はタイトル
-    QRegExp rx("<a href=\"http://com.nicovideo.jp/community/(co\\d+)\">.*<h5><a href=\"http://live.nicovideo.jp/watch/(lv\\d+)\\?ref=zero_mysubscribe\">(.*)</a></h5>");
-    rx.setMinimal(true);
-    int currentIndex=0;
-    QList<LiveData*> tmpDataList;
-
-    while ((currentIndex=rx.indexIn(QString(repdata),currentIndex))!=-1){
-        // 見つけた文字列分だけずらす
-        currentIndex+=rx.cap(0).length();
-        //内部のデータ構造に格納　メモリ解放をしないといけないかも・・？
-        //３つ目のデータは将来的に利用予定
-        LiveData *data=new LiveData(rx.cap(2),rx.cap(3),rx.cap(1));
-        tmpDataList.append(data);
-    }
-    //現在見ている番組を一番上にしたい
-		if (NULL!=currentSelectLive){
-			for (int i=0;i<tmpDataList.length();i++){
-				//文字列が一緒がどうか・・Java勢でごめんなさい
-				//同じコミュニティなら選択する
-				//配信IDじゃなくていいのかな・・？
-				LiveData *data=tmpDataList.at(i);
-				if (currentSelectLive->getCommunityID().compare(data->getCommunityID())==0){
-					ui->broad_list->addItem(data->getTitle());
-					broadIDList.append(data);
-					//コミュIDが同じで配信IDが異なる場合、新しい配信があると判断
-//          if (currentSelectLive->getLiveID().compare(data->getLiveID())!=0){
-//            //このIDで自動的に再接続
-//            on_broad_list_activated(0);
-//          }
-
-					break;
-				}
-			}
-		}
-
-    for (int i=0;i<tmpDataList.length();i++){
-        LiveData *data=tmpDataList.at(i);
-        //文字列が一緒がどうか・・Java勢でごめんなさい
-
-        if (NULL!=currentSelectLive){
-            if (currentSelectLive->getCommunityID().compare(data->getCommunityID())==0){
-                //すでに上で挿入済み
-                continue;
-            }
-        }
-        ui->broad_list->addItem(data->getTitle());
-        broadIDList.append(data);
-    }
-}
-
-
 void MainWindow::getSessionFromCookie()
 {
 	try {
@@ -194,9 +127,7 @@ MainWindow::MainWindow(QWidget *parent) :
 	QMainWindow(parent),
 	setting_commentCommand(""),
 	commtcp(NULL),
-	ui(new Ui::MainWindow),
-	currentSelectLive(NULL),
-	liveDataReloadtimer(NULL)
+	ui(new Ui::MainWindow)
 {
 	ui->setupUi(this);
 
@@ -204,7 +135,6 @@ MainWindow::MainWindow(QWidget *parent) :
 	ui->userdata_mail->setEchoMode(QLineEdit::Password);
 	ui->userdata_pass->setEchoMode(QLineEdit::Password);
 
-	nicolivemanager = new NicoLiveManager(this, &commtcp, this);
 
 	if ( ui->cookiesetting_browserCombo->currentIndex() == 0 )
 		getUserSession();
@@ -213,6 +143,7 @@ MainWindow::MainWindow(QWidget *parent) :
 
 	try {
 		userManager = new UserManager(this);
+		nicolivemanager = new NicoLiveManager(this, &commtcp, this);
 	} catch(QString e) {
 		qDebug() << e;
 	}
@@ -220,10 +151,15 @@ MainWindow::MainWindow(QWidget *parent) :
 	const QString mail = ui->userdata_mail->text();
 	const QString pass = ui->userdata_pass->text();
 	nicolivemanager->loginAlertAPI(mail, pass);
+
+	on_user_data_OK_clicked();
+	QTimer::singleShot(30000, this, SLOT(on_user_data_OK_clicked()));
+	QTimer::singleShot(60000, this, SLOT(on_user_data_OK_clicked()));
 }
 
 MainWindow::~MainWindow()
 {
+	on_disconnect_clicked();
 	delete ui;
 }
 
@@ -379,23 +315,6 @@ void MainWindow::on_setting_apply_clicked()
 	}
 }
 
-void MainWindow::on_broad_list_activated(int index)
-{
-    currentSelectLive=broadIDList.at(index);
-    ui->housouId->setText(currentSelectLive->getLiveID());
-
-	on_receive_clicked();
-}
-
-void MainWindow::on_mylive_reflesh_clicked()
-{
-	QString session = getUserSession();
-
-	if (!session.isEmpty()){
-		getRawMyLiveHTML(session);
-	}
-}
-
 void MainWindow::on_commentView_itemDoubleClicked(QTreeWidgetItem *item, int column)
 {
 	if (column == 2) {
@@ -406,16 +325,6 @@ void MainWindow::on_commentView_itemDoubleClicked(QTreeWidgetItem *item, int col
 
 void MainWindow::on_cookiesetting_usersession_textChanged()
 {
-	if ( liveDataReloadtimer != NULL )
-		liveDataReloadtimer->deleteLater();
-
-	on_mylive_reflesh_clicked();
-
-	liveDataReloadtimer = new QTimer(this); //タイマー
-	liveDataReloadtimer->setInterval(60000);
-	liveDataReloadtimer->start();
-
-	connect(liveDataReloadtimer,SIGNAL(timeout()),this,SLOT(on_mylive_reflesh_clicked()));
 }
 
 void MainWindow::on_commentView_currentItemChanged(QTreeWidgetItem *current)
@@ -435,7 +344,19 @@ void MainWindow::on_commentView_currentItemChanged(QTreeWidgetItem *current)
 	ui->comment_view->setHtml( commentView );
 }
 
-bool MainWindow::is_next_waku()
+bool MainWindow::isNextWaku()
 {
 	return ui->auto_next_waku->isChecked();
+}
+
+void MainWindow::on_live_waku_list_activated(int index)
+{
+	ui->housouId->setText(nicolivemanager->liveWakuList.at(index)->getBroadID());
+
+	on_receive_clicked();
+}
+
+void MainWindow::on_user_data_OK_clicked()
+{
+	nicolivemanager->getRawMyLiveHTML(ui->cookiesetting_usersession->text());
 }

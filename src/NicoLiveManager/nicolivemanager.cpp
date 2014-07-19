@@ -29,18 +29,14 @@ QVariant NicoLiveManager::makePostData(QString session_id)
 	return postData;
 }
 
-QString NicoLiveManager::getCommunity() const
+void NicoLiveManager::insertLiveWakuList(LiveWaku* livewaku)
 {
-	return community;
-}
+	const QString livewakuBID = livewaku->getBroadID();
+	foreach (LiveWaku* alistwaku, liveWakuList) {
+		if (livewakuBID == alistwaku->getBroadID())
+			return;
+	}
 
-QStringList NicoLiveManager::getMycommunityes() const
-{
-	return mycommunityes;
-}
-
-QStringList NicoLiveManager::getMylivecommunityes() const
-{
-	return mylivecommunityes;
+	liveWakuList << livewaku;
 }
 

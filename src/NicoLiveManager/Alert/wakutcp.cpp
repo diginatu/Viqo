@@ -39,12 +39,10 @@ void WakuTcp::connected()
 		throw QString("Error: ").append(socket->errorString());
 	}
 
-	mwin->onReceiveStarted();
 }
 
 void WakuTcp::disconnected()
 {
-	mwin->onReceiveEnded();
 }
 
 void WakuTcp::bytesWritten(qint64 bytes)
@@ -66,7 +64,6 @@ void WakuTcp::readyRead()
 
 void WakuTcp::readOneRawWaku(QByteArray& rawwaku)
 {
-//	qDebug() << rawwaku << "\n";
 
 	if (rawwaku.startsWith("<thread")) {
 		return;
@@ -76,18 +73,26 @@ void WakuTcp::readOneRawWaku(QByteArray& rawwaku)
 	QString wakuS = awaku.midStr(">", "</chat>");
 
 	QStringList wakur = wakuS.split(",");
+	const QString& broadID = wakur.at(0);
+	const QString& CommunityID = wakur.at(1);
+//	const QString& nushiID = wakur.at(2);
 
 	if(wakur.size() != 3) {
 		return;
 	}
 
-	qDebug() << wakur.at(0) << "," << wakur.at(1) << "," << wakur.at(2);
-
-
-	if ( mwin->is_next_waku() ){
-		if ( nicolivemanager->getCommunity() == wakur.at(1) ){
-			mwin->setHousouID("lv" + wakur.at(0));
+	if ( mwin->isNextWaku() ){
+		if ( nicolivemanager->nowWaku.getCommunity() == CommunityID &&
+				 nicolivemanager->nowWaku.getBroadID() != "lv"+broadID){
+			mwin->setHousouID("lv" + broadID);
 			mwin->on_receive_clicked();
+		}
+	}
+
+	foreach (QString commu, nicolivemanager->mycommunities) {
+		if (commu == wakur.at(1)) {
+			nicolivemanager->insertLiveWakuList(new LiveWaku(broadID, CommunityID));
+			mwin->refleshLiveWaku();
 		}
 	}
 

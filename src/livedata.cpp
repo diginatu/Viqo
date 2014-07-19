@@ -1,19 +1,19 @@
 #include "livedata.h"
 
-LiveData:: LiveData(QString liveID,  QString title,QString communityID)
+LiveData::LiveData(QString liveID, QString title, QString communityID)
 {
-   this->liveID=liveID;
-   this->communityID=communityID;
-   this->title=title;
+	 this->liveID = liveID;
+	 this->communityID = communityID;
+	 this->title = title;
 }
 
 QString LiveData::getLiveID(){
-    return this->liveID;
+		return liveID;
 }
 
 QString LiveData::getTitle(){
-    return this->title;
+		return title;
 }
 QString LiveData::getCommunityID(){
-    return this->communityID;
+		return communityID;
 }

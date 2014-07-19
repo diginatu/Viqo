@@ -27,10 +27,11 @@ SOURCES += src/main.cpp\
     src/NicoLiveManager/playyerstatusapi.cpp \
     src/NicoLiveManager/heartbeatapi.cpp \
     src/NicoLiveManager/Alert/alert.cpp \
-    src/NicoLiveManager/Alert/wakutcp.cpp
+    src/NicoLiveManager/Alert/wakutcp.cpp \
+    src/NicoLiveManager/Alert/livewaku.cpp \
+    src/NicoLiveManager/rawmylivewaku.cpp
 
-HEADERS  += src/main.h\
-    src/NicoLiveManager/nicolivemanager.h \
+HEADERS  += src/NicoLiveManager/nicolivemanager.h \
     src/commtcp.h \
     src/cookieread.h \
     src/livedata.h \
@@ -39,6 +40,7 @@ HEADERS  += src/main.h\
     src/strabstractor.h \
     src/usergetter.h \
     src/usermanager.h \
-    src/NicoLiveManager/Alert/wakutcp.h
+    src/NicoLiveManager/Alert/wakutcp.h \
+    src/NicoLiveManager/Alert/livewaku.h
 
 FORMS    += ui/mainwindow.ui

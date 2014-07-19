@@ -39,9 +39,10 @@ public:
 
 	void setWatchCount();
 	void setHousouID(QString text);
+	void refleshLiveWaku();
 
 	bool isCheckedAutoGettingUserName();
-	bool is_next_waku();
+	bool isNextWaku();
 
 	UserManager* userManager;
 
@@ -64,20 +65,15 @@ public slots:
 	void on_setting_commentComand_checkbox_stateChanged(int st);
 	void on_setting_apply_clicked();
 
-	void on_broad_list_activated(int index);
-	void on_mylive_reflesh_clicked();
-
 private slots:
-	// connect slot
-	void rawMyLivefinished();
-
 	void on_commentView_itemDoubleClicked(QTreeWidgetItem *item, int column);
 	void on_cookiesetting_usersession_textChanged();
-
 	void on_commentView_currentItemChanged(QTreeWidgetItem *current);
+	void on_live_waku_list_activated(int index);
+	void on_user_data_OK_clicked();
+	void updateElapsedTime();
 
 private:
-	void getRawMyLiveHTML(QString user_id);
 	void getComment();
 	void getSessionFromCookie();
 
@@ -86,15 +82,10 @@ private:
 	Ui::MainWindow* ui;
 	QByteArray m_data;
 
-	QNetworkAccessManager* mManager;
-	QNetworkReply* reply;
-
 	NicoLiveManager* nicolivemanager;
 
-	QList<LiveData*> broadIDList;
-	LiveData* currentSelectLive;
-	QTimer* liveDataReloadtimer;
 	QTimer* watch_count_timer;
+	QTimer* elapsed_time_timer;
 
 };
 

@@ -30,7 +30,7 @@
        </sizepolicy>
       </property>
       <property name="text">
-       <string>housou id</string>
+       <string>放送ID</string>
       </property>
      </widget>
     </item>
@@ -61,20 +61,7 @@
      </widget>
     </item>
     <item row="1" column="0" colspan="2">
-     <widget class="QComboBox" name="broad_list"/>
-    </item>
-    <item row="1" column="3">
-     <widget class="QPushButton" name="mylive_reflesh">
-      <property name="sizePolicy">
-       <sizepolicy hsizetype="Maximum" vsizetype="Fixed">
-        <horstretch>0</horstretch>
-        <verstretch>0</verstretch>
-       </sizepolicy>
-      </property>
-      <property name="text">
-       <string>reflesh</string>
-      </property>
-     </widget>
+     <widget class="QComboBox" name="live_waku_list"/>
     </item>
     <item row="1" column="4">
      <widget class="QPushButton" name="clear">
@@ -154,27 +141,7 @@
            </property>
           </widget>
          </item>
-         <item row="1" column="1">
-          <spacer name="horizontalSpacer">
-           <property name="orientation">
-            <enum>Qt::Horizontal</enum>
-           </property>
-           <property name="sizeHint" stdset="0">
-            <size>
-             <width>325</width>
-             <height>20</height>
-            </size>
-           </property>
-          </spacer>
-         </item>
-         <item row="1" column="2">
-          <widget class="QLabel" name="num_audience">
-           <property name="text">
-            <string>来場者数: 0</string>
-           </property>
-          </widget>
-         </item>
-         <item row="0" column="0" colspan="3">
+         <item row="0" column="0" colspan="5">
           <widget class="QTreeWidget" name="commentView">
            <property name="sizePolicy">
             <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
@@ -221,6 +188,33 @@
             </property>
            </column>
           </widget>
+         </item>
+         <item row="2" column="0">
+          <widget class="QLabel" name="num_audience">
+           <property name="text">
+            <string>来場者数: 0</string>
+           </property>
+          </widget>
+         </item>
+         <item row="2" column="3">
+          <widget class="QLabel" name="elapsed_time">
+           <property name="text">
+            <string>00:00:00</string>
+           </property>
+          </widget>
+         </item>
+         <item row="2" column="1">
+          <spacer name="horizontalSpacer_2">
+           <property name="orientation">
+            <enum>Qt::Horizontal</enum>
+           </property>
+           <property name="sizeHint" stdset="0">
+            <size>
+             <width>40</width>
+             <height>20</height>
+            </size>
+           </property>
+          </spacer>
          </item>
         </layout>
        </widget>
@@ -442,7 +436,7 @@
          </layout>
         </widget>
        </widget>
-       <widget class="QWidget" name="setting">
+       <widget class="QWidget" name="setting_tab">
         <attribute name="title">
          <string>setting</string>
         </attribute>
@@ -523,17 +517,17 @@
           </item>
          </layout>
         </widget>
-        <widget class="QPushButton" name="pushButton">
+        <widget class="QPushButton" name="user_data_OK">
          <property name="geometry">
           <rect>
-           <x>320</x>
-           <y>50</y>
+           <x>270</x>
+           <y>70</y>
            <width>99</width>
            <height>27</height>
           </rect>
          </property>
          <property name="text">
-          <string>PushButton</string>
+          <string>OK</string>
          </property>
         </widget>
        </widget>
@@ -558,6 +552,9 @@
         <verstretch>0</verstretch>
        </sizepolicy>
       </property>
+      <property name="text">
+       <string>lv</string>
+      </property>
      </widget>
     </item>
    </layout>
@@ -565,9 +562,8 @@
    <zorder>housouId</zorder>
    <zorder>housouId_label</zorder>
    <zorder>disconnect</zorder>
-   <zorder>broad_list</zorder>
+   <zorder>live_waku_list</zorder>
    <zorder>clear</zorder>
-   <zorder>mylive_reflesh</zorder>
    <zorder>splitter</zorder>
    <zorder>auto_next_waku</zorder>
   </widget>
@@ -606,14 +602,6 @@
   <action name="actionLoad">
    <property name="text">
     <string>load</string>
-   </property>
-  </action>
-  <action name="actionComment_View">
-   <property name="checkable">
-    <bool>true</bool>
-   </property>
-   <property name="text">
-    <string>Comment View</string>
    </property>
   </action>
  </widget>

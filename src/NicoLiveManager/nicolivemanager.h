@@ -9,6 +9,10 @@
 #include "../strabstractor.h"
 #include "../commtcp.h"
 #include "Alert/wakutcp.h"
+#include "Alert/livewaku.h"
+
+// temp
+#include "../livedata.h"
 
 class MainWindow;
 
@@ -18,20 +22,23 @@ class NicoLiveManager : public QObject
 public:
 	explicit NicoLiveManager(MainWindow* mwin, CommTcp** comtcp, QObject *parent = 0);
 
-	QString getAddr() const;
-	QString getThread() const;
-	int getPort() const;
 	QString getWatchCount() const;
-	QString getCommunity() const;
+
+	void insertLiveWakuList(LiveWaku* livewaku);
 
 	void getHeartBeatAPI(QString user_id, QString broad_id);
 	void getPlayyerStatusAPI(QString session_id, QString broad_id);
 	void loginAlertAPI(QString mail, QString pass);
 	void adminAlertAPI(QString ticket);
+	void getRawMyLiveHTML(QString session_id);
 
-	QStringList getMycommunityes() const;
+//	QList<LiveWaku> myliveWakus;
 
-	QStringList getMylivecommunityes() const;
+	QStringList mycommunities;
+
+	LiveWaku nowWaku;
+
+	QList<LiveWaku*> liveWakuList;
 
 signals:
 
@@ -42,8 +49,6 @@ private:
 	CommTcp** commtcp;
 	WakuTcp* wakutcp;
 
-	QString community;
-
 	QString addr;
 	QString thread;
 	int port;
@@ -53,8 +58,6 @@ private:
 	QString waku_thread;
 	int waku_port;
 
-	QStringList mycommunityes;
-	QStringList mylivecommunityes;
 
 	QVariant makePostData(QString session_id);
 
@@ -63,6 +66,7 @@ private slots:
 	void heartBeatFinished(QNetworkReply* reply);
 	void loginAlertFinished(QNetworkReply* reply);
 	void adminAlertFinished(QNetworkReply* reply);
+	void rawMyLivefinished(QNetworkReply* reply);
 
 };
 
