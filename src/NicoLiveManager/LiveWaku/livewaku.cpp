@@ -1,14 +1,22 @@
 #include "livewaku.h"
 
-LiveWaku::LiveWaku(QObject* parent) :
+LiveWaku::LiveWaku(MainWindow* mwin, QObject* parent) :
 	QObject(parent)
 {
+	this->mwin = mwin;
 }
 
-LiveWaku::LiveWaku(QString broadID, QString community, QString title, QObject *parent) :
+LiveWaku::LiveWaku(MainWindow* mwin, QString broadID, QObject *parent) :
 	QObject(parent)
 {
-	this->title = title;
+	this->mwin = mwin;
+	this->broadID = broadID;
+}
+
+LiveWaku::LiveWaku(MainWindow* mwin, QString broadID, QString community, QString title, QObject *parent) :
+	QObject(parent)
+{
+	this->mwin = mwin;
 	this->broadID = broadID;
 	this->community = community;
 	this->title = title;

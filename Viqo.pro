@@ -23,13 +23,14 @@ SOURCES += src/main.cpp\
     src/usergetter.cpp \
     src/usermanager.cpp \
 		src/NicoLiveManager/nicolivemanager.cpp \
-    src/NicoLiveManager/playyerstatusapi.cpp \
     src/NicoLiveManager/heartbeatapi.cpp \
     src/NicoLiveManager/Alert/alert.cpp \
     src/NicoLiveManager/Alert/wakutcp.cpp \
-    src/NicoLiveManager/Alert/livewaku.cpp \
     src/NicoLiveManager/rawmylivewaku.cpp \
-    src/NicoLiveManager/commtcp.cpp
+    src/NicoLiveManager/LiveWaku/livewaku.cpp \
+    src/NicoLiveManager/LiveWaku/playyerstatusapi.cpp \
+    src/NicoLiveManager/LiveWaku/nowlivewaku.cpp \
+    src/NicoLiveManager/LiveWaku/commtcp.cpp
 
 HEADERS  += src/NicoLiveManager/nicolivemanager.h \
     src/cookieread.h \
@@ -40,7 +41,8 @@ HEADERS  += src/NicoLiveManager/nicolivemanager.h \
     src/usergetter.h \
     src/usermanager.h \
     src/NicoLiveManager/Alert/wakutcp.h \
-    src/NicoLiveManager/Alert/livewaku.h \
-    src/NicoLiveManager/commtcp.h
+    src/NicoLiveManager/LiveWaku/livewaku.h \
+    src/NicoLiveManager/LiveWaku/nowlivewaku.h \
+    src/NicoLiveManager/LiveWaku/commtcp.h
 
 FORMS    += ui/mainwindow.ui

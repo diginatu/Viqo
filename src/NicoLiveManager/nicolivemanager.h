@@ -7,12 +7,12 @@
 #include <QNetworkRequest>
 
 #include "../strabstractor.h"
-#include "commtcp.h"
 #include "Alert/wakutcp.h"
-#include "Alert/livewaku.h"
+#include "LiveWaku/livewaku.h"
+#include "LiveWaku/nowlivewaku.h"
 
 // temp
-#include "../livedata.h"
+//#include "../livedata.h"
 
 class MainWindow;
 
@@ -24,10 +24,11 @@ public:
 
 	QString getWatchCount() const;
 
+	static QVariant makePostData(QString session_id);
+
 	void insertLiveWakuList(LiveWaku* livewaku);
 
 	void getHeartBeatAPI(QString user_id, QString broad_id);
-	void getPlayyerStatusAPI(QString session_id, QString broad_id);
 	void loginAlertAPI(QString mail, QString pass);
 	void adminAlertAPI(QString ticket);
 	void getRawMyLiveHTML(QString session_id);
@@ -36,33 +37,28 @@ public:
 
 	QStringList mycommunities;
 
-	LiveWaku nowWaku;
+	NowLiveWaku nowWaku;
 
 	QList<LiveWaku*> liveWakuList;
 
 	void broadDisconnect();
+	void broadStart(QString session);
 signals:
 
 public slots:
 
 private:
 	MainWindow* mwin;
-	CommTcp* commtcp;
 	WakuTcp* wakutcp;
 
-	QString addr;
-	QString thread;
-	int port;
 	QString watchCount;
 
 	QString waku_addr;
 	QString waku_thread;
 	int waku_port;
 
-	QVariant makePostData(QString session_id);
 
 private slots:
-	void playerStatusFinished(QNetworkReply* reply);
 	void heartBeatFinished(QNetworkReply* reply);
 	void loginAlertFinished(QNetworkReply* reply);
 	void adminAlertFinished(QNetworkReply* reply);

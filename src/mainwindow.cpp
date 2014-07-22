@@ -172,15 +172,13 @@ QString MainWindow::getUserSession(){
 
 void MainWindow::on_receive_clicked()
 {
-	const QString userSession = getUserSession();
-	const QString broad_id = ui->housouId->text();
-
-	if ( userSession.isEmpty() ) return;
+	if ( getUserSession().isEmpty() ) return;
 
 	on_disconnect_clicked();
 	on_clear_clicked();
 
-	nicolivemanager->getPlayyerStatusAPI(userSession, broad_id);
+	nicolivemanager->nowWaku.setBroadID(ui->housouId->text());
+	nicolivemanager->broadStart(getUserSession());
 }
 
 

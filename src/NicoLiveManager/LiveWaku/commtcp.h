@@ -31,13 +31,14 @@ public slots:
 	void sendNull();
 
 private:
-	MainWindow* mwin;
 	QTcpSocket* socket;
 	QString domain, thread;
 	int port;
 	QDateTime opentime;
 	QByteArray lastRawComm;
 	QTimer* nullDataTimer;
+
+	MainWindow* mwin;
 
 };
 

@@ -31,7 +31,7 @@ void NicoLiveManager::rawMyLivefinished(QNetworkReply* reply)
 		// 見つけた文字列分だけずらす
 		currentIndex+=rx.cap(0).length();
 
-		insertLiveWakuList(new LiveWaku(rx.cap(2),rx.cap(1),rx.cap(3)));
+		insertLiveWakuList(new LiveWaku(mwin, rx.cap(2),rx.cap(1),rx.cap(3)));
 	}
 
 //	qDebug() << broadIDList;

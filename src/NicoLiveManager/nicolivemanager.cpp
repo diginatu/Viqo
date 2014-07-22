@@ -3,7 +3,7 @@
 
 NicoLiveManager::NicoLiveManager(MainWindow* mwin, QObject *parent) :
 	QObject(parent),
-	commtcp(NULL),
+	nowWaku(mwin, this),
 	wakutcp(NULL)
 {
 	this->mwin = mwin;
@@ -40,11 +40,11 @@ void NicoLiveManager::insertLiveWakuList(LiveWaku* livewaku)
 	liveWakuList << livewaku;
 }
 
+void NicoLiveManager::broadStart(QString session){
+	nowWaku.getPlayyerStatusAPI(session);
+}
+
 void NicoLiveManager::broadDisconnect(){
-	if (commtcp != NULL && commtcp->isConnected() ) {
-		commtcp->close();
-		commtcp->deleteLater();
-		commtcp = NULL;
-	}
+	nowWaku.broadDisconnect();
 }
 

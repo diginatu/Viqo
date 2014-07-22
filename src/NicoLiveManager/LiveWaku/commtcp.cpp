@@ -1,7 +1,8 @@
 #include "commtcp.h"
-#include "../mainwindow.h"
+#include "../../mainwindow.h"
 
-CommTcp::CommTcp(QString domain, int port, QString thread, MainWindow* mwin)
+CommTcp::CommTcp(QString domain, int port, QString thread, MainWindow* mwin) :
+	socket(NULL)
 {
 	this->domain = domain;
 	this->port = port;
@@ -155,5 +156,6 @@ void CommTcp::close()
 
 bool CommTcp::isConnected()
 {
+	if (socket == NULL) return false;
 	return socket->state() != QAbstractSocket::UnconnectedState;
 }
