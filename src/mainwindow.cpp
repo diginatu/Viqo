@@ -5,7 +5,7 @@ void MainWindow::onReceiveStarted()
 {
 	qDebug() << "-----------st-------------";
 
-	QWidget::setWindowTitle("- " + nicolivemanager->nowWaku.getTitle() + " - Viqo");
+	QWidget::setWindowTitle(nicolivemanager->nowWaku.getTitle() + " - Viqo");
 
 	// set audiences num timer
 	elapsed_time_timer = new QTimer(this);
@@ -39,10 +39,9 @@ void MainWindow::onReceiveEnded()
 
 void MainWindow::getWatchCount()
 {
-	const QString userSession = getUserSession();
-	const QString broad_id = ui->housouId->text();
+	const QString& broad_id = ui->housouId->text();
 
-	nicolivemanager->getHeartBeatAPI(userSession,broad_id);
+	nicolivemanager->getHeartBeatAPI(broad_id);
 }
 
 void MainWindow::updateElapsedTime()
@@ -58,12 +57,17 @@ void MainWindow::setHousouID(QString text)
 	ui->housouId->setText(text);
 }
 
-void MainWindow::refleshLiveWaku()
+void MainWindow::reflashLiveWaku()
 {
 	ui->live_waku_list->clear();
+	int now_no;
 	for(int i = 0; i < nicolivemanager->liveWakuList.size(); ++i) {
+		if (nicolivemanager->liveWakuList.at(i)->getBroadID() == nicolivemanager->nowWaku.getBroadID())
+			now_no = i;
 		ui->live_waku_list->addItem(nicolivemanager->liveWakuList.at(i)->getTitle());
 	}
+
+	ui->live_waku_list->setCurrentIndex(now_no);
 }
 
 void MainWindow::setWatchCount()
@@ -139,8 +143,8 @@ MainWindow::MainWindow(QWidget *parent) :
 	ui->userdata_pass->setEchoMode(QLineEdit::Password);
 
 
-	if ( ui->cookiesetting_browserCombo->currentIndex() == 0 )
-		getUserSession();
+//	if ( ui->cookiesetting_browserCombo->currentIndex() == 0 )
+//		getUserSession();
 
 	on_actionLoad_triggered();
 
@@ -178,7 +182,7 @@ void MainWindow::on_receive_clicked()
 	on_clear_clicked();
 
 	nicolivemanager->nowWaku.setBroadID(ui->housouId->text());
-	nicolivemanager->broadStart(getUserSession());
+	nicolivemanager->broadStart();
 }
 
 
@@ -348,11 +352,11 @@ bool MainWindow::isNextWaku()
 
 void MainWindow::on_live_waku_list_activated(int index)
 {
-	ui->housouId->setText("lv"+nicolivemanager->liveWakuList.at(index)->getBroadID());
+	ui->housouId->setText(nicolivemanager->liveWakuList.at(index)->getBroadID());
 	on_receive_clicked();
 }
 
 void MainWindow::on_user_data_OK_clicked()
 {
-	nicolivemanager->getRawMyLiveHTML(ui->cookiesetting_usersession->text());
+	nicolivemanager->getRawMyLiveHTML();
 }

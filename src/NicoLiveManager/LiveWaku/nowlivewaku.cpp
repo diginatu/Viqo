@@ -13,32 +13,12 @@ NowLiveWaku::NowLiveWaku(MainWindow* mwin, QString broadID, QObject* parent) :
 {
 }
 
-NowLiveWaku::NowLiveWaku(MainWindow* mwin, QString broadID, QString community, QString title, QObject* parent) :
-	LiveWaku(mwin, broadID, community, title, parent),
-	commtcp(NULL)
-{
-}
-
 void NowLiveWaku::broadDisconnect() {
 	if (commtcp != NULL && commtcp->isConnected() ) {
 		commtcp->close();
 		commtcp->deleteLater();
 		commtcp = NULL;
 	}
-}
-
-void NowLiveWaku::getPlayyerStatusAPI(QString session_id)
-{
-	QNetworkAccessManager* mManager = new QNetworkAccessManager(this);
-	// make request
-	QNetworkRequest rq;
-	QVariant postData = NicoLiveManager::makePostData(session_id);
-	rq.setHeader(QNetworkRequest::CookieHeader, postData);
-	rq.setUrl(QUrl("http://live.nicovideo.jp/api/getplayerstatus?v=" + broadID));
-
-	connect(mManager, SIGNAL(finished(QNetworkReply*)), this,
-					SLOT(playerStatusFinished(QNetworkReply*)));
-	mManager->get(rq);
 }
 
 void NowLiveWaku::playerStatusFinished(QNetworkReply* reply)

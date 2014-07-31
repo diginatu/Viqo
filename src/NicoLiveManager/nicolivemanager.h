@@ -11,8 +11,6 @@
 #include "LiveWaku/livewaku.h"
 #include "LiveWaku/nowlivewaku.h"
 
-// temp
-//#include "../livedata.h"
 
 class MainWindow;
 
@@ -28,12 +26,10 @@ public:
 
 	void insertLiveWakuList(LiveWaku* livewaku);
 
-	void getHeartBeatAPI(QString user_id, QString broad_id);
+	void getHeartBeatAPI(QString broad_id);
 	void loginAlertAPI(QString mail, QString pass);
 	void adminAlertAPI(QString ticket);
-	void getRawMyLiveHTML(QString session_id);
-
-//	QList<LiveWaku> myliveWakus;
+	void getRawMyLiveHTML();
 
 	QStringList mycommunities;
 
@@ -42,7 +38,7 @@ public:
 	QList<LiveWaku*> liveWakuList;
 
 	void broadDisconnect();
-	void broadStart(QString session);
+	void broadStart();
 signals:
 
 public slots:

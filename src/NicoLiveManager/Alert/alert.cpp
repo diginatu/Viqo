@@ -32,7 +32,7 @@ void NicoLiveManager::loginAlertFinished(QNetworkReply* reply)
 
 	QString ticket = commTcpi.midStr("<ticket>","</ticket>");
 
-	mwin->insLog("got ticket: "+ticket);
+//	mwin->insLog("got ticket: "+ticket);
 
 	adminAlertAPI(ticket);
 }
@@ -76,7 +76,7 @@ void NicoLiveManager::adminAlertFinished(QNetworkReply* reply)
 		this->mycommunities << mycommunity;
 	}
 
-	qDebug() << this->mycommunities;
+//	qDebug() << this->mycommunities;
 
 	waku_addr = wakuTcpi.midStr("<addr>", "</addr>");
 	waku_port = wakuTcpi.midStr("<port>", "</port>").toInt();

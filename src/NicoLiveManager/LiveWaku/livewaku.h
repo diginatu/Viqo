@@ -13,9 +13,8 @@ class LiveWaku : public QObject
 public:
 	explicit LiveWaku(MainWindow* mwin, QObject *parent = 0);
 	explicit LiveWaku(MainWindow* mwin, QString broadID, QObject *parent = 0);
-	explicit LiveWaku(MainWindow* mwin, QString broadID, QString community = "", QString title = "", QObject *parent = 0);
 
-	void getPlayyerStatusAPI(QString session_id);
+	void getPlayyerStatusAPI();
 
 	QString getTitle() const;
 	void setTitle(const QString& value);

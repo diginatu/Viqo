@@ -15,7 +15,6 @@ public:
 	NowLiveWaku(MainWindow* mwin, QString broadID, QString community, QString title, QObject* parent);
 
 	void broadDisconnect();
-	void getPlayyerStatusAPI(QString session_id);
 
 private slots:
 	void playerStatusFinished(QNetworkReply* reply);

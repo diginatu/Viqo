@@ -1,12 +1,12 @@
 #include "nicolivemanager.h"
 #include "../mainwindow.h"
 
-void NicoLiveManager::getHeartBeatAPI(QString session_id, QString broad_id)
+void NicoLiveManager::getHeartBeatAPI(QString broad_id)
 {
 	QNetworkAccessManager* mManager = new QNetworkAccessManager(this);
 	// make request
 	QNetworkRequest rq;
-	QVariant postData = makePostData(session_id);
+	QVariant postData = makePostData(mwin->getUserSession());
 	rq.setHeader(QNetworkRequest::CookieHeader, postData);
 	rq.setUrl(QUrl("http://live.nicovideo.jp/api/heartbeat?v=" + broad_id));
 

@@ -28,7 +28,6 @@ SOURCES += src/main.cpp\
     src/NicoLiveManager/Alert/wakutcp.cpp \
     src/NicoLiveManager/rawmylivewaku.cpp \
     src/NicoLiveManager/LiveWaku/livewaku.cpp \
-    src/NicoLiveManager/LiveWaku/playyerstatusapi.cpp \
     src/NicoLiveManager/LiveWaku/nowlivewaku.cpp \
     src/NicoLiveManager/LiveWaku/commtcp.cpp
 

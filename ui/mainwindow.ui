@@ -30,7 +30,7 @@
        </sizepolicy>
       </property>
       <property name="text">
-       <string>放送ID</string>
+       <string>放送ID lv</string>
       </property>
      </widget>
     </item>
@@ -553,7 +553,7 @@
        </sizepolicy>
       </property>
       <property name="text">
-       <string>lv</string>
+       <string/>
       </property>
      </widget>
     </item>

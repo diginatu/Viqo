@@ -37,11 +37,13 @@ void NicoLiveManager::insertLiveWakuList(LiveWaku* livewaku)
 			return;
 	}
 
+	livewaku->getPlayyerStatusAPI();
 	liveWakuList << livewaku;
+
 }
 
-void NicoLiveManager::broadStart(QString session){
-	nowWaku.getPlayyerStatusAPI(session);
+void NicoLiveManager::broadStart(){
+	nowWaku.getPlayyerStatusAPI();
 }
 
 void NicoLiveManager::broadDisconnect(){

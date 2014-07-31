@@ -86,15 +86,15 @@ void WakuTcp::readOneRawWaku(QByteArray& rawwaku)
 	if ( mwin->isNextWaku() ){
 		if ( nicolivemanager->nowWaku.getCommunity() == CommunityID &&
 				 nicolivemanager->nowWaku.getBroadID() != broadID){
-			mwin->setHousouID("lv" + broadID);
+			mwin->setHousouID(broadID);
 			mwin->on_receive_clicked();
 		}
 	}
 
 	foreach (QString commu, nicolivemanager->mycommunities) {
 		if (commu == wakur.at(1)) {
-			nicolivemanager->insertLiveWakuList(new LiveWaku(mwin, broadID, CommunityID));
-			mwin->refleshLiveWaku();
+			nicolivemanager->insertLiveWakuList(new LiveWaku(mwin, broadID));
+			mwin->reflashLiveWaku();
 		}
 	}
 

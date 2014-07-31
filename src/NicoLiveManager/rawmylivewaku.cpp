@@ -1,12 +1,12 @@
 #include "nicolivemanager.h"
 #include "../mainwindow.h"
 
-void NicoLiveManager::getRawMyLiveHTML(QString session_id)
+void NicoLiveManager::getRawMyLiveHTML()
 {
 	QNetworkAccessManager* mManager = new QNetworkAccessManager(this);
 	// make request
 	QNetworkRequest rq;
-	QVariant postData = makePostData(session_id);
+	QVariant postData = makePostData(mwin->getUserSession());
 	rq.setHeader(QNetworkRequest::CookieHeader, postData);
 	rq.setUrl(QUrl("http://www.nicovideo.jp/my/live"));
 
@@ -31,11 +31,10 @@ void NicoLiveManager::rawMyLivefinished(QNetworkReply* reply)
 		// 見つけた文字列分だけずらす
 		currentIndex+=rx.cap(0).length();
 
-		insertLiveWakuList(new LiveWaku(mwin, rx.cap(2),rx.cap(1),rx.cap(3)));
+		insertLiveWakuList(new LiveWaku(mwin, rx.cap(2)));
 	}
 
 //	qDebug() << broadIDList;
 
-	mwin->refleshLiveWaku();
 
 }

@@ -39,7 +39,7 @@ public:
 
 	void setWatchCount();
 	void setHousouID(QString text);
-	void refleshLiveWaku();
+	void reflashLiveWaku();
 
 	bool isCheckedAutoGettingUserName();
 	bool isNextWaku();
