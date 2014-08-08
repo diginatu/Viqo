@@ -18,23 +18,17 @@ void NicoLiveManager::getRawMyLiveHTML()
 void NicoLiveManager::rawMyLivefinished(QNetworkReply* reply)
 {
 	QByteArray repdata = reply->readAll();
+//	qDebug() << repdata;
 
 //	while (!liveWakuList.isEmpty())
 //		delete liveWakuList.takeFirst();
 
-	//cap(1)はコミュID、cap(2)は配信ID,cap(3)はタイトル
-	QRegExp rx("<a href=\"http://com.nicovideo.jp/community/(co\\d+)\">.*<h5><a href=\"http://live.nicovideo.jp/watch/lv(\\d+)\\?ref=zero_mysubscribe\">(.*)</a></h5>");
-	rx.setMinimal(true);
-	int currentIndex=0;
+	StrAbstractor liveID(repdata);
 
-	while ((currentIndex=rx.indexIn(QString(repdata),currentIndex))!=-1){
-		// 見つけた文字列分だけずらす
-		currentIndex+=rx.cap(0).length();
-
-		insertLiveWakuList(new LiveWaku(mwin, rx.cap(2)));
+	QString ID;
+	while((ID = liveID.midStr("<a href=\"http://live.nicovideo.jp/watch/lv",
+														"?ref=zero_mysubscribe\">")) != "") {
+		insertLiveWakuList(new LiveWaku(mwin, ID));
 	}
-
-//	qDebug() << broadIDList;
-
 
 }

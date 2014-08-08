@@ -116,7 +116,6 @@ QTreeWidgetItem* MainWindow::insComment(int num, QString prem, QString user, QSt
 	ls += is_184?"@":"";
 
 	QTreeWidgetItem* item = new QTreeWidgetItem(ls);
-	item->setToolTip(3, comm);
 	ui->commentView->insertTopLevelItem(0, item);
 	return item;
 }
