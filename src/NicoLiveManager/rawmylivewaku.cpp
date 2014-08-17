@@ -20,15 +20,31 @@ void NicoLiveManager::rawMyLivefinished(QNetworkReply* reply)
 	QByteArray repdata = reply->readAll();
 //	qDebug() << repdata;
 
-//	while (!liveWakuList.isEmpty())
-//		delete liveWakuList.takeFirst();
-
 	StrAbstractor liveID(repdata);
 
+	// seek to Programs from the channels/communities joined if exist
+	if (liveID.forwardStr("<div class=\"articleBody \" id=\"ch\">") == -1) {
+		return;
+	}
+
+	QString bfID;
 	QString ID;
 	while((ID = liveID.midStr("<a href=\"http://live.nicovideo.jp/watch/lv",
-														"?ref=zero_mysubscribe\">")) != "") {
-		insertLiveWakuList(new LiveWaku(mwin, ID));
+														"?ref=")) != "") {
+		if (bfID == ID) continue;
+		bool isID = true;
+
+		for(int i; i<ID.size(); ++i) {
+			if( ID[i] > '9' || ID[i] < '0' ) {
+				isID = false;
+				break;
+			}
+		}
+
+		if ( !isID ) continue;
+
+		insertLiveWakuList(new LiveWaku(mwin, this, ID));
+		bfID = ID;
 	}
 
 }

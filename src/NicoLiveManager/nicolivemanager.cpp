@@ -7,6 +7,19 @@ NicoLiveManager::NicoLiveManager(MainWindow* mwin, QObject *parent) :
 	wakutcp(NULL)
 {
 	this->mwin = mwin;
+
+	// set timer to delete the ended elements in waku list.
+	delWakuTimer = new QTimer(this);
+	delWakuTimer->setInterval(30000);
+
+	connect(delWakuTimer, SIGNAL(timeout()), this, SLOT(deleteWakuList()));
+	delWakuTimer->start();
+}
+
+NicoLiveManager::~NicoLiveManager()
+{
+	delWakuTimer->stop();
+	delWakuTimer->deleteLater();
 }
 
 QVariant NicoLiveManager::makePostData(QString session_id)
@@ -39,14 +52,24 @@ void NicoLiveManager::insertLiveWakuList(LiveWaku* livewaku)
 
 	livewaku->getPlayyerStatusAPI();
 	liveWakuList << livewaku;
-
 }
 
-void NicoLiveManager::broadStart(){
+void NicoLiveManager::broadStart()
+{
 	nowWaku.getPlayyerStatusAPI();
 }
 
-void NicoLiveManager::broadDisconnect(){
+void NicoLiveManager::broadDisconnect()
+{
 	nowWaku.broadDisconnect();
 }
 
+void NicoLiveManager::deleteWakuList()
+{
+	QDateTime nowTime = QDateTime::currentDateTimeUtc();
+	for (int i; i < liveWakuList.size(); ++i) {
+		if ( nowTime > liveWakuList[i]->getEd() ) {
+			liveWakuList[i]->getPlayyerStatusAPI();
+		}
+	}
+}

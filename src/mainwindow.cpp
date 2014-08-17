@@ -39,9 +39,12 @@ void MainWindow::onReceiveEnded()
 
 void MainWindow::getWatchCount()
 {
-	const QString& broad_id = ui->housouId->text();
+	nicolivemanager->getHeartBeatAPI();
+}
 
-	nicolivemanager->getHeartBeatAPI(broad_id);
+void MainWindow::setWatchCount(QString num)
+{
+	ui->num_audience->setText("来場者数: " + num);
 }
 
 void MainWindow::updateElapsedTime()
@@ -57,7 +60,7 @@ void MainWindow::setHousouID(QString text)
 	ui->housouId->setText(text);
 }
 
-void MainWindow::reflashLiveWaku()
+void MainWindow::refleshLiveWaku()
 {
 	ui->live_waku_list->clear();
 	int now_no;
@@ -70,10 +73,6 @@ void MainWindow::reflashLiveWaku()
 	ui->live_waku_list->setCurrentIndex(now_no);
 }
 
-void MainWindow::setWatchCount()
-{
-	ui->num_audience->setText("来場者数: " + nicolivemanager->getWatchCount());
-}
 
 bool MainWindow::isCheckedAutoGettingUserName()
 {

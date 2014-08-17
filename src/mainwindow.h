@@ -37,9 +37,9 @@ public:
 	QString getUserSession();
 	QString setting_commentCommand;
 
-	void setWatchCount();
+	void setWatchCount(QString num);
 	void setHousouID(QString text);
-	void reflashLiveWaku();
+	void refleshLiveWaku();
 
 	bool isCheckedAutoGettingUserName();
 	bool isNextWaku();

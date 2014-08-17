@@ -5,6 +5,7 @@
 #include <QtNetwork>
 #include <QNetworkAccessManager>
 #include <QNetworkRequest>
+#include <QTimer>
 
 #include "../strabstractor.h"
 #include "Alert/wakutcp.h"
@@ -19,6 +20,7 @@ class NicoLiveManager : public QObject
 	Q_OBJECT
 public:
 	explicit NicoLiveManager(MainWindow* mwin, QObject *parent = 0);
+	~NicoLiveManager();
 
 	QString getWatchCount() const;
 
@@ -26,7 +28,7 @@ public:
 
 	void insertLiveWakuList(LiveWaku* livewaku);
 
-	void getHeartBeatAPI(QString broad_id);
+	void getHeartBeatAPI();
 	void loginAlertAPI(QString mail, QString pass);
 	void adminAlertAPI(QString ticket);
 	void getRawMyLiveHTML();
@@ -53,6 +55,7 @@ private:
 	QString waku_thread;
 	int waku_port;
 
+	QTimer* delWakuTimer;
 
 private slots:
 	void heartBeatFinished(QNetworkReply* reply);
@@ -60,6 +63,7 @@ private slots:
 	void adminAlertFinished(QNetworkReply* reply);
 	void rawMyLivefinished(QNetworkReply* reply);
 
+	void deleteWakuList();
 };
 
 

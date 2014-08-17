@@ -2,16 +2,18 @@
 #include "../../mainwindow.h"
 #include "../nicolivemanager.h"
 
-LiveWaku::LiveWaku(MainWindow* mwin, QObject* parent) :
+LiveWaku::LiveWaku(MainWindow* mwin, NicoLiveManager* nlman, QObject* parent) :
 	QObject(parent)
 {
 	this->mwin = mwin;
+	this->nlman = nlman;
 }
 
-LiveWaku::LiveWaku(MainWindow* mwin, QString broadID, QObject *parent) :
+LiveWaku::LiveWaku(MainWindow* mwin, NicoLiveManager* nlman, QString broadID, QObject *parent) :
 	QObject(parent)
 {
 	this->mwin = mwin;
+	this->nlman = nlman;
 	this->broadID = broadID;
 }
 
@@ -89,6 +91,20 @@ void LiveWaku::playerStatusFinished(QNetworkReply* reply)
 	if (status == "fail") {
 		QString code = commTcpi.midStr("<code>","</code>");
 		mwin->insLog(code);
+
+		if (code == "closed") {
+			QList<LiveWaku*>& wlist = nlman->liveWakuList;
+			for (int i = 0; i < wlist.size(); ++i) {
+				if (wlist[i] == this) {
+					mwin->insLog("remove list : " + i);
+					wlist.removeAt(i);
+					this->deleteLater();
+					mwin->refleshLiveWaku();
+					return;
+				}
+			}
+			mwin->insLog("?????");
+		}
 		return;
 	}
 
@@ -101,6 +117,8 @@ void LiveWaku::playerStatusFinished(QNetworkReply* reply)
 	setSt(commTcpi.midStr("<start_time>","</start_time>").toUInt());
 	setEd(commTcpi.midStr("<end_time>","</end_time>").toUInt());
 
-	mwin->reflashLiveWaku();
+	mwin->refleshLiveWaku();
+
+	return;
 }
 

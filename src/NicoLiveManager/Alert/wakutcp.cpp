@@ -93,8 +93,8 @@ void WakuTcp::readOneRawWaku(QByteArray& rawwaku)
 
 	foreach (QString commu, nicolivemanager->mycommunities) {
 		if (commu == wakur.at(1)) {
-			nicolivemanager->insertLiveWakuList(new LiveWaku(mwin, broadID));
-			mwin->reflashLiveWaku();
+			nicolivemanager->insertLiveWakuList(new LiveWaku(mwin, nicolivemanager, broadID));
+			mwin->refleshLiveWaku();
 		}
 	}
 

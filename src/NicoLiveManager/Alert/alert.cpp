@@ -82,7 +82,9 @@ void NicoLiveManager::adminAlertFinished(QNetworkReply* reply)
 	waku_port = wakuTcpi.midStr("<port>", "</port>").toInt();
 	waku_thread = wakuTcpi.midStr("<thread>", "</thread>");
 
-	mwin->insLog("waku addr: "+waku_addr+"\nport: "+QString::number(waku_port)+"\nthread:"+waku_thread);
+	mwin->insLog("waku addr: " + waku_addr +
+							 "\nport: " + QString::number(waku_port) +
+							 "\nthread:" + waku_thread);
 
 	try {
 		if ( wakutcp != NULL ) wakutcp->deleteLater();

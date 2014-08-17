@@ -6,13 +6,14 @@
 #include <QNetworkReply>
 
 class MainWindow;
+class NicoLiveManager;
 
 class LiveWaku : public QObject
 {
 	Q_OBJECT
 public:
-	explicit LiveWaku(MainWindow* mwin, QObject *parent = 0);
-	explicit LiveWaku(MainWindow* mwin, QString broadID, QObject *parent = 0);
+	explicit LiveWaku(MainWindow* mwin, NicoLiveManager* nlman, QObject *parent = 0);
+	explicit LiveWaku(MainWindow* mwin, NicoLiveManager* nlman, QString broadID, QObject *parent = 0);
 
 	void getPlayyerStatusAPI();
 
@@ -51,6 +52,7 @@ protected:
 	QDateTime ed;
 
 	MainWindow* mwin;
+	NicoLiveManager* nlman;
 
 };
 

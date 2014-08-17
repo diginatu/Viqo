@@ -2,13 +2,13 @@
 #include "../../mainwindow.h"
 
 NowLiveWaku::NowLiveWaku(MainWindow* mwin, QObject* parent) :
-	LiveWaku(mwin, parent),
+	LiveWaku(mwin, NULL, parent),
 	commtcp(NULL)
 {
 }
 
 NowLiveWaku::NowLiveWaku(MainWindow* mwin, QString broadID, QObject* parent) :
-	LiveWaku(mwin, broadID, parent),
+	LiveWaku(mwin, NULL, broadID, parent),
 	commtcp(NULL)
 {
 }

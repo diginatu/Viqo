@@ -80,7 +80,7 @@ void CommTcp::readyRead()
 
 void CommTcp::readOneRawComment(QByteArray& rawcomm)
 {
-	mwin->insLog(QString(rawcomm));
+//	mwin->insLog(QString(rawcomm));
 
 	if (rawcomm.startsWith("<thread")) {
 		return;
@@ -151,6 +151,8 @@ void CommTcp::readOneRawComment(QByteArray& rawcomm)
 
 void CommTcp::close()
 {
+	nullDataTimer->stop();
+	nullDataTimer->deleteLater();
 	socket->close();
 }
 
