@@ -77,6 +77,8 @@ private:
 	void getComment();
 	void getSessionFromCookie();
 
+	void bodyClear();
+
 	Ui::MainWindow* ui;
 	QByteArray m_data;
 

@@ -177,7 +177,7 @@ void MainWindow::on_receive_clicked()
 	if ( getUserSession().isEmpty() ) return;
 
 	on_disconnect_clicked();
-	on_clear_clicked();
+	bodyClear();
 
 	nicolivemanager->nowWaku.setBroadID(ui->housouId->text());
 	nicolivemanager->broadStart();
@@ -186,6 +186,7 @@ void MainWindow::on_receive_clicked()
 
 void MainWindow::on_disconnect_clicked()
 {
+	setWatchCount("0");
 	nicolivemanager->broadDisconnect();
 }
 
@@ -217,8 +218,13 @@ void MainWindow::on_cookiesetting_browserCombo_currentIndexChanged(int index)
 
 void MainWindow::on_clear_clicked()
 {
-	ui->commentView->clear();
+	bodyClear();
 	ui->logtext->clear();
+}
+
+void MainWindow::bodyClear()
+{
+	ui->commentView->clear();
 	ui->comment_view->clear();
 }
 
