@@ -32,7 +32,7 @@ void NicoLiveManager::loginAlertFinished(QNetworkReply* reply)
 
 	QString ticket = commTcpi.midStr("<ticket>","</ticket>");
 
-	mwin->insLog("got ticket: "+ticket);
+//	mwin->insLog("got ticket: "+ticket);
 
 	adminAlertAPI(ticket);
 }
@@ -57,7 +57,6 @@ void NicoLiveManager::adminAlertAPI(QString ticket)
 void NicoLiveManager::adminAlertFinished(QNetworkReply* reply)
 {
 	QByteArray repdata = reply->readAll();
-	qDebug() << repdata;
 
 	StrAbstractor wakuTcpi(repdata);
 
@@ -74,15 +73,18 @@ void NicoLiveManager::adminAlertFinished(QNetworkReply* reply)
 	StrAbstractor communityi(mycommunities);
 	QString mycommunity;
 	while ((mycommunity = communityi.midStr("<community_id>","</community_id>")) != "") {
-		qDebug() << mycommunity;
+		this->mycommunities << mycommunity;
 	}
 
+//	qDebug() << this->mycommunities;
 
 	waku_addr = wakuTcpi.midStr("<addr>", "</addr>");
 	waku_port = wakuTcpi.midStr("<port>", "</port>").toInt();
 	waku_thread = wakuTcpi.midStr("<thread>", "</thread>");
 
-	mwin->insLog("waku addr: "+waku_addr+"\nport: "+QString::number(waku_port)+"\nthread:"+waku_thread);
+	mwin->insLog("waku addr: " + waku_addr +
+							 "\nport: " + QString::number(waku_port) +
+							 "\nthread:" + waku_thread);
 
 	try {
 		if ( wakutcp != NULL ) wakutcp->deleteLater();

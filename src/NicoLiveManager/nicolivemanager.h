@@ -5,10 +5,13 @@
 #include <QtNetwork>
 #include <QNetworkAccessManager>
 #include <QNetworkRequest>
+#include <QTimer>
 
 #include "../strabstractor.h"
-#include "../commtcp.h"
 #include "Alert/wakutcp.h"
+#include "LiveWaku/livewaku.h"
+#include "LiveWaku/nowlivewaku.h"
+
 
 class MainWindow;
 
@@ -16,54 +19,51 @@ class NicoLiveManager : public QObject
 {
 	Q_OBJECT
 public:
-	explicit NicoLiveManager(MainWindow* mwin, CommTcp** comtcp, QObject *parent = 0);
+	explicit NicoLiveManager(MainWindow* mwin, QObject *parent = 0);
+	~NicoLiveManager();
 
-	QString getAddr() const;
-	QString getThread() const;
-	int getPort() const;
 	QString getWatchCount() const;
-	QString getCommunity() const;
 
-	void getHeartBeatAPI(QString user_id, QString broad_id);
-	void getPlayyerStatusAPI(QString session_id, QString broad_id);
+	static QVariant makePostData(QString session_id);
+
+	void insertLiveWakuList(LiveWaku* livewaku);
+
+	void getHeartBeatAPI();
 	void loginAlertAPI(QString mail, QString pass);
 	void adminAlertAPI(QString ticket);
+	void getRawMyLiveHTML();
 
-	QStringList getMycommunityes() const;
+	QStringList mycommunities;
 
-	QStringList getMylivecommunityes() const;
+	NowLiveWaku nowWaku;
 
+	QList<LiveWaku*> liveWakuList;
+
+	void broadDisconnect();
+	void broadStart();
 signals:
 
 public slots:
 
 private:
 	MainWindow* mwin;
-	CommTcp** commtcp;
 	WakuTcp* wakutcp;
 
-	QString community;
-
-	QString addr;
-	QString thread;
-	int port;
 	QString watchCount;
 
 	QString waku_addr;
 	QString waku_thread;
 	int waku_port;
 
-	QStringList mycommunityes;
-	QStringList mylivecommunityes;
-
-	QVariant makePostData(QString session_id);
+	QTimer* delWakuTimer;
 
 private slots:
-	void playerStatusFinished(QNetworkReply* reply);
 	void heartBeatFinished(QNetworkReply* reply);
 	void loginAlertFinished(QNetworkReply* reply);
 	void adminAlertFinished(QNetworkReply* reply);
+	void rawMyLivefinished(QNetworkReply* reply);
 
+	void deleteWakuList();
 };
 
 

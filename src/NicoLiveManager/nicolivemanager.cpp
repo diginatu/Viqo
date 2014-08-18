@@ -1,12 +1,25 @@
 #include "nicolivemanager.h"
 #include "../mainwindow.h"
 
-NicoLiveManager::NicoLiveManager(MainWindow* mwin, CommTcp** commtcp, QObject *parent) :
+NicoLiveManager::NicoLiveManager(MainWindow* mwin, QObject *parent) :
 	QObject(parent),
+	nowWaku(mwin, this),
 	wakutcp(NULL)
 {
 	this->mwin = mwin;
-	this->commtcp = commtcp;
+
+	// set timer to delete the ended elements in waku list.
+	delWakuTimer = new QTimer(this);
+	delWakuTimer->setInterval(30000);
+
+	connect(delWakuTimer, SIGNAL(timeout()), this, SLOT(deleteWakuList()));
+	delWakuTimer->start();
+}
+
+NicoLiveManager::~NicoLiveManager()
+{
+	delWakuTimer->stop();
+	delWakuTimer->deleteLater();
 }
 
 QVariant NicoLiveManager::makePostData(QString session_id)
@@ -29,18 +42,34 @@ QVariant NicoLiveManager::makePostData(QString session_id)
 	return postData;
 }
 
-QString NicoLiveManager::getCommunity() const
+void NicoLiveManager::insertLiveWakuList(LiveWaku* livewaku)
 {
-	return community;
+	const QString livewakuBID = livewaku->getBroadID();
+	foreach (LiveWaku* alistwaku, liveWakuList) {
+		if (livewakuBID == alistwaku->getBroadID())
+			return;
+	}
+
+	livewaku->getPlayyerStatusAPI();
+	liveWakuList << livewaku;
 }
 
-QStringList NicoLiveManager::getMycommunityes() const
+void NicoLiveManager::broadStart()
 {
-	return mycommunityes;
+	nowWaku.getPlayyerStatusAPI();
 }
 
-QStringList NicoLiveManager::getMylivecommunityes() const
+void NicoLiveManager::broadDisconnect()
 {
-	return mylivecommunityes;
+	nowWaku.broadDisconnect();
 }
 
+void NicoLiveManager::deleteWakuList()
+{
+	QDateTime nowTime = QDateTime::currentDateTimeUtc();
+	for (int i; i < liveWakuList.size(); ++i) {
+		if ( nowTime > liveWakuList[i]->getEd() ) {
+			liveWakuList[i]->getPlayyerStatusAPI();
+		}
+	}
+}

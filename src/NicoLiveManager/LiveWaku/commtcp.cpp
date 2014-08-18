@@ -1,7 +1,8 @@
 #include "commtcp.h"
-#include "mainwindow.h"
+#include "../../mainwindow.h"
 
-CommTcp::CommTcp(QString domain, int port, QString thread, MainWindow* mwin)
+CommTcp::CommTcp(QString domain, int port, QString thread, MainWindow* mwin) :
+	socket(NULL)
 {
 	this->domain = domain;
 	this->port = port;
@@ -79,7 +80,7 @@ void CommTcp::readyRead()
 
 void CommTcp::readOneRawComment(QByteArray& rawcomm)
 {
-	mwin->insLog(QString(rawcomm));
+//	mwin->insLog(QString(rawcomm));
 
 	if (rawcomm.startsWith("<thread")) {
 		return;
@@ -150,10 +151,13 @@ void CommTcp::readOneRawComment(QByteArray& rawcomm)
 
 void CommTcp::close()
 {
+	nullDataTimer->stop();
+	nullDataTimer->deleteLater();
 	socket->close();
 }
 
 bool CommTcp::isConnected()
 {
+	if (socket == NULL) return false;
 	return socket->state() != QAbstractSocket::UnconnectedState;
 }

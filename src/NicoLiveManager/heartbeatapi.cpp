@@ -1,14 +1,14 @@
 #include "nicolivemanager.h"
 #include "../mainwindow.h"
 
-void NicoLiveManager::getHeartBeatAPI(QString session_id, QString broad_id)
+void NicoLiveManager::getHeartBeatAPI()
 {
 	QNetworkAccessManager* mManager = new QNetworkAccessManager(this);
 	// make request
 	QNetworkRequest rq;
-	QVariant postData = makePostData(session_id);
+	QVariant postData = makePostData(mwin->getUserSession());
 	rq.setHeader(QNetworkRequest::CookieHeader, postData);
-	rq.setUrl(QUrl("http://live.nicovideo.jp/api/heartbeat?v=" + broad_id));
+	rq.setUrl(QUrl("http://live.nicovideo.jp/api/heartbeat?v=lv" + nowWaku.getBroadID()));
 
 	connect(mManager, SIGNAL(finished(QNetworkReply*)), this,
 					SLOT(heartBeatFinished(QNetworkReply*)));
@@ -20,11 +20,14 @@ void NicoLiveManager::heartBeatFinished(QNetworkReply* reply){
 	StrAbstractor heartbeat_data(repdata);
 
 	const QString status = heartbeat_data.midStr("status=\"", "\"");
-	if ( status == "fail" ) return;
+	if ( status == "fail" ) {
+		mwin->insLog("getting the watch count failed");
+		return;
+	}
 
 	watchCount = heartbeat_data.midStr("<watchCount>","</watchCount>");
 
-	mwin->setWatchCount();
+	mwin->setWatchCount(watchCount);
 }
 
 QString NicoLiveManager::getWatchCount() const {
