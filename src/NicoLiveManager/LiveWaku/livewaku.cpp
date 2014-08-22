@@ -96,7 +96,6 @@ void LiveWaku::playerStatusFinished(QNetworkReply* reply)
 			QList<LiveWaku*>& wlist = nlman->liveWakuList;
 			for (int i = 0; i < wlist.size(); ++i) {
 				if (wlist[i] == this) {
-					mwin->insLog("remove list : " + i);
 					wlist.removeAt(i);
 					this->deleteLater();
 					mwin->refleshLiveWaku();

@@ -76,7 +76,7 @@ void MainWindow::refleshLiveWaku()
 
 bool MainWindow::isCheckedAutoGettingUserName()
 {
-	return ui->auto_getting_user_name->isChecked();
+	return ui->auto_getting_user_name_chk->isChecked();
 }
 
 QString MainWindow::getCookieSetting(int n)
@@ -116,6 +116,11 @@ QTreeWidgetItem* MainWindow::insComment(int num, QString prem, QString user, QSt
 
 	QTreeWidgetItem* item = new QTreeWidgetItem(ls);
 	ui->commentView->insertTopLevelItem(0, item);
+
+	if (ui->keep_top_chk->isChecked()) {
+		ui->commentView->setCurrentItem(item);
+	}
+
 	return item;
 }
 
@@ -240,7 +245,7 @@ void MainWindow::on_actionSave_triggered()
 	cookie["value"] = ui->cookiesetting_column_value->text();
 
 	QJsonObject other;
-	other["auto_getting_user_name"] = ui->auto_getting_user_name->isChecked();
+	other["auto_getting_user_name_chk"] = ui->auto_getting_user_name_chk->isChecked();
 
 	other["comment_command_check"] = ui->setting_commentComand_checkbox->isChecked();
 	other["comment_command"] = ui->setting_commentComand->text();
@@ -292,7 +297,7 @@ void MainWindow::on_actionLoad_triggered()
 
 	QJsonObject other;
 	other = jsd.object()["other"].toObject();
-	ui->auto_getting_user_name->setChecked(other["auto_getting_user_name"].toBool());
+	ui->auto_getting_user_name_chk->setChecked(other["auto_getting_user_name_chk"].toBool());
 	ui->setting_commentComand->setText(other["comment_command"].toString());
 	ui->setting_commentComand_checkbox->setChecked(other["comment_command_check"].toBool());
 

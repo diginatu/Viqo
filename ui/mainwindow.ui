@@ -133,7 +133,7 @@
         </attribute>
         <layout class="QGridLayout" name="gridLayout">
          <item row="1" column="0">
-          <widget class="QCheckBox" name="auto_getting_user_name">
+          <widget class="QCheckBox" name="auto_getting_user_name_chk">
            <property name="toolTip">
             <string>auto getting user name and saving</string>
            </property>
@@ -141,7 +141,10 @@
             <string/>
            </property>
            <property name="text">
-            <string>auto get name</string>
+            <string>自動名前取得</string>
+           </property>
+           <property name="checked">
+            <bool>true</bool>
            </property>
           </widget>
          </item>
@@ -230,6 +233,13 @@
              <string>184</string>
             </property>
            </column>
+          </widget>
+         </item>
+         <item row="1" column="1">
+          <widget class="QCheckBox" name="keep_top_chk">
+           <property name="text">
+            <string>カーソルを常にトップ</string>
+           </property>
           </widget>
          </item>
         </layout>
