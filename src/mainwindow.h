@@ -30,7 +30,7 @@ public:
 
 	explicit MainWindow(QWidget *parent = 0);
 	~MainWindow();
-	QTreeWidgetItem* insComment(int num, QString prem, QString user, QString comm, QString date, bool is_184);
+	void insComment(int num, QString prem, QString user, QString comm, QString date, bool is_184, bool after_open);
 	void insLog(QString log);
 
 	QString getCookieSetting(int n);
@@ -41,7 +41,6 @@ public:
 	void setHousouID(QString text);
 	void refleshLiveWaku();
 
-	bool isCheckedAutoGettingUserName();
 	bool isNextWaku();
 
 	UserManager* userManager;

@@ -3,7 +3,7 @@
 
 void MainWindow::onReceiveStarted()
 {
-	qDebug() << "-----------st-------------";
+	qDebug() << "--comment receiving started--";
 
 	QWidget::setWindowTitle(nicolivemanager->nowWaku.getTitle() + " - Viqo");
 
@@ -23,7 +23,7 @@ void MainWindow::onReceiveStarted()
 
 void MainWindow::onReceiveEnded()
 {
-	qDebug() << "-----------ed-------------";
+	qDebug() << "--comment receiving ended--";
 
 	QWidget::setWindowTitle("Viqo");
 
@@ -73,12 +73,6 @@ void MainWindow::refleshLiveWaku()
 	ui->live_waku_list->setCurrentIndex(now_no);
 }
 
-
-bool MainWindow::isCheckedAutoGettingUserName()
-{
-	return ui->auto_getting_user_name_chk->isChecked();
-}
-
 QString MainWindow::getCookieSetting(int n)
 {
 	switch (n) {
@@ -102,7 +96,7 @@ void MainWindow::insLog(QString log)
 	ui->logtext->append(log + "\n");
 }
 
-QTreeWidgetItem* MainWindow::insComment(int num, QString prem, QString user, QString comm, QString date, bool is_184)
+void MainWindow::insComment(int num, QString prem, QString user, QString comm, QString date, bool is_184, bool after_open)
 {
 	QStringList ls;
 
@@ -117,11 +111,14 @@ QTreeWidgetItem* MainWindow::insComment(int num, QString prem, QString user, QSt
 	QTreeWidgetItem* item = new QTreeWidgetItem(ls);
 	ui->commentView->insertTopLevelItem(0, item);
 
+	if ( ui->auto_getting_user_name_chk->isChecked() && (user!="放送主") ) {
+		// use HTTP connection for only received comment after started.
+		userManager->getUserName(item, user, after_open);
+	}
+
 	if (ui->keep_top_chk->isChecked()) {
 		ui->commentView->setCurrentItem(item);
 	}
-
-	return item;
 }
 
 void MainWindow::getSessionFromCookie()
@@ -246,6 +243,7 @@ void MainWindow::on_actionSave_triggered()
 
 	QJsonObject other;
 	other["auto_getting_user_name"] = ui->auto_getting_user_name_chk->isChecked();
+	other["keep_top_comment"] = ui->keep_top_chk->isChecked();
 	other["comment_command_check"] = ui->setting_commentComand_checkbox->isChecked();
 	other["comment_command"] = ui->setting_commentComand->text();
 
@@ -296,6 +294,7 @@ void MainWindow::on_actionLoad_triggered()
 	QJsonObject other;
 	other = jsd.object()["other"].toObject();
 	ui->auto_getting_user_name_chk->setChecked(other["auto_getting_user_name"].toBool());
+	ui->keep_top_chk->setChecked(other["keep_top_comment"].toBool());
 	ui->setting_commentComand->setText(other["comment_command"].toString());
 	ui->setting_commentComand_checkbox->setChecked(other["comment_command_check"].toBool());
 
