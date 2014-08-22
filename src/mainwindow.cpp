@@ -245,15 +245,13 @@ void MainWindow::on_actionSave_triggered()
 	cookie["value"] = ui->cookiesetting_column_value->text();
 
 	QJsonObject other;
-	other["auto_getting_user_name_chk"] = ui->auto_getting_user_name_chk->isChecked();
-
+	other["auto_getting_user_name"] = ui->auto_getting_user_name_chk->isChecked();
 	other["comment_command_check"] = ui->setting_commentComand_checkbox->isChecked();
 	other["comment_command"] = ui->setting_commentComand->text();
 
 	QJsonObject user_data;
 	user_data["mail"] = ui->userdata_mail->text();
 	user_data["pass"] = ui->userdata_pass->text();
-
 
 	QJsonObject root;
 	root["cookie"] = cookie;
@@ -297,7 +295,7 @@ void MainWindow::on_actionLoad_triggered()
 
 	QJsonObject other;
 	other = jsd.object()["other"].toObject();
-	ui->auto_getting_user_name_chk->setChecked(other["auto_getting_user_name_chk"].toBool());
+	ui->auto_getting_user_name_chk->setChecked(other["auto_getting_user_name"].toBool());
 	ui->setting_commentComand->setText(other["comment_command"].toString());
 	ui->setting_commentComand_checkbox->setChecked(other["comment_command_check"].toBool());
 

@@ -94,15 +94,15 @@ void LiveWaku::playerStatusFinished(QNetworkReply* reply)
 
 		if (code == "closed") {
 			QList<LiveWaku*>& wlist = nlman->liveWakuList;
-			for (int i = 0; i < wlist.size(); ++i) {
-				if (wlist[i] == this) {
-					wlist.removeAt(i);
-					this->deleteLater();
-					mwin->refleshLiveWaku();
-					return;
-				}
+
+			const int this_index = wlist.indexOf(this);
+
+			if (this_index != -1) {
+				wlist.removeAt(this_index);
+				this->deleteLater();
+				mwin->refleshLiveWaku();
+				return;
 			}
-			mwin->insLog("?????");
 		}
 		return;
 	}
