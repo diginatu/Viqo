@@ -116,7 +116,7 @@ void MainWindow::insComment(int num, QString prem, QString user, QString comm, Q
 		userManager->getUserName(item, user, after_open);
 	}
 
-	if (ui->keep_top_chk->isChecked()) {
+	if (after_open && ui->keep_top_chk->isChecked()) {
 		ui->commentView->setCurrentItem(item);
 	}
 }
@@ -338,15 +338,28 @@ void MainWindow::on_commentView_currentItemChanged(QTreeWidgetItem *current)
 {
 	if (current == NULL) return;
 
+	QString commentView("");
+	commentView += "<html><head /><body>";
 
-	QString commentView;
+	commentView += "<table width=\"100%\" border=\"0\"><tr>";
+
+	commentView += "<td>";
 	if (current->text(6) == "@") {
 		commentView += current->text(2);
 	} else {
 		commentView += "<a href=\"http://www.nicovideo.jp/user/"+current->text(5)+"\">"+current->text(2)+"</a>";
 	}
+	commentView += "</td>";
 
-	commentView += "<pre style=\"white-space:normal;\">"+current->text(3).toHtmlEscaped()+"</pre>";
+	commentView += "<td align=\"right\">";
+	commentView += current->text(4);
+	commentView += "</td>";
+
+	commentView += "</tr></table>";
+
+	commentView += "<pre>"+current->text(3).toHtmlEscaped()+"</pre>";
+
+	commentView += "</body></html>";
 
 	ui->comment_view->setHtml( commentView );
 }
