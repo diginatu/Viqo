@@ -92,7 +92,7 @@ void LiveWaku::playerStatusFinished(QNetworkReply* reply)
 		QString code = commTcpi.midStr("<code>","</code>");
 		mwin->insLog(code);
 
-		if (code == "closed") {
+		if (code == "closed" || code == "deletedbyuser") {
 			QList<LiveWaku*>& wlist = nlman->liveWakuList;
 
 			const int this_index = wlist.indexOf(this);
