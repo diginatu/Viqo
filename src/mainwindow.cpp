@@ -42,6 +42,20 @@ void MainWindow::getWatchCount()
 	nicolivemanager->getHeartBeatAPI();
 }
 
+bool MainWindow::isCommandCommentChecked() {
+  return ui->command_comment_chk->isChecked();
+}
+QString MainWindow::getCommandComment() {
+  return ui->command_comment->text();
+}
+
+bool MainWindow::isCommandNextWakuChecked() {
+  return ui->command_nextWaku_chk->isChecked();
+}
+QString MainWindow::getCommandNextWaku() {
+  return ui->command_nextWaku->text();
+}
+
 void MainWindow::setWatchCount(QString num)
 {
 	ui->num_audience->setText("来場者数: " + num);
@@ -133,7 +147,6 @@ void MainWindow::getSessionFromCookie()
 
 MainWindow::MainWindow(QWidget *parent) :
 	QMainWindow(parent),
-	setting_commentCommand(""),
 	ui(new Ui::MainWindow)
 {
 	ui->setupUi(this);
@@ -150,7 +163,7 @@ MainWindow::MainWindow(QWidget *parent) :
 
 	try {
 		userManager = new UserManager(this);
-		nicolivemanager = new NicoLiveManager(this, this);
+    nicolivemanager = new NicoLiveManager(this, this);
 	} catch(QString e) {
 		qDebug() << e;
 	}
@@ -244,8 +257,10 @@ void MainWindow::on_actionSave_triggered()
 	QJsonObject other;
 	other["auto_getting_user_name"] = ui->auto_getting_user_name_chk->isChecked();
 	other["keep_top_comment"] = ui->keep_top_chk->isChecked();
-	other["comment_command_check"] = ui->setting_commentComand_checkbox->isChecked();
-	other["comment_command"] = ui->setting_commentComand->text();
+
+	QJsonObject command;
+	command["comment_check"] = ui->command_comment_chk->isChecked();
+	command["comment"] = ui->command_comment->text();
 
 	QJsonObject user_data;
 	user_data["mail"] = ui->userdata_mail->text();
@@ -254,6 +269,7 @@ void MainWindow::on_actionSave_triggered()
 	QJsonObject root;
 	root["cookie"] = cookie;
 	root["other"] = other;
+	root["command"] = command;
 	root["user_data"] = user_data;
 
 	QJsonDocument jsd;
@@ -295,8 +311,11 @@ void MainWindow::on_actionLoad_triggered()
 	other = jsd.object()["other"].toObject();
 	ui->auto_getting_user_name_chk->setChecked(other["auto_getting_user_name"].toBool());
 	ui->keep_top_chk->setChecked(other["keep_top_comment"].toBool());
-	ui->setting_commentComand->setText(other["comment_command"].toString());
-	ui->setting_commentComand_checkbox->setChecked(other["comment_command_check"].toBool());
+
+	QJsonObject command;
+	command = jsd.object()["command"].toObject();
+	ui->command_comment->setText(command["comment"].toString());
+	ui->command_comment_chk->setChecked(command["comment_check"].toBool());
 
 	QJsonObject user_data;
 	user_data = jsd.object()["user_data"].toObject();
@@ -304,22 +323,6 @@ void MainWindow::on_actionLoad_triggered()
 	ui->userdata_pass->setText(user_data["pass"].toString());
 
 	file.close();
-}
-
-void MainWindow::on_setting_commentComand_checkbox_stateChanged(int st)
-{
-	bool fl = st==0?false:true;
-	ui->setting_commentComand->setEnabled( fl );
-	setting_commentCommand = fl?(ui->setting_commentComand->text()):"";
-}
-
-void MainWindow::on_setting_apply_clicked()
-{
-	if (ui->setting_commentComand_checkbox->isChecked()) {
-		setting_commentCommand = ui->setting_commentComand->text();
-	} else {
-		setting_commentCommand = "";
-	}
 }
 
 void MainWindow::on_commentView_itemDoubleClicked(QTreeWidgetItem *item, int column)

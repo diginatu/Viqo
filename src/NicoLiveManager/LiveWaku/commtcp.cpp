@@ -131,9 +131,9 @@ void CommTcp::readOneRawComment(QByteArray& rawcomm)
 			broadcaster?"放送主":user, comm, date, is_184, commenttime > opentime);
 
 	// comment command
-	if ( !mwin->setting_commentCommand.isEmpty() && commenttime > opentime ) {
-		QProcess pr;
-		QString cmd = mwin->setting_commentCommand;
+  if ( mwin->isCommandCommentChecked() && commenttime > opentime ) {
+    QProcess pr;
+    QString cmd = mwin->getCommandComment();
 
 		QString escmd = comm;
 		escmd.replace("'", "");

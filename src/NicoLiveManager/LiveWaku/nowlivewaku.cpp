@@ -52,7 +52,7 @@ void NowLiveWaku::playerStatusFinished(QNetworkReply* reply)
 	mwin->insLog("addr: "+addr+"\nport: "+QString::number(port)+"\nthread:"+thread);
 
 	try {
-		commtcp = new CommTcp(addr, port, thread, mwin);
+    commtcp = new CommTcp(addr, port, thread, mwin);
 		commtcp->doConnect();
 	} catch(QString e) {
 		qDebug() << e;

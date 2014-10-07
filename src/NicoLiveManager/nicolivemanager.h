@@ -12,14 +12,15 @@
 #include "LiveWaku/livewaku.h"
 #include "LiveWaku/nowlivewaku.h"
 
-
+namespace Ui {
 class MainWindow;
+}
 
 class NicoLiveManager : public QObject
 {
 	Q_OBJECT
 public:
-	explicit NicoLiveManager(MainWindow* mwin, QObject *parent = 0);
+  explicit NicoLiveManager(MainWindow* mwin, QObject *parent = 0);
 	~NicoLiveManager();
 
 	QString getWatchCount() const;
@@ -41,6 +42,7 @@ public:
 
 	void broadDisconnect();
 	void broadStart();
+
 signals:
 
 public slots:

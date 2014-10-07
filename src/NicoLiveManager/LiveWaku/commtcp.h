@@ -15,7 +15,7 @@ class CommTcp : public QObject
 {
 	Q_OBJECT
 public:
-	explicit CommTcp(QString domain, int port, QString thread, MainWindow* mwin);
+  explicit CommTcp(QString domain, int port, QString thread, MainWindow* mwin);
 	void doConnect();
 	void close();
 

@@ -35,7 +35,6 @@ public:
 
 	QString getCookieSetting(int n);
 	QString getUserSession();
-	QString setting_commentCommand;
 
 	void setWatchCount(QString num);
 	void setHousouID(QString text);
@@ -44,6 +43,13 @@ public:
 	bool isNextWaku();
 
 	UserManager* userManager;
+
+  // command setting
+  bool isCommandCommentChecked();
+  QString getCommandComment();
+  bool isCommandNextWakuChecked();
+  QString getCommandNextWaku();
+
 
 public slots:
 	// ui slots
@@ -60,9 +66,6 @@ public slots:
 
 	void on_actionSave_triggered();
 	void on_actionLoad_triggered();
-
-	void on_setting_commentComand_checkbox_stateChanged(int st);
-	void on_setting_apply_clicked();
 
 private slots:
 	void on_commentView_itemDoubleClicked(QTreeWidgetItem *item, int column);

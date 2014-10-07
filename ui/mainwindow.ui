@@ -62,7 +62,7 @@
        </sizepolicy>
       </property>
       <property name="text">
-       <string>receive</string>
+       <string>受信</string>
       </property>
      </widget>
     </item>
@@ -75,7 +75,7 @@
        </sizepolicy>
       </property>
       <property name="text">
-       <string>disconnect</string>
+       <string>切断</string>
       </property>
      </widget>
     </item>
@@ -88,7 +88,7 @@
        </sizepolicy>
       </property>
       <property name="text">
-       <string>Clear</string>
+       <string>消去</string>
       </property>
      </widget>
     </item>
@@ -138,11 +138,11 @@
         </size>
        </property>
        <property name="currentIndex">
-        <number>0</number>
+        <number>2</number>
        </property>
        <widget class="QWidget" name="comment_tab">
         <attribute name="title">
-         <string>comment</string>
+         <string>コメント</string>
         </attribute>
         <layout class="QGridLayout" name="gridLayout">
          <item row="1" column="0">
@@ -259,37 +259,8 @@
        </widget>
        <widget class="QWidget" name="setting_tab">
         <attribute name="title">
-         <string>setting</string>
+         <string>設定</string>
         </attribute>
-        <widget class="QCheckBox" name="setting_commentComand_checkbox">
-         <property name="geometry">
-          <rect>
-           <x>30</x>
-           <y>120</y>
-           <width>221</width>
-           <height>22</height>
-          </rect>
-         </property>
-         <property name="text">
-          <string>enable comment command</string>
-         </property>
-        </widget>
-        <widget class="QLineEdit" name="setting_commentComand">
-         <property name="enabled">
-          <bool>false</bool>
-         </property>
-         <property name="geometry">
-          <rect>
-           <x>260</x>
-           <y>120</y>
-           <width>241</width>
-           <height>27</height>
-          </rect>
-         </property>
-         <property name="text">
-          <string>aplay p.wav</string>
-         </property>
-        </widget>
         <widget class="QPushButton" name="setting_apply">
          <property name="geometry">
           <rect>
@@ -351,6 +322,41 @@
           <string>OK</string>
          </property>
         </widget>
+       </widget>
+       <widget class="QWidget" name="tab">
+        <attribute name="title">
+         <string>コマンド</string>
+        </attribute>
+        <layout class="QFormLayout" name="formLayout_4">
+         <item row="0" column="0">
+          <widget class="QCheckBox" name="command_comment_chk">
+           <property name="text">
+            <string>コメント受信時</string>
+           </property>
+          </widget>
+         </item>
+         <item row="0" column="1">
+          <widget class="QLineEdit" name="command_comment">
+           <property name="enabled">
+            <bool>false</bool>
+           </property>
+          </widget>
+         </item>
+         <item row="1" column="0">
+          <widget class="QCheckBox" name="command_nextWaku_chk">
+           <property name="text">
+            <string>次枠移動時</string>
+           </property>
+          </widget>
+         </item>
+         <item row="1" column="1">
+          <widget class="QLineEdit" name="command_nextWaku">
+           <property name="enabled">
+            <bool>false</bool>
+           </property>
+          </widget>
+         </item>
+        </layout>
        </widget>
        <widget class="QWidget" name="cookiesetting_tab">
         <property name="mouseTracking">
@@ -562,7 +568,7 @@
        </widget>
        <widget class="QWidget" name="log_tab">
         <attribute name="title">
-         <string>log</string>
+         <string>ログ</string>
         </attribute>
         <layout class="QGridLayout" name="gridLayout_2">
          <item row="0" column="0">
@@ -594,7 +600,7 @@
    </property>
    <widget class="QMenu" name="menuSetting">
     <property name="title">
-     <string>setting</string>
+     <string>ファイル</string>
     </property>
     <addaction name="actionSave"/>
     <addaction name="actionLoad"/>
@@ -623,7 +629,40 @@
  </widget>
  <layoutdefault spacing="6" margin="11"/>
  <resources/>
- <connections/>
+ <connections>
+  <connection>
+   <sender>command_comment_chk</sender>
+   <signal>toggled(bool)</signal>
+   <receiver>command_comment</receiver>
+   <slot>setEnabled(bool)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>94</x>
+     <y>251</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>201</x>
+     <y>250</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>command_nextWaku_chk</sender>
+   <signal>toggled(bool)</signal>
+   <receiver>command_nextWaku</receiver>
+   <slot>setEnabled(bool)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>111</x>
+     <y>284</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>169</x>
+     <y>284</y>
+    </hint>
+   </hints>
+  </connection>
+ </connections>
  <slots>
   <slot>menu_triggered(QAction*)</slot>
  </slots>
