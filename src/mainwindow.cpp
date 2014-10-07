@@ -261,6 +261,8 @@ void MainWindow::on_actionSave_triggered()
 	QJsonObject command;
 	command["comment_check"] = ui->command_comment_chk->isChecked();
 	command["comment"] = ui->command_comment->text();
+  command["nextWaku_check"] = ui->command_nextWaku_chk->isChecked();
+  command["nextWaku"] = ui->command_nextWaku->text();
 
 	QJsonObject user_data;
 	user_data["mail"] = ui->userdata_mail->text();
@@ -316,6 +318,8 @@ void MainWindow::on_actionLoad_triggered()
 	command = jsd.object()["command"].toObject();
 	ui->command_comment->setText(command["comment"].toString());
 	ui->command_comment_chk->setChecked(command["comment_check"].toBool());
+  ui->command_nextWaku->setText(command["nextWaku"].toString());
+  ui->command_nextWaku_chk->setChecked(command["nextWaku_check"].toBool());
 
 	QJsonObject user_data;
 	user_data = jsd.object()["user_data"].toObject();

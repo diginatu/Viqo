@@ -90,7 +90,7 @@ void WakuTcp::readOneRawWaku(QByteArray& rawwaku)
       QProcess pr;
       QString cmd = mwin->getCommandNextWaku();
 
-      cmd.replace("%wakuURL%",'"http://live.nicovideo.jp/watch/lv' + broadID + '"');
+      cmd.replace("%wakuURL%","\"http://live.nicovideo.jp/watch/lv" + broadID + '"');
 
       pr.start(cmd);
       pr.waitForFinished(30000);
