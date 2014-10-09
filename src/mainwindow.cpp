@@ -77,14 +77,15 @@ void MainWindow::setHousouID(QString text)
 void MainWindow::refleshLiveWaku()
 {
 	ui->live_waku_list->clear();
-	int now_no;
+  int now_no = -1;
 	for(int i = 0; i < nicolivemanager->liveWakuList.size(); ++i) {
 		if (nicolivemanager->liveWakuList.at(i)->getBroadID() == nicolivemanager->nowWaku.getBroadID())
 			now_no = i;
 		ui->live_waku_list->addItem(nicolivemanager->liveWakuList.at(i)->getTitle());
 	}
 
-	ui->live_waku_list->setCurrentIndex(now_no);
+  if (now_no != -1)
+    ui->live_waku_list->setCurrentIndex(now_no);
 }
 
 QString MainWindow::getCookieSetting(int n)

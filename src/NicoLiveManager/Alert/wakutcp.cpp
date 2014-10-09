@@ -87,13 +87,15 @@ void WakuTcp::readOneRawWaku(QByteArray& rawwaku)
 		if ( nicolivemanager->nowWaku.getCommunity() == CommunityID &&
 				 nicolivemanager->nowWaku.getBroadID() != broadID){
 
-      QProcess pr;
-      QString cmd = mwin->getCommandNextWaku();
+      if (mwin->isCommandNextWakuChecked()) {
+        QProcess pr;
+        QString cmd = mwin->getCommandNextWaku();
 
-      cmd.replace("%wakuURL%","\"http://live.nicovideo.jp/watch/lv" + broadID + '"');
+        cmd.replace("%wakuURL%","\"http://live.nicovideo.jp/watch/lv" + broadID + '"');
 
-      pr.start(cmd);
-      pr.waitForFinished(30000);
+        pr.start(cmd);
+        pr.waitForFinished(30000);
+      }
 
       mwin->setHousouID(broadID);
 			mwin->on_receive_clicked();

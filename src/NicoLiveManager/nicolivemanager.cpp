@@ -67,7 +67,7 @@ void NicoLiveManager::broadDisconnect()
 void NicoLiveManager::deleteWakuList()
 {
 	QDateTime nowTime = QDateTime::currentDateTimeUtc();
-	for (int i; i < liveWakuList.size(); ++i) {
+  for (int i = 0; i < liveWakuList.size(); ++i) {
 		if ( nowTime > liveWakuList[i]->getEd() ) {
 			liveWakuList[i]->getPlayyerStatusAPI();
 		}

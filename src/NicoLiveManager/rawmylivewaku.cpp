@@ -34,7 +34,7 @@ void NicoLiveManager::rawMyLivefinished(QNetworkReply* reply)
 		if (bfID == ID) continue;
 		bool isID = true;
 
-		for(int i; i<ID.size(); ++i) {
+    for(int i = 0; i < ID.size(); ++i) {
 			if( ID[i] > '9' || ID[i] < '0' ) {
 				isID = false;
 				break;
