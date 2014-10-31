@@ -31,7 +31,7 @@ void UserGetter::finished()
 								+ userID + ", '" + username + "')");
 
 	if (!query.exec()) {
-		throw QString("user db get error");
+    throw QString("user db got error");
 	}
 
 	this->deleteLater();

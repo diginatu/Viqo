@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>527</width>
-    <height>412</height>
+    <width>483</width>
+    <height>424</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -27,16 +27,16 @@
   </property>
   <widget class="QWidget" name="centralWidget">
    <layout class="QGridLayout" name="gridLayout_3">
-    <item row="0" column="0">
-     <widget class="QLabel" name="housouId_label">
+    <item row="0" column="3">
+     <widget class="QPushButton" name="receive">
       <property name="sizePolicy">
-       <sizepolicy hsizetype="Maximum" vsizetype="Preferred">
+       <sizepolicy hsizetype="Maximum" vsizetype="Fixed">
         <horstretch>0</horstretch>
         <verstretch>0</verstretch>
        </sizepolicy>
       </property>
       <property name="text">
-       <string>放送ID lv</string>
+       <string>受信</string>
       </property>
      </widget>
     </item>
@@ -53,8 +53,8 @@
       </property>
      </widget>
     </item>
-    <item row="0" column="3">
-     <widget class="QPushButton" name="receive">
+    <item row="1" column="4">
+     <widget class="QPushButton" name="clear">
       <property name="sizePolicy">
        <sizepolicy hsizetype="Maximum" vsizetype="Fixed">
         <horstretch>0</horstretch>
@@ -62,7 +62,7 @@
        </sizepolicy>
       </property>
       <property name="text">
-       <string>受信</string>
+       <string>消去</string>
       </property>
      </widget>
     </item>
@@ -79,16 +79,16 @@
       </property>
      </widget>
     </item>
-    <item row="1" column="4">
-     <widget class="QPushButton" name="clear">
+    <item row="0" column="0">
+     <widget class="QLabel" name="housouId_label">
       <property name="sizePolicy">
-       <sizepolicy hsizetype="Maximum" vsizetype="Fixed">
+       <sizepolicy hsizetype="Maximum" vsizetype="Preferred">
         <horstretch>0</horstretch>
         <verstretch>0</verstretch>
        </sizepolicy>
       </property>
       <property name="text">
-       <string>消去</string>
+       <string>放送ID lv</string>
       </property>
      </widget>
     </item>
@@ -138,7 +138,7 @@
         </size>
        </property>
        <property name="currentIndex">
-        <number>0</number>
+        <number>2</number>
        </property>
        <widget class="QWidget" name="comment_tab">
         <attribute name="title">
@@ -209,41 +209,46 @@
             </sizepolicy>
            </property>
            <property name="columnCount">
-            <number>7</number>
+            <number>8</number>
            </property>
            <column>
             <property name="text">
-             <string>num</string>
+             <string>No.</string>
             </property>
            </column>
            <column>
             <property name="text">
-             <string>prem</string>
+             <string>プレミアム</string>
             </property>
            </column>
            <column>
             <property name="text">
-             <string>user</string>
+             <string>ユーザ名</string>
             </property>
            </column>
            <column>
             <property name="text">
-             <string>comment</string>
+             <string>コメント</string>
             </property>
            </column>
            <column>
             <property name="text">
-             <string>date</string>
+             <string>日付</string>
             </property>
            </column>
            <column>
             <property name="text">
-             <string>user_num</string>
+             <string>ユーザID</string>
             </property>
            </column>
            <column>
             <property name="text">
              <string>184</string>
+            </property>
+           </column>
+           <column>
+            <property name="text">
+             <string>放送主</string>
             </property>
            </column>
           </widget>
@@ -261,19 +266,6 @@
         <attribute name="title">
          <string>設定</string>
         </attribute>
-        <widget class="QPushButton" name="setting_apply">
-         <property name="geometry">
-          <rect>
-           <x>330</x>
-           <y>260</y>
-           <width>151</width>
-           <height>27</height>
-          </rect>
-         </property>
-         <property name="text">
-          <string>apply</string>
-         </property>
-        </widget>
         <widget class="QGroupBox" name="userddata">
          <property name="geometry">
           <rect>
@@ -327,33 +319,79 @@
         <attribute name="title">
          <string>コマンド</string>
         </attribute>
-        <layout class="QFormLayout" name="formLayout_4">
-         <item row="0" column="0">
-          <widget class="QCheckBox" name="command_comment_chk">
-           <property name="text">
-            <string>コメント受信時</string>
+        <layout class="QVBoxLayout" name="verticalLayout">
+         <item>
+          <widget class="QScrollArea" name="command_scrollArea">
+           <property name="widgetResizable">
+            <bool>true</bool>
            </property>
-          </widget>
-         </item>
-         <item row="0" column="1">
-          <widget class="QLineEdit" name="command_comment">
-           <property name="enabled">
-            <bool>false</bool>
-           </property>
-          </widget>
-         </item>
-         <item row="1" column="0">
-          <widget class="QCheckBox" name="command_nextWaku_chk">
-           <property name="text">
-            <string>次枠移動時</string>
-           </property>
-          </widget>
-         </item>
-         <item row="1" column="1">
-          <widget class="QLineEdit" name="command_nextWaku">
-           <property name="enabled">
-            <bool>false</bool>
-           </property>
+           <widget class="QWidget" name="command">
+            <property name="geometry">
+             <rect>
+              <x>0</x>
+              <y>0</y>
+              <width>441</width>
+              <height>131</height>
+             </rect>
+            </property>
+            <layout class="QVBoxLayout" name="verticalLayout_2">
+             <item>
+              <widget class="QWidget" name="command_comment_widget" native="true">
+               <property name="sizePolicy">
+                <sizepolicy hsizetype="Preferred" vsizetype="Minimum">
+                 <horstretch>0</horstretch>
+                 <verstretch>0</verstretch>
+                </sizepolicy>
+               </property>
+               <layout class="QFormLayout" name="formLayout_2">
+                <property name="fieldGrowthPolicy">
+                 <enum>QFormLayout::AllNonFixedFieldsGrow</enum>
+                </property>
+                <item row="0" column="0">
+                 <widget class="QCheckBox" name="command_comment_chk">
+                  <property name="text">
+                   <string>コメント受信時</string>
+                  </property>
+                 </widget>
+                </item>
+                <item row="0" column="1">
+                 <widget class="QLineEdit" name="command_comment">
+                  <property name="enabled">
+                   <bool>false</bool>
+                  </property>
+                 </widget>
+                </item>
+               </layout>
+              </widget>
+             </item>
+             <item>
+              <widget class="QWidget" name="command_nextwaku_widget" native="true">
+               <property name="sizePolicy">
+                <sizepolicy hsizetype="Preferred" vsizetype="Minimum">
+                 <horstretch>0</horstretch>
+                 <verstretch>0</verstretch>
+                </sizepolicy>
+               </property>
+               <layout class="QFormLayout" name="formLayout_4">
+                <item row="0" column="0">
+                 <widget class="QCheckBox" name="command_nextWaku_chk">
+                  <property name="text">
+                   <string>次枠移動時</string>
+                  </property>
+                 </widget>
+                </item>
+                <item row="0" column="1">
+                 <widget class="QLineEdit" name="command_nextWaku">
+                  <property name="enabled">
+                   <bool>false</bool>
+                  </property>
+                 </widget>
+                </item>
+               </layout>
+              </widget>
+             </item>
+            </layout>
+           </widget>
           </widget>
          </item>
         </layout>
@@ -363,208 +401,76 @@
          <bool>false</bool>
         </property>
         <attribute name="title">
-         <string>cookie setting</string>
+         <string>ブラウザセッション</string>
         </attribute>
-        <widget class="QComboBox" name="cookiesetting_browserCombo">
-         <property name="geometry">
-          <rect>
-           <x>40</x>
-           <y>10</y>
-           <width>151</width>
-           <height>27</height>
-          </rect>
-         </property>
-         <item>
-          <property name="text">
-           <string>firefox</string>
-          </property>
-         </item>
-         <item>
-          <property name="text">
-           <string>direct input</string>
-          </property>
-         </item>
-        </widget>
-        <widget class="QWidget" name="cookiesetting_browserSettings_group" native="true">
-         <property name="enabled">
-          <bool>true</bool>
-         </property>
-         <property name="geometry">
-          <rect>
-           <x>50</x>
-           <y>60</y>
-           <width>421</width>
-           <height>261</height>
-          </rect>
-         </property>
-         <widget class="QLabel" name="cookiesetting_file_label">
-          <property name="geometry">
-           <rect>
-            <x>20</x>
-            <y>20</y>
-            <width>91</width>
-            <height>17</height>
-           </rect>
-          </property>
-          <property name="text">
-           <string>cookies file</string>
-          </property>
-         </widget>
-         <widget class="QLineEdit" name="cookiesetting_filename">
-          <property name="geometry">
-           <rect>
-            <x>160</x>
-            <y>20</y>
-            <width>161</width>
-            <height>27</height>
-           </rect>
-          </property>
-         </widget>
-         <widget class="QPushButton" name="cookiesetting_file_open_button">
-          <property name="geometry">
-           <rect>
-            <x>330</x>
-            <y>20</y>
-            <width>71</width>
-            <height>27</height>
-           </rect>
-          </property>
-          <property name="text">
-           <string>open...</string>
-          </property>
-         </widget>
-         <widget class="QLabel" name="cookiesetting_table_label">
-          <property name="geometry">
-           <rect>
-            <x>100</x>
-            <y>90</y>
-            <width>101</width>
-            <height>17</height>
-           </rect>
-          </property>
-          <property name="text">
-           <string>Table name</string>
-          </property>
-         </widget>
-         <widget class="QLabel" name="cookiesetting_column_label">
-          <property name="geometry">
-           <rect>
-            <x>100</x>
-            <y>120</y>
-            <width>101</width>
-            <height>17</height>
-           </rect>
-          </property>
-          <property name="text">
-           <string>column name</string>
-          </property>
-         </widget>
-         <widget class="QPushButton" name="cookiesetting_apply">
-          <property name="geometry">
-           <rect>
-            <x>150</x>
-            <y>50</y>
-            <width>151</width>
-            <height>27</height>
-           </rect>
-          </property>
-          <property name="text">
-           <string>apply</string>
-          </property>
-         </widget>
-         <widget class="QLineEdit" name="cookiesetting_tablename">
-          <property name="geometry">
-           <rect>
-            <x>240</x>
-            <y>90</y>
-            <width>131</width>
-            <height>27</height>
-           </rect>
-          </property>
-          <property name="text">
-           <string>moz_cookies</string>
-          </property>
-         </widget>
-         <widget class="QWidget" name="widget" native="true">
-          <property name="geometry">
-           <rect>
-            <x>140</x>
-            <y>140</y>
-            <width>255</width>
-            <height>111</height>
-           </rect>
-          </property>
-          <layout class="QFormLayout" name="formLayout_2">
-           <item row="0" column="0">
-            <widget class="QLabel" name="cookiesetting_column_basedomain_label">
-             <property name="text">
-              <string>baseDomain</string>
-             </property>
-            </widget>
-           </item>
-           <item row="0" column="1">
-            <widget class="QLineEdit" name="cookiesetting_column_basedomain">
-             <property name="text">
-              <string>baseDomain</string>
-             </property>
-            </widget>
-           </item>
-           <item row="1" column="0">
-            <widget class="QLabel" name="cookiesetting_column_name_label">
-             <property name="text">
-              <string>name</string>
-             </property>
-            </widget>
-           </item>
-           <item row="1" column="1">
-            <widget class="QLineEdit" name="cookiesetting_column_name">
-             <property name="text">
-              <string>name</string>
-             </property>
-            </widget>
-           </item>
-           <item row="2" column="0">
-            <widget class="QLabel" name="cookiesetting_column_value_label">
-             <property name="text">
-              <string>value</string>
-             </property>
-            </widget>
-           </item>
-           <item row="2" column="1">
-            <widget class="QLineEdit" name="cookiesetting_column_value">
-             <property name="text">
-              <string>value</string>
-             </property>
-            </widget>
-           </item>
-          </layout>
-         </widget>
-        </widget>
-        <widget class="QWidget" name="cookiesetting_usersession_groupe" native="true">
-         <property name="enabled">
-          <bool>false</bool>
-         </property>
-         <property name="geometry">
-          <rect>
-           <x>210</x>
-           <y>10</y>
-           <width>257</width>
-           <height>45</height>
-          </rect>
-         </property>
-         <layout class="QFormLayout" name="formLayout">
-          <item row="0" column="0">
-           <widget class="QLabel" name="cookiesetting_usersession_label">
+        <layout class="QGridLayout" name="gridLayout_5">
+         <item row="0" column="0">
+          <widget class="QComboBox" name="cookiesetting_browserCombo">
+           <item>
             <property name="text">
-             <string>user_session</string>
+             <string>firefox</string>
             </property>
-           </widget>
-          </item>
-          <item row="0" column="1">
-           <widget class="QLineEdit" name="cookiesetting_usersession"/>
-          </item>
-         </layout>
-        </widget>
+           </item>
+           <item>
+            <property name="text">
+             <string>direct input</string>
+            </property>
+           </item>
+          </widget>
+         </item>
+         <item row="0" column="1">
+          <widget class="QWidget" name="cookiesetting_usersession_groupe" native="true">
+           <property name="enabled">
+            <bool>false</bool>
+           </property>
+           <layout class="QFormLayout" name="formLayout">
+            <item row="0" column="0">
+             <widget class="QLabel" name="cookiesetting_usersession_label">
+              <property name="text">
+               <string>user_session</string>
+              </property>
+             </widget>
+            </item>
+            <item row="0" column="1">
+             <widget class="QLineEdit" name="cookiesetting_usersession"/>
+            </item>
+           </layout>
+          </widget>
+         </item>
+         <item row="1" column="0" colspan="2">
+          <widget class="QWidget" name="cookiesetting_browserSettings_group" native="true">
+           <property name="enabled">
+            <bool>true</bool>
+           </property>
+           <layout class="QGridLayout" name="gridLayout_4">
+            <item row="2" column="1">
+             <widget class="QPushButton" name="cookiesetting_apply">
+              <property name="text">
+               <string>apply</string>
+              </property>
+             </widget>
+            </item>
+            <item row="1" column="1">
+             <widget class="QLineEdit" name="cookiesetting_filename"/>
+            </item>
+            <item row="1" column="2">
+             <widget class="QPushButton" name="cookiesetting_file_open_button">
+              <property name="text">
+               <string>open...</string>
+              </property>
+             </widget>
+            </item>
+            <item row="1" column="0">
+             <widget class="QLabel" name="cookiesetting_file_label">
+              <property name="text">
+               <string>cookies file</string>
+              </property>
+             </widget>
+            </item>
+           </layout>
+          </widget>
+         </item>
+        </layout>
        </widget>
        <widget class="QWidget" name="log_tab">
         <attribute name="title">
@@ -594,7 +500,7 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>527</width>
+     <width>483</width>
      <height>25</height>
     </rect>
    </property>
@@ -637,12 +543,12 @@
    <slot>setEnabled(bool)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>94</x>
-     <y>251</y>
+     <x>124</x>
+     <y>289</y>
     </hint>
     <hint type="destinationlabel">
-     <x>201</x>
-     <y>250</y>
+     <x>354</x>
+     <y>294</y>
     </hint>
    </hints>
   </connection>
@@ -653,12 +559,28 @@
    <slot>setEnabled(bool)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>111</x>
-     <y>284</y>
+     <x>141</x>
+     <y>349</y>
     </hint>
     <hint type="destinationlabel">
-     <x>169</x>
-     <y>284</y>
+     <x>304</x>
+     <y>354</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>auto_next_waku</sender>
+   <signal>toggled(bool)</signal>
+   <receiver>command_nextwaku_widget</receiver>
+   <slot>setEnabled(bool)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>330</x>
+     <y>98</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>67</x>
+     <y>323</y>
     </hint>
    </hints>
   </connection>

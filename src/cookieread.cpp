@@ -5,23 +5,18 @@ CookieRead::CookieRead(MainWindow* mwin)
 {
 	this->mwin = mwin;
 	db = QSqlDatabase::addDatabase("QSQLITE");
-	db.setDatabaseName(mwin->getCookieSetting(0));
+  db.setDatabaseName(mwin->getCookieName());
 
 	if (db.open()) {
 		mwin->insLog("db open succeeded");
 	} else {
-		throw QString("db open error occured");
+    throw QString("Cookie db : open error occured");
 	}
 }
 
 QString CookieRead::getUserSession()
 {
-	QString queryS = "select ";
-	queryS.append(mwin->getCookieSetting(4));
-	queryS.append(" from ").append(mwin->getCookieSetting(1));
-	queryS.append(" where ").append(mwin->getCookieSetting(2));
-	queryS.append("=:baseDomain and ").append(mwin->getCookieSetting(3));
-	queryS.append("=:name");
+  QString queryS = "select value from moz_cookies where baseDomain=:baseDomain and name=:name";
 
 	QSqlQuery query(db);
 
@@ -34,7 +29,7 @@ QString CookieRead::getUserSession()
 			return query.value(0).toString();
 		}
 	} else {
-		throw QString("usersession get error");
+    throw QString("Cookie db : usersession get error");
 	}
 
 	return "";
@@ -42,5 +37,6 @@ QString CookieRead::getUserSession()
 
 CookieRead::~CookieRead()
 {
+  qDebug() << "cookie db closed";
 	db.close();
 }

@@ -83,9 +83,9 @@ void WakuTcp::readOneRawWaku(QByteArray& rawwaku)
 	}
 
 
-	if ( mwin->isNextWaku() ){
-		if ( nicolivemanager->nowWaku.getCommunity() == CommunityID &&
-				 nicolivemanager->nowWaku.getBroadID() != broadID){
+  if (mwin->isNextWaku()) {
+    if ( nicolivemanager->nowWaku.getCommunity() == CommunityID &&
+         nicolivemanager->nowWaku.getBroadID() != broadID){
 
       if (mwin->isCommandNextWakuChecked()) {
         QProcess pr;
@@ -98,9 +98,9 @@ void WakuTcp::readOneRawWaku(QByteArray& rawwaku)
       }
 
       mwin->setHousouID(broadID);
-			mwin->on_receive_clicked();
-		}
-	}
+      mwin->on_receive_clicked();
+    }
+  }
 
 	foreach (QString commu, nicolivemanager->mycommunities) {
 		if (commu == wakur.at(1)) {

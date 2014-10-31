@@ -33,7 +33,6 @@ public:
 	void insComment(int num, QString prem, QString user, QString comm, QString date, bool is_184, bool after_open);
 	void insLog(QString log);
 
-	QString getCookieSetting(int n);
 	QString getUserSession();
 
 	void setWatchCount(QString num);
@@ -50,6 +49,7 @@ public:
   bool isCommandNextWakuChecked();
   QString getCommandNextWaku();
 
+  QString getCookieName();
 
 public slots:
 	// ui slots
