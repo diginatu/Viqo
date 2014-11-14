@@ -83,14 +83,15 @@ void LiveWaku::getPlayyerStatusAPI()
 
 void LiveWaku::playerStatusFinished(QNetworkReply* reply)
 {
-	QByteArray repdata = reply->readAll();
+  mwin->insLog(" LiveWaku::playerStatusFinished :");
+  QByteArray repdata = reply->readAll();
 
 	StrAbstractor commTcpi(repdata);
 
 	QString status = commTcpi.midStr("status=\"","\"");
 	if (status == "fail") {
 		QString code = commTcpi.midStr("<code>","</code>");
-		mwin->insLog(code);
+    mwin->insLog("livewaku : " + code);
 
 		if (code == "closed" || code == "deletedbyuser") {
 			QList<LiveWaku*>& wlist = nlman->liveWakuList;

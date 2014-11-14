@@ -5,29 +5,33 @@ void NicoLiveManager::loginAlertAPI(QString mail, QString pass)
 {
 	QNetworkAccessManager* mManager = new QNetworkAccessManager(this);
 
-	connect(mManager, SIGNAL(finished(QNetworkReply*)),
+  QNetworkRequest rq(QUrl("https://secure.nicovideo.jp/secure/login?site=nicolive_antenna"));
+  rq.setHeader(QNetworkRequest::ContentTypeHeader, "application/x-www-form-urlencoded");
+
+  QUrlQuery params;
+  params.addQueryItem("mail", QUrl::toPercentEncoding(mail));
+  params.addQueryItem("password", QUrl::toPercentEncoding(pass));
+
+  connect(mManager, SIGNAL(finished(QNetworkReply*)),
 					this, SLOT(loginAlertFinished(QNetworkReply*)));
 
-	QByteArray data;
-	data.append("mail=" + mail + "&password=" + pass);
-
-	QNetworkRequest rq(QUrl("https://secure.nicovideo.jp/secure/login?site=nicolive_antenna"));
-	rq.setHeader(QNetworkRequest::ContentTypeHeader, "application/x-www-form-urlencoded");
-
-	mManager->post(rq, data);
+  mManager->post(rq, params.toString(QUrl::FullyEncoded).toUtf8());
+  // qDebug() << params.toString(QUrl::FullyEncoded).toUtf8();
 }
 
 void NicoLiveManager::loginAlertFinished(QNetworkReply* reply)
 {
-	QByteArray repdata = reply->readAll();
+  mwin->insLog("loginAlertFinished :");
+  QByteArray repdata = reply->readAll();
 
 	StrAbstractor commTcpi(repdata);
 
 	QString status = commTcpi.midStr("status=\"","\"");
 	if (status == "fail") {
-		QString code = commTcpi.midStr("<code>","</code>");
-		mwin->insLog(code);
-		return;
+    const QString code = commTcpi.midStr("<code>","</code>");
+    const QString description = commTcpi.midStr("<description>","</description>");
+    mwin->insLog(code + "\n" + description);
+    return;
 	}
 
 	QString ticket = commTcpi.midStr("<ticket>","</ticket>");
@@ -56,7 +60,8 @@ void NicoLiveManager::adminAlertAPI(QString ticket)
 
 void NicoLiveManager::adminAlertFinished(QNetworkReply* reply)
 {
-	QByteArray repdata = reply->readAll();
+  mwin->insLog("adminAlertFinished :");
+  QByteArray repdata = reply->readAll();
 
 	StrAbstractor wakuTcpi(repdata);
 
@@ -82,7 +87,7 @@ void NicoLiveManager::adminAlertFinished(QNetworkReply* reply)
 	waku_port = wakuTcpi.midStr("<port>", "</port>").toInt();
 	waku_thread = wakuTcpi.midStr("<thread>", "</thread>");
 
-	mwin->insLog("waku addr: " + waku_addr +
+  mwin->insLog("waku addr: " + waku_addr +
 							 "\nport: " + QString::number(waku_port) +
 							 "\nthread:" + waku_thread);
 

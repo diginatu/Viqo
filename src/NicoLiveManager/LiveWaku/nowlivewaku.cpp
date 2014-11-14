@@ -23,7 +23,8 @@ void NowLiveWaku::broadDisconnect() {
 
 void NowLiveWaku::playerStatusFinished(QNetworkReply* reply)
 {
-	QByteArray repdata = reply->readAll();
+  mwin->insLog(" LiveWaku::playerStatusFinished :");
+  QByteArray repdata = reply->readAll();
 //	qDebug() << repdata;
 
 	StrAbstractor commTcpi(repdata);

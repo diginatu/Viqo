@@ -157,7 +157,7 @@ MainWindow::MainWindow(QWidget *parent) :
 	}
 
 	const QString mail = ui->userdata_mail->text();
-	const QString pass = ui->userdata_pass->text();
+  const QString pass = ui->userdata_pass->text();
 	nicolivemanager->loginAlertAPI(mail, pass);
 
 	on_user_data_OK_clicked();
