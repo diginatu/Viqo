@@ -5,7 +5,12 @@ UserManager::UserManager(MainWindow* mwin, QObject *parent) :
 	NicoHttp(mwin, parent)
 {
 	db = QSqlDatabase::addDatabase("QSQLITE");
-	db.setDatabaseName("user.sqlite");
+
+  QStringList dir = QStandardPaths::standardLocations(QStandardPaths::DataLocation);
+  if (dir.empty()) {
+    throw QString("save directory is not found");
+  }
+  db.setDatabaseName(dir[0] + "/user.sqlite");
 
 	if (db.open()) {
 		mwin->insLog("user name db open succeeded");

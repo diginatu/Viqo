@@ -15,7 +15,6 @@ public:
 	void getUserName(QTreeWidgetItem* item, QString userID, bool useHTTP = true, bool useDB = true);
 
 private:
-//	MainWindow* mwin;
 	QSqlDatabase db;
 
 };

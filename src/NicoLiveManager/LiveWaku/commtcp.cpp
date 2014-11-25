@@ -63,7 +63,7 @@ void CommTcp::sendNull()
 
 void CommTcp::bytesWritten(qint64 bytes)
 {
-	qDebug() << bytes << " bytes written...";
+  // qDebug() << bytes << " bytes written...";
 }
 
 void CommTcp::readyRead()

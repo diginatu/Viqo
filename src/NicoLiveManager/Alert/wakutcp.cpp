@@ -47,7 +47,7 @@ void WakuTcp::disconnected()
 
 void WakuTcp::bytesWritten(qint64 bytes)
 {
-	qDebug() << bytes << " bytes written...";
+  // qDebug() << bytes << " bytes written...";
 }
 
 void WakuTcp::readyRead()
@@ -64,7 +64,8 @@ void WakuTcp::readyRead()
 
 void WakuTcp::readOneRawWaku(QByteArray& rawwaku)
 {
-	if (rawwaku.startsWith("<thread")) {
+
+  if (rawwaku.startsWith("<thread")) {
 		return;
 	}
 

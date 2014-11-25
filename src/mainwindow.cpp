@@ -137,12 +137,20 @@ MainWindow::MainWindow(QWidget *parent) :
 	QMainWindow(parent),
 	ui(new Ui::MainWindow)
 {
-	ui->setupUi(this);
+  ui->setupUi(this);
 
 	ui->cookiesetting_usersession->setEchoMode(QLineEdit::Password);
 	ui->userdata_mail->setEchoMode(QLineEdit::Password);
 	ui->userdata_pass->setEchoMode(QLineEdit::Password);
 
+  QStringList dirs = QStandardPaths::standardLocations(QStandardPaths::DataLocation);
+  if (dirs.empty()) {
+    throw QString("save directory is not found");
+  }
+  QDir dir(dirs[0]);
+  if (!dir.exists()) {
+    if (!dir.mkpath(dirs[0])) throw QString("making save path failed");
+  }
 
 //	if ( ui->cookiesetting_browserCombo->currentIndex() == 0 )
 //		getUserSession();
@@ -261,7 +269,11 @@ void MainWindow::on_actionSave_triggered()
 	QJsonDocument jsd;
 	jsd.setObject(root);
 
-	QFile file("settings.json");
+  QStringList dir = QStandardPaths::standardLocations(QStandardPaths::DataLocation);
+  if (dir.empty()) {
+    throw QString("save directory is not found");
+  }
+  QFile file(dir[0] + "/settings.json");
 	file.open(QIODevice::WriteOnly);
 
 	QTextStream out(&file);
@@ -273,7 +285,12 @@ void MainWindow::on_actionSave_triggered()
 
 void MainWindow::on_actionLoad_triggered()
 {
-	QFile file("settings.json");
+  QStringList dir = QStandardPaths::standardLocations(QStandardPaths::DataLocation);
+  if (dir.empty()) {
+    throw QString("save directory is not found");
+  }
+  QFile file(dir[0] + "/settings.json");
+
 	if ( !file.exists() ) return;
 
 	file.open(QIODevice::ReadOnly | QIODevice::Text);
