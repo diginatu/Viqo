@@ -21,7 +21,6 @@ void UserGetter::finished()
 
 	userinfo.midStr("class=\"userDetail\"","class=\"avatar\""); //set position
 	QString username = userinfo.midStr("alt=\"", "\"");
-	mwin->insLog("user name (http) :" + username);
 
 	item->setText(2, username);
 
@@ -31,7 +30,7 @@ void UserGetter::finished()
 								+ userID + ", '" + username + "')");
 
 	if (!query.exec()) {
-    throw QString("user db got error");
+    throw QString("UserGetter::finished user db got error");
 	}
 
 	this->deleteLater();

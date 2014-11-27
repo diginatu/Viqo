@@ -36,9 +36,8 @@ void NicoLiveManager::loginAlertFinished(QNetworkReply* reply)
 
 	QString ticket = commTcpi.midStr("<ticket>","</ticket>");
 
-//	mwin->insLog("got ticket: "+ticket);
-
 	adminAlertAPI(ticket);
+  mwin->insLog("");
 }
 
 
@@ -89,7 +88,7 @@ void NicoLiveManager::adminAlertFinished(QNetworkReply* reply)
 
   mwin->insLog("waku addr: " + waku_addr +
 							 "\nport: " + QString::number(waku_port) +
-							 "\nthread:" + waku_thread);
+               "\nthread:" + waku_thread + "\n");
 
 	try {
 		if ( wakutcp != NULL ) wakutcp->deleteLater();

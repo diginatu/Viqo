@@ -13,9 +13,9 @@ UserManager::UserManager(MainWindow* mwin, QObject *parent) :
   db.setDatabaseName(dir[0] + "/user.sqlite");
 
 	if (db.open()) {
-		mwin->insLog("user name db open succeeded");
+    mwin->insLog("UserManager::UserManager db open succeeded\n");
 	} else {
-		throw QString("user name db open error occured");
+    mwin->insLog("UserManager::UserManager db open error occured\n");
 	}
 
 	QSqlQuery query(db);

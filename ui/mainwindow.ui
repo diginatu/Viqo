@@ -359,6 +359,9 @@
                   <property name="enabled">
                    <bool>false</bool>
                   </property>
+                  <property name="placeholderText">
+                   <string>notify 'コメント：%comment%'</string>
+                  </property>
                  </widget>
                 </item>
                </layout>
@@ -384,6 +387,9 @@
                  <widget class="QLineEdit" name="command_nextWaku">
                   <property name="enabled">
                    <bool>false</bool>
+                  </property>
+                  <property name="placeholderText">
+                   <string>firefox %wakuURL%</string>
                   </property>
                  </widget>
                 </item>

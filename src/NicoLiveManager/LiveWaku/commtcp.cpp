@@ -8,21 +8,21 @@ CommTcp::CommTcp(QString domain, int port, QString thread, MainWindow* mwin) :
 	this->port = port;
 	this->thread = thread;
 	this->mwin = mwin;
+
+  socket = new QTcpSocket(this);
+
+  connect(socket, SIGNAL(connected()),this, SLOT(connected()));
+  connect(socket, SIGNAL(disconnected()),this, SLOT(disconnected()));
+  connect(socket, SIGNAL(bytesWritten(qint64)),this, SLOT(bytesWritten(qint64)));
+  connect(socket, SIGNAL(readyRead()),this, SLOT(readyRead()));
 }
 
 void CommTcp::doConnect()
 {
-	socket = new QTcpSocket(this);
-
-	connect(socket, SIGNAL(connected()),this, SLOT(connected()));
-	connect(socket, SIGNAL(disconnected()),this, SLOT(disconnected()));
-	connect(socket, SIGNAL(bytesWritten(qint64)),this, SLOT(bytesWritten(qint64)));
-	connect(socket, SIGNAL(readyRead()),this, SLOT(readyRead()));
-
 	socket->connectToHost(domain, port);
 
 	if(!socket->waitForConnected(5000)) {
-		throw QString("Error: ").append(socket->errorString());
+    throw QString("CommTcp::doConnect Error: ").append(socket->errorString());
 	}
 }
 
@@ -35,17 +35,16 @@ void CommTcp::connected()
 	send.append('\0');
 
 	if (socket->write(send) == -1) {
-		throw QString("Error: ").append(socket->errorString());
+    throw QString("CommTcp::connected Error: ").append(socket->errorString());
 	}
 
 	mwin->onReceiveStarted();
 
 	// set timer to send NULL data.
-	nullDataTimer = new QTimer(this);
-	nullDataTimer->setInterval(60000);
+  nullDataTimer.setInterval(60000);
 
-	connect(nullDataTimer, SIGNAL(timeout()), this, SLOT(sendNull()));
-	nullDataTimer->start();
+  connect(&nullDataTimer, SIGNAL(timeout()), this, SLOT(sendNull()));
+  nullDataTimer.start();
 }
 
 void CommTcp::disconnected()
@@ -57,8 +56,11 @@ void CommTcp::sendNull()
 {
 	QByteArray send(1, '\0');
 
-	if (socket->write(send) == -1)
-		throw QString("Error: ").append(socket->errorString());
+  if (socket->write(send) == -1) {
+    mwin->insLog("CommTcp::sendNull Error: " + socket->errorString() + "\n");
+    socket->close();
+    doConnect();
+  }
 }
 
 void CommTcp::bytesWritten(qint64 bytes)
@@ -80,9 +82,7 @@ void CommTcp::readyRead()
 
 void CommTcp::readOneRawComment(QByteArray& rawcomm)
 {
-//	mwin->insLog(QString(rawcomm));
-
-	if (rawcomm.startsWith("<thread")) {
+  if (rawcomm.startsWith("<thread")) {
 		return;
 	}
 
@@ -146,8 +146,7 @@ void CommTcp::readOneRawComment(QByteArray& rawcomm)
 
 void CommTcp::close()
 {
-	nullDataTimer->stop();
-	nullDataTimer->deleteLater();
+  nullDataTimer.stop();
 	socket->close();
 }
 

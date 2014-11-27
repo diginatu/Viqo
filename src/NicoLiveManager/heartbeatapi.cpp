@@ -21,7 +21,7 @@ void NicoLiveManager::heartBeatFinished(QNetworkReply* reply){
 
 	const QString status = heartbeat_data.midStr("status=\"", "\"");
 	if ( status == "fail" ) {
-		mwin->insLog("getting the watch count failed");
+    mwin->insLog("getting the watch count failed\n");
 		return;
 	}
 

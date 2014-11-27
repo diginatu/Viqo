@@ -17,13 +17,13 @@ class WakuTcp : public QObject
 	Q_OBJECT
 public:
 	explicit WakuTcp(QString domain, int port, QString thread, MainWindow* mwin, NicoLiveManager* nicolivemanager);
-	void doConnect();
 	void close();
 
 signals:
 
 public slots:
-	void connected();
+  void doConnect();
+  void connected();
 	void disconnected();
 	void bytesWritten(qint64 bytes);
 	void readyRead();
@@ -40,8 +40,10 @@ private:
 
 	QDateTime opentime;
 	QByteArray lastRawWaku;
-	QTimer* nullDataTimer;
-
+  QTime connectionTime;
+  QTimer checkConnectionTimer;
+private slots:
+  void checkConnection();
 };
 
 #endif // WAKUTCP_H

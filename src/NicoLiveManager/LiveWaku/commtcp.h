@@ -36,7 +36,7 @@ private:
 	int port;
 	QDateTime opentime;
 	QByteArray lastRawComm;
-	QTimer* nullDataTimer;
+  QTimer nullDataTimer;
 
 	MainWindow* mwin;
 

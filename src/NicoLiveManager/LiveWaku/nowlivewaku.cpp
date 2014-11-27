@@ -50,7 +50,9 @@ void NowLiveWaku::playerStatusFinished(QNetworkReply* reply)
 	port = commTcpi.midStr("<port>", "</port>").toInt();
 	thread = commTcpi.midStr("<thread>", "</thread>");
 
-	mwin->insLog("addr: "+addr+"\nport: "+QString::number(port)+"\nthread:"+thread);
+  mwin->insLog("addr: " + addr +
+               "\nport: " + QString::number(port) +
+               "\nthread:" + thread + "\n");
 
 	try {
     commtcp = new CommTcp(addr, port, thread, mwin);

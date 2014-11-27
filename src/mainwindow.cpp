@@ -16,9 +16,9 @@ void MainWindow::onReceiveStarted()
 	// set audiences num timer
 	getWatchCount();
 	watch_count_timer = new QTimer(this);
-	watch_count_timer->setInterval(60000);
+  connect(watch_count_timer,SIGNAL(timeout()),this,SLOT(getWatchCount()));
+  watch_count_timer->setInterval(60000);
 	watch_count_timer->start();
-	connect(watch_count_timer,SIGNAL(timeout()),this,SLOT(getWatchCount()));
 }
 
 void MainWindow::onReceiveEnded()
@@ -95,7 +95,7 @@ void MainWindow::refleshLiveWaku()
 
 void MainWindow::insLog(QString log)
 {
-	ui->logtext->append(log + "\n");
+  ui->logtext->append(log);
 }
 
 void MainWindow::insComment(int num, QString prem, QString user, QString comm, QString date, bool is_184, bool after_open)
@@ -168,9 +168,8 @@ MainWindow::MainWindow(QWidget *parent) :
   const QString pass = ui->userdata_pass->text();
 	nicolivemanager->loginAlertAPI(mail, pass);
 
-	on_user_data_OK_clicked();
-	QTimer::singleShot(30000, this, SLOT(on_user_data_OK_clicked()));
-	QTimer::singleShot(60000, this, SLOT(on_user_data_OK_clicked()));
+  nicolivemanager->getRawMyLiveHTML();
+  QTimer::singleShot(30000, nicolivemanager, SLOT(getRawMyLiveHTML()));
 }
 
 MainWindow::~MainWindow()

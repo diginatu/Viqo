@@ -91,7 +91,7 @@ void LiveWaku::playerStatusFinished(QNetworkReply* reply)
 	QString status = commTcpi.midStr("status=\"","\"");
 	if (status == "fail") {
 		QString code = commTcpi.midStr("<code>","</code>");
-    mwin->insLog("livewaku : " + code);
+    mwin->insLog(code);
 
 		if (code == "closed" || code == "deletedbyuser") {
 			QList<LiveWaku*>& wlist = nlman->liveWakuList;
@@ -100,24 +100,21 @@ void LiveWaku::playerStatusFinished(QNetworkReply* reply)
 
 			if (this_index != -1) {
 				wlist.removeAt(this_index);
-				this->deleteLater();
 				mwin->refleshLiveWaku();
-				return;
+        this->deleteLater();
 			}
 		}
 		return;
 	}
 
 	setBroadID(commTcpi.midStr("<id>lv", "</id>"));
-
 	setTitle(commTcpi.midStr("<title>", "</title>"));
-
 	setCommunity(commTcpi.midStr("<default_community>", "</default_community>"));
-
 	setSt(commTcpi.midStr("<start_time>","</start_time>").toUInt());
 	setEd(commTcpi.midStr("<end_time>","</end_time>").toUInt());
 
 	mwin->refleshLiveWaku();
+  mwin->insLog("got a broad info : " + title + "\n");
 
 	return;
 }

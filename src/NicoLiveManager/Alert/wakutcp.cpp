@@ -9,22 +9,23 @@ WakuTcp::WakuTcp(QString domain, int port, QString thread, MainWindow* mwin, Nic
 	this->thread = thread;
 	this->mwin = mwin;
 	this->nicolivemanager = nicolivemanager;
+
+  socket = new QTcpSocket(this);
+
+  connect(socket, SIGNAL(connected()),this, SLOT(connected()));
+  connect(socket, SIGNAL(disconnected()),this, SLOT(disconnected()));
+  connect(socket, SIGNAL(bytesWritten(qint64)),this, SLOT(bytesWritten(qint64)));
+  connect(socket, SIGNAL(readyRead()),this, SLOT(readyRead()));
 }
 
 void WakuTcp::doConnect()
 {
-	socket = new QTcpSocket(this);
-
-	connect(socket, SIGNAL(connected()),this, SLOT(connected()));
-	connect(socket, SIGNAL(disconnected()),this, SLOT(disconnected()));
-	connect(socket, SIGNAL(bytesWritten(qint64)),this, SLOT(bytesWritten(qint64)));
-	connect(socket, SIGNAL(readyRead()),this, SLOT(readyRead()));
-
 	socket->connectToHost(domain, port);
 
 	if(!socket->waitForConnected(5000)) {
-		throw QString("Error: ").append(socket->errorString());
-	}
+    mwin->insLog("wakuTcp::doConnect Error: " + socket->errorString() + "\n");
+    QTimer::singleShot(30000, this, SLOT(doConnect()));
+  }
 }
 
 void WakuTcp::connected()
@@ -35,10 +36,18 @@ void WakuTcp::connected()
 	send.append("<thread thread=\""+thread+"\" res_from=\"-1\" version=\"20061206\" />");
 	send.append('\0');
 
-	if (socket->write(send) == -1) {
-		throw QString("Error: ").append(socket->errorString());
-	}
+  if (socket->write(send) == -1) {
+    mwin->insLog("wakuTcp::connected Error: " + socket->errorString() + "\n");
+    socket->close();
+    QTimer::singleShot(30000, this, SLOT(doConnect()));
+    return;
+  }
 
+  connect(&checkConnectionTimer,SIGNAL(timeout()),this,SLOT(checkConnection()));
+  checkConnectionTimer.setInterval(30000);
+  checkConnectionTimer.start();
+
+  connectionTime.start();
 }
 
 void WakuTcp::disconnected()
@@ -64,7 +73,7 @@ void WakuTcp::readyRead()
 
 void WakuTcp::readOneRawWaku(QByteArray& rawwaku)
 {
-
+  connectionTime.restart();
   if (rawwaku.startsWith("<thread")) {
 		return;
 	}
@@ -119,5 +128,16 @@ void WakuTcp::close()
 
 bool WakuTcp::isConnected()
 {
-	return socket->state() != QAbstractSocket::UnconnectedState;
+  return socket->state() != QAbstractSocket::UnconnectedState;
+}
+
+void WakuTcp::checkConnection()
+{
+  if (connectionTime.elapsed() > 61000) {
+    mwin->insLog("alert is disconnected\n");
+    socket->close();
+    nicolivemanager->getRawMyLiveHTML();
+    QTimer::singleShot(30000, nicolivemanager, SLOT(getRawMyLiveHTML()));
+    doConnect();
+  }
 }

@@ -32,7 +32,6 @@ public:
 	void getHeartBeatAPI();
 	void loginAlertAPI(QString mail, QString pass);
 	void adminAlertAPI(QString ticket);
-	void getRawMyLiveHTML();
 
 	QStringList mycommunities;
 
@@ -46,6 +45,7 @@ public:
 signals:
 
 public slots:
+  void getRawMyLiveHTML();
 
 private:
 	MainWindow* mwin;
