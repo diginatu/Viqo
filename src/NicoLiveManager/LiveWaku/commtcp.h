@@ -13,32 +13,31 @@ class MainWindow;
 
 class CommTcp : public QObject
 {
-	Q_OBJECT
+  Q_OBJECT
 public:
   explicit CommTcp(QString domain, int port, QString thread, MainWindow* mwin);
-	void doConnect();
-	void close();
+  void doConnect();
+  void close();
 
 signals:
 
 public slots:
-	void connected();
-	void disconnected();
-	void bytesWritten(qint64 bytes);
-	void readyRead();
-	void readOneRawComment(QByteArray& rawcomm);
-	bool isConnected();
-	void sendNull();
+  void connected();
+  void disconnected();
+  void readyRead();
+  void readOneRawComment(QByteArray& rawcomm);
+  bool isConnected();
+  void sendNull();
 
 private:
-	QTcpSocket* socket;
-	QString domain, thread;
-	int port;
-	QDateTime opentime;
-	QByteArray lastRawComm;
+  QTcpSocket* socket;
+  QString domain, thread;
+  int port;
+  QDateTime opentime;
+  QByteArray lastRawComm;
   QTimer nullDataTimer;
 
-	MainWindow* mwin;
+  MainWindow* mwin;
 
 };
 

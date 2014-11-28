@@ -2,18 +2,18 @@
 
 LiveData::LiveData(QString liveID, QString title, QString communityID)
 {
-	 this->liveID = liveID;
-	 this->communityID = communityID;
-	 this->title = title;
+  this->liveID = liveID;
+  this->communityID = communityID;
+  this->title = title;
 }
 
 QString LiveData::getLiveID(){
-		return liveID;
+  return liveID;
 }
 
 QString LiveData::getTitle(){
-		return title;
+  return title;
 }
 QString LiveData::getCommunityID(){
-		return communityID;
+  return communityID;
 }

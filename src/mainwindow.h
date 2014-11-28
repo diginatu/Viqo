@@ -31,7 +31,7 @@ public:
 	explicit MainWindow(QWidget *parent = 0);
 	~MainWindow();
 	void insComment(int num, QString prem, QString user, QString comm, QString date, bool is_184, bool after_open);
-	void insLog(QString log);
+  void insLog(QString log = "");
 
 	QString getUserSession();
 

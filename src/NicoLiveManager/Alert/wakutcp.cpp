@@ -4,40 +4,43 @@
 
 WakuTcp::WakuTcp(QString domain, int port, QString thread, MainWindow* mwin, NicoLiveManager* nicolivemanager)
 {
-	this->domain = domain;
-	this->port = port;
-	this->thread = thread;
-	this->mwin = mwin;
-	this->nicolivemanager = nicolivemanager;
+  this->domain = domain;
+  this->port = port;
+  this->thread = thread;
+  this->mwin = mwin;
+  this->nicolivemanager = nicolivemanager;
 
   socket = new QTcpSocket(this);
 
   connect(socket, SIGNAL(connected()),this, SLOT(connected()));
   connect(socket, SIGNAL(disconnected()),this, SLOT(disconnected()));
-  connect(socket, SIGNAL(bytesWritten(qint64)),this, SLOT(bytesWritten(qint64)));
   connect(socket, SIGNAL(readyRead()),this, SLOT(readyRead()));
 }
 
 void WakuTcp::doConnect()
 {
-	socket->connectToHost(domain, port);
+  mwin->insLog("WakuTcp::doConnect");
+  socket->connectToHost(domain, port);
 
-	if(!socket->waitForConnected(5000)) {
-    mwin->insLog("wakuTcp::doConnect Error: " + socket->errorString() + "\n");
+  if(!socket->waitForConnected(5000)) {
+    mwin->insLog("Error: " + socket->errorString() + "\n");
     QTimer::singleShot(30000, this, SLOT(doConnect()));
   }
+
+  mwin->insLog();
 }
 
 void WakuTcp::connected()
 {
-	QByteArray send;
-	opentime = QDateTime::currentDateTime();
+  mwin->insLog("WakuTcp::connected");
+  QByteArray send;
+  opentime = QDateTime::currentDateTime();
 
-	send.append("<thread thread=\""+thread+"\" res_from=\"-1\" version=\"20061206\" />");
-	send.append('\0');
+  send.append("<thread thread=\""+thread+"\" res_from=\"-1\" version=\"20061206\" />");
+  send.append('\0');
 
   if (socket->write(send) == -1) {
-    mwin->insLog("wakuTcp::connected Error: " + socket->errorString() + "\n");
+    mwin->insLog("Error: " + socket->errorString() + "\n");
     socket->close();
     QTimer::singleShot(30000, this, SLOT(doConnect()));
     return;
@@ -48,49 +51,45 @@ void WakuTcp::connected()
   checkConnectionTimer.start();
 
   connectionTime.start();
+  mwin->insLog();
 }
 
 void WakuTcp::disconnected()
 {
 }
 
-void WakuTcp::bytesWritten(qint64 bytes)
-{
-  // qDebug() << bytes << " bytes written...";
-}
-
 void WakuTcp::readyRead()
 {
-	QList<QByteArray> rawwakus( socket->readAll().split('\0') );
-	rawwakus[0].insert(0, lastRawWaku);
+  QList<QByteArray> rawwakus( socket->readAll().split('\0') );
+  rawwakus[0].insert(0, lastRawWaku);
 
-	for ( int i = 0; i < rawwakus.size()-1; ++i) {
-		readOneRawWaku(rawwakus[i]);
-	}
+  for ( int i = 0; i < rawwakus.size()-1; ++i) {
+    readOneRawWaku(rawwakus[i]);
+  }
 
-	lastRawWaku = rawwakus.takeLast();
+  lastRawWaku = rawwakus.takeLast();
 }
 
 void WakuTcp::readOneRawWaku(QByteArray& rawwaku)
 {
   connectionTime.restart();
   if (rawwaku.startsWith("<thread")) {
-		return;
-	}
+    return;
+  }
 
-	StrAbstractor awaku(rawwaku);
-	QString wakuS = awaku.midStr(">", "</chat>");
+  StrAbstractor awaku(rawwaku);
+  QString wakuS = awaku.midStr(">", "</chat>");
 
-	QStringList wakur = wakuS.split(",");
-	const QString& broadID = wakur.at(0);
-	const QString& CommunityID = wakur.at(1);
-//	const QString& nushiID = wakur.at(2);
+  QStringList wakur = wakuS.split(",");
+  const QString& broadID = wakur.at(0);
+  const QString& CommunityID = wakur.at(1);
+  //	const QString& nushiID = wakur.at(2);
 
-//	qDebug() << CommunityID << "," << broadID;
+  //	qDebug() << CommunityID << "," << broadID;
 
-	if(wakur.size() != 3) {
-		return;
-	}
+  if(wakur.size() != 3) {
+    return;
+  }
 
 
   if (mwin->isNextWaku()) {
@@ -112,18 +111,18 @@ void WakuTcp::readOneRawWaku(QByteArray& rawwaku)
     }
   }
 
-	foreach (QString commu, nicolivemanager->mycommunities) {
-		if (commu == wakur.at(1)) {
-			nicolivemanager->insertLiveWakuList(new LiveWaku(mwin, nicolivemanager, broadID));
-			mwin->refleshLiveWaku();
-		}
-	}
+  foreach (QString commu, nicolivemanager->mycommunities) {
+    if (commu == wakur.at(1)) {
+      nicolivemanager->insertLiveWakuList(new LiveWaku(mwin, nicolivemanager, broadID));
+      mwin->refleshLiveWaku();
+    }
+  }
 
 }
 
 void WakuTcp::close()
 {
-	socket->close();
+  socket->close();
 }
 
 bool WakuTcp::isConnected()
