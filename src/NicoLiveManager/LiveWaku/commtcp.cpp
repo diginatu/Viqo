@@ -117,8 +117,9 @@ void CommTcp::readOneRawComment(QByteArray& rawcomm)
   comm.replace("&lt;", "<");
   comm.replace("&gt;", ">");
 
-  mwin->insComment( num,premium?"@":" ",
-                    broadcaster?"放送主":user, comm, date, is_184, commenttime > opentime);
+  mwin->insComment( num, premium,
+                    broadcaster?"放送主":user, comm, date,
+                    is_184, broadcaster, commenttime > opentime);
 
   // comment command
   if ( mwin->isCommandCommentChecked() && commenttime > opentime ) {

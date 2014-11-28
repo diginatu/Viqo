@@ -98,24 +98,27 @@ void MainWindow::insLog(QString log)
   ui->logtext->append(log);
 }
 
-void MainWindow::insComment(int num, QString prem, QString user, QString comm, QString date, bool is_184, bool after_open)
+void MainWindow::insComment(int num, bool prem, QString user,
+     QString comm, QString date, bool is_184,
+     bool broadcaster, bool after_open)
 {
   QStringList ls;
 
   ls += QString::number(num);
-  ls += prem;
+  ls += prem?"@":"";
   ls += user;
   ls += comm;
   ls += date;
   ls += user;
   ls += is_184?"@":"";
+  ls += broadcaster?"@":"";
 
   QTreeWidgetItem* item = new QTreeWidgetItem(ls);
   ui->commentView->insertTopLevelItem(0, item);
 
-  if ( ui->auto_getting_user_name_chk->isChecked() && (user!="放送主") ) {
+  if ( !broadcaster && !is_184 ) {
     // use HTTP connection for only received comment after started.
-    userManager->getUserName(item, user, after_open);
+    userManager->getUserName(item, user, ui->auto_getting_user_name_chk->isChecked() && after_open);
   }
 
   if (after_open && ui->keep_top_chk->isChecked()) {
