@@ -72,7 +72,7 @@ void LiveWaku::getPlayyerStatusAPI()
   QNetworkAccessManager* mManager = new QNetworkAccessManager(this);
   // make request
   QNetworkRequest rq;
-  QVariant postData = NicoLiveManager::makePostData(mwin->getUserSession());
+  QVariant postData = NicoLiveManager::makePostData(mwin->settings.getUserSession());
   rq.setHeader(QNetworkRequest::CookieHeader, postData);
   rq.setUrl(QUrl("http://live.nicovideo.jp/api/getplayerstatus?v=lv" + broadID));
   connect(mManager, SIGNAL(finished(QNetworkReply*)), this,

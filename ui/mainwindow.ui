@@ -110,7 +110,7 @@
       <property name="orientation">
        <enum>Qt::Vertical</enum>
       </property>
-      <widget class="QTextBrowser" name="comment_view">
+      <widget class="QTextBrowser" name="one_comment_view">
        <property name="sizePolicy">
         <sizepolicy hsizetype="Minimum" vsizetype="Expanding">
          <horstretch>0</horstretch>
@@ -201,7 +201,7 @@
           </widget>
          </item>
          <item row="0" column="0" colspan="3">
-          <widget class="QTreeWidget" name="commentView">
+          <widget class="QTreeWidget" name="comment_view">
            <property name="sizePolicy">
             <sizepolicy hsizetype="Minimum" vsizetype="Expanding">
              <horstretch>0</horstretch>
@@ -261,59 +261,6 @@
           </widget>
          </item>
         </layout>
-       </widget>
-       <widget class="QWidget" name="setting_tab">
-        <attribute name="title">
-         <string>設定</string>
-        </attribute>
-        <widget class="QGroupBox" name="userddata">
-         <property name="geometry">
-          <rect>
-           <x>30</x>
-           <y>10</y>
-           <width>209</width>
-           <height>96</height>
-          </rect>
-         </property>
-         <property name="title">
-          <string>User Data</string>
-         </property>
-         <layout class="QFormLayout" name="formLayout_3">
-          <item row="0" column="0">
-           <widget class="QLabel" name="label">
-            <property name="text">
-             <string>Mail</string>
-            </property>
-           </widget>
-          </item>
-          <item row="0" column="1">
-           <widget class="QLineEdit" name="userdata_mail"/>
-          </item>
-          <item row="1" column="0">
-           <widget class="QLabel" name="label_2">
-            <property name="text">
-             <string>Pass</string>
-            </property>
-           </widget>
-          </item>
-          <item row="1" column="1">
-           <widget class="QLineEdit" name="userdata_pass"/>
-          </item>
-         </layout>
-        </widget>
-        <widget class="QPushButton" name="user_data_OK">
-         <property name="geometry">
-          <rect>
-           <x>270</x>
-           <y>70</y>
-           <width>99</width>
-           <height>27</height>
-          </rect>
-         </property>
-         <property name="text">
-          <string>OK</string>
-         </property>
-        </widget>
        </widget>
        <widget class="QWidget" name="tab">
         <attribute name="title">
@@ -402,82 +349,6 @@
          </item>
         </layout>
        </widget>
-       <widget class="QWidget" name="cookiesetting_tab">
-        <property name="mouseTracking">
-         <bool>false</bool>
-        </property>
-        <attribute name="title">
-         <string>ブラウザセッション</string>
-        </attribute>
-        <layout class="QGridLayout" name="gridLayout_5">
-         <item row="0" column="0">
-          <widget class="QComboBox" name="cookiesetting_browserCombo">
-           <item>
-            <property name="text">
-             <string>firefox</string>
-            </property>
-           </item>
-           <item>
-            <property name="text">
-             <string>direct input</string>
-            </property>
-           </item>
-          </widget>
-         </item>
-         <item row="0" column="1">
-          <widget class="QWidget" name="cookiesetting_usersession_groupe" native="true">
-           <property name="enabled">
-            <bool>false</bool>
-           </property>
-           <layout class="QFormLayout" name="formLayout">
-            <item row="0" column="0">
-             <widget class="QLabel" name="cookiesetting_usersession_label">
-              <property name="text">
-               <string>user_session</string>
-              </property>
-             </widget>
-            </item>
-            <item row="0" column="1">
-             <widget class="QLineEdit" name="cookiesetting_usersession"/>
-            </item>
-           </layout>
-          </widget>
-         </item>
-         <item row="1" column="0" colspan="2">
-          <widget class="QWidget" name="cookiesetting_browserSettings_group" native="true">
-           <property name="enabled">
-            <bool>true</bool>
-           </property>
-           <layout class="QGridLayout" name="gridLayout_4">
-            <item row="2" column="1">
-             <widget class="QPushButton" name="cookiesetting_apply">
-              <property name="text">
-               <string>apply</string>
-              </property>
-             </widget>
-            </item>
-            <item row="1" column="1">
-             <widget class="QLineEdit" name="cookiesetting_filename"/>
-            </item>
-            <item row="1" column="2">
-             <widget class="QPushButton" name="cookiesetting_file_open_button">
-              <property name="text">
-               <string>open...</string>
-              </property>
-             </widget>
-            </item>
-            <item row="1" column="0">
-             <widget class="QLabel" name="cookiesetting_file_label">
-              <property name="text">
-               <string>cookies file</string>
-              </property>
-             </widget>
-            </item>
-           </layout>
-          </widget>
-         </item>
-        </layout>
-       </widget>
        <widget class="QWidget" name="log_tab">
         <attribute name="title">
          <string>ログ</string>
@@ -516,6 +387,8 @@
     </property>
     <addaction name="actionSave"/>
     <addaction name="actionLoad"/>
+    <addaction name="separator"/>
+    <addaction name="action"/>
    </widget>
    <addaction name="menuSetting"/>
   </widget>
@@ -530,18 +403,39 @@
   <widget class="QStatusBar" name="statusBar"/>
   <action name="actionSave">
    <property name="text">
-    <string>save</string>
+    <string>保存</string>
    </property>
   </action>
   <action name="actionLoad">
    <property name="text">
-    <string>load</string>
+    <string>読み込み</string>
+   </property>
+  </action>
+  <action name="action">
+   <property name="text">
+    <string>設定</string>
    </property>
   </action>
  </widget>
  <layoutdefault spacing="6" margin="11"/>
  <resources/>
  <connections>
+  <connection>
+   <sender>auto_next_waku</sender>
+   <signal>toggled(bool)</signal>
+   <receiver>command_nextwaku_widget</receiver>
+   <slot>setEnabled(bool)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>330</x>
+     <y>98</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>67</x>
+     <y>323</y>
+    </hint>
+   </hints>
+  </connection>
   <connection>
    <sender>command_comment_chk</sender>
    <signal>toggled(bool)</signal>
@@ -571,22 +465,6 @@
     <hint type="destinationlabel">
      <x>304</x>
      <y>354</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>auto_next_waku</sender>
-   <signal>toggled(bool)</signal>
-   <receiver>command_nextwaku_widget</receiver>
-   <slot>setEnabled(bool)</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>330</x>
-     <y>98</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>67</x>
-     <y>323</y>
     </hint>
    </hints>
   </connection>

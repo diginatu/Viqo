@@ -6,7 +6,7 @@ void NicoLiveManager::getHeartBeatAPI()
   QNetworkAccessManager* mManager = new QNetworkAccessManager(this);
   // make request
   QNetworkRequest rq;
-  QVariant postData = makePostData(mwin->getUserSession());
+  QVariant postData = makePostData(mwin->settings.getUserSession());
   rq.setHeader(QNetworkRequest::CookieHeader, postData);
   rq.setUrl(QUrl("http://live.nicovideo.jp/api/heartbeat?v=lv" + nowWaku.getBroadID()));
 

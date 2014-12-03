@@ -1,6 +1,46 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 
+MainWindow::MainWindow(QWidget *parent) :
+  QMainWindow(parent),
+  settingsWindow(new SettingsWindow(this, this)),
+  settings(this, this),
+  ui(new Ui::MainWindow)
+{
+  ui->setupUi(this);
+
+  QStringList dirs = QStandardPaths::standardLocations(QStandardPaths::DataLocation);
+  if (dirs.empty()) {
+    insLog("save directory is not found");
+  } else {
+    QDir dir(dirs[0]);
+    if (!dir.exists()) {
+      if (!dir.mkpath(dirs[0]))
+        insLog("making save path failed");
+    }
+  }
+
+  userManager = new UserManager(this);
+  nicolivemanager = new NicoLiveManager(this, this);
+
+  settings.loadSettings();
+  settings.loadStatus(ui);
+
+  const QString mail = settings.getUserMail();
+  const QString pass = settings.getUserPass();
+  if ( mail != "" && pass != "") {
+    nicolivemanager->loginAlertAPI(mail, pass);
+  }
+
+  nicolivemanager->getRawMyLiveHTML();
+  QTimer::singleShot(30000, nicolivemanager, SLOT(getRawMyLiveHTML()));
+}
+
+MainWindow::~MainWindow()
+{
+  on_disconnect_clicked();
+  delete ui;
+}
 void MainWindow::onReceiveStarted()
 {
   qDebug() << "--comment receiving started--";
@@ -35,11 +75,6 @@ void MainWindow::onReceiveEnded()
   // delete audiences num timer
   watch_count_timer->stop();
   watch_count_timer->deleteLater();
-}
-
-QString MainWindow::getCookieName()
-{
-  return ui->cookiesetting_filename->text();
 }
 
 void MainWindow::getWatchCount()
@@ -114,7 +149,7 @@ void MainWindow::insComment(int num, bool prem, QString user,
   ls += broadcaster?"@":"";
 
   QTreeWidgetItem* item = new QTreeWidgetItem(ls);
-  ui->commentView->insertTopLevelItem(0, item);
+  ui->comment_view->insertTopLevelItem(0, item);
 
   if ( !broadcaster && !is_184 ) {
     // use HTTP connection for only received comment after started.
@@ -122,66 +157,19 @@ void MainWindow::insComment(int num, bool prem, QString user,
   }
 
   if (after_open && ui->keep_top_chk->isChecked()) {
-    ui->commentView->setCurrentItem(item);
+    ui->comment_view->setCurrentItem(item);
   }
 }
 
 void MainWindow::getSessionFromCookie()
 {
   CookieRead cr(this);
-  ui->cookiesetting_usersession->setText(cr.getUserSession());
-}
-
-MainWindow::MainWindow(QWidget *parent) :
-  QMainWindow(parent),
-  ui(new Ui::MainWindow)
-{
-  ui->setupUi(this);
-
-  ui->cookiesetting_usersession->setEchoMode(QLineEdit::Password);
-  ui->userdata_mail->setEchoMode(QLineEdit::Password);
-  ui->userdata_pass->setEchoMode(QLineEdit::Password);
-
-  QStringList dirs = QStandardPaths::standardLocations(QStandardPaths::DataLocation);
-  if (dirs.empty()) {
-    insLog("save directory is not found");
-  } else {
-    QDir dir(dirs[0]);
-    if (!dir.exists()) {
-      if (!dir.mkpath(dirs[0]))
-        insLog("making save path failed");
-    }
-  }
-
-  //	if ( ui->cookiesetting_browserCombo->currentIndex() == 0 )
-  //		getUserSession();
-
-  on_actionLoad_triggered();
-
-  userManager = new UserManager(this);
-  nicolivemanager = new NicoLiveManager(this, this);
-
-  const QString mail = ui->userdata_mail->text();
-  const QString pass = ui->userdata_pass->text();
-  nicolivemanager->loginAlertAPI(mail, pass);
-
-  nicolivemanager->getRawMyLiveHTML();
-  QTimer::singleShot(30000, nicolivemanager, SLOT(getRawMyLiveHTML()));
-}
-
-MainWindow::~MainWindow()
-{
-  on_disconnect_clicked();
-  delete ui;
-}
-
-QString MainWindow::getUserSession(){
-  return ui->cookiesetting_usersession->text();
+  settings.setUserSession(cr.getUserSession());
 }
 
 void MainWindow::on_receive_clicked()
 {
-  if ( getUserSession().isEmpty() ) return;
+  if ( settings.getUserSession().isEmpty() ) return;
 
   on_disconnect_clicked();
   bodyClear();
@@ -197,32 +185,6 @@ void MainWindow::on_disconnect_clicked()
   nicolivemanager->broadDisconnect();
 }
 
-void MainWindow::on_cookiesetting_file_open_button_clicked()
-{
-  QString filePath = QFileDialog::getOpenFileName(this, tr("Open Cookies File"), QDir::homePath(), tr("sqlite Files (*.sqlite)"));
-  if ( filePath == "" ) return;
-  ui->cookiesetting_filename->setText(filePath);
-}
-
-void MainWindow::on_cookiesetting_apply_clicked()
-{
-  getSessionFromCookie();
-}
-
-void MainWindow::on_cookiesetting_browserCombo_currentIndexChanged(int index)
-{
-  switch (index) {
-  case 0:
-    ui->cookiesetting_browserSettings_group->setEnabled(true);
-    ui->cookiesetting_usersession_groupe->setEnabled(false);
-    break;
-  case 1:
-    ui->cookiesetting_browserSettings_group->setEnabled(false);
-    ui->cookiesetting_usersession_groupe->setEnabled(true);
-    break;
-  }
-}
-
 void MainWindow::on_clear_clicked()
 {
   bodyClear();
@@ -231,97 +193,21 @@ void MainWindow::on_clear_clicked()
 
 void MainWindow::bodyClear()
 {
-  ui->commentView->clear();
   ui->comment_view->clear();
+  ui->one_comment_view->clear();
 }
 
 void MainWindow::on_actionSave_triggered()
 {
-  QStringList dir = QStandardPaths::standardLocations(QStandardPaths::DataLocation);
-  if (dir.empty()) {
-    insLog("save directory is not available");
-    return;
-  }
-
-  QJsonObject cookie;
-  cookie["browser"] = ui->cookiesetting_browserCombo->currentIndex();
-  cookie["user_session"] = ui->cookiesetting_usersession->text();
-  cookie["file_name"] = ui->cookiesetting_filename->text();
-
-  QJsonObject other;
-  other["auto_getting_user_name"] = ui->auto_getting_user_name_chk->isChecked();
-  other["keep_top_comment"] = ui->keep_top_chk->isChecked();
-
-  QJsonObject command;
-  command["comment_check"] = ui->command_comment_chk->isChecked();
-  command["comment"] = ui->command_comment->text();
-  command["nextWaku_check"] = ui->command_nextWaku_chk->isChecked();
-  command["nextWaku"] = ui->command_nextWaku->text();
-
-  QJsonObject user_data;
-  user_data["mail"] = ui->userdata_mail->text();
-  user_data["pass"] = ui->userdata_pass->text();
-
-  QJsonObject root;
-  root["cookie"] = cookie;
-  root["other"] = other;
-  root["command"] = command;
-  root["user_data"] = user_data;
-
-  QJsonDocument jsd;
-  jsd.setObject(root);
-
-  QFile file(dir[0] + "/settings.json");
-  file.open(QIODevice::WriteOnly);
-
-  QTextStream out(&file);
-
-  out << jsd.toJson().data();
-
-  file.close();
+  settings.saveStatus(ui);
 }
 
 void MainWindow::on_actionLoad_triggered()
 {
-  QStringList dir = QStandardPaths::standardLocations(QStandardPaths::DataLocation);
-  if (dir.empty()) {
-    insLog("save directory is not available");
-    return;
-  }
-  QFile file(dir[0] + "/settings.json");
-  if ( !file.exists() ) return;
-
-  file.open(QIODevice::ReadOnly | QIODevice::Text);
-
-  QJsonDocument jsd = QJsonDocument::fromJson(file.readAll());
-
-  QJsonObject cookie;
-  cookie = jsd.object()["cookie"].toObject();
-  ui->cookiesetting_browserCombo->setCurrentIndex(cookie["browser"].toInt());
-  ui->cookiesetting_usersession->setText(cookie["user_session"].toString());
-  ui->cookiesetting_filename->setText(cookie["file_name"].toString());
-
-  QJsonObject other;
-  other = jsd.object()["other"].toObject();
-  ui->auto_getting_user_name_chk->setChecked(other["auto_getting_user_name"].toBool());
-  ui->keep_top_chk->setChecked(other["keep_top_comment"].toBool());
-
-  QJsonObject command;
-  command = jsd.object()["command"].toObject();
-  ui->command_comment->setText(command["comment"].toString());
-  ui->command_comment_chk->setChecked(command["comment_check"].toBool());
-  ui->command_nextWaku->setText(command["nextWaku"].toString());
-  ui->command_nextWaku_chk->setChecked(command["nextWaku_check"].toBool());
-
-  QJsonObject user_data;
-  user_data = jsd.object()["user_data"].toObject();
-  ui->userdata_mail->setText(user_data["mail"].toString());
-  ui->userdata_pass->setText(user_data["pass"].toString());
-
-  file.close();
+  settings.loadStatus(ui);
 }
 
-void MainWindow::on_commentView_itemDoubleClicked(QTreeWidgetItem *item, int column)
+void MainWindow::on_comment_view_itemDoubleClicked(QTreeWidgetItem *item, int column)
 {
   if (column == 2) {
     QString userid = item->text(5);
@@ -329,41 +215,37 @@ void MainWindow::on_commentView_itemDoubleClicked(QTreeWidgetItem *item, int col
   }
 }
 
-void MainWindow::on_cookiesetting_usersession_textChanged()
-{
-}
-
-void MainWindow::on_commentView_currentItemChanged(QTreeWidgetItem *current)
+void MainWindow::on_comment_view_currentItemChanged(QTreeWidgetItem *current)
 {
   if (current == NULL) return;
 
-  QString commentView("");
-  commentView += "<html><head /><body>";
+  QString comment_view("");
+  comment_view += "<html><head /><body>";
 
-  commentView += "<table width=\"100%\" border=\"0\"><tr>";
+  comment_view += "<table width=\"100%\" border=\"0\"><tr>";
 
-  commentView += "<td>";
+  comment_view += "<td>";
   if (current->text(6) == "@") {
-    commentView += current->text(2);
+    comment_view += current->text(2);
   } else {
-    commentView += "<a href=\"http://www.nicovideo.jp/user/"+current->text(5)+"\">"+current->text(2)+"</a>";
+    comment_view += "<a href=\"http://www.nicovideo.jp/user/"+current->text(5)+"\">"+current->text(2)+"</a>";
   }
-  commentView += "</td>";
+  comment_view += "</td>";
 
-  commentView += "<td align=\"right\">";
-  commentView += current->text(4);
-  commentView += "</td>";
+  comment_view += "<td align=\"right\">";
+  comment_view += current->text(4);
+  comment_view += "</td>";
 
-  commentView += "</tr></table>";
+  comment_view += "</tr></table>";
 
   QString comme = current->text(3).toHtmlEscaped();
   comme.replace("\n", "\n<br>");
-  commentView += "<p>"+comme+"</p>";
+  comment_view += "<p>"+comme+"</p>";
 
-  commentView += "</body></html>";
+  comment_view += "</body></html>";
 
 
-  ui->comment_view->setHtml( commentView );
+  ui->one_comment_view->setHtml( comment_view );
 }
 
 bool MainWindow::isNextWaku()
@@ -377,7 +259,10 @@ void MainWindow::on_live_waku_list_activated(int index)
   on_receive_clicked();
 }
 
-void MainWindow::on_user_data_OK_clicked()
+void MainWindow::on_action_triggered()
 {
-  nicolivemanager->getRawMyLiveHTML();
+  settingsWindow->init();
+  settingsWindow->show();
+  settingsWindow->raise();
+  settingsWindow->activateWindow();
 }

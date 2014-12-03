@@ -30,7 +30,7 @@ void NicoLiveManager::loginAlertFinished(QNetworkReply* reply)
   if (status == "fail") {
     const QString code = commTcpi.midStr("<code>","</code>");
     const QString description = commTcpi.midStr("<description>","</description>");
-    mwin->insLog(code + "\n" + description);
+    mwin->insLog(code + "\n" + description + "\n");
     return;
   }
 
