@@ -47,5 +47,7 @@ void NicoLiveManager::loginFinished(QNetworkReply* reply){
 
   if (!success) mwin->insLog("login failed");
 
+  swin->getUserSessionFinished();
+
   mwin->insLog();
 }

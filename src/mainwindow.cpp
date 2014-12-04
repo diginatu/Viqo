@@ -21,7 +21,7 @@ MainWindow::MainWindow(QWidget *parent) :
   }
 
   userManager = new UserManager(this);
-  nicolivemanager = new NicoLiveManager(this, this);
+  nicolivemanager = new NicoLiveManager(this, settingsWindow, this);
 
   settings.loadSettings();
   settings.loadStatus(ui);
@@ -165,6 +165,7 @@ void MainWindow::getSessionFromCookie()
 {
   CookieRead cr(this);
   settings.setUserSession(cr.getUserSession());
+
 }
 
 void MainWindow::on_receive_clicked()

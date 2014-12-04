@@ -14,14 +14,13 @@ class SettingsWindow : public QDialog
   Q_OBJECT
 
 public:
-  explicit SettingsWindow(MainWindow* mwin, QWidget *parent = 0);
+  explicit SettingsWindow(MainWindow* mwin, QWidget* parent = 0);
   ~SettingsWindow();
   void init();
+  void getUserSessionFinished();
 
 private slots:
-  void on_buttonBox_rejected();
-
-  void on_loginWayCombo_currentIndexChanged(int index);
+  void on_login_way_combo_currentIndexChanged(int index);
 
   void on_buttonBox_accepted();
 

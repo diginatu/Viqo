@@ -53,6 +53,8 @@ public:
 
   NicoLiveManager* nicolivemanager;
 
+  void bodyClear();
+
 public slots:
 	// ui slots
 	void on_receive_clicked();
@@ -74,9 +76,6 @@ private slots:
   void on_action_triggered();
 
 private:
-
-	void bodyClear();
-
 	Ui::MainWindow* ui;
 
 	QTimer* watch_count_timer;

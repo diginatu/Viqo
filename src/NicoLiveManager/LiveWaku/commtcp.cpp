@@ -57,6 +57,7 @@ void CommTcp::sendNull()
 
   if (socket->write(send) == -1) {
     mwin->insLog("CommTcp::sendNull Error: " + socket->errorString() + "\n");
+    mwin->bodyClear();
     socket->close();
     doConnect();
   }

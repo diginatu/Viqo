@@ -83,7 +83,7 @@
      </property>
      <layout class="QGridLayout" name="gridLayout_2">
       <item row="0" column="0">
-       <widget class="QComboBox" name="loginWayCombo">
+       <widget class="QComboBox" name="login_way_combo">
         <item>
          <property name="text">
           <string>直接入力</string>

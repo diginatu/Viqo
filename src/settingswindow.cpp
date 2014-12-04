@@ -2,7 +2,7 @@
 #include "ui_settingswindow.h"
 #include "src/mainwindow.h"
 
-SettingsWindow::SettingsWindow(MainWindow* mwin, QWidget *parent) :
+SettingsWindow::SettingsWindow(MainWindow* mwin, QWidget* parent) :
   QDialog(parent),
   ui(new Ui::SettingsWindow)
 {
@@ -24,12 +24,18 @@ void SettingsWindow::init()
 {
   ui->userdata_mail->setText(mwin->settings.getUserMail());
   ui->userdata_pass->setText(mwin->settings.getUserPass());
-  ui->loginWayCombo->setCurrentIndex(mwin->settings.getLoginWay());
+  ui->login_way_combo->setCurrentIndex(mwin->settings.getLoginWay());
   ui->usersession->setText(mwin->settings.getUserSession());
   ui->cookiesetting_filename->setText(mwin->settings.getCookieFile());
 }
 
-void SettingsWindow::on_loginWayCombo_currentIndexChanged(int index)
+void SettingsWindow::getUserSessionFinished()
+{
+  ui->usersession->setText(mwin->settings.getUserSession());
+  ui->buttonBox->setEnabled(true);
+}
+
+void SettingsWindow::on_login_way_combo_currentIndexChanged(int index)
 {
   switch (index) {
   case 0:
@@ -50,39 +56,38 @@ void SettingsWindow::on_loginWayCombo_currentIndexChanged(int index)
   }
 }
 
-void SettingsWindow::on_buttonBox_rejected()
-{
-}
-
 void SettingsWindow::on_buttonBox_accepted()
 {
   mwin->settings.setUserMail(ui->userdata_mail->text());
   mwin->settings.setUserPass(ui->userdata_pass->text());
-  mwin->settings.setLoginWay(ui->loginWayCombo->currentIndex());
+  mwin->settings.setLoginWay(ui->login_way_combo->currentIndex());
   mwin->settings.setUserSession(ui->usersession->text());
   mwin->settings.setCookieFile(ui->cookiesetting_filename->text());
 
   mwin->settings.saveSettings();
+
+  mwin->nicolivemanager->alertReconnect();
 }
 
 
 void SettingsWindow::on_cookiesetting_file_open_button_clicked()
 {
-  QString filePath = QFileDialog::getOpenFileName(this, tr("Open Cookies File"), QDir::homePath(), tr("sqlite Files (*.sqlite)"));
+  const QString filePath = QFileDialog::getOpenFileName(this, tr("Open Cookies File"), QDir::homePath(), tr("sqlite Files (*.sqlite)"));
   if ( filePath == "" ) return;
   ui->cookiesetting_filename->setText(filePath);
 }
 
 void SettingsWindow::on_get_session_clicked()
 {
-  switch (ui->loginWayCombo->currentIndex()) {
+  switch (ui->login_way_combo->currentIndex()) {
   case 1:
+    ui->buttonBox->setEnabled(false);
     mwin->getSessionFromCookie();
-    ui->usersession->setText(mwin->settings.getUserSession());
+    getUserSessionFinished();
     break;
   case 2:
+    ui->buttonBox->setEnabled(false);
     mwin->nicolivemanager->login(ui->userdata_mail->text(), ui->userdata_pass->text());
-    ui->usersession->setText(mwin->settings.getUserSession());
     break;
   default:
     Q_ASSERT(false);

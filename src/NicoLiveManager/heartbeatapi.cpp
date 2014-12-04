@@ -29,7 +29,3 @@ void NicoLiveManager::heartBeatFinished(QNetworkReply* reply){
 
   mwin->setWatchCount(watchCount);
 }
-
-QString NicoLiveManager::getWatchCount() const {
-  return watchCount;
-}

@@ -11,6 +11,7 @@
 #include "Alert/wakutcp.h"
 #include "LiveWaku/livewaku.h"
 #include "LiveWaku/nowlivewaku.h"
+#include "../settingswindow.h"
 
 namespace Ui {
 class MainWindow;
@@ -20,10 +21,8 @@ class NicoLiveManager : public QObject
 {
 	Q_OBJECT
 public:
-  explicit NicoLiveManager(MainWindow* mwin, QObject *parent = 0);
+  explicit NicoLiveManager(MainWindow* mwin, SettingsWindow* swin, QObject *parent = 0);
 	~NicoLiveManager();
-
-	QString getWatchCount() const;
 
 	static QVariant makePostData(QString session_id);
 
@@ -32,6 +31,9 @@ public:
 	void getHeartBeatAPI();
 	void loginAlertAPI(QString mail, QString pass);
 	void adminAlertAPI(QString ticket);
+
+  void alertReconnect();
+
   void login(QString mail, QString pass);
 
 	QStringList mycommunities;
@@ -50,7 +52,8 @@ public slots:
 
 private:
 	MainWindow* mwin;
-	WakuTcp* wakutcp;
+  SettingsWindow* swin;
+  WakuTcp* wakutcp;
 
 	QString watchCount;
 

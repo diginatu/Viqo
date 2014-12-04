@@ -97,3 +97,19 @@ void NicoLiveManager::adminAlertFinished(QNetworkReply* reply)
 
   mwin->insLog();
 }
+
+void NicoLiveManager::alertReconnect()
+{
+  wakutcp->close();
+  wakutcp->deleteLater();
+
+  QString mail = mwin->settings.getUserMail();
+  QString pass = mwin->settings.getUserPass();
+
+  if ( mail == "" || pass == "") {
+    mwin->insLog("mail or pass are not specified");
+    return;
+  }
+
+  loginAlertAPI(mail, pass);
+}
