@@ -4,19 +4,25 @@
 CookieRead::CookieRead(MainWindow* mwin)
 {
   this->mwin = mwin;
-  db = QSqlDatabase::addDatabase("QSQLITE");
-  db.setDatabaseName(mwin->getCookieName());
-
-  if (db.open()) {
-    mwin->insLog("CookieRead::CookieRead db open succeeded\n");
-  } else {
-    mwin->insLog("CookieRead::CookieRead db open error occured\n");
-  }
 }
 
 QString CookieRead::getUserSession()
 {
   mwin->insLog("CookieRead::getUserSession");
+
+  QString cookie_name = mwin->settings.getCookieFile();
+  if (cookie_name == "") {
+    mwin->insLog("Cookie Name is not specified");
+    return "";
+  }
+  db = QSqlDatabase::addDatabase("QSQLITE", "firefox_cookie_connection");
+  db.setDatabaseName(cookie_name);
+
+  if (db.open()) {
+    mwin->insLog("db open succeeded\n");
+  } else {
+    mwin->insLog("db open error occured\n");
+  }
 
   QString queryS = "select value from moz_cookies where baseDomain=:baseDomain and name=:name";
 
@@ -31,7 +37,7 @@ QString CookieRead::getUserSession()
       return query.value(0).toString();
     }
   } else {
-    mwin->insLog("Cookie db usersession getting error");
+    mwin->insLog("query error");
   }
 
   mwin->insLog();
@@ -40,6 +46,6 @@ QString CookieRead::getUserSession()
 
 CookieRead::~CookieRead()
 {
-  qDebug() << "cookie db closed";
+  mwin->insLog("CookieRead::~CookieRead db closed\n");
   db.close();
 }

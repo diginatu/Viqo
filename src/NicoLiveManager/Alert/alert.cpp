@@ -21,7 +21,7 @@ void NicoLiveManager::loginAlertAPI(QString mail, QString pass)
 
 void NicoLiveManager::loginAlertFinished(QNetworkReply* reply)
 {
-  mwin->insLog("loginAlertFinished :");
+  mwin->insLog("NicoLiveManager::loginAlertFinished");
   QByteArray repdata = reply->readAll();
 
   StrAbstractor commTcpi(repdata);
@@ -30,7 +30,7 @@ void NicoLiveManager::loginAlertFinished(QNetworkReply* reply)
   if (status == "fail") {
     const QString code = commTcpi.midStr("<code>","</code>");
     const QString description = commTcpi.midStr("<description>","</description>");
-    mwin->insLog(code + "\n" + description);
+    mwin->insLog(code + "\n" + description + "\n");
     return;
   }
 
@@ -59,7 +59,7 @@ void NicoLiveManager::adminAlertAPI(QString ticket)
 
 void NicoLiveManager::adminAlertFinished(QNetworkReply* reply)
 {
-  mwin->insLog("adminAlertFinished :");
+  mwin->insLog("NicoLiveManager::adminAlertFinished");
   QByteArray repdata = reply->readAll();
 
   StrAbstractor wakuTcpi(repdata);
@@ -95,4 +95,21 @@ void NicoLiveManager::adminAlertFinished(QNetworkReply* reply)
   wakutcp = new WakuTcp(waku_addr, waku_port, waku_thread, mwin, this);
   wakutcp->doConnect();
 
+  mwin->insLog();
+}
+
+void NicoLiveManager::alertReconnect()
+{
+  wakutcp->close();
+  wakutcp->deleteLater();
+
+  QString mail = mwin->settings.getUserMail();
+  QString pass = mwin->settings.getUserPass();
+
+  if ( mail == "" || pass == "") {
+    mwin->insLog("mail or pass are not specified");
+    return;
+  }
+
+  loginAlertAPI(mail, pass);
 }

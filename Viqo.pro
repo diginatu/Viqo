@@ -23,14 +23,17 @@ SOURCES += src/main.cpp\
     src/strabstractor.cpp \
     src/usergetter.cpp \
     src/usermanager.cpp \
-		src/NicoLiveManager/nicolivemanager.cpp \
+    src/NicoLiveManager/nicolivemanager.cpp \
     src/NicoLiveManager/heartbeatapi.cpp \
     src/NicoLiveManager/Alert/alert.cpp \
     src/NicoLiveManager/Alert/wakutcp.cpp \
     src/NicoLiveManager/rawmylivewaku.cpp \
     src/NicoLiveManager/LiveWaku/livewaku.cpp \
     src/NicoLiveManager/LiveWaku/nowlivewaku.cpp \
-    src/NicoLiveManager/LiveWaku/commtcp.cpp
+    src/NicoLiveManager/LiveWaku/commtcp.cpp \
+    src/settingswindow.cpp \
+    src/settings.cpp \
+    src/NicoLiveManager/loginapi.cpp
 
 HEADERS  += src/NicoLiveManager/nicolivemanager.h \
     src/cookieread.h \
@@ -43,6 +46,9 @@ HEADERS  += src/NicoLiveManager/nicolivemanager.h \
     src/NicoLiveManager/Alert/wakutcp.h \
     src/NicoLiveManager/LiveWaku/livewaku.h \
     src/NicoLiveManager/LiveWaku/nowlivewaku.h \
-    src/NicoLiveManager/LiveWaku/commtcp.h
+    src/NicoLiveManager/LiveWaku/commtcp.h \
+    src/settingswindow.h \
+    src/settings.h
 
-FORMS    += ui/mainwindow.ui
+FORMS    += ui/mainwindow.ui \
+    ui/settingswindow.ui

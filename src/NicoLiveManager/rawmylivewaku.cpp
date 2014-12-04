@@ -3,10 +3,15 @@
 
 void NicoLiveManager::getRawMyLiveHTML()
 {
+  if (mwin->settings.getUserSession() == "") {
+    mwin->insLog("NicoLiveManager::getRawMyLiveHTML user_session is not set yet");
+    return;
+  }
+
   QNetworkAccessManager* mManager = new QNetworkAccessManager(this);
   // make request
   QNetworkRequest rq;
-  QVariant postData = makePostData(mwin->getUserSession());
+  QVariant postData = makePostData(mwin->settings.getUserSession());
   rq.setHeader(QNetworkRequest::CookieHeader, postData);
   rq.setUrl(QUrl("http://www.nicovideo.jp/my/live"));
 

@@ -18,7 +18,7 @@ QVariant NicoHttp::makePostData(){
   ck.setName("user_session");
 
   QByteArray user_id_ba;
-  user_id_ba.append(mwin->getUserSession());
+  user_id_ba.append(mwin->settings.getUserSession());
 
   ck.setValue(user_id_ba);
   cookies.append(ck);
