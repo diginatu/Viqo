@@ -32,6 +32,7 @@ public:
 	void getHeartBeatAPI();
 	void loginAlertAPI(QString mail, QString pass);
 	void adminAlertAPI(QString ticket);
+  void login(QString mail, QString pass);
 
 	QStringList mycommunities;
 
@@ -64,8 +65,9 @@ private slots:
 	void loginAlertFinished(QNetworkReply* reply);
 	void adminAlertFinished(QNetworkReply* reply);
 	void rawMyLivefinished(QNetworkReply* reply);
+  void loginFinished(QNetworkReply* reply);
 
-	void deleteWakuList();
+  void deleteWakuList();
 };
 
 

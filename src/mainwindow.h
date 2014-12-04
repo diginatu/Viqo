@@ -51,6 +51,8 @@ public:
 
   Settings settings;
 
+  NicoLiveManager* nicolivemanager;
+
 public slots:
 	// ui slots
 	void on_receive_clicked();
@@ -76,8 +78,6 @@ private:
 	void bodyClear();
 
 	Ui::MainWindow* ui;
-
-	NicoLiveManager* nicolivemanager;
 
 	QTimer* watch_count_timer;
 	QTimer* elapsed_time_timer;

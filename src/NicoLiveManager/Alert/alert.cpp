@@ -21,7 +21,7 @@ void NicoLiveManager::loginAlertAPI(QString mail, QString pass)
 
 void NicoLiveManager::loginAlertFinished(QNetworkReply* reply)
 {
-  mwin->insLog("loginAlertFinished :");
+  mwin->insLog("NicoLiveManager::loginAlertFinished");
   QByteArray repdata = reply->readAll();
 
   StrAbstractor commTcpi(repdata);
@@ -59,7 +59,7 @@ void NicoLiveManager::adminAlertAPI(QString ticket)
 
 void NicoLiveManager::adminAlertFinished(QNetworkReply* reply)
 {
-  mwin->insLog("adminAlertFinished :");
+  mwin->insLog("NicoLiveManager::adminAlertFinished");
   QByteArray repdata = reply->readAll();
 
   StrAbstractor wakuTcpi(repdata);
@@ -95,4 +95,5 @@ void NicoLiveManager::adminAlertFinished(QNetworkReply* reply)
   wakutcp = new WakuTcp(waku_addr, waku_port, waku_thread, mwin, this);
   wakutcp->doConnect();
 
+  mwin->insLog();
 }

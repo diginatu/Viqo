@@ -75,13 +75,14 @@ void SettingsWindow::on_cookiesetting_file_open_button_clicked()
 
 void SettingsWindow::on_get_session_clicked()
 {
-  switch (mwin->settings.getLoginWay()) {
+  switch (ui->loginWayCombo->currentIndex()) {
   case 1:
     mwin->getSessionFromCookie();
     ui->usersession->setText(mwin->settings.getUserSession());
     break;
   case 2:
-
+    mwin->nicolivemanager->login(ui->userdata_mail->text(), ui->userdata_pass->text());
+    ui->usersession->setText(mwin->settings.getUserSession());
     break;
   default:
     Q_ASSERT(false);
