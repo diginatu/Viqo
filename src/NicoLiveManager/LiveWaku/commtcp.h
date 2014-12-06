@@ -44,6 +44,9 @@ private:
   NowLiveWaku* nlwaku;
 
   int lastBlockNum;
+
+private slots:
+  void getPostKey();
 };
 
 #endif // COMMTCP_H

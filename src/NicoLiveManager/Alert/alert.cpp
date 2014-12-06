@@ -97,7 +97,8 @@ void NicoLiveManager::adminAlertFinished(QNetworkReply* reply)
 
 void NicoLiveManager::alertReconnect()
 {
-  wakutcp->close();
+  if (wakutcp->isConnected())
+    wakutcp->close();
   wakutcp->deleteLater();
 
   QString mail = mwin->settings.getUserMail();

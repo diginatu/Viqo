@@ -61,6 +61,11 @@ void CommTcp::sendNull()
   }
 }
 
+void CommTcp::getPostKey()
+{
+  nlwaku->getPostKeyAPI(thread, lastBlockNum);
+}
+
 void CommTcp::readyRead()
 {
   QList<QByteArray> rawcomms( socket->readAll().split('\0') );
@@ -87,7 +92,7 @@ void CommTcp::readOneRawComment(QByteArray& rawcomm)
     nlwaku->getPostKeyAPI(thread, lastBlockNum);
     // set timer to get post_key
     postkey_timer.setInterval(10000);
-    connect(&postkey_timer, SIGNAL(timeout()), nlwaku, SLOT(getPostKeyAPI()));
+    connect(&postkey_timer, SIGNAL(timeout()), this, SLOT(getPostKey()));
     postkey_timer.start();
 
     return;
