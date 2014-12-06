@@ -1,24 +1,29 @@
 #include "nowlivewaku.h"
 #include "../../mainwindow.h"
 
-NowLiveWaku::NowLiveWaku(MainWindow* mwin, QObject* parent) :
-  LiveWaku(mwin, NULL, parent),
-  commtcp(NULL)
+NowLiveWaku::NowLiveWaku(MainWindow* mwin, NicoLiveManager* nlman, QObject* parent) :
+  LiveWaku(mwin, nlman, parent),
+  commtcp(nullptr)
 {
 }
 
-NowLiveWaku::NowLiveWaku(MainWindow* mwin, QString broadID, QObject* parent) :
-  LiveWaku(mwin, NULL, broadID, parent),
-  commtcp(NULL)
+NowLiveWaku::NowLiveWaku(MainWindow* mwin, NicoLiveManager* nlman, QString broadID, QObject* parent) :
+  LiveWaku(mwin, nlman, broadID, parent),
+  commtcp(nullptr)
 {
 }
 
 void NowLiveWaku::broadDisconnect() {
-  if (commtcp != NULL && commtcp->isConnected() ) {
+  if (commtcp != nullptr && commtcp->isConnected() ) {
     commtcp->close();
     commtcp->deleteLater();
     commtcp = NULL;
   }
+}
+
+void NowLiveWaku::getPostKeyAPI(const QString& thread, int block_num)
+{
+  nlman->getPostKeyAPI(thread, block_num);
 }
 
 void NowLiveWaku::playerStatusFinished(QNetworkReply* reply)
@@ -46,6 +51,8 @@ void NowLiveWaku::playerStatusFinished(QNetworkReply* reply)
   setSt(commTcpi.midStr("<start_time>","</start_time>").toUInt());
   setEd(commTcpi.midStr("<end_time>","</end_time>").toUInt());
 
+  QString user_id = commTcpi.midStr("<user_id>", "</user_id>");
+
   addr = commTcpi.midStr("<addr>", "</addr>");
   port = commTcpi.midStr("<port>", "</port>").toInt();
   thread = commTcpi.midStr("<thread>", "</thread>");
@@ -54,7 +61,23 @@ void NowLiveWaku::playerStatusFinished(QNetworkReply* reply)
                "\nport: " + QString::number(port) +
                "\nthread:" + thread + "\n");
 
-  commtcp = new CommTcp(addr, port, thread, mwin);
+  commtcp = new CommTcp(addr, port, thread, user_id, mwin, this);
   commtcp->doConnect();
+}
 
+
+
+QString NowLiveWaku::getPostKey() const
+{
+  return postKey;
+}
+
+void NowLiveWaku::setPostKey(const QString& value)
+{
+  postKey = value;
+}
+
+void NowLiveWaku::sendComment(const QString& text)
+{
+  commtcp->sendComment(text);
 }

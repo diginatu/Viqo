@@ -12,7 +12,7 @@ class LiveWaku : public QObject
 {
 	Q_OBJECT
 public:
-	explicit LiveWaku(MainWindow* mwin, NicoLiveManager* nlman, QObject *parent = 0);
+  explicit LiveWaku(MainWindow* mwin, NicoLiveManager* nlman, QObject *parent = 0);
 	explicit LiveWaku(MainWindow* mwin, NicoLiveManager* nlman, QString broadID, QObject *parent = 0);
 
 	void getPlayyerStatusAPI();

@@ -10,19 +10,28 @@ class NowLiveWaku : public LiveWaku
 {
 	Q_OBJECT
 public:
-	NowLiveWaku(MainWindow* mwin, QObject* parent);
-	NowLiveWaku(MainWindow* mwin, QString broadID, QObject* parent);
-	NowLiveWaku(MainWindow* mwin, QString broadID, QString community, QString title, QObject* parent);
+  NowLiveWaku(MainWindow* mwin, NicoLiveManager* nlman, QObject* parent);
+  NowLiveWaku(MainWindow* mwin, NicoLiveManager* nlman, QString broadID, QObject* parent);
+  NowLiveWaku(MainWindow* mwin, NicoLiveManager* nlman, QString broadID, QString community, QString title, QObject* parent);
 
 	void broadDisconnect();
 
+  void getPostKeyAPI(const QString& thread, int block_num);
+
+  QString getPostKey() const;
+  void setPostKey(const QString& value);
+
+  void sendComment(const QString& text);
+
 private slots:
-	void playerStatusFinished(QNetworkReply* reply);
+  void playerStatusFinished(QNetworkReply* reply);
 
 private:
 	QString addr;
 	QString thread;
 	int port;
+
+  QString postKey;
 
 	CommTcp* commtcp;
 

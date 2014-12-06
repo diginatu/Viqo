@@ -3,7 +3,7 @@
 
 NicoLiveManager::NicoLiveManager(MainWindow* mwin, SettingsWindow* swin, QObject *parent) :
   QObject(parent),
-  nowWaku(mwin, this),
+  nowWaku(mwin, this, this),
   wakutcp(NULL)
 {
   this->mwin = mwin;

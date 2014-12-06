@@ -62,8 +62,6 @@ public slots:
 
 	void getWatchCount();
 
-	void on_clear_clicked();
-
 	void on_actionSave_triggered();
 	void on_actionLoad_triggered();
 
@@ -73,7 +71,11 @@ private slots:
 	void on_live_waku_list_activated(int index);
 	void updateElapsedTime();
 
-  void on_action_triggered();
+  void on_setting_triggered();
+
+  void on_clear_triggered();
+
+  void on_submit_button_clicked();
 
 private:
 	Ui::MainWindow* ui;

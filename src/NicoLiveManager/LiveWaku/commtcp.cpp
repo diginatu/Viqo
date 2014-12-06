@@ -1,13 +1,16 @@
 #include "commtcp.h"
 #include "../../mainwindow.h"
+#include "nowlivewaku.h"
 
-CommTcp::CommTcp(QString domain, int port, QString thread, MainWindow* mwin) :
+CommTcp::CommTcp(QString domain, int port, QString thread, QString user_id, MainWindow* mwin, NowLiveWaku* nlwaku) :
   socket(NULL)
 {
   this->domain = domain;
   this->port = port;
   this->thread = thread;
   this->mwin = mwin;
+  this->nlwaku = nlwaku;
+  this->user_id = user_id;
 
   socket = new QTcpSocket(this);
 
@@ -28,7 +31,6 @@ void CommTcp::doConnect()
 void CommTcp::connected()
 {
   QByteArray send;
-  opentime = QDateTime::currentDateTime();
 
   send.append("<thread thread=\""+thread+"\" res_from=\"-1000\" version=\"20061206\" />");
   send.append('\0');
@@ -36,8 +38,6 @@ void CommTcp::connected()
   if (socket->write(send) == -1) {
     throw QString("CommTcp::connected Error: ").append(socket->errorString());
   }
-
-  mwin->onReceiveStarted();
 
   // set timer to send NULL data.
   nullDataTimer.setInterval(60000);
@@ -77,7 +77,21 @@ void CommTcp::readyRead()
 
 void CommTcp::readOneRawComment(QByteArray& rawcomm)
 {
+  qDebug() << rawcomm;
   if (rawcomm.startsWith("<thread")) {
+    open_time = QDateTime::currentDateTime();
+    mwin->onReceiveStarted();
+
+    StrAbstractor threadinfo(rawcomm);
+    lastBlockNum = threadinfo.midStr("last_res=\"", "\"", false).toInt() / 10;
+    ticket = threadinfo.midStr("ticket=\"", "\"", false);
+    server_time = threadinfo.midStr("server_time=\"", "\"", false).toUInt();
+
+    nlwaku->getPostKeyAPI(thread, lastBlockNum);
+    return;
+  }
+  if (rawcomm.startsWith("<chat_result")) {
+    qDebug() << rawcomm;
     return;
   }
 
@@ -90,6 +104,11 @@ void CommTcp::readOneRawComment(QByteArray& rawcomm)
   StrAbstractor comminfo(rawcomm);
 
   int num = comminfo.midStr("no=\"", "\"", false).toInt();
+  const int block = num/10;
+  if (block > lastBlockNum) {
+    lastBlockNum = block;
+    nlwaku->getPostKeyAPI(thread, block);
+  }
 
   int udate = comminfo.midStr("date=\"", "\"", false).toInt();
   QDateTime commenttime;
@@ -120,10 +139,10 @@ void CommTcp::readOneRawComment(QByteArray& rawcomm)
 
   mwin->insComment( num, premium,
                     broadcaster?"放送主":user, comm, date,
-                    is_184, broadcaster, commenttime > opentime);
+                    is_184, broadcaster, commenttime > open_time);
 
   // comment command
-  if ( mwin->isCommandCommentChecked() && commenttime > opentime ) {
+  if ( mwin->isCommandCommentChecked() && commenttime > open_time ) {
     QProcess pr;
     QString cmd = mwin->getCommandComment();
 
@@ -140,6 +159,48 @@ void CommTcp::close()
 {
   nullDataTimer.stop();
   socket->close();
+}
+
+void CommTcp::sendComment(const QString& text)
+{
+  const auto start_time = nlwaku->getSt().toTime_t();
+  const auto now_time = QDateTime::currentDateTime();
+
+  QString postkey = nlwaku->getPostKey();
+  if (postkey == "") {
+    mwin->insLog("CommTcp::sendComment no postKey\n");
+    return;
+  }
+
+  QByteArray send;
+  open_time = QDateTime::currentDateTime();
+
+  const auto vpos = 100 * (server_time - start_time +
+                     now_time.toTime_t() - open_time.toTime_t());
+
+  // qDebug() << "server" << server_time;
+  // qDebug() << "start" << start_time;
+  // qDebug() << "now" << now_time.toTime_t();
+  // qDebug() << "open" << open_time.toTime_t();
+  qDebug() << "vpos" << vpos;
+
+  send.append("<chat thread=\"" + thread +
+              "\" ticket=\"" + ticket +
+              "\" vpos=\"" + QString::number(vpos) +
+              "\" postkey=\"" + postkey +
+              // "\" mail=\" 184\"" +
+              "\" user_id=\"" + user_id +
+              "\" " +
+              "premium=\"1\"" +
+              ">" + text +
+              "</chat>");
+  send.append('\0');
+
+  qDebug() << send;
+
+  if (socket->write(send) == -1) {
+    throw QString("CommTcp::sendComment Error: ").append(socket->errorString());
+  }
 }
 
 bool CommTcp::isConnected()

@@ -1,7 +1,7 @@
 #include "../nicolivemanager.h"
 #include "../../mainwindow.h"
 
-void NicoLiveManager::loginAlertAPI(QString mail, QString pass)
+void NicoLiveManager::loginAlertAPI(const QString& mail, const QString& pass)
 {
   QNetworkAccessManager* mManager = new QNetworkAccessManager(this);
 
@@ -16,7 +16,6 @@ void NicoLiveManager::loginAlertAPI(QString mail, QString pass)
           this, SLOT(loginAlertFinished(QNetworkReply*)));
 
   mManager->post(rq, params.toString(QUrl::FullyEncoded).toUtf8());
-  // qDebug() << params.toString(QUrl::FullyEncoded).toUtf8();
 }
 
 void NicoLiveManager::loginAlertFinished(QNetworkReply* reply)
@@ -41,7 +40,7 @@ void NicoLiveManager::loginAlertFinished(QNetworkReply* reply)
 }
 
 
-void NicoLiveManager::adminAlertAPI(QString ticket)
+void NicoLiveManager::adminAlertAPI(const QString& ticket)
 {
   QNetworkAccessManager* mManager = new QNetworkAccessManager(this);
 
@@ -79,8 +78,6 @@ void NicoLiveManager::adminAlertFinished(QNetworkReply* reply)
   while ((mycommunity = communityi.midStr("<community_id>","</community_id>")) != "") {
     this->mycommunities << mycommunity;
   }
-
-  //	qDebug() << this->mycommunities;
 
   waku_addr = wakuTcpi.midStr("<addr>", "</addr>");
   waku_port = wakuTcpi.midStr("<port>", "</port>").toInt();

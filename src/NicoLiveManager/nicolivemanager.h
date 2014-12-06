@@ -29,8 +29,9 @@ public:
 	void insertLiveWakuList(LiveWaku* livewaku);
 
 	void getHeartBeatAPI();
-	void loginAlertAPI(QString mail, QString pass);
-	void adminAlertAPI(QString ticket);
+  void loginAlertAPI(const QString& mail, const QString& pass);
+  void adminAlertAPI(const QString& ticket);
+  void getPostKeyAPI(const QString& thread, int block_no);
 
   void alertReconnect();
 
@@ -69,6 +70,7 @@ private slots:
 	void adminAlertFinished(QNetworkReply* reply);
 	void rawMyLivefinished(QNetworkReply* reply);
   void loginFinished(QNetworkReply* reply);
+  void postKeyFinished(QNetworkReply* reply);
 
   void deleteWakuList();
 };

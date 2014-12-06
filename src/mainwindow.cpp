@@ -45,6 +45,9 @@ void MainWindow::onReceiveStarted()
 {
   qDebug() << "--comment receiving started--";
 
+  ui->submit_button->setEnabled(true);
+  ui->disconnect->setEnabled(true);
+
   QWidget::setWindowTitle(nicolivemanager->nowWaku.getTitle() + " - Viqo");
 
   // set audiences num timer
@@ -64,6 +67,9 @@ void MainWindow::onReceiveStarted()
 void MainWindow::onReceiveEnded()
 {
   qDebug() << "--comment receiving ended--";
+
+  ui->submit_button->setEnabled(false);
+  ui->disconnect->setEnabled(false);
 
   QWidget::setWindowTitle("Viqo");
 
@@ -186,12 +192,6 @@ void MainWindow::on_disconnect_clicked()
   nicolivemanager->broadDisconnect();
 }
 
-void MainWindow::on_clear_clicked()
-{
-  bodyClear();
-  ui->logtext->clear();
-}
-
 void MainWindow::bodyClear()
 {
   ui->comment_view->clear();
@@ -260,10 +260,21 @@ void MainWindow::on_live_waku_list_activated(int index)
   on_receive_clicked();
 }
 
-void MainWindow::on_action_triggered()
+void MainWindow::on_setting_triggered()
 {
   settingsWindow->init();
   settingsWindow->show();
   settingsWindow->raise();
   settingsWindow->activateWindow();
+}
+
+void MainWindow::on_clear_triggered()
+{
+  bodyClear();
+}
+
+void MainWindow::on_submit_button_clicked()
+{
+  const QString& text = ui->submit_text->text();
+  nicolivemanager->nowWaku.sendComment(text);
 }

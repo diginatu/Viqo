@@ -85,12 +85,9 @@ void WakuTcp::readOneRawWaku(QByteArray& rawwaku)
   const QString& CommunityID = wakur.at(1);
   //	const QString& nushiID = wakur.at(2);
 
-  //	qDebug() << CommunityID << "," << broadID;
-
   if(wakur.size() != 3) {
     return;
   }
-
 
   if (mwin->isNextWaku()) {
     if ( nicolivemanager->nowWaku.getCommunity() == CommunityID &&
