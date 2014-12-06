@@ -4,7 +4,7 @@
 NicoLiveManager::NicoLiveManager(MainWindow* mwin, SettingsWindow* swin, QObject *parent) :
   QObject(parent),
   nowWaku(mwin, this, this),
-  wakutcp(NULL)
+  wakutcp(nullptr)
 {
   this->mwin = mwin;
   this->swin = swin;

@@ -87,7 +87,11 @@ void NicoLiveManager::adminAlertFinished(QNetworkReply* reply)
                "\nport: " + QString::number(waku_port) +
                "\nthread:" + waku_thread + "\n");
 
-  if ( wakutcp != NULL ) wakutcp->deleteLater();
+  if ( wakutcp != nullptr ) {
+    if ( wakutcp->isConnected() )
+      wakutcp->close();
+    wakutcp->deleteLater();
+  }
 
   wakutcp = new WakuTcp(waku_addr, waku_port, waku_thread, mwin, this);
   wakutcp->doConnect();
@@ -97,10 +101,6 @@ void NicoLiveManager::adminAlertFinished(QNetworkReply* reply)
 
 void NicoLiveManager::alertReconnect()
 {
-  if (wakutcp->isConnected())
-    wakutcp->close();
-  wakutcp->deleteLater();
-
   QString mail = mwin->settings.getUserMail();
   QString pass = mwin->settings.getUserPass();
 

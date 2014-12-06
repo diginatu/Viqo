@@ -14,10 +14,11 @@ NowLiveWaku::NowLiveWaku(MainWindow* mwin, NicoLiveManager* nlman, QString broad
 }
 
 void NowLiveWaku::broadDisconnect() {
-  if (commtcp != nullptr && commtcp->isConnected() ) {
-    commtcp->close();
+  if (commtcp != nullptr) {
+    if (commtcp->isConnected())
+      commtcp->close();
     commtcp->deleteLater();
-    commtcp = NULL;
+    commtcp = nullptr;
   }
 }
 
