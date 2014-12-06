@@ -51,7 +51,8 @@ void NowLiveWaku::playerStatusFinished(QNetworkReply* reply)
   setSt(commTcpi.midStr("<start_time>","</start_time>").toUInt());
   setEd(commTcpi.midStr("<end_time>","</end_time>").toUInt());
 
-  QString user_id = commTcpi.midStr("<user_id>", "</user_id>");
+  user_id = commTcpi.midStr("<user_id>", "</user_id>");
+  is_premium = commTcpi.midStr("<is_premium>", "</is_premium>").toUInt();
 
   addr = commTcpi.midStr("<addr>", "</addr>");
   port = commTcpi.midStr("<port>", "</port>").toInt();
@@ -61,11 +62,18 @@ void NowLiveWaku::playerStatusFinished(QNetworkReply* reply)
                "\nport: " + QString::number(port) +
                "\nthread:" + thread + "\n");
 
-  commtcp = new CommTcp(addr, port, thread, user_id, mwin, this);
+  commtcp = new CommTcp(addr, port, thread, mwin, this);
   commtcp->doConnect();
 }
+QString NowLiveWaku::getUser_id() const
+{
+  return user_id;
+}
 
-
+bool NowLiveWaku::getIs_premium() const
+{
+  return is_premium;
+}
 
 QString NowLiveWaku::getPostKey() const
 {

@@ -23,6 +23,9 @@ public:
 
   void sendComment(const QString& text);
 
+  bool getIs_premium() const;
+  QString getUser_id() const;
+
 private slots:
   void playerStatusFinished(QNetworkReply* reply);
 
@@ -32,6 +35,8 @@ private:
 	int port;
 
   QString postKey;
+  QString user_id;
+  bool is_premium;
 
 	CommTcp* commtcp;
 

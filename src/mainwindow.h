@@ -55,6 +55,8 @@ public:
 
   void bodyClear();
 
+  void submittedComment();
+
 public slots:
 	// ui slots
 	void on_receive_clicked();
@@ -76,6 +78,8 @@ private slots:
   void on_clear_triggered();
 
   void on_submit_button_clicked();
+
+  void on_submit_text_returnPressed();
 
 private:
 	Ui::MainWindow* ui;

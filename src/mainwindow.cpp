@@ -198,6 +198,11 @@ void MainWindow::bodyClear()
   ui->one_comment_view->clear();
 }
 
+void MainWindow::submittedComment()
+{
+  ui->submit_button->setEnabled(true);
+}
+
 void MainWindow::on_actionSave_triggered()
 {
   settings.saveStatus(ui);
@@ -277,4 +282,12 @@ void MainWindow::on_submit_button_clicked()
 {
   const QString& text = ui->submit_text->text();
   nicolivemanager->nowWaku.sendComment(text);
+  QString bl = "";
+  ui->submit_text->setText(bl);
+  ui->submit_button->setEnabled(false);
+}
+
+void MainWindow::on_submit_text_returnPressed()
+{
+  on_submit_button_clicked();
 }
