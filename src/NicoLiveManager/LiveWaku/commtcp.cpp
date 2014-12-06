@@ -153,8 +153,10 @@ void CommTcp::readOneRawComment(QByteArray& rawcomm)
                     broadcaster?"放送主":user, comm, date,
                     is_184, broadcaster, commenttime > open_time);
 
+  qDebug() << comm;
   // comment command
   if ( mwin->isCommandCommentChecked() && commenttime > open_time ) {
+    qDebug() << "a";
     QProcess pr;
     QString cmd = mwin->getCommandComment();
 
@@ -185,7 +187,6 @@ void CommTcp::sendComment(const QString& text)
   }
 
   QByteArray send;
-  open_time = QDateTime::currentDateTime();
 
   const auto vpos = 100 * (server_time - start_time +
                      now_time.toTime_t() - open_time.toTime_t());
