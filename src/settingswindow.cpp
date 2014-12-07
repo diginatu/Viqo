@@ -13,8 +13,6 @@ SettingsWindow::SettingsWindow(MainWindow* mwin, QWidget* parent) :
   ui->userdata_mail->setEchoMode(QLineEdit::Password);
   ui->userdata_pass->setEchoMode(QLineEdit::Password);
   ui->usersession->setEchoMode(QLineEdit::Password);
-
-
 }
 
 SettingsWindow::~SettingsWindow()

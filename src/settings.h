@@ -17,11 +17,11 @@ class Settings : public QObject
 {
   Q_OBJECT
 public:
-  explicit Settings(MainWindow* mwin, QObject* parent = 0);
+  explicit Settings(MainWindow* mwin, Ui::MainWindow* ui, QObject* parent = 0);
 
-  void saveStatus(Ui::MainWindow* ui);
-  void loadStatus(Ui::MainWindow* ui);
-  void oldLoad(Ui::MainWindow* ui);
+  void saveStatus();
+  void loadStatus();
+  void oldLoad();
 
   void saveSettings();
   void loadSettings();
@@ -45,6 +45,7 @@ public:
   bool getOwnerComment() const;
   void setOwnerComment(bool value);
 
+  bool getIs184() const;
 signals:
 
 public slots:
@@ -60,6 +61,7 @@ private:
   bool ownerComment;
 
   MainWindow* mwin;
+  Ui::MainWindow *ui;
 };
 
 #endif // SETTINGS_H

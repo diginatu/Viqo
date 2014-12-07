@@ -49,7 +49,6 @@ public:
 
   SettingsWindow* settingsWindow;
 
-  Settings settings;
 
   NicoLiveManager* nicolivemanager;
 
@@ -86,6 +85,9 @@ private:
 
 	QTimer* watch_count_timer;
 	QTimer* elapsed_time_timer;
+
+public:
+  Settings settings;
 
 };
 

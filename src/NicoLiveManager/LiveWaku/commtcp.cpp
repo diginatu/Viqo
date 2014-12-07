@@ -150,8 +150,8 @@ void CommTcp::readOneRawComment(QByteArray& rawcomm)
   comm.replace("&gt;", ">");
 
   mwin->insComment( num, premium,
-                    broadcaster?"放送主":user, comm, date,
-                    is_184, broadcaster, commenttime > open_time);
+    broadcaster?"放送主":user, comm, date, is_184,
+    broadcaster, commenttime > open_time);
 
   // comment command
   if ( mwin->isCommandCommentChecked() && commenttime > open_time ) {
@@ -189,20 +189,21 @@ void CommTcp::sendComment(const QString& text)
   const auto vpos = 100 * (server_time - start_time +
                      now_time.toTime_t() - open_time.toTime_t());
 
-  send.append("<chat thread=\"" + thread +
-              "\" ticket=\"" + ticket +
-              "\" vpos=\"" + QString::number(vpos) +
-              "\" postkey=\"" + postkey +
-              // "\" mail=\" 184\"" +
-              "\" user_id=\"" + nlwaku->getUser_id() +
-              QString("\"") +
-              ((nlwaku->getIs_premium())?" premium=\"1\"":"") +
-              QString(">") + text +
-              "</chat>");
+  send.append(QString("<chat thread=\"%1\" ticket=\"%2\" vpos=\"%3\" "
+          "postkey=\"%4\"%5 user_id=\"%6\"%7>%8</chat>")
+      .arg(thread)
+      .arg(ticket)
+      .arg(vpos)
+      .arg(postkey)
+      .arg((mwin->settings.getIs184())?" mail=\"184\"":"")
+      .arg(nlwaku->getUser_id())
+      .arg((nlwaku->getIs_premium())?" premium=\"1\"":"")
+      .arg(text));
+
   send.append('\0');
 
   if (socket->write(send) == -1) {
-    throw QString("CommTcp::sendComment Error: ").append(socket->errorString());
+    mwin->insLog("CommTcp::sendComment Error: " + socket->errorString());
   }
 }
 

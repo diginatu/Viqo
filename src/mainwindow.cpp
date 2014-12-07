@@ -4,8 +4,8 @@
 MainWindow::MainWindow(QWidget *parent) :
   QMainWindow(parent),
   settingsWindow(new SettingsWindow(this, this)),
-  settings(this, this),
-  ui(new Ui::MainWindow)
+  ui(new Ui::MainWindow),
+  settings(this, ui, this)
 {
   ui->setupUi(this);
 
@@ -24,7 +24,7 @@ MainWindow::MainWindow(QWidget *parent) :
   nicolivemanager = new NicoLiveManager(this, settingsWindow, this);
 
   settings.loadSettings();
-  settings.loadStatus(ui);
+  settings.loadStatus();
 
   const QString mail = settings.getUserMail();
   const QString pass = settings.getUserPass();
@@ -205,12 +205,12 @@ void MainWindow::submittedComment()
 
 void MainWindow::on_actionSave_triggered()
 {
-  settings.saveStatus(ui);
+  settings.saveStatus();
 }
 
 void MainWindow::on_actionLoad_triggered()
 {
-  settings.loadStatus(ui);
+  settings.loadStatus();
 }
 
 void MainWindow::on_comment_view_itemDoubleClicked(QTreeWidgetItem *item, int column)

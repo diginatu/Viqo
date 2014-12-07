@@ -1,7 +1,7 @@
 #include "settings.h"
 #include "mainwindow.h"
 
-Settings::Settings(MainWindow* mwin, QObject* parent) :
+Settings::Settings(MainWindow* mwin, Ui::MainWindow* ui, QObject* parent) :
   QObject(parent)
 {
   loginWay = 0;
@@ -14,9 +14,10 @@ Settings::Settings(MainWindow* mwin, QObject* parent) :
   ownerComment = true;
 
   this->mwin = mwin;
+  this->ui = ui;
 }
 
-void Settings::saveStatus(Ui::MainWindow* ui)
+void Settings::saveStatus()
 {
   QStringList dir = QStandardPaths::standardLocations(QStandardPaths::DataLocation);
   if (dir.empty()) {
@@ -27,6 +28,7 @@ void Settings::saveStatus(Ui::MainWindow* ui)
   QJsonObject other;
   other["auto_getting_user_name"] = ui->auto_getting_user_name_chk->isChecked();
   other["keep_top_comment"] = ui->keep_top_chk->isChecked();
+  other["is184_comment"] = ui->is184_chk->isChecked();
 
   QJsonObject command;
   command["comment_check"] = ui->command_comment_chk->isChecked();
@@ -51,7 +53,7 @@ void Settings::saveStatus(Ui::MainWindow* ui)
   file.close();
 }
 
-void Settings::loadStatus(Ui::MainWindow* ui)
+void Settings::loadStatus()
 {
   QStringList dir = QStandardPaths::standardLocations(QStandardPaths::DataLocation);
   if (dir.empty()) {
@@ -61,7 +63,7 @@ void Settings::loadStatus(Ui::MainWindow* ui)
   QFile file(dir[0] + "/status_01.json");
   if ( !file.exists() ) {
     file.close();
-    oldLoad(ui);
+    oldLoad();
     return;
   }
 
@@ -69,13 +71,12 @@ void Settings::loadStatus(Ui::MainWindow* ui)
 
   QJsonDocument jsd = QJsonDocument::fromJson(file.readAll());
 
-  QJsonObject other;
-  other = jsd.object()["other"].toObject();
+  QJsonObject other = jsd.object()["other"].toObject();
   ui->auto_getting_user_name_chk->setChecked(other["auto_getting_user_name"].toBool());
   ui->keep_top_chk->setChecked(other["keep_top_comment"].toBool());
+  ui->is184_chk->setChecked(other["is184_comment"].toBool());
 
-  QJsonObject command;
-  command = jsd.object()["command"].toObject();
+  QJsonObject command = jsd.object()["command"].toObject();
   ui->command_comment->setText(command["comment"].toString());
   ui->command_comment_chk->setChecked(command["comment_check"].toBool());
   ui->command_nextWaku->setText(command["nextWaku"].toString());
@@ -84,7 +85,7 @@ void Settings::loadStatus(Ui::MainWindow* ui)
   file.close();
 }
 
-void Settings::oldLoad(Ui::MainWindow* ui)
+void Settings::oldLoad()
 {
   QStringList dir = QStandardPaths::standardLocations(QStandardPaths::DataLocation);
   if (dir.empty()) {
@@ -181,18 +182,18 @@ void Settings::loadSettings()
 
   file.open(QIODevice::ReadOnly | QIODevice::Text);
 
-  auto jsd = QJsonDocument::fromJson(file.readAll());
+  QJsonDocument jsd = QJsonDocument::fromJson(file.readAll());
 
-  auto login_way = jsd.object()["login_way"].toObject();
+  QJsonObject login_way = jsd.object()["login_way"].toObject();
   loginWay = login_way["login_way"].toInt();
   userSession = login_way["user_session"].toString();
   cookieFile = login_way["cookie_file_name"].toString();
 
-  auto user_data = jsd.object()["user_data"].toObject();
+  QJsonObject user_data = jsd.object()["user_data"].toObject();
   userMail = user_data["mail"].toString();
   userPass = user_data["pass"].toString();
 
-  auto comment = jsd.object()["comment"].toObject();
+  QJsonObject comment = jsd.object()["comment"].toObject();
   if (comment.contains("owner_comment"))
     ownerComment = comment["owner_comment"].toBool();
 
@@ -239,17 +240,22 @@ QString Settings::getCookieFile() const
 {
   return cookieFile;
 }
+
 void Settings::setCookieFile(const QString& value)
 {
   cookieFile = value;
 }
+
 bool Settings::getOwnerComment() const
 {
   return ownerComment;
 }
-
 void Settings::setOwnerComment(bool value)
 {
   ownerComment = value;
 }
 
+bool Settings::getIs184() const
+{
+  return ui->is184_chk->isChecked();
+}
