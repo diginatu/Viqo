@@ -42,17 +42,22 @@ public:
   QString getCookieFile() const;
   void setCookieFile(const QString& value);
 
+  bool getOwnerComment() const;
+  void setOwnerComment(bool value);
+
 signals:
 
 public slots:
 
 private:
-  QString userMail;
-  QString userPass;
-
   int loginWay;
   QString userSession;
   QString cookieFile;
+
+  QString userMail;
+  QString userPass;
+
+  bool ownerComment;
 
   MainWindow* mwin;
 };

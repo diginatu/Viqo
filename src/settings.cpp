@@ -5,6 +5,14 @@ Settings::Settings(MainWindow* mwin, QObject* parent) :
   QObject(parent)
 {
   loginWay = 0;
+  userSession = "";
+  cookieFile = "";
+
+  userMail = "";
+  userPass = "";
+
+  ownerComment = true;
+
   this->mwin = mwin;
 }
 
@@ -127,18 +135,23 @@ void Settings::saveSettings()
     return;
   }
 
-  QJsonObject user_data;
-  user_data["mail"] = userMail;
-  user_data["pass"] = userPass;
-
   QJsonObject login_way;
   login_way["login_way"] = loginWay;
   login_way["user_session"] = userSession;
   login_way["cookie_file_name"] = cookieFile;
 
+  QJsonObject user_data;
+  user_data["mail"] = userMail;
+  user_data["pass"] = userPass;
+
+  QJsonObject comment;
+  comment["owner_comment"] = ownerComment;
+
+
   QJsonObject root;
   root["user_data"] = user_data;
   root["login_way"] = login_way;
+  root["comment"] = comment;
 
   QJsonDocument jsd;
   jsd.setObject(root);
@@ -168,18 +181,20 @@ void Settings::loadSettings()
 
   file.open(QIODevice::ReadOnly | QIODevice::Text);
 
-  QJsonDocument jsd = QJsonDocument::fromJson(file.readAll());
+  auto jsd = QJsonDocument::fromJson(file.readAll());
 
-  QJsonObject login_way;
-  login_way = jsd.object()["login_way"].toObject();
+  auto login_way = jsd.object()["login_way"].toObject();
   loginWay = login_way["login_way"].toInt();
   userSession = login_way["user_session"].toString();
   cookieFile = login_way["cookie_file_name"].toString();
 
-  QJsonObject user_data;
-  user_data = jsd.object()["user_data"].toObject();
+  auto user_data = jsd.object()["user_data"].toObject();
   userMail = user_data["mail"].toString();
   userPass = user_data["pass"].toString();
+
+  auto comment = jsd.object()["comment"].toObject();
+  if (comment.contains("owner_comment"))
+    ownerComment = comment["owner_comment"].toBool();
 
   file.close();
 }
@@ -228,3 +243,13 @@ void Settings::setCookieFile(const QString& value)
 {
   cookieFile = value;
 }
+bool Settings::getOwnerComment() const
+{
+  return ownerComment;
+}
+
+void Settings::setOwnerComment(bool value)
+{
+  ownerComment = value;
+}
+

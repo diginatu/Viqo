@@ -21,24 +21,34 @@ public:
   QString getPostKey() const;
   void setPostKey(const QString& value);
 
-  void sendComment(const QString& text);
+  void sendComment(const QString& text, const QString& name = nullptr);
 
   bool getIs_premium() const;
   QString getUser_id() const;
+  QString getOwner_id() const;
+
+  QString getOwnerCommentToken() const;
+  void setOwnerCommentToken(const QString& value);
+
+  bool getOwnerBroad() const;
 
 private slots:
   void playerStatusFinished(QNetworkReply* reply);
 
 private:
-	QString addr;
+  QString addr;
 	QString thread;
 	int port;
 
   QString postKey;
   QString user_id;
+  QString owner_id;
   bool is_premium;
 
 	CommTcp* commtcp;
+
+  QString ownerCommentToken;
+  bool ownerBroad;
 
 };
 

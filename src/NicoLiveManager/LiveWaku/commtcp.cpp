@@ -153,10 +153,8 @@ void CommTcp::readOneRawComment(QByteArray& rawcomm)
                     broadcaster?"放送主":user, comm, date,
                     is_184, broadcaster, commenttime > open_time);
 
-  qDebug() << comm;
   // comment command
   if ( mwin->isCommandCommentChecked() && commenttime > open_time ) {
-    qDebug() << "a";
     QProcess pr;
     QString cmd = mwin->getCommandComment();
 

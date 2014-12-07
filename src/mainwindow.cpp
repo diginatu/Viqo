@@ -289,5 +289,6 @@ void MainWindow::on_submit_button_clicked()
 
 void MainWindow::on_submit_text_returnPressed()
 {
-  on_submit_button_clicked();
+  if (ui->submit_button->isEnabled())
+    on_submit_button_clicked();
 }

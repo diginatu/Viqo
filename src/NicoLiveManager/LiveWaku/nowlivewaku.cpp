@@ -49,6 +49,8 @@ void NowLiveWaku::playerStatusFinished(QNetworkReply* reply)
 
   setCommunity(commTcpi.midStr("<default_community>", "</default_community>"));
 
+  owner_id = commTcpi.midStr("<owner_id>", "</owner_id>");
+
   setSt(commTcpi.midStr("<start_time>","</start_time>").toUInt());
   setEd(commTcpi.midStr("<end_time>","</end_time>").toUInt());
 
@@ -63,9 +65,37 @@ void NowLiveWaku::playerStatusFinished(QNetworkReply* reply)
                "\nport: " + QString::number(port) +
                "\nthread:" + thread + "\n");
 
+  if (mwin->settings.getOwnerComment() && owner_id == user_id) {
+    nlman->getPublishStatusAPI();
+    ownerBroad = true;
+  } else {
+    ownerBroad = false;
+  }
+
   commtcp = new CommTcp(addr, port, thread, mwin, this);
   commtcp->doConnect();
 }
+
+bool NowLiveWaku::getOwnerBroad() const
+{
+  return ownerBroad;
+}
+
+QString NowLiveWaku::getOwnerCommentToken() const
+{
+  return ownerCommentToken;
+}
+
+void NowLiveWaku::setOwnerCommentToken(const QString& value)
+{
+  ownerCommentToken = value;
+}
+
+QString NowLiveWaku::getOwner_id() const
+{
+  return owner_id;
+}
+
 QString NowLiveWaku::getUser_id() const
 {
   return user_id;
@@ -86,7 +116,17 @@ void NowLiveWaku::setPostKey(const QString& value)
   postKey = value;
 }
 
-void NowLiveWaku::sendComment(const QString& text)
+void NowLiveWaku::sendComment(const QString& text, const QString& name)
 {
-  commtcp->sendComment(text);
+  if (!commtcp->isConnected()) {
+    mwin->insLog("NowLiveWaku::sendComment commTcp is not connected");
+    return;
+  }
+
+  if (mwin->settings.getOwnerComment() && ownerBroad) {
+    nlman->submitOwnerCommentAPI(text, name);
+  } else {
+    commtcp->sendComment(text);
+  }
+
 }
