@@ -148,7 +148,7 @@ void MainWindow::insComment(int num, bool prem, QString user,
   ls += QString::number(num);
   ls += prem?"@":"";
   ls += user;
-  ls += comm;
+  ls += comm.replace("\n", "\\n");
   ls += date;
   ls += user;
   ls += is_184?"@":"";
@@ -246,7 +246,7 @@ void MainWindow::on_comment_view_currentItemChanged(QTreeWidgetItem *current)
 
   QString comme = current->text(3).toHtmlEscaped();
   comme.replace("\n", "\n<br>");
-  comment_view += "<p>"+comme+"</p>";
+  comment_view += "<p>"+comme.replace("\\n", "<br>")+"</p>";
 
   comment_view += "</body></html>";
 
