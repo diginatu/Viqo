@@ -242,11 +242,10 @@ void MainWindow::on_comment_view_currentItemChanged(QTreeWidgetItem *current)
   comment_view += "</tr></table>";
 
   QString comme = current->text(3).toHtmlEscaped();
-  comme.replace("\n", "\n<br>");
+  comme.replace("↵", "<br>");
   comment_view += "<p>"+comme+"</p>";
 
   comment_view += "</body></html>";
-
 
   ui->one_comment_view->setHtml( comment_view );
 }
