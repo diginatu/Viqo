@@ -28,19 +28,19 @@ public:
 
   // setter and getter
   QString getUserMail() const;
-  void setUserMail(const QString& value);
+  void setUserMail(QString value);
 
   QString getUserPass() const;
-  void setUserPass(const QString& value);
+  void setUserPass(QString value);
 
   int getLoginWay() const;
   void setLoginWay(int value);
 
   QString getUserSession() const;
-  void setUserSession(const QString& value);
+  void setUserSession(QString value);
 
   QString getCookieFile() const;
-  void setCookieFile(const QString& value);
+  void setCookieFile(QString value);
 
   bool getOwnerComment() const;
   void setOwnerComment(bool value);

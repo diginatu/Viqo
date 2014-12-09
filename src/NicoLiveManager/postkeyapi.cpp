@@ -3,7 +3,12 @@
 
 void NicoLiveManager::getPostKeyAPI(const QString& thread, int block_no)
 {
-  QNetworkAccessManager* mManager = new QNetworkAccessManager(this);
+  if(mPostKeyManager!=nullptr)  delete mPostKeyManager;
+  mPostKeyManager = new QNetworkAccessManager(this);
+
+  connect(mPostKeyManager, SIGNAL(finished(QNetworkReply*)), this,
+          SLOT(postKeyFinished(QNetworkReply*)));
+
   // make request
   QNetworkRequest rq;
   QVariant postData = makePostData(mwin->settings.getUserSession());
@@ -12,9 +17,7 @@ void NicoLiveManager::getPostKeyAPI(const QString& thread, int block_no)
              "thread=" + thread +
              "&block_no=" + QString::number(block_no) ));
 
-  connect(mManager, SIGNAL(finished(QNetworkReply*)), this,
-          SLOT(postKeyFinished(QNetworkReply*)));
-  mManager->get(rq);
+  mPostKeyManager->get(rq);
 }
 
 void NicoLiveManager::postKeyFinished(QNetworkReply* reply){
@@ -22,4 +25,5 @@ void NicoLiveManager::postKeyFinished(QNetworkReply* reply){
   // int t = repdata.indexOf(".", 9);
   auto postKey = repdata.mid(8);
   nowWaku.setPostKey(QString(postKey));
+  reply->deleteLater();
 }

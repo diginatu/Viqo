@@ -4,17 +4,26 @@
 NicoLiveManager::NicoLiveManager(MainWindow* mwin, SettingsWindow* swin, QObject *parent) :
   QObject(parent),
   nowWaku(mwin, this, this),
-  wakutcp(nullptr)
+  wakutcp(nullptr),
+  mPostKeyManager(nullptr),
+  mLoginAlertManager(nullptr),
+  mAdminAlertManager(nullptr),
+  mHeartBeatManager(nullptr),
+  mLoginManager(nullptr),
+  mOwnerCommentManager(nullptr),
+  mOwnerCommentSManager(nullptr),
+  mRawMyLiveManager(nullptr)
 {
   this->mwin = mwin;
   this->swin = swin;
 
   // set timer to delete the ended elements in waku list.
   delWakuTimer = new QTimer(this);
-  delWakuTimer->setInterval(30000);
 
   connect(delWakuTimer, SIGNAL(timeout()), this, SLOT(deleteWakuList()));
-  delWakuTimer->start();
+  delWakuTimer->start(30000);
+
+
 }
 
 NicoLiveManager::~NicoLiveManager()

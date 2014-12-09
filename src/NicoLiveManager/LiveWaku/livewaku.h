@@ -18,15 +18,15 @@ public:
 	void getPlayyerStatusAPI();
 
 	QString getTitle() const;
-	void setTitle(const QString& value);
+  void setTitle(QString value);
 
 	QString getBroadID() const;
-	void setBroadID(const QString& value);
+  void setBroadID(QString value);
 
 	QDateTime endTime;
 
 	QString getCommunity() const;
-	void setCommunity(const QString& value);
+  void setCommunity(QString value);
 
 	QDateTime getSt() const;
 	void setSt(uint unixt);
@@ -43,6 +43,8 @@ protected slots:
 	void playerStatusFinished(QNetworkReply* reply);
 
 private:
+  QNetworkAccessManager* mManager;
+
 protected:
 	QString title;
 	QString broadID;

@@ -3,16 +3,19 @@
 
 void NicoLiveManager::getHeartBeatAPI()
 {
-  QNetworkAccessManager* mManager = new QNetworkAccessManager(this);
+  if(mHeartBeatManager!=nullptr)  delete mHeartBeatManager;
+  mHeartBeatManager = new QNetworkAccessManager(this);
+
+  connect(mHeartBeatManager, SIGNAL(finished(QNetworkReply*)), this,
+          SLOT(heartBeatFinished(QNetworkReply*)));
+
   // make request
   QNetworkRequest rq;
   QVariant postData = makePostData(mwin->settings.getUserSession());
   rq.setHeader(QNetworkRequest::CookieHeader, postData);
   rq.setUrl(QUrl("http://live.nicovideo.jp/api/heartbeat?v=lv" + nowWaku.getBroadID()));
 
-  connect(mManager, SIGNAL(finished(QNetworkReply*)), this,
-          SLOT(heartBeatFinished(QNetworkReply*)));
-  mManager->get(rq);
+  mHeartBeatManager->get(rq);
 }
 
 void NicoLiveManager::heartBeatFinished(QNetworkReply* reply){
@@ -28,4 +31,5 @@ void NicoLiveManager::heartBeatFinished(QNetworkReply* reply){
   watchCount = heartbeat_data.midStr("<watchCount>","</watchCount>");
 
   mwin->setWatchCount(watchCount);
+  reply->deleteLater();
 }

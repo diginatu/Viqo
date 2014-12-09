@@ -5,12 +5,6 @@ Settings::Settings(MainWindow* mwin, Ui::MainWindow* ui, QObject* parent) :
   QObject(parent)
 {
   loginWay = 0;
-  userSession = "";
-  cookieFile = "";
-
-  userMail = "";
-  userPass = "";
-
   ownerComment = true;
 
   this->mwin = mwin;
@@ -204,7 +198,7 @@ QString Settings::getUserMail() const
 {
   return userMail;
 }
-void Settings::setUserMail(const QString& value)
+void Settings::setUserMail(QString value)
 {
   userMail = value;
 }
@@ -213,7 +207,7 @@ QString Settings::getUserPass() const
 {
   return userPass;
 }
-void Settings::setUserPass(const QString& value)
+void Settings::setUserPass(QString value)
 {
   userPass = value;
 }
@@ -231,7 +225,8 @@ QString Settings::getUserSession() const
 {
   return userSession;
 }
-void Settings::setUserSession(const QString& value)
+
+void Settings::setUserSession(QString value)
 {
   userSession = value;
 }
@@ -241,7 +236,7 @@ QString Settings::getCookieFile() const
   return cookieFile;
 }
 
-void Settings::setCookieFile(const QString& value)
+void Settings::setCookieFile(QString value)
 {
   cookieFile = value;
 }

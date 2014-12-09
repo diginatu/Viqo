@@ -52,16 +52,14 @@ void MainWindow::onReceiveStarted()
 
   // set audiences num timer
   elapsed_time_timer = new QTimer(this);
-  elapsed_time_timer->setInterval(1000);
-  elapsed_time_timer->start();
   connect(elapsed_time_timer,SIGNAL(timeout()),this,SLOT(updateElapsedTime()));
+  elapsed_time_timer->start(1000);
 
   // set audiences num timer
   getWatchCount();
   watch_count_timer = new QTimer(this);
   connect(watch_count_timer,SIGNAL(timeout()),this,SLOT(getWatchCount()));
-  watch_count_timer->setInterval(60000);
-  watch_count_timer->start();
+  watch_count_timer->start(60000);
 }
 
 void MainWindow::onReceiveEnded()
@@ -148,7 +146,7 @@ void MainWindow::insComment(int num, bool prem, QString user,
   ls += QString::number(num);
   ls += prem?"@":"";
   ls += user;
-  ls += comm;
+  ls += comm.replace("\n", "↵");
   ls += date;
   ls += user;
   ls += is_184?"@":"";
@@ -171,7 +169,6 @@ void MainWindow::getSessionFromCookie()
 {
   CookieRead cr(this);
   settings.setUserSession(cr.getUserSession());
-
 }
 
 void MainWindow::on_receive_clicked()

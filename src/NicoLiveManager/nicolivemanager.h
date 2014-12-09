@@ -67,6 +67,15 @@ private:
 
 	QTimer* delWakuTimer;
 
+  QNetworkAccessManager* mPostKeyManager;
+  QNetworkAccessManager* mLoginAlertManager;
+  QNetworkAccessManager* mAdminAlertManager;
+  QNetworkAccessManager* mHeartBeatManager;
+  QNetworkAccessManager* mLoginManager;
+  QNetworkAccessManager* mOwnerCommentManager;
+  QNetworkAccessManager* mOwnerCommentSManager;
+  QNetworkAccessManager* mRawMyLiveManager;
+
 private slots:
 	void heartBeatFinished(QNetworkReply* reply);
 

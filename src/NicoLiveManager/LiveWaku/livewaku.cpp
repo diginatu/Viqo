@@ -3,18 +3,21 @@
 #include "../nicolivemanager.h"
 
 LiveWaku::LiveWaku(MainWindow* mwin, NicoLiveManager* nlman, QObject* parent) :
-  QObject(parent)
+  QObject(parent),
+  mManager(nullptr)
 {
   this->mwin = mwin;
   this->nlman = nlman;
 }
 
 LiveWaku::LiveWaku(MainWindow* mwin, NicoLiveManager* nlman, QString broadID, QObject *parent) :
-  QObject(parent)
+  QObject(parent),
+  mManager(nullptr)
 {
+  this->broadID = broadID;
+  // LiveWaku(mwin, nlman, parent);
   this->mwin = mwin;
   this->nlman = nlman;
-  this->broadID = broadID;
 }
 
 QString LiveWaku::getTitle() const
@@ -22,7 +25,7 @@ QString LiveWaku::getTitle() const
   return title;
 }
 
-void LiveWaku::setTitle(const QString& value)
+void LiveWaku::setTitle(QString value)
 {
   title = value;
 }
@@ -32,7 +35,7 @@ QString LiveWaku::getBroadID() const
   return broadID;
 }
 
-void LiveWaku::setBroadID(const QString& value)
+void LiveWaku::setBroadID(QString value)
 {
   broadID = value;
 }
@@ -42,7 +45,7 @@ QString LiveWaku::getCommunity() const
   return community;
 }
 
-void LiveWaku::setCommunity(const QString& value)
+void LiveWaku::setCommunity(QString value)
 {
   community = value;
 }
@@ -69,14 +72,17 @@ void LiveWaku::setEd(uint unixt)
 
 void LiveWaku::getPlayyerStatusAPI()
 {
-  QNetworkAccessManager* mManager = new QNetworkAccessManager(this);
+  if(mManager!=nullptr)  delete mManager;
+  mManager = new QNetworkAccessManager(this);
+
+  connect(mManager, SIGNAL(finished(QNetworkReply*)), this,
+          SLOT(playerStatusFinished(QNetworkReply*)));
+
   // make request
   QNetworkRequest rq;
   QVariant postData = NicoLiveManager::makePostData(mwin->settings.getUserSession());
   rq.setHeader(QNetworkRequest::CookieHeader, postData);
   rq.setUrl(QUrl("http://live.nicovideo.jp/api/getplayerstatus?v=lv" + broadID));
-  connect(mManager, SIGNAL(finished(QNetworkReply*)), this,
-          SLOT(playerStatusFinished(QNetworkReply*)));
   mManager->get(rq);
 }
 
@@ -116,5 +122,5 @@ void LiveWaku::playerStatusFinished(QNetworkReply* reply)
   mwin->refleshLiveWaku();
   mwin->insLog("got a broad info : " + title + "\n");
 
-  return;
+  reply->deleteLater();
 }

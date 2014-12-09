@@ -234,6 +234,9 @@
              <verstretch>0</verstretch>
             </sizepolicy>
            </property>
+           <property name="styleSheet">
+            <string notr="true"/>
+           </property>
            <property name="columnCount">
             <number>8</number>
            </property>

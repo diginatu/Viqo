@@ -31,7 +31,7 @@ void NowLiveWaku::playerStatusFinished(QNetworkReply* reply)
 {
   mwin->insLog(" LiveWaku::playerStatusFinished :");
   QByteArray repdata = reply->readAll();
-  //	qDebug() << repdata;
+  // qDebug() << repdata;
 
   StrAbstractor commTcpi(repdata);
 
@@ -72,8 +72,10 @@ void NowLiveWaku::playerStatusFinished(QNetworkReply* reply)
     ownerBroad = false;
   }
 
-  commtcp = new CommTcp(addr, port, thread, mwin, this);
+  commtcp = new CommTcp(addr, port, thread, mwin, this, this);
   commtcp->doConnect();
+
+  reply->deleteLater();
 }
 
 bool NowLiveWaku::getOwnerBroad() const

@@ -7,6 +7,11 @@ NicoHttp::NicoHttp(MainWindow* mwin, QObject *parent) :
   this->mwin = mwin;
 }
 
+NicoHttp::~NicoHttp()
+{
+  reply->deleteLater();
+}
+
 // Return PostData with only user_session cookie
 QVariant NicoHttp::makePostData(){
   QVariant postData;
@@ -29,15 +34,13 @@ QVariant NicoHttp::makePostData(){
 
 void NicoHttp::getBody(QUrl url)
 {
-  mManager = new QNetworkAccessManager(this);
-
   // make request
   QNetworkRequest rq;
   QVariant postData = makePostData();
   rq.setHeader(QNetworkRequest::CookieHeader, postData);
   rq.setUrl(url);
 
-  reply = mManager->get(rq);
+  reply = mManager.get(rq);
   connect(reply,SIGNAL(finished()),this,SLOT(finished()));
 }
 

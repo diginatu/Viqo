@@ -2,8 +2,9 @@
 #include "../../mainwindow.h"
 #include "nowlivewaku.h"
 
-CommTcp::CommTcp(QString domain, int port, QString thread, MainWindow* mwin, NowLiveWaku* nlwaku) :
-  socket(NULL)
+CommTcp::CommTcp(QString domain, int port, QString thread, MainWindow* mwin, NowLiveWaku* nlwaku, QObject* parent) :
+  socket(NULL),
+  QObject(parent)
 {
   this->domain = domain;
   this->port = port;
@@ -16,6 +17,9 @@ CommTcp::CommTcp(QString domain, int port, QString thread, MainWindow* mwin, Now
   connect(socket, SIGNAL(connected()),this, SLOT(connected()));
   connect(socket, SIGNAL(disconnected()),this, SLOT(disconnected()));
   connect(socket, SIGNAL(readyRead()),this, SLOT(readyRead()));
+
+  connect(&postkey_timer, SIGNAL(timeout()), this, SLOT(getPostKey()));
+  connect(&nullData_timer, SIGNAL(timeout()), this, SLOT(sendNull()));
 }
 
 void CommTcp::doConnect()
@@ -39,9 +43,7 @@ void CommTcp::connected()
   }
 
   // set timer to send NULL data.
-  nullData_timer.setInterval(60000);
-  connect(&nullData_timer, SIGNAL(timeout()), this, SLOT(sendNull()));
-  nullData_timer.start();
+  nullData_timer.start(60000);
 }
 
 void CommTcp::disconnected()
@@ -91,9 +93,7 @@ void CommTcp::readOneRawComment(QByteArray& rawcomm)
 
     nlwaku->getPostKeyAPI(thread, lastBlockNum);
     // set timer to get post_key
-    postkey_timer.setInterval(10000);
-    connect(&postkey_timer, SIGNAL(timeout()), this, SLOT(getPostKey()));
-    postkey_timer.start();
+    postkey_timer.start(10000);
 
     return;
   }
@@ -170,6 +170,7 @@ void CommTcp::readOneRawComment(QByteArray& rawcomm)
 void CommTcp::close()
 {
   nullData_timer.stop();
+  postkey_timer.stop();
   socket->close();
 }
 
@@ -209,6 +210,6 @@ void CommTcp::sendComment(const QString& text)
 
 bool CommTcp::isConnected()
 {
-  if (socket == NULL) return false;
+  if (socket == nullptr) return false;
   return socket->state() != QAbstractSocket::UnconnectedState;
 }

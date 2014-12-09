@@ -3,16 +3,19 @@
 
 void NicoLiveManager::getPublishStatusAPI()
 {
-  QNetworkAccessManager* mManager = new QNetworkAccessManager(this);
+  if(mOwnerCommentManager!=nullptr)  delete mOwnerCommentManager;
+  mOwnerCommentManager = new QNetworkAccessManager(this);
+
+  connect(mOwnerCommentManager, SIGNAL(finished(QNetworkReply*)), this,
+          SLOT(publishStatusFinished(QNetworkReply*)));
+
   // make request
   QNetworkRequest rq;
   QVariant postData = makePostData(mwin->settings.getUserSession());
   rq.setHeader(QNetworkRequest::CookieHeader, postData);
   rq.setUrl(QUrl("http://live.nicovideo.jp/api/getpublishstatus?v=lv" + nowWaku.getBroadID()));
 
-  connect(mManager, SIGNAL(finished(QNetworkReply*)), this,
-          SLOT(publishStatusFinished(QNetworkReply*)));
-  mManager->get(rq);
+  mOwnerCommentManager->get(rq);
 }
 
 void NicoLiveManager::publishStatusFinished(QNetworkReply* reply){
@@ -28,11 +31,18 @@ void NicoLiveManager::publishStatusFinished(QNetworkReply* reply){
 
   const QString token = heartbeat_data.midStr("<token>","</token>");
   nowWaku.setOwnerCommentToken(token);
+
+  reply->deleteLater();
 }
 
 void NicoLiveManager::submitOwnerCommentAPI(const QString& text, const QString& name)
 {
-  QNetworkAccessManager* mManager = new QNetworkAccessManager(this);
+  if(mOwnerCommentSManager!=nullptr)  delete mOwnerCommentSManager;
+  mOwnerCommentSManager = new QNetworkAccessManager(this);
+
+  connect(mOwnerCommentSManager, SIGNAL(finished(QNetworkReply*)), this,
+          SLOT(submitOwnerCommentFinished(QNetworkReply*)));
+
   // make request
   QNetworkRequest rq;
   QVariant postData = makePostData(mwin->settings.getUserSession());
@@ -43,9 +53,7 @@ void NicoLiveManager::submitOwnerCommentAPI(const QString& text, const QString& 
                  "&token=" + nowWaku.getOwnerCommentToken() +
                  "&name=" + name ));
 
-  connect(mManager, SIGNAL(finished(QNetworkReply*)), this,
-          SLOT(submitOwnerCommentFinished(QNetworkReply*)));
-  mManager->get(rq);
+  mOwnerCommentSManager->get(rq);
 }
 
 void NicoLiveManager::submitOwnerCommentFinished(QNetworkReply* reply){
@@ -58,4 +66,5 @@ void NicoLiveManager::submitOwnerCommentFinished(QNetworkReply* reply){
     mwin->insLog("NicoLiveManager::submitOwnerCommentFinished error\n");
     return;
   }
+  reply->deleteLater();
 }
