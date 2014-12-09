@@ -27,6 +27,8 @@ void SettingsWindow::init()
   ui->login_way_combo->setCurrentIndex(mwin->settings.getLoginWay());
   ui->usersession->setText(mwin->settings.getUserSession());
   ui->cookiesetting_filename->setText(mwin->settings.getCookieFile());
+
+  ui->ownercomment_chk->setChecked(mwin->settings.getOwnerComment());
 }
 
 void SettingsWindow::getUserSessionFinished()
@@ -63,6 +65,8 @@ void SettingsWindow::on_buttonBox_accepted()
   mwin->settings.setLoginWay(ui->login_way_combo->currentIndex());
   mwin->settings.setUserSession(ui->usersession->text());
   mwin->settings.setCookieFile(ui->cookiesetting_filename->text());
+
+  mwin->settings.setOwnerComment(ui->ownercomment_chk->isChecked());
 
   mwin->settings.saveSettings();
 

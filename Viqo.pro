@@ -33,7 +33,9 @@ SOURCES += src/main.cpp\
     src/NicoLiveManager/LiveWaku/commtcp.cpp \
     src/settingswindow.cpp \
     src/settings.cpp \
-    src/NicoLiveManager/loginapi.cpp
+    src/NicoLiveManager/loginapi.cpp \
+    src/NicoLiveManager/postkeyapi.cpp \
+    src/NicoLiveManager/ownercomment.cpp
 
 HEADERS  += src/NicoLiveManager/nicolivemanager.h \
     src/cookieread.h \

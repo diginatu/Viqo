@@ -4,8 +4,8 @@
 MainWindow::MainWindow(QWidget *parent) :
   QMainWindow(parent),
   settingsWindow(new SettingsWindow(this, this)),
-  settings(this, this),
-  ui(new Ui::MainWindow)
+  ui(new Ui::MainWindow),
+  settings(this, ui, this)
 {
   ui->setupUi(this);
 
@@ -24,7 +24,7 @@ MainWindow::MainWindow(QWidget *parent) :
   nicolivemanager = new NicoLiveManager(this, settingsWindow, this);
 
   settings.loadSettings();
-  settings.loadStatus(ui);
+  settings.loadStatus();
 
   const QString mail = settings.getUserMail();
   const QString pass = settings.getUserPass();
@@ -45,25 +45,29 @@ void MainWindow::onReceiveStarted()
 {
   qDebug() << "--comment receiving started--";
 
+  ui->submit_button->setEnabled(true);
+  ui->disconnect->setEnabled(true);
+
   QWidget::setWindowTitle(nicolivemanager->nowWaku.getTitle() + " - Viqo");
 
   // set audiences num timer
   elapsed_time_timer = new QTimer(this);
-  elapsed_time_timer->setInterval(1000);
-  elapsed_time_timer->start();
   connect(elapsed_time_timer,SIGNAL(timeout()),this,SLOT(updateElapsedTime()));
+  elapsed_time_timer->start(1000);
 
   // set audiences num timer
   getWatchCount();
   watch_count_timer = new QTimer(this);
   connect(watch_count_timer,SIGNAL(timeout()),this,SLOT(getWatchCount()));
-  watch_count_timer->setInterval(60000);
-  watch_count_timer->start();
+  watch_count_timer->start(60000);
 }
 
 void MainWindow::onReceiveEnded()
 {
   qDebug() << "--comment receiving ended--";
+
+  ui->submit_button->setEnabled(false);
+  ui->disconnect->setEnabled(false);
 
   QWidget::setWindowTitle("Viqo");
 
@@ -142,7 +146,7 @@ void MainWindow::insComment(int num, bool prem, QString user,
   ls += QString::number(num);
   ls += prem?"@":"";
   ls += user;
-  ls += comm;
+  ls += comm.replace("\n", "↵");
   ls += date;
   ls += user;
   ls += is_184?"@":"";
@@ -165,7 +169,6 @@ void MainWindow::getSessionFromCookie()
 {
   CookieRead cr(this);
   settings.setUserSession(cr.getUserSession());
-
 }
 
 void MainWindow::on_receive_clicked()
@@ -186,26 +189,25 @@ void MainWindow::on_disconnect_clicked()
   nicolivemanager->broadDisconnect();
 }
 
-void MainWindow::on_clear_clicked()
-{
-  bodyClear();
-  ui->logtext->clear();
-}
-
 void MainWindow::bodyClear()
 {
   ui->comment_view->clear();
   ui->one_comment_view->clear();
 }
 
+void MainWindow::submittedComment()
+{
+  ui->submit_button->setEnabled(true);
+}
+
 void MainWindow::on_actionSave_triggered()
 {
-  settings.saveStatus(ui);
+  settings.saveStatus();
 }
 
 void MainWindow::on_actionLoad_triggered()
 {
-  settings.loadStatus(ui);
+  settings.loadStatus();
 }
 
 void MainWindow::on_comment_view_itemDoubleClicked(QTreeWidgetItem *item, int column)
@@ -260,10 +262,30 @@ void MainWindow::on_live_waku_list_activated(int index)
   on_receive_clicked();
 }
 
-void MainWindow::on_action_triggered()
+void MainWindow::on_setting_triggered()
 {
   settingsWindow->init();
   settingsWindow->show();
   settingsWindow->raise();
   settingsWindow->activateWindow();
+}
+
+void MainWindow::on_clear_triggered()
+{
+  bodyClear();
+}
+
+void MainWindow::on_submit_button_clicked()
+{
+  const QString& text = ui->submit_text->text();
+  nicolivemanager->nowWaku.sendComment(text);
+  QString bl = "";
+  ui->submit_text->setText(bl);
+  ui->submit_button->setEnabled(false);
+}
+
+void MainWindow::on_submit_text_returnPressed()
+{
+  if (ui->submit_button->isEnabled())
+    on_submit_button_clicked();
 }

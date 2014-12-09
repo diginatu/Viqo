@@ -3,7 +3,12 @@
 
 void NicoLiveManager::login(QString mail, QString pass)
 {
-  QNetworkAccessManager* mManager = new QNetworkAccessManager(this);
+  if(mLoginManager!=nullptr)  delete mLoginManager;
+  mLoginManager = new QNetworkAccessManager(this);
+
+  connect(mLoginManager, SIGNAL(finished(QNetworkReply*)),
+          this, SLOT(loginFinished(QNetworkReply*)));
+
 
   QNetworkRequest rq(QUrl("https://secure.nicovideo.jp/secure/login?site=nicolive"));
   rq.setHeader(QNetworkRequest::ContentTypeHeader, "application/x-www-form-urlencoded");
@@ -17,10 +22,7 @@ void NicoLiveManager::login(QString mail, QString pass)
   params.addQueryItem("mail", QUrl::toPercentEncoding(mail));
   params.addQueryItem("password", QUrl::toPercentEncoding(pass));
 
-  connect(mManager, SIGNAL(finished(QNetworkReply*)),
-          this, SLOT(loginFinished(QNetworkReply*)));
-
-  mManager->post(rq, params.toString(QUrl::FullyEncoded).toUtf8());
+  mLoginManager->post(rq, params.toString(QUrl::FullyEncoded).toUtf8());
 }
 
 void NicoLiveManager::loginFinished(QNetworkReply* reply){
@@ -50,4 +52,5 @@ void NicoLiveManager::loginFinished(QNetworkReply* reply){
   swin->getUserSessionFinished();
 
   mwin->insLog();
+  reply->deleteLater();
 }

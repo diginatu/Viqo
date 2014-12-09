@@ -15,6 +15,12 @@ WakuTcp::WakuTcp(QString domain, int port, QString thread, MainWindow* mwin, Nic
   connect(socket, SIGNAL(connected()),this, SLOT(connected()));
   connect(socket, SIGNAL(disconnected()),this, SLOT(disconnected()));
   connect(socket, SIGNAL(readyRead()),this, SLOT(readyRead()));
+
+  connect(&checkConnectionTimer,SIGNAL(timeout()),this,SLOT(timeoutConnection()));
+}
+
+WakuTcp::~WakuTcp()
+{
 }
 
 void WakuTcp::doConnect()
@@ -46,16 +52,13 @@ void WakuTcp::connected()
     return;
   }
 
-  connect(&checkConnectionTimer,SIGNAL(timeout()),this,SLOT(checkConnection()));
-  checkConnectionTimer.setInterval(30000);
-  checkConnectionTimer.start();
-
-  connectionTime.start();
+  checkConnectionTimer.start(61000);
   mwin->insLog();
 }
 
 void WakuTcp::disconnected()
 {
+  checkConnectionTimer.stop();
 }
 
 void WakuTcp::readyRead()
@@ -72,7 +75,7 @@ void WakuTcp::readyRead()
 
 void WakuTcp::readOneRawWaku(QByteArray& rawwaku)
 {
-  connectionTime.restart();
+  checkConnectionTimer.start();
   if (rawwaku.startsWith("<thread")) {
     return;
   }
@@ -85,12 +88,9 @@ void WakuTcp::readOneRawWaku(QByteArray& rawwaku)
   const QString& CommunityID = wakur.at(1);
   //	const QString& nushiID = wakur.at(2);
 
-  //	qDebug() << CommunityID << "," << broadID;
-
   if(wakur.size() != 3) {
     return;
   }
-
 
   if (mwin->isNextWaku()) {
     if ( nicolivemanager->nowWaku.getCommunity() == CommunityID &&
@@ -130,13 +130,11 @@ bool WakuTcp::isConnected()
   return socket->state() != QAbstractSocket::UnconnectedState;
 }
 
-void WakuTcp::checkConnection()
+void WakuTcp::timeoutConnection()
 {
-  if (connectionTime.elapsed() > 61000) {
-    mwin->insLog("alert is disconnected\n");
-    socket->close();
-    nicolivemanager->getRawMyLiveHTML();
-    QTimer::singleShot(30000, nicolivemanager, SLOT(getRawMyLiveHTML()));
-    doConnect();
-  }
+  mwin->insLog("alert is disconnected\n");
+  socket->close();
+  nicolivemanager->getRawMyLiveHTML();
+  QTimer::singleShot(30000, nicolivemanager, SLOT(getRawMyLiveHTML()));
+  doConnect();
 }

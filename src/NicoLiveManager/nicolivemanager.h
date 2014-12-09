@@ -29,8 +29,10 @@ public:
 	void insertLiveWakuList(LiveWaku* livewaku);
 
 	void getHeartBeatAPI();
-	void loginAlertAPI(QString mail, QString pass);
-	void adminAlertAPI(QString ticket);
+  void loginAlertAPI(const QString& mail, const QString& pass);
+  void getPostKeyAPI(const QString& thread, int block_no);
+  void getPublishStatusAPI();
+  void submitOwnerCommentAPI(const QString& text, const QString& name);
 
   void alertReconnect();
 
@@ -51,7 +53,9 @@ public slots:
   void getRawMyLiveHTML();
 
 private:
-	MainWindow* mwin;
+  void adminAlertAPI(const QString& ticket);
+
+  MainWindow* mwin;
   SettingsWindow* swin;
   WakuTcp* wakutcp;
 
@@ -63,12 +67,29 @@ private:
 
 	QTimer* delWakuTimer;
 
+  QNetworkAccessManager* mPostKeyManager;
+  QNetworkAccessManager* mLoginAlertManager;
+  QNetworkAccessManager* mAdminAlertManager;
+  QNetworkAccessManager* mHeartBeatManager;
+  QNetworkAccessManager* mLoginManager;
+  QNetworkAccessManager* mOwnerCommentManager;
+  QNetworkAccessManager* mOwnerCommentSManager;
+  QNetworkAccessManager* mRawMyLiveManager;
+
 private slots:
 	void heartBeatFinished(QNetworkReply* reply);
+
 	void loginAlertFinished(QNetworkReply* reply);
 	void adminAlertFinished(QNetworkReply* reply);
+
 	void rawMyLivefinished(QNetworkReply* reply);
+
   void loginFinished(QNetworkReply* reply);
+
+  void postKeyFinished(QNetworkReply* reply);
+
+  void publishStatusFinished(QNetworkReply* reply);
+  void submitOwnerCommentFinished(QNetworkReply* reply);
 
   void deleteWakuList();
 };

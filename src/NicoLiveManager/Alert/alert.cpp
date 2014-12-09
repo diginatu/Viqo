@@ -1,9 +1,13 @@
 #include "../nicolivemanager.h"
 #include "../../mainwindow.h"
 
-void NicoLiveManager::loginAlertAPI(QString mail, QString pass)
+void NicoLiveManager::loginAlertAPI(const QString& mail, const QString& pass)
 {
-  QNetworkAccessManager* mManager = new QNetworkAccessManager(this);
+  if(mLoginAlertManager!=nullptr)  delete mLoginAlertManager;
+  mLoginAlertManager = new QNetworkAccessManager(this);
+
+  connect(mLoginAlertManager, SIGNAL(finished(QNetworkReply*)),
+          this, SLOT(loginAlertFinished(QNetworkReply*)));
 
   QNetworkRequest rq(QUrl("https://secure.nicovideo.jp/secure/login?site=nicolive_antenna"));
   rq.setHeader(QNetworkRequest::ContentTypeHeader, "application/x-www-form-urlencoded");
@@ -12,11 +16,7 @@ void NicoLiveManager::loginAlertAPI(QString mail, QString pass)
   params.addQueryItem("mail", QUrl::toPercentEncoding(mail));
   params.addQueryItem("password", QUrl::toPercentEncoding(pass));
 
-  connect(mManager, SIGNAL(finished(QNetworkReply*)),
-          this, SLOT(loginAlertFinished(QNetworkReply*)));
-
-  mManager->post(rq, params.toString(QUrl::FullyEncoded).toUtf8());
-  // qDebug() << params.toString(QUrl::FullyEncoded).toUtf8();
+  mLoginAlertManager->post(rq, params.toString(QUrl::FullyEncoded).toUtf8());
 }
 
 void NicoLiveManager::loginAlertFinished(QNetworkReply* reply)
@@ -38,14 +38,16 @@ void NicoLiveManager::loginAlertFinished(QNetworkReply* reply)
 
   adminAlertAPI(ticket);
   mwin->insLog();
+  reply->deleteLater();
 }
 
 
-void NicoLiveManager::adminAlertAPI(QString ticket)
+void NicoLiveManager::adminAlertAPI(const QString& ticket)
 {
-  QNetworkAccessManager* mManager = new QNetworkAccessManager(this);
+  if(mAdminAlertManager!=nullptr)  delete mAdminAlertManager;
+  mAdminAlertManager = new QNetworkAccessManager(this);
 
-  connect(mManager, SIGNAL(finished(QNetworkReply*)),
+  connect(mAdminAlertManager, SIGNAL(finished(QNetworkReply*)),
           this, SLOT(adminAlertFinished(QNetworkReply*)));
 
   QByteArray data;
@@ -54,7 +56,7 @@ void NicoLiveManager::adminAlertAPI(QString ticket)
   QNetworkRequest rq(QUrl("http://live.nicovideo.jp/api/getalertstatus"));
   rq.setHeader(QNetworkRequest::ContentTypeHeader, "application/x-www-form-urlencoded");
 
-  mManager->post(rq, data);
+  mAdminAlertManager->post(rq, data);
 }
 
 void NicoLiveManager::adminAlertFinished(QNetworkReply* reply)
@@ -80,8 +82,6 @@ void NicoLiveManager::adminAlertFinished(QNetworkReply* reply)
     this->mycommunities << mycommunity;
   }
 
-  //	qDebug() << this->mycommunities;
-
   waku_addr = wakuTcpi.midStr("<addr>", "</addr>");
   waku_port = wakuTcpi.midStr("<port>", "</port>").toInt();
   waku_thread = wakuTcpi.midStr("<thread>", "</thread>");
@@ -90,19 +90,21 @@ void NicoLiveManager::adminAlertFinished(QNetworkReply* reply)
                "\nport: " + QString::number(waku_port) +
                "\nthread:" + waku_thread + "\n");
 
-  if ( wakutcp != NULL ) wakutcp->deleteLater();
+  if ( wakutcp != nullptr ) {
+    if ( wakutcp->isConnected() )
+      wakutcp->close();
+    wakutcp->deleteLater();
+  }
 
   wakutcp = new WakuTcp(waku_addr, waku_port, waku_thread, mwin, this);
   wakutcp->doConnect();
 
   mwin->insLog();
+  reply->deleteLater();
 }
 
 void NicoLiveManager::alertReconnect()
 {
-  wakutcp->close();
-  wakutcp->deleteLater();
-
   QString mail = mwin->settings.getUserMail();
   QString pass = mwin->settings.getUserPass();
 

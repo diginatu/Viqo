@@ -12,12 +12,13 @@ class NicoHttp : public QObject
 	Q_OBJECT
 public:
 	explicit NicoHttp(MainWindow* mwin, QObject *parent = 0);
+  ~NicoHttp();
 	void getBody(QUrl url);
 
 protected:
 	MainWindow* mwin;
 	QNetworkReply* reply;
-	QNetworkAccessManager* mManager;
+  QNetworkAccessManager mManager;
 
 	QVariant makePostData();
 

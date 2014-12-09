@@ -17,44 +17,51 @@ class Settings : public QObject
 {
   Q_OBJECT
 public:
-  explicit Settings(MainWindow* mwin, QObject* parent = 0);
+  explicit Settings(MainWindow* mwin, Ui::MainWindow* ui, QObject* parent = 0);
 
-  void saveStatus(Ui::MainWindow* ui);
-  void loadStatus(Ui::MainWindow* ui);
-  void oldLoad(Ui::MainWindow* ui);
+  void saveStatus();
+  void loadStatus();
+  void oldLoad();
 
   void saveSettings();
   void loadSettings();
 
   // setter and getter
   QString getUserMail() const;
-  void setUserMail(const QString& value);
+  void setUserMail(QString value);
 
   QString getUserPass() const;
-  void setUserPass(const QString& value);
+  void setUserPass(QString value);
 
   int getLoginWay() const;
   void setLoginWay(int value);
 
   QString getUserSession() const;
-  void setUserSession(const QString& value);
+  void setUserSession(QString value);
 
   QString getCookieFile() const;
-  void setCookieFile(const QString& value);
+  void setCookieFile(QString value);
 
+  bool getOwnerComment() const;
+  void setOwnerComment(bool value);
+
+  bool getIs184() const;
 signals:
 
 public slots:
 
 private:
-  QString userMail;
-  QString userPass;
-
   int loginWay;
   QString userSession;
   QString cookieFile;
 
+  QString userMail;
+  QString userPass;
+
+  bool ownerComment;
+
   MainWindow* mwin;
+  Ui::MainWindow *ui;
 };
 
 #endif // SETTINGS_H

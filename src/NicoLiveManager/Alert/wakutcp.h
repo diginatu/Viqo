@@ -4,7 +4,6 @@
 #include <QObject>
 #include <QTcpSocket>
 #include <QAbstractSocket>
-#include <QDebug>
 #include <QDateTime>
 #include <QProcess>
 #include <QTimer>
@@ -17,6 +16,7 @@ class WakuTcp : public QObject
 	Q_OBJECT
 public:
 	explicit WakuTcp(QString domain, int port, QString thread, MainWindow* mwin, NicoLiveManager* nicolivemanager);
+  ~WakuTcp();
 	void close();
 
 signals:
@@ -39,10 +39,9 @@ private:
 
 	QDateTime opentime;
 	QByteArray lastRawWaku;
-  QTime connectionTime;
   QTimer checkConnectionTimer;
 private slots:
-  void checkConnection();
+  void timeoutConnection();
 };
 
 #endif // WAKUTCP_H

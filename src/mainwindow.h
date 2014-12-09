@@ -49,11 +49,12 @@ public:
 
   SettingsWindow* settingsWindow;
 
-  Settings settings;
 
   NicoLiveManager* nicolivemanager;
 
   void bodyClear();
+
+  void submittedComment();
 
 public slots:
 	// ui slots
@@ -61,8 +62,6 @@ public slots:
 	void on_disconnect_clicked();
 
 	void getWatchCount();
-
-	void on_clear_clicked();
 
 	void on_actionSave_triggered();
 	void on_actionLoad_triggered();
@@ -73,13 +72,22 @@ private slots:
 	void on_live_waku_list_activated(int index);
 	void updateElapsedTime();
 
-  void on_action_triggered();
+  void on_setting_triggered();
+
+  void on_clear_triggered();
+
+  void on_submit_button_clicked();
+
+  void on_submit_text_returnPressed();
 
 private:
 	Ui::MainWindow* ui;
 
 	QTimer* watch_count_timer;
 	QTimer* elapsed_time_timer;
+
+public:
+  Settings settings;
 
 };
 
