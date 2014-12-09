@@ -3,8 +3,8 @@
 #include "nowlivewaku.h"
 
 CommTcp::CommTcp(QString domain, int port, QString thread, MainWindow* mwin, NowLiveWaku* nlwaku, QObject* parent) :
-  socket(NULL),
-  QObject(parent)
+  QObject(parent),
+  socket(NULL)
 {
   this->domain = domain;
   this->port = port;
