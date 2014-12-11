@@ -221,6 +221,7 @@ void MainWindow::on_comment_view_itemDoubleClicked(QTreeWidgetItem *item, int co
 void MainWindow::on_comment_view_currentItemChanged(QTreeWidgetItem *current)
 {
   if (current == NULL) return;
+  const bool owner = current->text(7)=="@"?true:false;
 
   QString comment_view("");
   comment_view += "<html><head /><body>";
@@ -241,8 +242,11 @@ void MainWindow::on_comment_view_currentItemChanged(QTreeWidgetItem *current)
 
   comment_view += "</tr></table>";
 
-  QString comme = current->text(3).toHtmlEscaped();
+  QString comme;
+  if (owner) comme = current->text(3);
+  else       comme = current->text(3).toHtmlEscaped();
   comme.replace("↵", "<br>");
+
   comment_view += "<p>"+comme+"</p>";
 
   comment_view += "</body></html>";

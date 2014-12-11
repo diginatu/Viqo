@@ -112,6 +112,7 @@ void NicoLiveManager::alertReconnect()
     mwin->insLog("mail or pass are not specified");
     return;
   }
-
   loginAlertAPI(mail, pass);
+  getRawMyLiveHTML();
+  QTimer::singleShot(30000, this, SLOT(getRawMyLiveHTML()));
 }
