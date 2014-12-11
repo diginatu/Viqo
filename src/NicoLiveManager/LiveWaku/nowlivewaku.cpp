@@ -7,8 +7,8 @@ NowLiveWaku::NowLiveWaku(MainWindow* mwin, NicoLiveManager* nlman, QObject* pare
 {
 }
 
-NowLiveWaku::NowLiveWaku(MainWindow* mwin, NicoLiveManager* nlman, QString broadID, QObject* parent) :
-  LiveWaku(mwin, nlman, broadID, parent),
+NowLiveWaku::NowLiveWaku(MainWindow* mwin, NicoLiveManager* nlman, QString broadID, QString community, QObject* parent) :
+  LiveWaku(mwin, nlman, broadID, community, parent),
   commtcp(nullptr)
 {
 }

@@ -36,11 +36,10 @@ void NicoLiveManager::rawMyLivefinished(QNetworkReply* reply)
     return;
   }
 
-  QString bfID;
   QString ID;
-  while((ID = liveID.midStr("<a href=\"http://live.nicovideo.jp/watch/lv",
-                            "?ref=")) != "") {
-    if (bfID == ID) continue;
+  QString community;
+  while((community = liveID.midStr("http://com.nicovideo.jp/community/co", "\">")) != "") {
+    ID = liveID.midStr("http://live.nicovideo.jp/watch/lv", "?ref=");
 
     // if ID contains no number charactor, it is not ID
     bool isID = true;
@@ -52,10 +51,8 @@ void NicoLiveManager::rawMyLivefinished(QNetworkReply* reply)
     }
     if ( !isID ) continue;
 
-    insertLiveWakuList(new LiveWaku(mwin, this, ID, this));
+    insertLiveWakuList(new LiveWaku(mwin, this, ID, community, this));
     mwin->insLog("added lv" + ID + " to the comunity list");
-
-    bfID = ID;
   }
 
   mwin->insLog();

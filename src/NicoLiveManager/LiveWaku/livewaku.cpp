@@ -10,11 +10,12 @@ LiveWaku::LiveWaku(MainWindow* mwin, NicoLiveManager* nlman, QObject* parent) :
   this->nlman = nlman;
 }
 
-LiveWaku::LiveWaku(MainWindow* mwin, NicoLiveManager* nlman, QString broadID, QObject *parent) :
+LiveWaku::LiveWaku(MainWindow* mwin, NicoLiveManager* nlman, QString broadID, QString community, QObject *parent) :
   QObject(parent),
   mManager(nullptr)
 {
   this->broadID = broadID;
+  this->community = community;
   // LiveWaku(mwin, nlman, parent);
   this->mwin = mwin;
   this->nlman = nlman;

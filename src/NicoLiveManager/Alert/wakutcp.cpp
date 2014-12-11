@@ -84,36 +84,17 @@ void WakuTcp::readOneRawWaku(QByteArray& rawwaku)
   QString wakuS = awaku.midStr(">", "</chat>");
 
   QStringList wakur = wakuS.split(",");
-  const QString& broadID = wakur.at(0);
-  const QString& CommunityID = wakur.at(1);
+  const QString broadID = wakur.at(0);
+  const QString CommunityID = wakur.at(1);
   //	const QString& nushiID = wakur.at(2);
 
   if(wakur.size() != 3) {
     return;
   }
 
-  if (mwin->isNextWaku()) {
-    if ( nicolivemanager->nowWaku.getCommunity() == CommunityID &&
-         nicolivemanager->nowWaku.getBroadID() != broadID){
-
-      if (mwin->isCommandNextWakuChecked()) {
-        QProcess pr;
-        QString cmd = mwin->getCommandNextWaku();
-
-        cmd.replace("%wakuURL%","\"http://live.nicovideo.jp/watch/lv" + broadID + '"');
-
-        pr.start(cmd);
-        pr.waitForFinished(30000);
-      }
-
-      mwin->setHousouID(broadID);
-      mwin->on_receive_clicked();
-    }
-  }
-
   foreach (QString commu, nicolivemanager->mycommunities) {
     if (commu == wakur.at(1)) {
-      nicolivemanager->insertLiveWakuList(new LiveWaku(mwin, nicolivemanager, broadID));
+      nicolivemanager->insertLiveWakuList(new LiveWaku(mwin, nicolivemanager, broadID, CommunityID));
       mwin->refleshLiveWaku();
     }
   }

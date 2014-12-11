@@ -60,6 +60,25 @@ void NicoLiveManager::insertLiveWakuList(LiveWaku* livewaku)
       return;
   }
 
+  if (mwin->isNextWaku()) {
+    if ( nowWaku.getCommunity() == livewaku->getCommunity() &&
+         nowWaku.getBroadID() != livewakuBID ){
+
+      if (mwin->isCommandNextWakuChecked()) {
+        QProcess pr;
+        QString cmd = mwin->getCommandNextWaku();
+
+        cmd.replace("%wakuURL%","\"http://live.nicovideo.jp/watch/lv" + livewakuBID + '"');
+
+        pr.start(cmd);
+        pr.waitForFinished(30000);
+      }
+
+      mwin->setHousouID(livewakuBID);
+      mwin->on_receive_clicked();
+    }
+  }
+
   livewaku->getPlayyerStatusAPI();
   liveWakuList << livewaku;
 }

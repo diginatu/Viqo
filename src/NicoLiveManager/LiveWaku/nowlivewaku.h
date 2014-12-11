@@ -11,8 +11,7 @@ class NowLiveWaku : public LiveWaku
 	Q_OBJECT
 public:
   NowLiveWaku(MainWindow* mwin, NicoLiveManager* nlman, QObject* parent);
-  NowLiveWaku(MainWindow* mwin, NicoLiveManager* nlman, QString broadID, QObject* parent);
-  NowLiveWaku(MainWindow* mwin, NicoLiveManager* nlman, QString broadID, QString community, QString title, QObject* parent);
+  NowLiveWaku(MainWindow* mwin, NicoLiveManager* nlman, QString broadID, QString community, QObject* parent);
 
 	void broadDisconnect();
 
