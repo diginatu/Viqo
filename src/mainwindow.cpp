@@ -173,12 +173,21 @@ void MainWindow::getSessionFromCookie()
 
 void MainWindow::on_receive_clicked()
 {
-  if ( settings.getUserSession().isEmpty() ) return;
+  const QRegExp broadIDrg("^.+lv(\\d+).*$");
+  QString broadID = ui->housouId->text();
+  broadID.replace(broadIDrg, "\\1");
+
+  ui->housouId->setText(broadID);
+
+  if ( settings.getUserSession().isEmpty() ) {
+    insLog("MainWindow::on_receive_clicked settionID is not set yet");
+    return;
+  }
 
   on_disconnect_clicked();
   bodyClear();
 
-  nicolivemanager->nowWaku.setBroadID(ui->housouId->text());
+  nicolivemanager->nowWaku.setBroadID(broadID);
   nicolivemanager->broadStart();
 }
 
@@ -242,9 +251,13 @@ void MainWindow::on_comment_view_currentItemChanged(QTreeWidgetItem *current)
 
   comment_view += "</tr></table>";
 
-  QString comme;
-  if (owner) comme = current->text(3);
-  else       comme = current->text(3).toHtmlEscaped();
+  QString comme = current->text(3);
+  const QRegExp urlrg("(https?://[\\w/:%#\\$&\\?\\(\\)~\\.=\\+\\-]+)");
+
+  if (!owner) {
+    comme = comme.toHtmlEscaped();
+    comme.replace(urlrg, "<a href=\"\\1\">\\1</a>");
+  }
   comme.replace("↵", "<br>");
 
   comment_view += "<p>"+comme+"</p>";
