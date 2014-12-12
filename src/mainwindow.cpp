@@ -34,6 +34,8 @@ MainWindow::MainWindow(QWidget *parent) :
 
   nicolivemanager->getRawMyLiveHTML();
   QTimer::singleShot(30000, nicolivemanager, SLOT(getRawMyLiveHTML()));
+
+  setAcceptDrops(true);
 }
 
 MainWindow::~MainWindow()
@@ -60,6 +62,19 @@ void MainWindow::onReceiveStarted()
   watch_count_timer = new QTimer(this);
   connect(watch_count_timer,SIGNAL(timeout()),this,SLOT(getWatchCount()));
   watch_count_timer->start(60000);
+}
+
+void MainWindow::dragEnterEvent(QDragEnterEvent *event)
+{
+  if (event->mimeData()->hasText())
+    event->acceptProposedAction();
+}
+
+void MainWindow::dropEvent(QDropEvent *event)
+{
+  event->acceptProposedAction();
+  ui->housouId->setText(event->mimeData()->text());
+  on_receive_clicked();
 }
 
 void MainWindow::onReceiveEnded()
@@ -175,7 +190,9 @@ void MainWindow::on_receive_clicked()
 {
   const QRegExp broadIDrg("^.+lv(\\d+).*$");
   QString broadID = ui->housouId->text();
-  broadID.replace(broadIDrg, "\\1");
+  if (broadIDrg.indexIn(broadID) != -1) {
+    broadID = broadIDrg.cap(1);
+  }
 
   ui->housouId->setText(broadID);
 

@@ -8,6 +8,8 @@
 #include <QVariant>
 #include <QIODevice>
 #include <QFileDialog>
+#include <QDropEvent>
+#include <QDragEnterEvent>
 
 #include "cookieread.h"
 #include "usermanager.h"
@@ -73,12 +75,11 @@ private slots:
 	void updateElapsedTime();
 
   void on_setting_triggered();
-
   void on_clear_triggered();
-
   void on_submit_button_clicked();
-
   void on_submit_text_returnPressed();
+  void dropEvent(QDropEvent* event);
+  void dragEnterEvent(QDragEnterEvent* event);
 
 private:
 	Ui::MainWindow* ui;
