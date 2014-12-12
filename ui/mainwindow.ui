@@ -56,7 +56,7 @@
         </widget>
        </item>
        <item>
-        <widget class="QLineEdit" name="housouId">
+        <widget class="QLineEdit" name="broadID">
          <property name="sizePolicy">
           <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
            <horstretch>0</horstretch>
@@ -94,6 +94,16 @@
          </property>
          <property name="text">
           <string>切断</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QToolButton" name="openBrowser">
+         <property name="toolTip">
+          <string extracomment="ブラウザで開く"/>
+         </property>
+         <property name="text">
+          <string>O</string>
          </property>
         </widget>
        </item>
@@ -212,9 +222,6 @@
         <layout class="QGridLayout" name="gridLayout">
          <item row="1" column="0">
           <widget class="QCheckBox" name="auto_getting_user_name_chk">
-           <property name="toolTip">
-            <string>auto getting user name and saving</string>
-           </property>
            <property name="whatsThis">
             <string/>
            </property>

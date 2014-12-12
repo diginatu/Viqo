@@ -64,19 +64,6 @@ void MainWindow::onReceiveStarted()
   watch_count_timer->start(60000);
 }
 
-void MainWindow::dragEnterEvent(QDragEnterEvent *event)
-{
-  if (event->mimeData()->hasText())
-    event->acceptProposedAction();
-}
-
-void MainWindow::dropEvent(QDropEvent *event)
-{
-  event->acceptProposedAction();
-  ui->housouId->setText(event->mimeData()->text());
-  on_receive_clicked();
-}
-
 void MainWindow::onReceiveEnded()
 {
   qDebug() << "--comment receiving ended--";
@@ -94,6 +81,19 @@ void MainWindow::onReceiveEnded()
   // delete audiences num timer
   watch_count_timer->stop();
   watch_count_timer->deleteLater();
+}
+
+void MainWindow::dragEnterEvent(QDragEnterEvent *event)
+{
+  if (event->mimeData()->hasText())
+    event->acceptProposedAction();
+}
+
+void MainWindow::dropEvent(QDropEvent *event)
+{
+  event->acceptProposedAction();
+  ui->broadID->setText(event->mimeData()->text());
+  on_receive_clicked();
 }
 
 void MainWindow::getWatchCount()
@@ -130,7 +130,7 @@ void MainWindow::updateElapsedTime()
 
 void MainWindow::setHousouID(QString text)
 {
-  ui->housouId->setText(text);
+  ui->broadID->setText(text);
 }
 
 void MainWindow::refleshLiveWaku()
@@ -189,12 +189,12 @@ void MainWindow::getSessionFromCookie()
 void MainWindow::on_receive_clicked()
 {
   const QRegExp broadIDrg("^.+lv(\\d+).*$");
-  QString broadID = ui->housouId->text();
+  QString broadID = ui->broadID->text();
   if (broadIDrg.indexIn(broadID) != -1) {
     broadID = broadIDrg.cap(1);
   }
 
-  ui->housouId->setText(broadID);
+  ui->broadID->setText(broadID);
 
   if ( settings.getUserSession().isEmpty() ) {
     insLog("MainWindow::on_receive_clicked settionID is not set yet");
@@ -291,7 +291,7 @@ bool MainWindow::isNextWaku()
 
 void MainWindow::on_live_waku_list_activated(int index)
 {
-  ui->housouId->setText(nicolivemanager->liveWakuList.at(index)->getBroadID());
+  ui->broadID->setText(nicolivemanager->liveWakuList.at(index)->getBroadID());
   on_receive_clicked();
 }
 
@@ -321,4 +321,11 @@ void MainWindow::on_submit_text_returnPressed()
 {
   if (ui->submit_button->isEnabled())
     on_submit_button_clicked();
+}
+
+void MainWindow::on_openBrowser_clicked()
+{
+  if (!ui->disconnect->isEnabled()) return;
+
+  QDesktopServices::openUrl("http://live.nicovideo.jp/watch/lv" + ui->broadID->text());
 }

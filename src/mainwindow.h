@@ -10,6 +10,7 @@
 #include <QFileDialog>
 #include <QDropEvent>
 #include <QDragEnterEvent>
+#include <QDesktopServices>
 
 #include "cookieread.h"
 #include "usermanager.h"
@@ -80,6 +81,7 @@ private slots:
   void on_submit_text_returnPressed();
   void dropEvent(QDropEvent* event);
   void dragEnterEvent(QDragEnterEvent* event);
+  void on_openBrowser_clicked();
 
 private:
 	Ui::MainWindow* ui;

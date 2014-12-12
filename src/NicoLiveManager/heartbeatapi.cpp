@@ -30,6 +30,7 @@ void NicoLiveManager::heartBeatFinished(QNetworkReply* reply){
 
   watchCount = heartbeat_data.midStr("<watchCount>","</watchCount>");
 
+  if (watchCount == "") return;
   mwin->setWatchCount(watchCount);
   reply->deleteLater();
 }

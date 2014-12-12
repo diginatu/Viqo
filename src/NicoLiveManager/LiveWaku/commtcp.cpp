@@ -27,7 +27,8 @@ void CommTcp::doConnect()
   socket->connectToHost(domain, port);
 
   if(!socket->waitForConnected(5000)) {
-    throw QString("CommTcp::doConnect Error: ").append(socket->errorString());
+    mwin->insLog("CommTcp::doConnect Error: " + socket->errorString());
+    doConnect();
   }
 }
 
@@ -39,7 +40,7 @@ void CommTcp::connected()
   send.append('\0');
 
   if (socket->write(send) == -1) {
-    throw QString("CommTcp::connected Error: ").append(socket->errorString());
+    mwin->insLog("CommTcp::connected Error: " + socket->errorString());
   }
 
   // set timer to send NULL data.
