@@ -254,3 +254,4 @@ bool Settings::getIs184() const
 {
   return ui->is184_chk->isChecked();
 }
+

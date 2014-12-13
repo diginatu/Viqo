@@ -206,6 +206,7 @@ void CommTcp::sendComment(const QString& text)
 
   if (socket->write(send) == -1) {
     mwin->insLog("CommTcp::sendComment Error: " + socket->errorString());
+    mwin->submittedComment();
   }
 }
 

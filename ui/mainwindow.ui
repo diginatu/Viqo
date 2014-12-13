@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>431</width>
+    <width>442</width>
     <height>501</height>
    </rect>
   </property>
@@ -100,7 +100,7 @@
        <item>
         <widget class="QToolButton" name="openBrowser">
          <property name="toolTip">
-          <string extracomment="ブラウザで開く"/>
+          <string>ブラウザで開く</string>
          </property>
          <property name="text">
           <string>O</string>
@@ -197,6 +197,9 @@
          <horstretch>0</horstretch>
          <verstretch>0</verstretch>
         </sizepolicy>
+       </property>
+       <property name="contextMenuPolicy">
+        <enum>Qt::CustomContextMenu</enum>
        </property>
        <property name="styleSheet">
         <string notr="true"/>
@@ -313,7 +316,7 @@
              <rect>
               <x>0</x>
               <y>0</y>
-              <width>389</width>
+              <width>400</width>
               <height>126</height>
              </rect>
             </property>
@@ -483,11 +486,11 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>431</width>
+     <width>442</width>
      <height>25</height>
     </rect>
    </property>
-   <widget class="QMenu" name="menuSetting">
+   <widget class="QMenu" name="file">
     <property name="title">
      <string>ファイル</string>
     </property>
@@ -496,14 +499,14 @@
     <addaction name="separator"/>
     <addaction name="setting"/>
    </widget>
-   <widget class="QMenu" name="menu">
+   <widget class="QMenu" name="edit">
     <property name="title">
      <string>編集</string>
     </property>
     <addaction name="clear"/>
    </widget>
-   <addaction name="menuSetting"/>
-   <addaction name="menu"/>
+   <addaction name="file"/>
+   <addaction name="edit"/>
   </widget>
   <widget class="QStatusBar" name="statusBar"/>
   <action name="actionSave">
@@ -526,6 +529,28 @@
     <string>コメント一覧を消去</string>
    </property>
   </action>
+  <action name="oneCommentActionSearchByGoogle">
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
+   <property name="text">
+    <string>googleで検索</string>
+   </property>
+  </action>
+  <action name="oneCommentActionCopy">
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
+   <property name="text">
+    <string>コピー</string>
+   </property>
+   <property name="toolTip">
+    <string>コピー</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+C</string>
+   </property>
+  </action>
  </widget>
  <layoutdefault spacing="6" margin="11"/>
  <resources/>
@@ -537,12 +562,12 @@
    <slot>setEnabled(bool)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>330</x>
-     <y>98</y>
+     <x>432</x>
+     <y>90</y>
     </hint>
     <hint type="destinationlabel">
-     <x>67</x>
-     <y>323</y>
+     <x>78</x>
+     <y>422</y>
     </hint>
    </hints>
   </connection>
@@ -553,12 +578,12 @@
    <slot>setEnabled(bool)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>124</x>
-     <y>289</y>
+     <x>135</x>
+     <y>350</y>
     </hint>
     <hint type="destinationlabel">
-     <x>354</x>
-     <y>294</y>
+     <x>411</x>
+     <y>353</y>
     </hint>
    </hints>
   </connection>
@@ -569,12 +594,44 @@
    <slot>setEnabled(bool)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>141</x>
-     <y>349</y>
+     <x>134</x>
+     <y>407</y>
     </hint>
     <hint type="destinationlabel">
-     <x>304</x>
-     <y>354</y>
+     <x>411</x>
+     <y>410</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>one_comment_view</sender>
+   <signal>copyAvailable(bool)</signal>
+   <receiver>oneCommentActionSearchByGoogle</receiver>
+   <slot>setEnabled(bool)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>220</x>
+     <y>195</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>one_comment_view</sender>
+   <signal>copyAvailable(bool)</signal>
+   <receiver>oneCommentActionCopy</receiver>
+   <slot>setEnabled(bool)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>220</x>
+     <y>195</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>-1</x>
+     <y>-1</y>
     </hint>
    </hints>
   </connection>

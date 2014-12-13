@@ -8,9 +8,6 @@
 
 #include "ui_mainwindow.h"
 
-namespace Ui {
-class MainWindow;
-}
 class MainWindow;
 
 class Settings : public QObject
@@ -51,6 +48,7 @@ signals:
 public slots:
 
 private slots:
+
 
 private:
   int loginWay;

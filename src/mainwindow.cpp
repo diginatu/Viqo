@@ -49,6 +49,7 @@ void MainWindow::onReceiveStarted()
 
   ui->submit_button->setEnabled(true);
   ui->disconnect->setEnabled(true);
+  ui->openBrowser->setEnabled(true);
 
   QWidget::setWindowTitle(nicolivemanager->nowWaku.getTitle() + " - Viqo");
 
@@ -70,6 +71,7 @@ void MainWindow::onReceiveEnded()
 
   ui->submit_button->setEnabled(false);
   ui->disconnect->setEnabled(false);
+  ui->openBrowser->setEnabled(false);
 
   QWidget::setWindowTitle("Viqo");
 
@@ -325,7 +327,33 @@ void MainWindow::on_submit_text_returnPressed()
 
 void MainWindow::on_openBrowser_clicked()
 {
-  if (!ui->disconnect->isEnabled()) return;
+  if (!ui->openBrowser->isEnabled()) return;
 
   QDesktopServices::openUrl("http://live.nicovideo.jp/watch/lv" + ui->broadID->text());
+}
+
+void MainWindow::on_comment_view_customContextMenuRequested(const QPoint &pos)
+{
+
+}
+
+void MainWindow::on_one_comment_view_customContextMenuRequested(const QPoint &pos)
+{
+  QMenu *menu=new QMenu(this);
+  menu->addAction(ui->oneCommentActionCopy);
+  menu->addAction(ui->oneCommentActionSearchByGoogle);
+  menu->popup(ui->one_comment_view->mapToGlobal(pos) + QPoint(2,1));
+}
+
+void MainWindow::on_oneCommentActionSearchByGoogle_triggered()
+{
+  const QString url = "https://www.google.co.jp/search?q=" +
+      ui->one_comment_view->textCursor().selectedText();
+  QDesktopServices::openUrl(url);
+}
+
+void MainWindow::on_oneCommentActionCopy_triggered()
+{
+  QClipboard *clipboard = QApplication::clipboard();
+  clipboard->setText(ui->one_comment_view->textCursor().selectedText());
 }

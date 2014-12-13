@@ -11,6 +11,7 @@
 #include <QDropEvent>
 #include <QDragEnterEvent>
 #include <QDesktopServices>
+#include <QClipboard>
 
 #include "cookieread.h"
 #include "usermanager.h"
@@ -82,6 +83,10 @@ private slots:
   void dropEvent(QDropEvent* event);
   void dragEnterEvent(QDragEnterEvent* event);
   void on_openBrowser_clicked();
+  void on_comment_view_customContextMenuRequested(const QPoint &pos);
+  void on_one_comment_view_customContextMenuRequested(const QPoint &pos);
+  void on_oneCommentActionSearchByGoogle_triggered();
+  void on_oneCommentActionCopy_triggered();
 
 private:
 	Ui::MainWindow* ui;

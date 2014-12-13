@@ -78,6 +78,7 @@ void NicoLiveManager::adminAlertFinished(QNetworkReply* reply)
 
   StrAbstractor communityi(mycommunities);
   QString mycommunity;
+  this->mycommunities.clear();
   while ((mycommunity = communityi.midStr("<community_id>","</community_id>")) != "") {
     this->mycommunities << mycommunity;
   }
@@ -86,9 +87,9 @@ void NicoLiveManager::adminAlertFinished(QNetworkReply* reply)
   waku_port = wakuTcpi.midStr("<port>", "</port>").toInt();
   waku_thread = wakuTcpi.midStr("<thread>", "</thread>");
 
-  mwin->insLog("waku addr: " + waku_addr +
-               "\nport: " + QString::number(waku_port) +
-               "\nthread:" + waku_thread + "\n");
+  // mwin->insLog("waku addr: " + waku_addr +
+  //              "\nport: " + QString::number(waku_port) +
+  //              "\nthread:" + waku_thread + "\n");
 
   if ( wakutcp != nullptr ) {
     if ( wakutcp->isConnected() )
