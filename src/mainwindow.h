@@ -33,6 +33,7 @@ public:
 	void onReceiveEnded();
 
   void insComment(int num, bool prem, QString user, QString comm, QString date, bool is_184, bool broadcaster, bool after_open);
+  int lastCommentNum();
   void insLog(QString log = "");
 
 	void setWatchCount(QString num);

@@ -150,6 +150,14 @@ void CommTcp::readOneRawComment(QByteArray& rawcomm)
   comm.replace("&lt;", "<");
   comm.replace("&gt;", ">");
 
+  int nextnum = mwin->lastCommentNum() + 1;
+  if (mwin->settings.getDispNG() && nextnum != num) {
+    for (int i = nextnum; i < num; ++i) {
+      mwin->insComment( i, false, "NG", "NGコメント", date,
+                        "NGcomment", false, false);
+    }
+  }
+
   mwin->insComment( num, premium,
     broadcaster?"放送主":user, comm, date, is_184,
     broadcaster, commenttime > open_time);
@@ -200,7 +208,7 @@ void CommTcp::sendComment(const QString& text)
       .arg((mwin->settings.getIs184())?" mail=\"184\"":"")
       .arg(nlwaku->getUser_id())
       .arg((nlwaku->getIs_premium())?" premium=\"1\"":"")
-      .arg(text));
+      .arg(text.toHtmlEscaped()));
 
   send.append('\0');
 

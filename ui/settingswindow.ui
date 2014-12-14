@@ -17,7 +17,7 @@
    <item>
     <widget class="QTabWidget" name="tabWidget">
      <property name="currentIndex">
-      <number>0</number>
+      <number>1</number>
      </property>
      <widget class="QWidget" name="account_tab">
       <attribute name="title">
@@ -166,7 +166,7 @@
       <attribute name="title">
        <string>コメント</string>
       </attribute>
-      <widget class="QCheckBox" name="ownercomment_chk">
+      <widget class="QCheckBox" name="comment_ownercomment_chk">
        <property name="geometry">
         <rect>
          <x>10</x>
@@ -177,6 +177,22 @@
        </property>
        <property name="text">
         <string>設定したユーザの放送の場合、運営コメントにする</string>
+       </property>
+       <property name="checked">
+        <bool>true</bool>
+       </property>
+      </widget>
+      <widget class="QCheckBox" name="comment_dipspNG_chk">
+       <property name="geometry">
+        <rect>
+         <x>10</x>
+         <y>40</y>
+         <width>171</width>
+         <height>22</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string>NGコメントを表示する</string>
        </property>
        <property name="checked">
         <bool>true</bool>

@@ -182,6 +182,13 @@ void MainWindow::insComment(int num, bool prem, QString user,
   }
 }
 
+int MainWindow::lastCommentNum()
+{
+  QTreeWidgetItem* topitem = ui->comment_view->topLevelItem(0);
+  if(topitem == 0) return 0;
+  return topitem->text(0).toInt();
+}
+
 void MainWindow::getSessionFromCookie()
 {
   CookieRead cr(this);
@@ -275,7 +282,18 @@ void MainWindow::on_comment_view_currentItemChanged(QTreeWidgetItem *current)
 
   if (!owner) {
     comme = comme.toHtmlEscaped();
-    comme.replace(urlrg, "<a href=\"\\1\">\\1</a>");
+    QString tcomme;
+    int bpos = 0;
+    int pos = 0;
+    while ((pos = urlrg.indexIn(comme, pos)) != -1) {
+      tcomme += comme.mid(bpos,pos-bpos).toHtmlEscaped();
+      tcomme += "<a href=\"" + urlrg.cap(1) + "\">" + urlrg.cap(1).toHtmlEscaped() + "</a>";
+      pos += urlrg.matchedLength();
+      bpos = pos;
+      qDebug() << urlrg.cap(1);
+    }
+    tcomme += comme.mid(bpos);
+    comme = tcomme;
   }
   comme.replace("↵", "<br>");
 

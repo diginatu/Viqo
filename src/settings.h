@@ -23,7 +23,10 @@ public:
   void saveSettings();
   void loadSettings();
 
-  // setter and getter
+  // main window
+  bool getIs184() const;
+
+  // account
   QString getUserMail() const;
   void setUserMail(QString value);
 
@@ -39,16 +42,18 @@ public:
   QString getCookieFile() const;
   void setCookieFile(QString value);
 
+  // comment
   bool getOwnerComment() const;
   void setOwnerComment(bool value);
 
-  bool getIs184() const;
+  bool getDispNG() const;
+  void setDispNG(bool value);
+
 signals:
 
 public slots:
 
 private slots:
-
 
 private:
   int loginWay;
@@ -59,6 +64,7 @@ private:
   QString userPass;
 
   bool ownerComment;
+  bool dispNG;
 
   MainWindow* mwin;
   Ui::MainWindow *ui;

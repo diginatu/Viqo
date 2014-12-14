@@ -49,9 +49,9 @@ void NicoLiveManager::submitOwnerCommentAPI(const QString& text, const QString& 
   rq.setHeader(QNetworkRequest::CookieHeader, postData);
   rq.setUrl(QUrl("http://watch.live.nicovideo.jp/api/broadcast/lv" +
                  nowWaku.getBroadID() +
-                 "?body=" + text +
+                 "?body=" + QUrl::toPercentEncoding(text) +
                  "&token=" + nowWaku.getOwnerCommentToken() +
-                 "&name=" + name ));
+                 "&name=" + QUrl::toPercentEncoding(name)));
 
   mOwnerCommentSManager->get(rq);
 }

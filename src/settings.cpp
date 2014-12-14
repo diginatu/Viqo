@@ -6,6 +6,7 @@ Settings::Settings(MainWindow* mwin, Ui::MainWindow* ui, QObject* parent) :
 {
   loginWay = 0;
   ownerComment = true;
+  dispNG = true;
 
   this->mwin = mwin;
   this->ui = ui;
@@ -141,6 +142,7 @@ void Settings::saveSettings()
 
   QJsonObject comment;
   comment["owner_comment"] = ownerComment;
+  comment["viewNG"] = dispNG;
 
 
   QJsonObject root;
@@ -190,6 +192,8 @@ void Settings::loadSettings()
   QJsonObject comment = jsd.object()["comment"].toObject();
   if (comment.contains("owner_comment"))
     ownerComment = comment["owner_comment"].toBool();
+  if (comment.contains("viewNG"))
+    ownerComment = comment["viewNG"].toBool();
 
   file.close();
 }
@@ -255,3 +259,12 @@ bool Settings::getIs184() const
   return ui->is184_chk->isChecked();
 }
 
+bool Settings::getDispNG() const
+{
+  return dispNG;
+}
+
+void Settings::setDispNG(bool value)
+{
+  dispNG = value;
+}

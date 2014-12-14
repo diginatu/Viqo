@@ -99,6 +99,9 @@
        </item>
        <item>
         <widget class="QToolButton" name="openBrowser">
+         <property name="enabled">
+          <bool>false</bool>
+         </property>
          <property name="toolTip">
           <string>ブラウザで開く</string>
          </property>
@@ -216,7 +219,7 @@
         </sizepolicy>
        </property>
        <property name="currentIndex">
-        <number>0</number>
+        <number>1</number>
        </property>
        <widget class="QWidget" name="comment_tab">
         <attribute name="title">
