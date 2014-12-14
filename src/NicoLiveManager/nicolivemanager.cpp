@@ -85,6 +85,7 @@ void NicoLiveManager::insertLiveWakuList(LiveWaku* livewaku)
 
 void NicoLiveManager::broadStart()
 {
+  nowWaku.init();
   nowWaku.getPlayyerStatusAPI();
 }
 

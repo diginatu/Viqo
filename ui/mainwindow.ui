@@ -406,6 +406,52 @@
                </layout>
               </widget>
              </item>
+             <item>
+              <widget class="QWidget" name="widget_5" native="true">
+               <layout class="QHBoxLayout" name="horizontalLayout_7">
+                <property name="leftMargin">
+                 <number>0</number>
+                </property>
+                <property name="topMargin">
+                 <number>0</number>
+                </property>
+                <property name="rightMargin">
+                 <number>0</number>
+                </property>
+                <property name="bottomMargin">
+                 <number>0</number>
+                </property>
+                <item>
+                 <widget class="QCheckBox" name="command_beforeEnd_chk">
+                  <property name="text">
+                   <string>終了前</string>
+                  </property>
+                 </widget>
+                </item>
+                <item>
+                 <widget class="QSpinBox" name="command_beforeEndMinuts_spn">
+                  <property name="value">
+                   <number>3</number>
+                  </property>
+                 </widget>
+                </item>
+                <item>
+                 <widget class="QLabel" name="label">
+                  <property name="text">
+                   <string>分</string>
+                  </property>
+                 </widget>
+                </item>
+                <item>
+                 <widget class="QLineEdit" name="command_beforeEnd">
+                  <property name="enabled">
+                   <bool>false</bool>
+                  </property>
+                 </widget>
+                </item>
+               </layout>
+              </widget>
+             </item>
             </layout>
            </widget>
           </widget>
@@ -570,7 +616,7 @@
     </hint>
     <hint type="destinationlabel">
      <x>78</x>
-     <y>422</y>
+     <y>384</y>
     </hint>
    </hints>
   </connection>
@@ -582,11 +628,11 @@
    <hints>
     <hint type="sourcelabel">
      <x>135</x>
-     <y>350</y>
+     <y>341</y>
     </hint>
     <hint type="destinationlabel">
      <x>411</x>
-     <y>353</y>
+     <y>343</y>
     </hint>
    </hints>
   </connection>
@@ -598,11 +644,11 @@
    <hints>
     <hint type="sourcelabel">
      <x>134</x>
-     <y>407</y>
+     <y>379</y>
     </hint>
     <hint type="destinationlabel">
      <x>411</x>
-     <y>410</y>
+     <y>381</y>
     </hint>
    </hints>
   </connection>
@@ -635,6 +681,22 @@
     <hint type="destinationlabel">
      <x>-1</x>
      <y>-1</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>command_beforeEnd_chk</sender>
+   <signal>toggled(bool)</signal>
+   <receiver>command_beforeEnd</receiver>
+   <slot>setEnabled(bool)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>104</x>
+     <y>407</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>223</x>
+     <y>412</y>
     </hint>
    </hints>
   </connection>

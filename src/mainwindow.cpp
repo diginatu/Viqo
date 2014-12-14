@@ -124,9 +124,29 @@ void MainWindow::setWatchCount(QString num)
 
 void MainWindow::updateElapsedTime()
 {
-  QTime el_time(QTime(0,0).addSecs(QDateTime::currentDateTimeUtc().toTime_t() -
-     nicolivemanager->nowWaku.getSt().toTime_t()));
+  const QDateTime st = nicolivemanager->nowWaku.getSt();
+  const QDateTime ed = nicolivemanager->nowWaku.getEd();
+  const QDateTime nw = QDateTime::currentDateTimeUtc();
 
+  if (!nicolivemanager->nowWaku.didAlermCommand &&
+      ui->command_beforeEnd_chk->isChecked()) {
+    const QTime alerm(0,ui->command_beforeEndMinuts_spn->value());
+    if (QTime(0,0).addSecs(ed.toTime_t() - nw.toTime_t()) <= alerm) {
+
+      nicolivemanager->nowWaku.didAlermCommand = true;
+
+      QProcess pr;
+      QString cmd = ui->command_beforeEnd->text();
+
+      const QString lastTime = QString::number(ui->command_beforeEndMinuts_spn->value());
+      cmd.replace("%lastTime%",'"' + lastTime + '"');
+
+      pr.start(cmd);
+      pr.waitForFinished(30000);
+    }
+  }
+
+  const QTime el_time(QTime(0,0).addSecs(nw.toTime_t() - st.toTime_t()));
   ui->elapsed_time->setText(el_time.toString("hh:mm:ss"));
 }
 
@@ -357,7 +377,7 @@ void MainWindow::on_comment_view_customContextMenuRequested(const QPoint &pos)
 
 void MainWindow::on_one_comment_view_customContextMenuRequested(const QPoint &pos)
 {
-  QMenu *menu=new QMenu(this);
+  QMenu *menu = new QMenu(this);
   menu->addAction(ui->oneCommentActionCopy);
   menu->addAction(ui->oneCommentActionSearchByGoogle);
   menu->popup(ui->one_comment_view->mapToGlobal(pos) + QPoint(2,1));

@@ -15,6 +15,9 @@ public:
   explicit LiveWaku(MainWindow* mwin, NicoLiveManager* nlman, QObject *parent = 0);
   explicit LiveWaku(MainWindow* mwin, NicoLiveManager* nlman, QString broadID, QString community, QObject *parent = 0);
 
+  void init();
+  bool didAlermCommand;
+
 	void getPlayyerStatusAPI();
 
 	QString getTitle() const;
@@ -45,15 +48,15 @@ protected slots:
 private:
   QNetworkAccessManager* mManager;
 
-protected:
-	QString title;
+  QString title;
 	QString broadID;
 	QString community;
 
 	QDateTime st;
 	QDateTime ed;
 
-	MainWindow* mwin;
+protected:
+  MainWindow* mwin;
 	NicoLiveManager* nlman;
 
 };

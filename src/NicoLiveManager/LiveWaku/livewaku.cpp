@@ -11,14 +11,15 @@ LiveWaku::LiveWaku(MainWindow* mwin, NicoLiveManager* nlman, QObject* parent) :
 }
 
 LiveWaku::LiveWaku(MainWindow* mwin, NicoLiveManager* nlman, QString broadID, QString community, QObject *parent) :
-  QObject(parent),
-  mManager(nullptr)
+  LiveWaku(mwin, nlman, parent)
 {
   this->broadID = broadID;
   this->community = community;
-  // LiveWaku(mwin, nlman, parent);
-  this->mwin = mwin;
-  this->nlman = nlman;
+}
+
+void LiveWaku::init()
+{
+  didAlermCommand = false;
 }
 
 QString LiveWaku::getTitle() const

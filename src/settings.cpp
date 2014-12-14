@@ -30,6 +30,9 @@ void Settings::saveStatus()
   command["comment"] = ui->command_comment->text();
   command["nextWaku_check"] = ui->command_nextWaku_chk->isChecked();
   command["nextWaku"] = ui->command_nextWaku->text();
+  command["command_beforeEnd_check"] = ui->command_beforeEnd_chk->isChecked();
+  command["command_beforeEnd_minuts"] = ui->command_beforeEndMinuts_spn->value();
+  command["command_beforeEnd"] = ui->command_beforeEnd->text();
 
   QJsonObject root;
   root["other"] = other;
@@ -76,6 +79,10 @@ void Settings::loadStatus()
   ui->command_comment_chk->setChecked(command["comment_check"].toBool());
   ui->command_nextWaku->setText(command["nextWaku"].toString());
   ui->command_nextWaku_chk->setChecked(command["nextWaku_check"].toBool());
+  ui->command_beforeEnd_chk->setChecked(command["command_beforeEnd_check"].toBool());
+  if (command.contains("command_beforeEnd_minuts"))
+    ui->command_beforeEndMinuts_spn->setValue(command["command_beforeEnd_minuts"].toInt());
+  ui->command_beforeEnd->setText(command["command_beforeEnd"].toString());
 
   file.close();
 }
