@@ -169,7 +169,7 @@ void CommTcp::readOneRawComment(QByteArray& rawcomm)
 
     QString escmd = comm;
     escmd.replace("'", "");
-    cmd.replace("%comment%",'"' + escmd + '"');
+    cmd.replace("%comment%",escmd);
 
     pr.start(cmd);
     pr.waitForFinished(30000);
