@@ -219,7 +219,7 @@
         </sizepolicy>
        </property>
        <property name="currentIndex">
-        <number>1</number>
+        <number>0</number>
        </property>
        <widget class="QWidget" name="comment_tab">
         <attribute name="title">
@@ -327,7 +327,7 @@
              <item>
               <widget class="QWidget" name="command_comment_widget" native="true">
                <property name="sizePolicy">
-                <sizepolicy hsizetype="Preferred" vsizetype="Minimum">
+                <sizepolicy hsizetype="Preferred" vsizetype="Maximum">
                  <horstretch>0</horstretch>
                  <verstretch>0</verstretch>
                 </sizepolicy>
@@ -358,7 +358,7 @@
                    <bool>false</bool>
                   </property>
                   <property name="placeholderText">
-                   <string>notify 'コメント：%comment%'</string>
+                   <string>notify-send &quot;コメント：%comment%&quot;</string>
                   </property>
                  </widget>
                 </item>
@@ -368,7 +368,7 @@
              <item>
               <widget class="QWidget" name="command_nextwaku_widget" native="true">
                <property name="sizePolicy">
-                <sizepolicy hsizetype="Preferred" vsizetype="Minimum">
+                <sizepolicy hsizetype="Preferred" vsizetype="Maximum">
                  <horstretch>0</horstretch>
                  <verstretch>0</verstretch>
                 </sizepolicy>
@@ -399,7 +399,7 @@
                    <bool>false</bool>
                   </property>
                   <property name="placeholderText">
-                   <string>firefox '%wakuURL%'</string>
+                   <string>firefox &quot;%wakuURL%&quot;</string>
                   </property>
                  </widget>
                 </item>
@@ -408,6 +408,12 @@
              </item>
              <item>
               <widget class="QWidget" name="widget_5" native="true">
+               <property name="sizePolicy">
+                <sizepolicy hsizetype="Preferred" vsizetype="Maximum">
+                 <horstretch>0</horstretch>
+                 <verstretch>0</verstretch>
+                </sizepolicy>
+               </property>
                <layout class="QHBoxLayout" name="horizontalLayout_7">
                 <property name="leftMargin">
                  <number>0</number>
@@ -447,10 +453,26 @@
                   <property name="enabled">
                    <bool>false</bool>
                   </property>
+                  <property name="placeholderText">
+                   <string>notify-send &quot;この放送は%lastTime%分で終了します&quot;</string>
+                  </property>
                  </widget>
                 </item>
                </layout>
               </widget>
+             </item>
+             <item>
+              <spacer name="verticalSpacer">
+               <property name="orientation">
+                <enum>Qt::Vertical</enum>
+               </property>
+               <property name="sizeHint" stdset="0">
+                <size>
+                 <width>20</width>
+                 <height>40</height>
+                </size>
+               </property>
+              </spacer>
              </item>
             </layout>
            </widget>
@@ -545,14 +567,14 @@
     </property>
     <addaction name="actionSave"/>
     <addaction name="actionLoad"/>
-    <addaction name="separator"/>
-    <addaction name="setting"/>
    </widget>
    <widget class="QMenu" name="edit">
     <property name="title">
      <string>編集</string>
     </property>
     <addaction name="clear"/>
+    <addaction name="separator"/>
+    <addaction name="setting"/>
    </widget>
    <addaction name="file"/>
    <addaction name="edit"/>
