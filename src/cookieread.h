@@ -12,7 +12,7 @@ class CookieRead : public QObject
 public:
 	explicit CookieRead(MainWindow* mwin);
 	~CookieRead();
-	QString getUserSession();
+    QString getUserSession(QString cookie_name);
 	void close();
 
 private:

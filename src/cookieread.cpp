@@ -6,11 +6,10 @@ CookieRead::CookieRead(MainWindow* mwin)
   this->mwin = mwin;
 }
 
-QString CookieRead::getUserSession()
+QString CookieRead::getUserSession(QString cookie_name)
 {
   mwin->insLog("CookieRead::getUserSession");
 
-  QString cookie_name = mwin->settings.getCookieFile();
   if (cookie_name == "") {
     mwin->insLog("Cookie Name is not specified");
     return "";
