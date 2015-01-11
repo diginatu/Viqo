@@ -87,7 +87,7 @@ void SettingsWindow::on_get_session_clicked()
   switch (ui->login_way_combo->currentIndex()) {
   case 1:
     ui->buttonBox->setEnabled(false);
-    mwin->getSessionFromCookie();
+    mwin->getSessionFromCookie(ui->cookiesetting_filename->text());
     getUserSessionFinished();
     break;
   case 2:

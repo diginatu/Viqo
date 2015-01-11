@@ -209,10 +209,10 @@ int MainWindow::lastCommentNum()
   return topitem->text(0).toInt();
 }
 
-void MainWindow::getSessionFromCookie()
+void MainWindow::getSessionFromCookie(QString cookie_name)
 {
   CookieRead cr(this);
-  settings.setUserSession(cr.getUserSession());
+  settings.setUserSession(cr.getUserSession(cookie_name));
 }
 
 void MainWindow::on_receive_clicked()

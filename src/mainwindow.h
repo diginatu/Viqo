@@ -50,7 +50,7 @@ public:
   bool isCommandNextWakuChecked();
   QString getCommandNextWaku();
 
-  void getSessionFromCookie();
+  void getSessionFromCookie(QString cookie_name);
 
   SettingsWindow* settingsWindow;
 
