@@ -89,6 +89,8 @@ private slots:
   void on_oneCommentActionSearchByGoogle_triggered();
   void on_oneCommentActionCopy_triggered();
 
+  void on_command_test_button_clicked();
+
 private:
 	Ui::MainWindow* ui;
 

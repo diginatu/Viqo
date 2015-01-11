@@ -395,3 +395,14 @@ void MainWindow::on_oneCommentActionCopy_triggered()
   QClipboard *clipboard = QApplication::clipboard();
   clipboard->setText(ui->one_comment_view->textCursor().selectedText());
 }
+
+void MainWindow::on_command_test_button_clicked()
+{
+  QProcess pr;
+  QString cmd = ui->command_test->text();
+
+  cmd.replace("%wakuURL%","http://live.nicovideo.jp/watch/lv" + nicolivemanager->nowWaku.getBroadID());
+
+  pr.start(cmd);
+  pr.waitForFinished(30000);
+}
