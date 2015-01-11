@@ -96,7 +96,6 @@ void Settings::oldLoad()
   }
   QFile file(dir[0] + "/settings.json");
   if ( !file.exists() ) {
-    file.close();
     return;
   }
 
@@ -136,6 +135,12 @@ void Settings::saveSettings()
   if (dir.empty()) {
     mwin->insLog("save directory is not available");
     return;
+  }
+
+  QFile files(dir[0] + "/status_01.json");
+  if ( !files.exists() ) {
+    files.open(QIODevice::WriteOnly);
+    files.close();
   }
 
   QJsonObject login_way;
