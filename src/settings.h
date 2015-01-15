@@ -16,8 +16,8 @@ class Settings : public QObject
 public:
   explicit Settings(MainWindow* mwin, Ui::MainWindow* ui, QObject* parent = 0);
 
-  void saveStatus();
-  void loadStatus();
+  void saveStatus(int num = 1);
+  void loadStatus(int num = 1);
   void oldLoad();
 
   void saveSettings();
@@ -61,6 +61,7 @@ signals:
 public slots:
 
 private slots:
+
 
 private:
   int loginWay;

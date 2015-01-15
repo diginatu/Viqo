@@ -12,7 +12,7 @@ Settings::Settings(MainWindow* mwin, Ui::MainWindow* ui, QObject* parent) :
   this->ui = ui;
 }
 
-void Settings::saveStatus()
+void Settings::saveStatus(int num)
 {
   QStringList dir = QStandardPaths::standardLocations(QStandardPaths::DataLocation);
   if (dir.empty()) {
@@ -43,7 +43,7 @@ void Settings::saveStatus()
   QJsonDocument jsd;
   jsd.setObject(root);
 
-  QFile file(dir[0] + "/status_01.json");
+  QFile file(dir[0] + "/status_0" + QString::number(num) + ".json");
   file.open(QIODevice::WriteOnly);
 
   QTextStream out(&file);
@@ -53,14 +53,14 @@ void Settings::saveStatus()
   file.close();
 }
 
-void Settings::loadStatus()
+void Settings::loadStatus(int num)
 {
   QStringList dir = QStandardPaths::standardLocations(QStandardPaths::DataLocation);
   if (dir.empty()) {
     mwin->insLog("save directory is not available");
     return;
   }
-  QFile file(dir[0] + "/status_01.json");
+  QFile file(dir[0] + "/status_0" + QString::number(num) + ".json");
   if ( !file.exists() ) {
     file.close();
     oldLoad();

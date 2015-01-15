@@ -60,9 +60,6 @@ public slots:
 
 	void getWatchCount();
 
-	void on_actionSave_triggered();
-	void on_actionLoad_triggered();
-
 private slots:
   void on_comment_view_itemDoubleClicked(QTreeWidgetItem *item, int column);
   void on_comment_view_currentItemChanged(QTreeWidgetItem *current);
@@ -82,6 +79,15 @@ private slots:
   void on_oneCommentActionCopy_triggered();
 
   void on_command_test_button_clicked();
+
+  void on_save_1_triggered();
+  void on_save_2_triggered();
+  void on_save_3_triggered();
+  void on_save_4_triggered();
+  void on_load_1_triggered();
+  void on_load_2_triggered();
+  void on_load_3_triggered();
+  void on_load_4_triggered();
 
 private:
 	Ui::MainWindow* ui;

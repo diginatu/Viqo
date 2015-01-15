@@ -241,16 +241,6 @@ void MainWindow::submittedComment()
   ui->submit_button->setEnabled(true);
 }
 
-void MainWindow::on_actionSave_triggered()
-{
-  settings.saveStatus();
-}
-
-void MainWindow::on_actionLoad_triggered()
-{
-  settings.loadStatus();
-}
-
 void MainWindow::on_comment_view_itemDoubleClicked(QTreeWidgetItem *item, int column)
 {
   if (column == 2) {
@@ -385,4 +375,38 @@ void MainWindow::on_command_test_button_clicked()
 
   pr.start(cmd);
   pr.waitForFinished(5000);
+}
+
+void MainWindow::on_save_1_triggered()
+{
+  settings.saveStatus();
+}
+void MainWindow::on_save_2_triggered()
+{
+  settings.saveStatus(2);
+}
+void MainWindow::on_save_3_triggered()
+{
+  settings.saveStatus(3);
+}
+void MainWindow::on_save_4_triggered()
+{
+  settings.saveStatus(4);
+}
+
+void MainWindow::on_load_1_triggered()
+{
+  settings.loadStatus();
+}
+void MainWindow::on_load_2_triggered()
+{
+  settings.loadStatus(2);
+}
+void MainWindow::on_load_3_triggered()
+{
+  settings.loadStatus(3);
+}
+void MainWindow::on_load_4_triggered()
+{
+  settings.loadStatus(4);
 }

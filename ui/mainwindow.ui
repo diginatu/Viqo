@@ -660,8 +660,26 @@
     <property name="title">
      <string>ファイル</string>
     </property>
-    <addaction name="actionSave"/>
-    <addaction name="actionLoad"/>
+    <widget class="QMenu" name="stateSave">
+     <property name="title">
+      <string>状態セーブ</string>
+     </property>
+     <addaction name="save_1"/>
+     <addaction name="save_2"/>
+     <addaction name="save_3"/>
+     <addaction name="save_4"/>
+    </widget>
+    <widget class="QMenu" name="stateLoad">
+     <property name="title">
+      <string>状態ロード</string>
+     </property>
+     <addaction name="load_1"/>
+     <addaction name="load_2"/>
+     <addaction name="load_3"/>
+     <addaction name="load_4"/>
+    </widget>
+    <addaction name="stateSave"/>
+    <addaction name="stateLoad"/>
    </widget>
    <widget class="QMenu" name="edit">
     <property name="title">
@@ -675,16 +693,6 @@
    <addaction name="edit"/>
   </widget>
   <widget class="QStatusBar" name="statusBar"/>
-  <action name="actionSave">
-   <property name="text">
-    <string>状態保存</string>
-   </property>
-  </action>
-  <action name="actionLoad">
-   <property name="text">
-    <string>読み込み</string>
-   </property>
-  </action>
   <action name="setting">
    <property name="text">
     <string>設定</string>
@@ -715,6 +723,46 @@
    </property>
    <property name="shortcut">
     <string>Ctrl+C</string>
+   </property>
+  </action>
+  <action name="save_1">
+   <property name="text">
+    <string>1 : デフォルト</string>
+   </property>
+  </action>
+  <action name="save_2">
+   <property name="text">
+    <string>2 :</string>
+   </property>
+  </action>
+  <action name="save_3">
+   <property name="text">
+    <string>3 :</string>
+   </property>
+  </action>
+  <action name="load_1">
+   <property name="text">
+    <string>1 : デフォルト</string>
+   </property>
+  </action>
+  <action name="load_2">
+   <property name="text">
+    <string>2 :</string>
+   </property>
+  </action>
+  <action name="load_3">
+   <property name="text">
+    <string>3 :</string>
+   </property>
+  </action>
+  <action name="save_4">
+   <property name="text">
+    <string>4 :</string>
+   </property>
+  </action>
+  <action name="load_4">
+   <property name="text">
+    <string>4 :</string>
    </property>
   </action>
  </widget>
