@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>442</width>
-    <height>459</height>
+    <height>487</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -318,12 +318,53 @@
             <property name="geometry">
              <rect>
               <x>0</x>
-              <y>-45</y>
+              <y>0</y>
               <width>384</width>
-              <height>150</height>
+              <height>183</height>
              </rect>
             </property>
             <layout class="QVBoxLayout" name="verticalLayout_2">
+             <item>
+              <widget class="QWidget" name="command_newWaku_widget" native="true">
+               <property name="sizePolicy">
+                <sizepolicy hsizetype="Preferred" vsizetype="Maximum">
+                 <horstretch>0</horstretch>
+                 <verstretch>0</verstretch>
+                </sizepolicy>
+               </property>
+               <layout class="QHBoxLayout" name="horizontalLayout_8">
+                <property name="leftMargin">
+                 <number>0</number>
+                </property>
+                <property name="topMargin">
+                 <number>0</number>
+                </property>
+                <property name="rightMargin">
+                 <number>0</number>
+                </property>
+                <property name="bottomMargin">
+                 <number>0</number>
+                </property>
+                <item>
+                 <widget class="QCheckBox" name="command_newWaku_chk">
+                  <property name="text">
+                   <string>放送開始</string>
+                  </property>
+                 </widget>
+                </item>
+                <item>
+                 <widget class="QLineEdit" name="command_newWaku">
+                  <property name="enabled">
+                   <bool>false</bool>
+                  </property>
+                  <property name="placeholderText">
+                   <string>notify-send &quot;%newWakuName%が開始されました&quot;</string>
+                  </property>
+                 </widget>
+                </item>
+               </layout>
+              </widget>
+             </item>
              <item>
               <widget class="QWidget" name="command_comment_widget" native="true">
                <property name="sizePolicy">
@@ -366,48 +407,7 @@
               </widget>
              </item>
              <item>
-              <widget class="QWidget" name="command_nextwaku_widget" native="true">
-               <property name="sizePolicy">
-                <sizepolicy hsizetype="Preferred" vsizetype="Maximum">
-                 <horstretch>0</horstretch>
-                 <verstretch>0</verstretch>
-                </sizepolicy>
-               </property>
-               <layout class="QHBoxLayout" name="horizontalLayout_5">
-                <property name="leftMargin">
-                 <number>0</number>
-                </property>
-                <property name="topMargin">
-                 <number>0</number>
-                </property>
-                <property name="rightMargin">
-                 <number>0</number>
-                </property>
-                <property name="bottomMargin">
-                 <number>0</number>
-                </property>
-                <item>
-                 <widget class="QCheckBox" name="command_nextWaku_chk">
-                  <property name="text">
-                   <string>次枠移動時</string>
-                  </property>
-                 </widget>
-                </item>
-                <item>
-                 <widget class="QLineEdit" name="command_nextWaku">
-                  <property name="enabled">
-                   <bool>false</bool>
-                  </property>
-                  <property name="placeholderText">
-                   <string>firefox &quot;%wakuURL%&quot;</string>
-                  </property>
-                 </widget>
-                </item>
-               </layout>
-              </widget>
-             </item>
-             <item>
-              <widget class="QWidget" name="widget_5" native="true">
+              <widget class="QWidget" name="command_beforeEnd_widget" native="true">
                <property name="sizePolicy">
                 <sizepolicy hsizetype="Preferred" vsizetype="Maximum">
                  <horstretch>0</horstretch>
@@ -462,7 +462,48 @@
               </widget>
              </item>
              <item>
-              <widget class="QWidget" name="widget_6" native="true">
+              <widget class="QWidget" name="command_nextwaku_widget" native="true">
+               <property name="sizePolicy">
+                <sizepolicy hsizetype="Preferred" vsizetype="Maximum">
+                 <horstretch>0</horstretch>
+                 <verstretch>0</verstretch>
+                </sizepolicy>
+               </property>
+               <layout class="QHBoxLayout" name="horizontalLayout_5">
+                <property name="leftMargin">
+                 <number>0</number>
+                </property>
+                <property name="topMargin">
+                 <number>0</number>
+                </property>
+                <property name="rightMargin">
+                 <number>0</number>
+                </property>
+                <property name="bottomMargin">
+                 <number>0</number>
+                </property>
+                <item>
+                 <widget class="QCheckBox" name="command_nextWaku_chk">
+                  <property name="text">
+                   <string>次枠移動時</string>
+                  </property>
+                 </widget>
+                </item>
+                <item>
+                 <widget class="QLineEdit" name="command_nextWaku">
+                  <property name="enabled">
+                   <bool>false</bool>
+                  </property>
+                  <property name="placeholderText">
+                   <string>firefox &quot;%wakuURL%&quot;</string>
+                  </property>
+                 </widget>
+                </item>
+               </layout>
+              </widget>
+             </item>
+             <item>
+              <widget class="QWidget" name="command_test_widget" native="true">
                <property name="sizePolicy">
                 <sizepolicy hsizetype="Preferred" vsizetype="Maximum">
                  <horstretch>0</horstretch>
@@ -482,7 +523,7 @@
                 <property name="bottomMargin">
                  <number>0</number>
                 </property>
-                <item row="0" column="0">
+                <item row="0" column="1">
                  <widget class="QLineEdit" name="command_test">
                   <property name="sizePolicy">
                    <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
@@ -492,7 +533,7 @@
                   </property>
                  </widget>
                 </item>
-                <item row="0" column="1">
+                <item row="0" column="2">
                  <widget class="QPushButton" name="command_test_button">
                   <property name="sizePolicy">
                    <sizepolicy hsizetype="Maximum" vsizetype="Fixed">
@@ -502,6 +543,13 @@
                   </property>
                   <property name="text">
                    <string>Test</string>
+                  </property>
+                 </widget>
+                </item>
+                <item row="0" column="0">
+                 <widget class="QLabel" name="label_2">
+                  <property name="text">
+                   <string>コマンドテスト</string>
                   </property>
                  </widget>
                 </item>
@@ -684,8 +732,8 @@
      <y>90</y>
     </hint>
     <hint type="destinationlabel">
-     <x>78</x>
-     <y>384</y>
+     <x>89</x>
+     <y>275</y>
     </hint>
    </hints>
   </connection>
@@ -696,12 +744,12 @@
    <slot>setEnabled(bool)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>135</x>
-     <y>341</y>
+     <x>146</x>
+     <y>239</y>
     </hint>
     <hint type="destinationlabel">
-     <x>411</x>
-     <y>343</y>
+     <x>395</x>
+     <y>242</y>
     </hint>
    </hints>
   </connection>
@@ -713,11 +761,11 @@
    <hints>
     <hint type="sourcelabel">
      <x>134</x>
-     <y>379</y>
+     <y>272</y>
     </hint>
     <hint type="destinationlabel">
-     <x>411</x>
-     <y>381</y>
+     <x>395</x>
+     <y>275</y>
     </hint>
    </hints>
   </connection>
@@ -761,11 +809,27 @@
    <hints>
     <hint type="sourcelabel">
      <x>104</x>
-     <y>407</y>
+     <y>305</y>
     </hint>
     <hint type="destinationlabel">
-     <x>223</x>
-     <y>412</y>
+     <x>390</x>
+     <y>308</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>command_newWaku_chk</sender>
+   <signal>toggled(bool)</signal>
+   <receiver>command_newWaku</receiver>
+   <slot>setEnabled(bool)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>118</x>
+     <y>325</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>144</x>
+     <y>328</y>
     </hint>
    </hints>
   </connection>

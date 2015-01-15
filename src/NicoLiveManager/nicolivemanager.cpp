@@ -21,9 +21,7 @@ NicoLiveManager::NicoLiveManager(MainWindow* mwin, SettingsWindow* swin, QObject
   delWakuTimer = new QTimer(this);
 
   connect(delWakuTimer, SIGNAL(timeout()), this, SLOT(deleteWakuList()));
-  delWakuTimer->start(30000);
-
-
+  delWakuTimer->start(15000);
 }
 
 NicoLiveManager::~NicoLiveManager()
@@ -89,21 +87,21 @@ void NicoLiveManager::deleteWakuList()
 
 void NicoLiveManager::allGotWakuInfo(QString communityID, QString broadID)
 {
-  if (mwin->isNextWaku()) {
+  if (mwin->settings.isAutoNextWaku()) {
     if ( nowWaku.getCommunity() == communityID &&
          nowWaku.getBroadID() != broadID )
     {
       mwin->setHousouID(broadID);
       mwin->on_receive_clicked();
 
-      if (mwin->isCommandNextWakuChecked()) {
+      if (mwin->settings.isCommandNextWakuChecked()) {
         QProcess pr;
-        QString cmd = mwin->getCommandNextWaku();
+        QString cmd = mwin->settings.getCommandNextWaku();
 
         cmd.replace("%wakuURL%","http://live.nicovideo.jp/watch/lv" + broadID);
 
         pr.start(cmd);
-        pr.waitForFinished(30000);
+        pr.waitForFinished(5000);
       }
     }
   }

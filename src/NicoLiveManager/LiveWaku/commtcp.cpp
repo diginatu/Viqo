@@ -163,16 +163,16 @@ void CommTcp::readOneRawComment(QByteArray& rawcomm)
     broadcaster, commenttime > open_time);
 
   // comment command
-  if ( mwin->isCommandCommentChecked() && commenttime > open_time ) {
+  if ( mwin->settings.isCommandCommentChecked() && commenttime > open_time ) {
     QProcess pr;
-    QString cmd = mwin->getCommandComment();
+    QString cmd = mwin->settings.getCommandComment();
 
     QString escmd = comm;
     escmd.replace("'", "");
     cmd.replace("%comment%",escmd);
 
     pr.start(cmd);
-    pr.waitForFinished(30000);
+    pr.waitForFinished(5000);
   }
 }
 

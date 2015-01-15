@@ -125,4 +125,14 @@ void LiveWaku::playerStatusFinished(QNetworkReply* reply)
   mwin->insLog("got a broad info : " + title + "\n");
 
   reply->deleteLater();
+
+  if (mwin->settings.isCommandNewWakuChecked()) {
+    QProcess pr;
+    QString cmd = mwin->settings.getCommandNewWaku();
+
+    cmd.replace("%newTitle%", title);
+
+    pr.start(cmd);
+    pr.waitForFinished(5000);
+  }
 }

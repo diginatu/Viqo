@@ -33,6 +33,8 @@ void Settings::saveStatus()
   command["command_beforeEnd_check"] = ui->command_beforeEnd_chk->isChecked();
   command["command_beforeEnd_minuts"] = ui->command_beforeEndMinuts_spn->value();
   command["command_beforeEnd"] = ui->command_beforeEnd->text();
+  command["newWaku_check"] = ui->command_newWaku_chk->isChecked();
+  command["newWaku"] = ui->command_newWaku->text();
 
   QJsonObject root;
   root["other"] = other;
@@ -46,7 +48,7 @@ void Settings::saveStatus()
 
   QTextStream out(&file);
 
-  out << jsd.toJson().data();
+  out << jsd.toJson();
 
   file.close();
 }
@@ -83,6 +85,8 @@ void Settings::loadStatus()
   if (command.contains("command_beforeEnd_minuts"))
     ui->command_beforeEndMinuts_spn->setValue(command["command_beforeEnd_minuts"].toInt());
   ui->command_beforeEnd->setText(command["command_beforeEnd"].toString());
+  ui->command_newWaku->setText(command["newWaku"].toString());
+  ui->command_newWaku_chk->setChecked(command["newWaku_check"].toBool());
 
   file.close();
 }
@@ -210,6 +214,40 @@ void Settings::loadSettings()
   file.close();
 }
 
+
+bool Settings::getIs184()
+{
+  return ui->is184_chk->isChecked();
+}
+
+bool Settings::isAutoNextWaku()
+{
+  return ui->auto_next_waku->isChecked();
+}
+
+bool Settings::isCommandCommentChecked() {
+  return ui->command_comment_chk->isChecked();
+}
+QString Settings::getCommandComment() {
+  return ui->command_comment->text();
+}
+
+bool Settings::isCommandNextWakuChecked() {
+  return ui->command_nextWaku_chk->isChecked();
+}
+QString Settings::getCommandNextWaku() {
+  return ui->command_nextWaku->text();
+}
+
+bool Settings::isCommandNewWakuChecked()
+{
+  return ui->command_newWaku_chk->isChecked();
+}
+QString Settings::getCommandNewWaku()
+{
+  return ui->command_newWaku->text();
+}
+
 QString Settings::getUserMail() const
 {
   return userMail;
@@ -264,11 +302,6 @@ bool Settings::getOwnerComment() const
 void Settings::setOwnerComment(bool value)
 {
   ownerComment = value;
-}
-
-bool Settings::getIs184() const
-{
-  return ui->is184_chk->isChecked();
 }
 
 bool Settings::getDispNG() const

@@ -23,8 +23,15 @@ public:
   void saveSettings();
   void loadSettings();
 
-  // main window
-  bool getIs184() const;
+  // main window settings
+  bool getIs184();
+  bool isAutoNextWaku();
+  bool isCommandCommentChecked();
+  QString getCommandComment();
+  bool isCommandNextWakuChecked();
+  QString getCommandNextWaku();
+  bool isCommandNewWakuChecked();
+  QString getCommandNewWaku();
 
   // account
   QString getUserMail() const;

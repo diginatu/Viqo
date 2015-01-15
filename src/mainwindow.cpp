@@ -103,20 +103,6 @@ void MainWindow::getWatchCount()
   nicolivemanager->getHeartBeatAPI();
 }
 
-bool MainWindow::isCommandCommentChecked() {
-  return ui->command_comment_chk->isChecked();
-}
-QString MainWindow::getCommandComment() {
-  return ui->command_comment->text();
-}
-
-bool MainWindow::isCommandNextWakuChecked() {
-  return ui->command_nextWaku_chk->isChecked();
-}
-QString MainWindow::getCommandNextWaku() {
-  return ui->command_nextWaku->text();
-}
-
 void MainWindow::setWatchCount(QString num)
 {
   ui->num_audience->setText("来場者数: " + num);
@@ -142,7 +128,7 @@ void MainWindow::updateElapsedTime()
       cmd.replace("%lastTime%",'"' + lastTime + '"');
 
       pr.start(cmd);
-      pr.waitForFinished(30000);
+      pr.waitForFinished(5000);
     }
   }
 
@@ -310,7 +296,6 @@ void MainWindow::on_comment_view_currentItemChanged(QTreeWidgetItem *current)
       tcomme += "<a href=\"" + urlrg.cap(1) + "\">" + urlrg.cap(1).toHtmlEscaped() + "</a>";
       pos += urlrg.matchedLength();
       bpos = pos;
-      qDebug() << urlrg.cap(1);
     }
     tcomme += comme.mid(bpos);
     comme = tcomme;
@@ -322,11 +307,6 @@ void MainWindow::on_comment_view_currentItemChanged(QTreeWidgetItem *current)
   comment_view += "</body></html>";
 
   ui->one_comment_view->setHtml( comment_view );
-}
-
-bool MainWindow::isNextWaku()
-{
-  return ui->auto_next_waku->isChecked();
 }
 
 void MainWindow::on_live_waku_list_activated(int index)
@@ -404,5 +384,5 @@ void MainWindow::on_command_test_button_clicked()
   cmd.replace("%wakuURL%","http://live.nicovideo.jp/watch/lv" + nicolivemanager->nowWaku.getBroadID());
 
   pr.start(cmd);
-  pr.waitForFinished(30000);
+  pr.waitForFinished(5000);
 }

@@ -40,15 +40,7 @@ public:
 	void setHousouID(QString text);
 	void refleshLiveWaku();
 
-	bool isNextWaku();
-
 	UserManager* userManager;
-
-  // command setting
-  bool isCommandCommentChecked();
-  QString getCommandComment();
-  bool isCommandNextWakuChecked();
-  QString getCommandNextWaku();
 
   void getSessionFromCookie(QString cookie_name);
 
