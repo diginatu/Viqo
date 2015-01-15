@@ -63,7 +63,10 @@ void Settings::loadStatus(int num)
   QFile file(dir[0] + "/status_0" + QString::number(num) + ".json");
   if ( !file.exists() ) {
     file.close();
-    oldLoad();
+    if (num == 0) {
+      oldLoad();
+    }
+    mwin->insLog("no save file : " + QString::number(num));
     return;
   }
 
