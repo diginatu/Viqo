@@ -36,6 +36,7 @@ public:
 
   void alertReconnect();
 
+  void allGotWakuInfo(QString communityID, QString broadID);
   void login(QString mail, QString pass);
 
 	QStringList mycommunities;

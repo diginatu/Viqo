@@ -56,8 +56,10 @@ void NicoLiveManager::insertLiveWakuList(LiveWaku* livewaku)
 {
   const QString livewakuBID = livewaku->getBroadID();
   foreach (LiveWaku* alistwaku, liveWakuList) {
-    if (livewakuBID == alistwaku->getBroadID())
+    if (livewakuBID == alistwaku->getBroadID()) {
+      delete livewaku;
       return;
+    }
   }
 
   livewaku->getPlayyerStatusAPI();
@@ -81,6 +83,28 @@ void NicoLiveManager::deleteWakuList()
   for (int i = 0; i < liveWakuList.size(); ++i) {
     if ( nowTime > liveWakuList[i]->getEd() ) {
       liveWakuList[i]->getPlayyerStatusAPI();
+    }
+  }
+}
+
+void NicoLiveManager::allGotWakuInfo(QString communityID, QString broadID)
+{
+  if (mwin->isNextWaku()) {
+    if ( nowWaku.getCommunity() == communityID &&
+         nowWaku.getBroadID() != broadID )
+    {
+      mwin->setHousouID(broadID);
+      mwin->on_receive_clicked();
+
+      if (mwin->isCommandNextWakuChecked()) {
+        QProcess pr;
+        QString cmd = mwin->getCommandNextWaku();
+
+        cmd.replace("%wakuURL%","http://live.nicovideo.jp/watch/lv" + broadID);
+
+        pr.start(cmd);
+        pr.waitForFinished(30000);
+      }
     }
   }
 }

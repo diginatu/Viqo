@@ -3,6 +3,8 @@
 
 void NicoLiveManager::getRawMyLiveHTML()
 {
+  mwin->insLog("NicoLiveManager::getRawMyLiveHTML");
+  mwin->insLog("getting joined community with the web page");
   if(mRawMyLiveManager!=nullptr)  delete mRawMyLiveManager;
   mRawMyLiveManager = new QNetworkAccessManager(this);
 
@@ -10,7 +12,7 @@ void NicoLiveManager::getRawMyLiveHTML()
           SLOT(rawMyLivefinished(QNetworkReply*)));
 
   if (mwin->settings.getUserSession() == "") {
-    mwin->insLog("NicoLiveManager::getRawMyLiveHTML user_session is not set yet");
+    mwin->insLog("user_session is not set yet");
     return;
   }
 
@@ -21,6 +23,7 @@ void NicoLiveManager::getRawMyLiveHTML()
   rq.setUrl(QUrl("http://www.nicovideo.jp/my/live"));
 
   mRawMyLiveManager->get(rq);
+  mwin->insLog();
 }
 
 void NicoLiveManager::rawMyLivefinished(QNetworkReply* reply)
@@ -49,7 +52,9 @@ void NicoLiveManager::rawMyLivefinished(QNetworkReply* reply)
         break;
       }
     }
-    if ( !isID ) continue;
+    if ( !isID ) { qDebug() << "no ID in html (rawLiveWaku) : " << ID; continue; }
+
+    allGotWakuInfo(community, ID);
 
     insertLiveWakuList(new LiveWaku(mwin, this, ID, community, this));
     mwin->insLog("added lv" + ID + " to the comunity list");
