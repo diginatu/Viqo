@@ -21,8 +21,8 @@ MIT ライセンス
 ダウンロード
 ------------
 
+### [Version 1.6](https://github.com/diginatu/Viqo/releases/tag/v1.6)
 Version 1.6 の実行ファイルが配布されています。
-[v1.6](https://github.com/diginatu/Viqo/releases/tag/v1.6)
 
 Ubuntu 14.04, Debian 7.7, OSX Yosemite, Windows 7, 8.1 などで動作確認されています。
 

@@ -115,6 +115,8 @@ void LiveWaku::playerStatusFinished(QNetworkReply* reply)
     return;
   }
 
+  QString befTitle = title;
+
   setBroadID(commTcpi.midStr("<id>lv", "</id>"));
   setTitle(commTcpi.midStr("<title>", "</title>"));
   setCommunity(commTcpi.midStr("<default_community>", "</default_community>"));
@@ -126,7 +128,7 @@ void LiveWaku::playerStatusFinished(QNetworkReply* reply)
 
   reply->deleteLater();
 
-  if (mwin->settings.isCommandNewWakuChecked()) {
+  if (mwin->settings.isCommandNewWakuChecked() && befTitle != title) {
     QProcess pr;
     QString cmd = mwin->settings.getCommandNewWaku();
 
