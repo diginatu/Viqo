@@ -22,7 +22,7 @@ void NicoLiveManager::loginAlertAPI(const QString& mail, const QString& pass)
 void NicoLiveManager::loginAlertFinished(QNetworkReply* reply)
 {
   mwin->insLog("NicoLiveManager::loginAlertFinished");
-  QByteArray repdata = reply->readAll();
+  QString repdata = QString(reply->readAll());
 
   StrAbstractor commTcpi(repdata);
 
@@ -62,7 +62,7 @@ void NicoLiveManager::adminAlertAPI(const QString& ticket)
 void NicoLiveManager::adminAlertFinished(QNetworkReply* reply)
 {
   mwin->insLog("NicoLiveManager::adminAlertFinished");
-  QByteArray repdata = reply->readAll();
+  QString repdata = QString(reply->readAll());
 
   StrAbstractor wakuTcpi(repdata);
 
@@ -73,8 +73,7 @@ void NicoLiveManager::adminAlertFinished(QNetworkReply* reply)
     return;
   }
 
-  QByteArray mycommunities;
-  mycommunities.append(wakuTcpi.midStr("<communities>","</communities>"));
+  QString mycommunities = wakuTcpi.midStr("<communities>","</communities>");
 
   StrAbstractor communityi(mycommunities);
   QString mycommunity;

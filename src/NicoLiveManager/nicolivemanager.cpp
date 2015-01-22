@@ -1,4 +1,4 @@
-#include "nicolivemanager.h"
+﻿#include "nicolivemanager.h"
 #include "../mainwindow.h"
 
 NicoLiveManager::NicoLiveManager(MainWindow* mwin, SettingsWindow* swin, QObject *parent) :
@@ -8,11 +8,12 @@ NicoLiveManager::NicoLiveManager(MainWindow* mwin, SettingsWindow* swin, QObject
   mPostKeyManager(nullptr),
   mLoginAlertManager(nullptr),
   mAdminAlertManager(nullptr),
-  mHeartBeatManager(nullptr),
+  mHeartBeat(nullptr),
   mLoginManager(nullptr),
   mOwnerCommentManager(nullptr),
   mOwnerCommentSManager(nullptr),
-  mRawMyLiveManager(nullptr)
+  mRawMyLiveManager(nullptr),
+  mTags(nullptr)
 {
   this->mwin = mwin;
   this->swin = swin;

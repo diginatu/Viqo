@@ -91,7 +91,7 @@ void LiveWaku::getPlayyerStatusAPI()
 void LiveWaku::playerStatusFinished(QNetworkReply* reply)
 {
   mwin->insLog(" LiveWaku::playerStatusFinished :");
-  QByteArray repdata = reply->readAll();
+  QString repdata = QString(reply->readAll());
 
   StrAbstractor commTcpi(repdata);
 

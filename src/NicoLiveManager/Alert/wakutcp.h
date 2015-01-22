@@ -26,7 +26,7 @@ public slots:
   void connected();
 	void disconnected();
 	void readyRead();
-	void readOneRawWaku(QByteArray& rawwaku);
+  void readOneRawWaku(const QString& rawwaku);
 	bool isConnected();
 
 private:
@@ -38,7 +38,7 @@ private:
 	int port;
 
 	QDateTime opentime;
-	QByteArray lastRawWaku;
+  QByteArray lastRawWaku;
   QTimer checkConnectionTimer;
 private slots:
   void timeoutConnection();

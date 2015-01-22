@@ -1,4 +1,4 @@
-#ifndef NICOLIVEMANAGER_H
+﻿#ifndef NICOLIVEMANAGER_H
 #define NICOLIVEMANAGER_H
 
 #include <QObject>
@@ -33,6 +33,8 @@ public:
   void getPostKeyAPI(const QString& thread, int block_no);
   void getPublishStatusAPI();
   void submitOwnerCommentAPI(const QString& text, const QString& name);
+  void getTagsAPI();
+  void getNewWakuAPI(int type);
 
   void alertReconnect();
 
@@ -71,28 +73,31 @@ private:
   QNetworkAccessManager* mPostKeyManager;
   QNetworkAccessManager* mLoginAlertManager;
   QNetworkAccessManager* mAdminAlertManager;
-  QNetworkAccessManager* mHeartBeatManager;
+  QNetworkAccessManager* mHeartBeat;
   QNetworkAccessManager* mLoginManager;
   QNetworkAccessManager* mOwnerCommentManager;
   QNetworkAccessManager* mOwnerCommentSManager;
   QNetworkAccessManager* mRawMyLiveManager;
+  QNetworkAccessManager* mTags;
+  QNetworkAccessManager* mNewWaku;
 
 private slots:
 	void heartBeatFinished(QNetworkReply* reply);
-
 	void loginAlertFinished(QNetworkReply* reply);
 	void adminAlertFinished(QNetworkReply* reply);
-
 	void rawMyLivefinished(QNetworkReply* reply);
-
   void loginFinished(QNetworkReply* reply);
-
   void postKeyFinished(QNetworkReply* reply);
+  void tagsFinished(QNetworkReply* reply);
+  void newWakuNewFinished(QNetworkReply* reply);
+  void newWakuConfirmFinished(QNetworkReply* reply);
+  void newWakuFinished(QNetworkReply* reply);
 
   void publishStatusFinished(QNetworkReply* reply);
   void submitOwnerCommentFinished(QNetworkReply* reply);
 
   void deleteWakuList();
+
 };
 
 

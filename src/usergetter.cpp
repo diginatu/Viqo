@@ -16,7 +16,7 @@ void UserGetter::getUserName(QTreeWidgetItem* item, QString userID, QSqlDatabase
 
 void UserGetter::finished()
 {
-  QByteArray repdata = reply->readAll();
+  QString repdata = QString(reply->readAll());
   StrAbstractor userinfo(repdata);
 
   userinfo.midStr("class=\"userDetail\"","class=\"avatar\""); //set position

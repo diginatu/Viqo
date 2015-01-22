@@ -1,6 +1,6 @@
-#include "settingswindow.h"
+﻿#include "settingswindow.h"
 #include "ui_settingswindow.h"
-#include "src/mainwindow.h"
+#include "mainwindow.h"
 
 SettingsWindow::SettingsWindow(MainWindow* mwin, QWidget* parent) :
   QDialog(parent),
@@ -29,6 +29,7 @@ void SettingsWindow::init()
   ui->cookiesetting_filename->setText(mwin->settings.getCookieFile());
 
   ui->comment_ownercomment_chk->setChecked(mwin->settings.getOwnerComment());
+  ui->comment_dipspNG_chk->setChecked(mwin->settings.getDispNG());
 }
 
 void SettingsWindow::getUserSessionFinished()

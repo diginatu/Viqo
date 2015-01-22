@@ -28,7 +28,7 @@ public slots:
   void connected();
   void disconnected();
   void readyRead();
-  void readOneRawComment(QByteArray& rawcomm);
+  void readOneRawComment(const QString rawcomm);
   bool isConnected();
   void sendNull();
 

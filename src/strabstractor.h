@@ -1,4 +1,4 @@
-#ifndef STRABSTRACTOR_H
+﻿#ifndef STRABSTRACTOR_H
 #define STRABSTRACTOR_H
 
 #include <QObject>
@@ -7,16 +7,19 @@ class StrAbstractor : public QObject
 {
 	Q_OBJECT
 public:
-	explicit StrAbstractor(QByteArray& doc, QObject *parent = 0);
+  explicit StrAbstractor(const QString doc, QObject *parent = 0);
 	QString midStr(QString start, QString end, bool foward = true);
-	int forwardStr(QString st);
+  StrAbstractor* mid(QString start, QString end, bool foward = true);
+  int forward(QString st);
 
 	void setPosition(int po);
-	int getPosition();
+  void setRelativePosition(int pos);
+  int getPosition();
+  QString toString();
 
 private:
 	int pos;
-	QByteArray* doc;
+  QString doc;
 
 signals:
 

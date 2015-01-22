@@ -3,10 +3,10 @@
 
 void NicoLiveManager::getHeartBeatAPI()
 {
-  if(mHeartBeatManager!=nullptr)  delete mHeartBeatManager;
-  mHeartBeatManager = new QNetworkAccessManager(this);
+  if(mHeartBeat!=nullptr)  delete mHeartBeat;
+  mHeartBeat = new QNetworkAccessManager(this);
 
-  connect(mHeartBeatManager, SIGNAL(finished(QNetworkReply*)), this,
+  connect(mHeartBeat, SIGNAL(finished(QNetworkReply*)), this,
           SLOT(heartBeatFinished(QNetworkReply*)));
 
   // make request
@@ -15,11 +15,11 @@ void NicoLiveManager::getHeartBeatAPI()
   rq.setHeader(QNetworkRequest::CookieHeader, postData);
   rq.setUrl(QUrl("http://live.nicovideo.jp/api/heartbeat?v=lv" + nowWaku.getBroadID()));
 
-  mHeartBeatManager->get(rq);
+  mHeartBeat->get(rq);
 }
 
 void NicoLiveManager::heartBeatFinished(QNetworkReply* reply){
-  QByteArray repdata = reply->readAll();
+  QString repdata = QString(reply->readAll());
   StrAbstractor heartbeat_data(repdata);
 
   const QString status = heartbeat_data.midStr("status=\"", "\"");

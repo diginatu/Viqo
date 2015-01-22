@@ -35,7 +35,9 @@ SOURCES += src/main.cpp\
     src/settings.cpp \
     src/NicoLiveManager/loginapi.cpp \
     src/NicoLiveManager/postkeyapi.cpp \
-    src/NicoLiveManager/ownercomment.cpp
+    src/NicoLiveManager/ownercomment.cpp \
+    src/NicoLiveManager/tagapi.cpp \
+    src/NicoLiveManager/getnewwaku.cpp
 
 HEADERS  += src/NicoLiveManager/nicolivemanager.h \
     src/cookieread.h \

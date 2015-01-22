@@ -53,6 +53,9 @@
          <property name="text">
           <string>放送ID lv</string>
          </property>
+         <property name="buddy">
+          <cstring>broadID</cstring>
+         </property>
         </widget>
        </item>
        <item>
@@ -320,7 +323,7 @@
               <x>0</x>
               <y>0</y>
               <width>384</width>
-              <height>183</height>
+              <height>216</height>
              </rect>
             </property>
             <layout class="QVBoxLayout" name="verticalLayout_2">
@@ -551,9 +554,19 @@
                   <property name="text">
                    <string>コマンドテスト</string>
                   </property>
+                  <property name="buddy">
+                   <cstring>command_test</cstring>
+                  </property>
                  </widget>
                 </item>
                </layout>
+              </widget>
+             </item>
+             <item>
+              <widget class="QPushButton" name="developtest">
+               <property name="text">
+                <string>PushButton</string>
+               </property>
               </widget>
              </item>
              <item>
@@ -689,13 +702,20 @@
     <addaction name="separator"/>
     <addaction name="setting"/>
    </widget>
+   <widget class="QMenu" name="menu">
+    <property name="title">
+     <string>放送</string>
+    </property>
+    <addaction name="action"/>
+   </widget>
    <addaction name="file"/>
    <addaction name="edit"/>
+   <addaction name="menu"/>
   </widget>
   <widget class="QStatusBar" name="statusBar"/>
   <action name="setting">
    <property name="text">
-    <string>設定</string>
+    <string>設定...</string>
    </property>
   </action>
   <action name="clear">
@@ -765,6 +785,14 @@
     <string>4 :</string>
    </property>
   </action>
+  <action name="action">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>次枠自動取得する</string>
+   </property>
+  </action>
  </widget>
  <layoutdefault spacing="6" margin="11"/>
  <resources/>
@@ -780,8 +808,8 @@
      <y>90</y>
     </hint>
     <hint type="destinationlabel">
-     <x>89</x>
-     <y>275</y>
+     <x>100</x>
+     <y>369</y>
     </hint>
    </hints>
   </connection>
@@ -792,12 +820,12 @@
    <slot>setEnabled(bool)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>146</x>
-     <y>239</y>
+     <x>152</x>
+     <y>300</y>
     </hint>
     <hint type="destinationlabel">
      <x>395</x>
-     <y>242</y>
+     <y>303</y>
     </hint>
    </hints>
   </connection>
@@ -809,11 +837,11 @@
    <hints>
     <hint type="sourcelabel">
      <x>134</x>
-     <y>272</y>
+     <y>366</y>
     </hint>
     <hint type="destinationlabel">
      <x>395</x>
-     <y>275</y>
+     <y>369</y>
     </hint>
    </hints>
   </connection>
@@ -857,11 +885,11 @@
    <hints>
     <hint type="sourcelabel">
      <x>104</x>
-     <y>305</y>
+     <y>333</y>
     </hint>
     <hint type="destinationlabel">
-     <x>390</x>
-     <y>308</y>
+     <x>395</x>
+     <y>336</y>
     </hint>
    </hints>
   </connection>
@@ -872,12 +900,12 @@
    <slot>setEnabled(bool)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>118</x>
-     <y>325</y>
+     <x>119</x>
+     <y>267</y>
     </hint>
     <hint type="destinationlabel">
-     <x>144</x>
-     <y>328</y>
+     <x>251</x>
+     <y>270</y>
     </hint>
    </hints>
   </connection>

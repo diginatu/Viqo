@@ -75,32 +75,33 @@ void CommTcp::readyRead()
   rawcomms[0].insert(0, lastRawComm);
 
   for ( int i = 0; i < rawcomms.size()-1; ++i) {
-    readOneRawComment(rawcomms[i]);
+    const QString tst(rawcomms[i]);
+    readOneRawComment(tst);
   }
 
   lastRawComm = rawcomms.takeLast();
 }
 
-void CommTcp::readOneRawComment(QByteArray& rawcomm)
+void CommTcp::readOneRawComment(const QString rawcomm)
 {
+  StrAbstractor rawcommabs(rawcomm);
+
   if (rawcomm.startsWith("<thread")) {
     open_time = QDateTime::currentDateTime();
     mwin->onReceiveStarted();
 
-    StrAbstractor threadinfo(rawcomm);
-    lastBlockNum = threadinfo.midStr("last_res=\"", "\"", false).toInt() / 10;
-    ticket = threadinfo.midStr("ticket=\"", "\"", false);
-    server_time = threadinfo.midStr("server_time=\"", "\"", false).toUInt();
+    lastBlockNum = rawcommabs.midStr("last_res=\"", "\"", false).toInt() / 10;
+    ticket = rawcommabs.midStr("ticket=\"", "\"", false);
+    server_time = rawcommabs.midStr("server_time=\"", "\"", false).toUInt();
 
     nlwaku->getPostKeyAPI(thread, lastBlockNum);
     // set timer to get post_key
     postkey_timer.start(10000);
 
     return;
-  }
-  if (rawcomm.startsWith("<chat_result")) {
-    StrAbstractor commresult(rawcomm);
-    const auto status = commresult.midStr("status=\"", "\"", false);
+
+  } else if (rawcomm.startsWith("<chat_result")) {
+    const auto status = rawcommabs.midStr("status=\"", "\"", false);
     if (status != "0") {
       mwin->insLog("CommTcp::readOneRawComment sendComment error with statue " + status);
     }
@@ -108,13 +109,11 @@ void CommTcp::readOneRawComment(QByteArray& rawcomm)
     return;
   }
 
-  int commSt = rawcomm.indexOf(">") + 1;
-  int commEd = rawcomm.lastIndexOf("</chat>");
+  const QString comminfostr = rawcommabs.midStr("<chat", ">");
+  StrAbstractor comminfo(comminfostr);
+  rawcommabs.setRelativePosition(-2);
 
-  QString comm = QString(rawcomm.mid(commSt,commEd-commSt));
-  rawcomm.truncate(commSt);
-
-  StrAbstractor comminfo(rawcomm);
+  QString comm = rawcommabs.midStr(">", "</chat>");
 
   int num = comminfo.midStr("no=\"", "\"", false).toInt();
   const int block = num/10;

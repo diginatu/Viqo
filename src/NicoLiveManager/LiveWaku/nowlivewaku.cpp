@@ -30,7 +30,7 @@ void NowLiveWaku::getPostKeyAPI(const QString& thread, int block_num)
 void NowLiveWaku::playerStatusFinished(QNetworkReply* reply)
 {
   mwin->insLog(" LiveWaku::playerStatusFinished :");
-  QByteArray repdata = reply->readAll();
+  QString repdata = QString(reply->readAll());
   // qDebug() << repdata;
 
   StrAbstractor commTcpi(repdata);

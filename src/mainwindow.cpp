@@ -1,4 +1,4 @@
-#include "mainwindow.h"
+﻿#include "mainwindow.h"
 #include "ui_mainwindow.h"
 
 MainWindow::MainWindow(QWidget *parent) :
@@ -342,7 +342,6 @@ void MainWindow::on_openBrowser_clicked()
 
 void MainWindow::on_comment_view_customContextMenuRequested(const QPoint &pos)
 {
-
 }
 
 void MainWindow::on_one_comment_view_customContextMenuRequested(const QPoint &pos)
@@ -375,6 +374,11 @@ void MainWindow::on_command_test_button_clicked()
 
   pr.start(cmd);
   pr.waitForFinished(5000);
+}
+
+void MainWindow::on_developtest_clicked()
+{
+  nicolivemanager->getNewWakuAPI(0);
 }
 
 void MainWindow::on_save_1_triggered()
