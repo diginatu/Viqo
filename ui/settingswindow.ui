@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>434</width>
+    <width>457</width>
     <height>432</height>
    </rect>
   </property>
@@ -228,15 +228,15 @@
           <string>プリセット</string>
          </property>
          <property name="buddy">
-          <cstring>comboBox_3</cstring>
+          <cstring>newWaku_presetes</cstring>
          </property>
         </widget>
        </item>
        <item row="0" column="1">
-        <widget class="QComboBox" name="comboBox_3"/>
+        <widget class="QComboBox" name="newWaku_presetes"/>
        </item>
        <item row="0" column="2">
-        <widget class="QPushButton" name="pushButton">
+        <widget class="QPushButton" name="newWaku_presets_regist">
          <property name="sizePolicy">
           <sizepolicy hsizetype="Maximum" vsizetype="Fixed">
            <horstretch>0</horstretch>
@@ -249,7 +249,7 @@
         </widget>
        </item>
        <item row="0" column="3">
-        <widget class="QPushButton" name="pushButton_2">
+        <widget class="QPushButton" name="newWaku_presets_delete">
          <property name="sizePolicy">
           <sizepolicy hsizetype="Maximum" vsizetype="Fixed">
            <horstretch>0</horstretch>
@@ -262,7 +262,65 @@
         </widget>
        </item>
        <item row="1" column="0" colspan="4">
+        <widget class="QWidget" name="widget" native="true">
+         <layout class="QHBoxLayout" name="horizontalLayout_2">
+          <property name="spacing">
+           <number>6</number>
+          </property>
+          <property name="leftMargin">
+           <number>0</number>
+          </property>
+          <property name="topMargin">
+           <number>0</number>
+          </property>
+          <property name="rightMargin">
+           <number>0</number>
+          </property>
+          <property name="bottomMargin">
+           <number>0</number>
+          </property>
+          <item>
+           <widget class="QPushButton" name="newWaku_befWakuReuse">
+            <property name="text">
+             <string>前枠再利用</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QPushButton" name="newWaku_edit">
+            <property name="text">
+             <string>編集</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QPushButton" name="newWaku_clear">
+            <property name="text">
+             <string>クリア</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <spacer name="horizontalSpacer">
+            <property name="orientation">
+             <enum>Qt::Horizontal</enum>
+            </property>
+            <property name="sizeHint" stdset="0">
+             <size>
+              <width>133</width>
+              <height>20</height>
+             </size>
+            </property>
+           </spacer>
+          </item>
+         </layout>
+        </widget>
+       </item>
+       <item row="2" column="0" colspan="4">
         <widget class="QToolBox" name="toolBox">
+         <property name="enabled">
+          <bool>true</bool>
+         </property>
          <property name="currentIndex">
           <number>0</number>
          </property>
@@ -271,152 +329,104 @@
            <rect>
             <x>0</x>
             <y>0</y>
-            <width>394</width>
-            <height>235</height>
+            <width>417</width>
+            <height>202</height>
            </rect>
           </property>
           <attribute name="label">
            <string>必須項目</string>
           </attribute>
-          <widget class="QLabel" name="label_7">
-           <property name="geometry">
-            <rect>
-             <x>20</x>
-             <y>140</y>
-             <width>53</width>
-             <height>27</height>
-            </rect>
-           </property>
-           <property name="text">
-            <string>カテゴリ</string>
-           </property>
-           <property name="buddy">
-            <cstring>newWaku_category</cstring>
-           </property>
-          </widget>
-          <widget class="QLabel" name="label_6">
-           <property name="geometry">
-            <rect>
-             <x>20</x>
-             <y>107</y>
-             <width>74</width>
-             <height>17</height>
-            </rect>
-           </property>
-           <property name="sizePolicy">
-            <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
-             <horstretch>0</horstretch>
-             <verstretch>0</verstretch>
-            </sizepolicy>
-           </property>
-           <property name="text">
-            <string>コミュニティ</string>
-           </property>
-           <property name="buddy">
-            <cstring>newWaku_community</cstring>
-           </property>
-          </widget>
-          <widget class="QLabel" name="label_4">
-           <property name="geometry">
-            <rect>
-             <x>20</x>
-             <y>2</y>
-             <width>50</width>
-             <height>17</height>
-            </rect>
-           </property>
-           <property name="sizePolicy">
-            <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
-             <horstretch>0</horstretch>
-             <verstretch>0</verstretch>
-            </sizepolicy>
-           </property>
-           <property name="text">
-            <string>タイトル</string>
-           </property>
-           <property name="buddy">
-            <cstring>newWaku_title</cstring>
-           </property>
-          </widget>
-          <widget class="QPlainTextEdit" name="newWaku_description">
-           <property name="geometry">
-            <rect>
-             <x>100</x>
-             <y>35</y>
-             <width>255</width>
-             <height>66</height>
-            </rect>
-           </property>
-           <property name="placeholderText">
-            <string>1000文字</string>
-           </property>
-          </widget>
-          <widget class="QLineEdit" name="newWaku_title">
-           <property name="geometry">
-            <rect>
-             <x>100</x>
-             <y>2</y>
-             <width>255</width>
-             <height>27</height>
-            </rect>
-           </property>
-           <property name="maxLength">
-            <number>100</number>
-           </property>
-           <property name="placeholderText">
-            <string>100文字</string>
-           </property>
-          </widget>
-          <widget class="QComboBox" name="newWaku_community">
-           <property name="geometry">
-            <rect>
-             <x>100</x>
-             <y>107</y>
-             <width>255</width>
-             <height>27</height>
-            </rect>
-           </property>
-          </widget>
-          <widget class="QLabel" name="label_5">
-           <property name="geometry">
-            <rect>
-             <x>20</x>
-             <y>35</y>
-             <width>30</width>
-             <height>17</height>
-            </rect>
-           </property>
-           <property name="sizePolicy">
-            <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
-             <horstretch>0</horstretch>
-             <verstretch>0</verstretch>
-            </sizepolicy>
-           </property>
-           <property name="text">
-            <string>詳細</string>
-           </property>
-           <property name="buddy">
-            <cstring>newWaku_description</cstring>
-           </property>
-          </widget>
-          <widget class="QComboBox" name="newWaku_category">
-           <property name="geometry">
-            <rect>
-             <x>100</x>
-             <y>140</y>
-             <width>255</width>
-             <height>27</height>
-            </rect>
-           </property>
-          </widget>
+          <layout class="QFormLayout" name="formLayout">
+           <item row="0" column="0">
+            <widget class="QLabel" name="label_4">
+             <property name="sizePolicy">
+              <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
+               <horstretch>0</horstretch>
+               <verstretch>0</verstretch>
+              </sizepolicy>
+             </property>
+             <property name="text">
+              <string>タイトル</string>
+             </property>
+             <property name="buddy">
+              <cstring>newWaku_title</cstring>
+             </property>
+            </widget>
+           </item>
+           <item row="0" column="1">
+            <widget class="QLineEdit" name="newWaku_title">
+             <property name="maxLength">
+              <number>100</number>
+             </property>
+             <property name="placeholderText">
+              <string>100文字</string>
+             </property>
+            </widget>
+           </item>
+           <item row="1" column="0">
+            <widget class="QLabel" name="label_5">
+             <property name="sizePolicy">
+              <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
+               <horstretch>0</horstretch>
+               <verstretch>0</verstretch>
+              </sizepolicy>
+             </property>
+             <property name="text">
+              <string>詳細</string>
+             </property>
+             <property name="buddy">
+              <cstring>newWaku_description</cstring>
+             </property>
+            </widget>
+           </item>
+           <item row="1" column="1">
+            <widget class="QPlainTextEdit" name="newWaku_description">
+             <property name="placeholderText">
+              <string>1000文字</string>
+             </property>
+            </widget>
+           </item>
+           <item row="2" column="0">
+            <widget class="QLabel" name="label_6">
+             <property name="sizePolicy">
+              <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
+               <horstretch>0</horstretch>
+               <verstretch>0</verstretch>
+              </sizepolicy>
+             </property>
+             <property name="text">
+              <string>コミュニティ</string>
+             </property>
+             <property name="buddy">
+              <cstring>newWaku_community</cstring>
+             </property>
+            </widget>
+           </item>
+           <item row="2" column="1">
+            <widget class="QComboBox" name="newWaku_community"/>
+           </item>
+           <item row="3" column="0">
+            <widget class="QLabel" name="label_7">
+             <property name="text">
+              <string>カテゴリ</string>
+             </property>
+             <property name="buddy">
+              <cstring>newWaku_category</cstring>
+             </property>
+            </widget>
+           </item>
+           <item row="3" column="1">
+            <widget class="QComboBox" name="newWaku_category"/>
+           </item>
+          </layout>
          </widget>
          <widget class="QWidget" name="page_2">
           <property name="geometry">
            <rect>
             <x>0</x>
             <y>0</y>
-            <width>394</width>
-            <height>235</height>
+            <width>417</width>
+            <height>202</height>
            </rect>
           </property>
           <attribute name="label">

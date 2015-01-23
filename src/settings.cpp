@@ -1,4 +1,4 @@
-#include "settings.h"
+﻿#include "settings.h"
 #include "mainwindow.h"
 
 Settings::Settings(MainWindow* mwin, Ui::MainWindow* ui, QObject* parent) :

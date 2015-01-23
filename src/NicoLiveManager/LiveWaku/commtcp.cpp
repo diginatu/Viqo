@@ -1,4 +1,4 @@
-#include "commtcp.h"
+﻿#include "commtcp.h"
 #include "../../mainwindow.h"
 #include "nowlivewaku.h"
 
@@ -144,10 +144,7 @@ void CommTcp::readOneRawComment(const QString rawcomm)
     mwin->on_disconnect_clicked();
   }
 
-  // html code decode
-  comm.replace("&amp;", "&");
-  comm.replace("&lt;", "<");
-  comm.replace("&gt;", ">");
+  comm = NicoLiveManager::HTMLdecode(comm);
 
   int nextnum = mwin->lastCommentNum() + 1;
   if (mwin->settings.getDispNG() && nextnum != num) {

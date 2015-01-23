@@ -13,7 +13,8 @@ NicoLiveManager::NicoLiveManager(MainWindow* mwin, SettingsWindow* swin, QObject
   mOwnerCommentManager(nullptr),
   mOwnerCommentSManager(nullptr),
   mRawMyLiveManager(nullptr),
-  mTags(nullptr)
+  mTags(nullptr),
+  mNewWaku(nullptr)
 {
   this->mwin = mwin;
   this->swin = swin;
@@ -106,4 +107,12 @@ void NicoLiveManager::allGotWakuInfo(QString communityID, QString broadID)
       }
     }
   }
+}
+
+QString NicoLiveManager::HTMLdecode(QString st)
+{
+  st.replace("&amp;", "&");
+  st.replace("&lt;", "<");
+  st.replace("&gt;", ">");
+  return st;
 }

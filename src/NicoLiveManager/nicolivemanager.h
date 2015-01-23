@@ -50,6 +50,7 @@ public:
 	void broadDisconnect();
 	void broadStart();
 
+  static QString HTMLdecode(QString st);
 signals:
 
 public slots:
@@ -57,6 +58,7 @@ public slots:
 
 private:
   void adminAlertAPI(const QString& ticket);
+  void newWakuAbstractor(QNetworkReply* reply, int mode);
 
   MainWindow* mwin;
   SettingsWindow* swin;
@@ -69,6 +71,8 @@ private:
 	int waku_port;
 
 	QTimer* delWakuTimer;
+
+  QMultiMap<QString, QString> newWakuData;
 
   QNetworkAccessManager* mPostKeyManager;
   QNetworkAccessManager* mLoginAlertManager;
@@ -89,7 +93,9 @@ private slots:
   void loginFinished(QNetworkReply* reply);
   void postKeyFinished(QNetworkReply* reply);
   void tagsFinished(QNetworkReply* reply);
-  void newWakuNewFinished(QNetworkReply* reply);
+  void newWakuNewReuseFinished(QNetworkReply* reply);
+  void newWakuNewUpdateFinished(QNetworkReply* reply);
+  void newWakuNewInitFinished(QNetworkReply* reply);
   void newWakuConfirmFinished(QNetworkReply* reply);
   void newWakuFinished(QNetworkReply* reply);
 

@@ -376,11 +376,6 @@ void MainWindow::on_command_test_button_clicked()
   pr.waitForFinished(5000);
 }
 
-void MainWindow::on_developtest_clicked()
-{
-  nicolivemanager->getNewWakuAPI(0);
-}
-
 void MainWindow::on_save_1_triggered()
 {
   settings.saveStatus();
@@ -413,4 +408,15 @@ void MainWindow::on_load_3_triggered()
 void MainWindow::on_load_4_triggered()
 {
   settings.loadStatus(4);
+}
+
+
+void MainWindow::on_developtest_clicked()
+{
+  nicolivemanager->getNewWakuAPI(0);
+}
+
+void MainWindow::getNewWakuAPI(int type)
+{
+  nicolivemanager->getNewWakuAPI(type);
 }
