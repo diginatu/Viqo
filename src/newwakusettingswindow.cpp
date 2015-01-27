@@ -8,6 +8,10 @@ NewWakuSettingsWindow::NewWakuSettingsWindow(MainWindow* mwin, QWidget *parent) 
 {
   ui->setupUi(this);
 
+  // set the column width for the comment view list
+  ui->tags_list->header()->resizeSection(0, 200);
+  ui->tags_list->header()->resizeSection(1, 57);
+
   this->mwin = mwin;
 }
 
@@ -89,10 +93,13 @@ void NewWakuSettingsWindow::applySettingsPostData()
 
 void NewWakuSettingsWindow::on_tag_add_clicked()
 {
-  QTreeWidgetItem* item = new QTreeWidgetItem();
+  QTreeWidgetItem* item = new QTreeWidgetItem(ui->tags_list);
   item->setText(0,"タグ");
   item->setFlags(item->flags() | Qt::ItemIsEditable | Qt::ItemIsUserCheckable);
   item->setCheckState(1, Qt::Unchecked);
+}
 
-  ui->tags_list->addTopLevelItem(item);
+void NewWakuSettingsWindow::on_tag_delete_clicked()
+{
+
 }

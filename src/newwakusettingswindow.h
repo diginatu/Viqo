@@ -34,6 +34,7 @@ private:
 private slots:
   void on_befWakuReuse_clicked();
   void on_tag_add_clicked();
+  void on_tag_delete_clicked();
 };
 
 #endif // NEWWAKUSETTINGSWINDOW_H

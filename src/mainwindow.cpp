@@ -10,6 +10,13 @@ MainWindow::MainWindow(QWidget *parent) :
 {
   ui->setupUi(this);
 
+  // set the column width for the comment view list
+  ui->comment_view->header()->resizeSection(0, 60);
+  ui->comment_view->header()->resizeSection(1, 30);
+  ui->comment_view->header()->resizeSection(3, 200);
+  ui->comment_view->header()->resizeSection(6, 30);
+  ui->comment_view->header()->resizeSection(7, 30);
+
   QStringList dirs = QStandardPaths::standardLocations(QStandardPaths::DataLocation);
   if (dirs.empty()) {
     insLog("save directory is not found");
