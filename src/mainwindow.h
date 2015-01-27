@@ -20,6 +20,7 @@
 #include "NicoLiveManager/nicolivemanager.h"
 #include "settingswindow.h"
 #include "settings.h"
+#include "newwakusettingswindow.h"
 
 class MainWindow : public QMainWindow
 {
@@ -45,7 +46,7 @@ public:
   void getSessionFromCookie(QString cookie_name);
 
   SettingsWindow* settingsWindow;
-
+  NewWakuSettingsWindow* newWakuSettingsWindow;
 
   NicoLiveManager* nicolivemanager;
 
@@ -80,7 +81,8 @@ private slots:
   void on_oneCommentActionCopy_triggered();
 
   void on_command_test_button_clicked();
-
+  void on_autoNewWakuSettings_triggered();
+  void on_getNewWakuNow_triggered();
 
   void on_developtest_clicked();
 

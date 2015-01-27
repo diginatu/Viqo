@@ -1,4 +1,4 @@
-#ifndef SETTINGS_H
+﻿#ifndef SETTINGS_H
 #define SETTINGS_H
 
 #include <QObject>
@@ -61,6 +61,7 @@ signals:
 public slots:
 
 private slots:
+
 
 
 private:

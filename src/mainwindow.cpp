@@ -4,6 +4,7 @@
 MainWindow::MainWindow(QWidget *parent) :
   QMainWindow(parent),
   settingsWindow(new SettingsWindow(this, this)),
+  newWakuSettingsWindow(new NewWakuSettingsWindow(this, this)),
   ui(new Ui::MainWindow),
   settings(this, ui, this)
 {
@@ -21,7 +22,7 @@ MainWindow::MainWindow(QWidget *parent) :
   }
 
   userManager = new UserManager(this);
-  nicolivemanager = new NicoLiveManager(this, settingsWindow, this);
+  nicolivemanager = new NicoLiveManager(this, settingsWindow, newWakuSettingsWindow, this);
 
   settings.loadSettings();
   settings.loadStatus();
@@ -419,4 +420,16 @@ void MainWindow::on_developtest_clicked()
 void MainWindow::getNewWakuAPI(int type)
 {
   nicolivemanager->getNewWakuAPI(type);
+}
+
+void MainWindow::on_autoNewWakuSettings_triggered()
+{
+  newWakuSettingsWindow->show();
+  newWakuSettingsWindow->raise();
+  newWakuSettingsWindow->activateWindow();
+}
+
+void MainWindow::on_getNewWakuNow_triggered()
+{
+  getNewWakuAPI(2);
 }

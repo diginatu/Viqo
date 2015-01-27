@@ -706,7 +706,9 @@
     <property name="title">
      <string>放送</string>
     </property>
-    <addaction name="action"/>
+    <addaction name="autoNewWakuChk"/>
+    <addaction name="getNewWakuNow"/>
+    <addaction name="autoNewWakuSettings"/>
    </widget>
    <addaction name="file"/>
    <addaction name="edit"/>
@@ -785,12 +787,22 @@
     <string>4 :</string>
    </property>
   </action>
-  <action name="action">
+  <action name="autoNewWakuChk">
    <property name="checkable">
     <bool>true</bool>
    </property>
    <property name="text">
     <string>次枠自動取得する</string>
+   </property>
+  </action>
+  <action name="autoNewWakuSettings">
+   <property name="text">
+    <string>次枠設定...</string>
+   </property>
+  </action>
+  <action name="getNewWakuNow">
+   <property name="text">
+    <string>今すぐ取得</string>
    </property>
   </action>
  </widget>

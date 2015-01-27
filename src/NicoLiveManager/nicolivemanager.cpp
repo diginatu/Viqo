@@ -1,7 +1,7 @@
 ﻿#include "nicolivemanager.h"
 #include "../mainwindow.h"
 
-NicoLiveManager::NicoLiveManager(MainWindow* mwin, SettingsWindow* swin, QObject *parent) :
+NicoLiveManager::NicoLiveManager(MainWindow* mwin, SettingsWindow* swin, NewWakuSettingsWindow* nwin, QObject *parent) :
   QObject(parent),
   nowWaku(mwin, this, this),
   wakutcp(nullptr),
@@ -18,6 +18,7 @@ NicoLiveManager::NicoLiveManager(MainWindow* mwin, SettingsWindow* swin, QObject
 {
   this->mwin = mwin;
   this->swin = swin;
+  this->nwin = nwin;
 
   // set timer to delete the ended elements in waku list.
   delWakuTimer = new QTimer(this);

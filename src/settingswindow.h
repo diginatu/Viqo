@@ -19,13 +19,6 @@ public:
   void init();
   void getUserSessionFinished();
 
-  void newWakuListStateSave();
-  void newWakuSetIndex(QString name, QString value);
-  void newWakuSet(QString name, QString value);
-  void newWakuListStateLoad();
-
-  void setSelectedCommunity(const QString& value);
-  void setSelectedCategory(const QString& value);
 
 private slots:
   void on_login_way_combo_currentIndexChanged(int index);
@@ -36,13 +29,11 @@ private slots:
 
   void on_get_session_clicked();
 
-  void on_newWaku_befWakuReuse_clicked();
 
 private:
   Ui::SettingsWindow *ui;
   MainWindow* mwin;
   void saveSettings();
-  QString selectedCommunity, selectedCategory;
 };
 
 #endif // SETTINGSWINDOW_H

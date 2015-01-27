@@ -12,6 +12,8 @@
 #include "LiveWaku/livewaku.h"
 #include "LiveWaku/nowlivewaku.h"
 #include "../settingswindow.h"
+#include "../newwakusettingswindow.h"
+
 
 namespace Ui {
 class MainWindow;
@@ -21,7 +23,7 @@ class NicoLiveManager : public QObject
 {
 	Q_OBJECT
 public:
-  explicit NicoLiveManager(MainWindow* mwin, SettingsWindow* swin, QObject *parent = 0);
+  explicit NicoLiveManager(MainWindow* mwin, SettingsWindow* swin, NewWakuSettingsWindow* nwin, QObject *parent = 0);
 	~NicoLiveManager();
 
 	static QVariant makePostData(QString session_id);
@@ -50,6 +52,8 @@ public:
 	void broadDisconnect();
 	void broadStart();
 
+  void newWakuSetFormData(QString name, QString value);
+
   static QString HTMLdecode(QString st);
 signals:
 
@@ -62,6 +66,7 @@ private:
 
   MainWindow* mwin;
   SettingsWindow* swin;
+  NewWakuSettingsWindow* nwin;
   WakuTcp* wakutcp;
 
 	QString watchCount;
@@ -73,6 +78,8 @@ private:
 	QTimer* delWakuTimer;
 
   QMultiMap<QString, QString> newWakuData;
+  QMap<QString, QString> categoryPair;
+  QMap<QString, QString> communityPair;
 
   QNetworkAccessManager* mPostKeyManager;
   QNetworkAccessManager* mLoginAlertManager;

@@ -6,8 +6,11 @@ void NicoLiveManager::getNewWakuAPI(int type)
   if (mNewWaku!=nullptr) delete mNewWaku;
   mNewWaku = new QNetworkAccessManager(this);
 
-  QHttpMultiPart *multiPart = new QHttpMultiPart(QHttpMultiPart::FormDataType);
-  multiPart->setParent(mNewWaku);
+  QHttpMultiPart *multiPart;
+  if (type > 2) {
+    multiPart = new QHttpMultiPart(QHttpMultiPart::FormDataType);
+    multiPart->setParent(mNewWaku);
+  }
 
   if (type == 0) {
     connect(mNewWaku, SIGNAL(finished(QNetworkReply*)), this,
@@ -22,25 +25,15 @@ void NicoLiveManager::getNewWakuAPI(int type)
     connect(mNewWaku, SIGNAL(finished(QNetworkReply*)), this,
             SLOT(newWakuConfirmFinished(QNetworkReply*)));
 
-    QHttpPart is_wait;
-    is_wait.setHeader(QNetworkRequest::ContentDispositionHeader, QVariant("form-data; name=\"is_wait\""));
-    is_wait.setBody("");
-    multiPart->append(is_wait);
+    QMapIterator<QString, QString> i(newWakuData);
+    while (i.hasNext()) {
+      i.next();
 
-    QHttpPart usecoupon;
-    usecoupon.setHeader(QNetworkRequest::ContentDispositionHeader, QVariant("form-data; name=\"usecoupon\""));
-    usecoupon.setBody("");
-    multiPart->append(usecoupon);
-
-    QHttpPart title;
-    title.setHeader(QNetworkRequest::ContentDispositionHeader, QVariant("form-data; name=\"title\""));
-    title.setBody("タイトル");
-    multiPart->append(title);
-
-    QHttpPart auto_charge_confirmed;
-    auto_charge_confirmed.setHeader(QNetworkRequest::ContentDispositionHeader, QVariant("form-data; name=\"auto_charge_confirmed\""));
-    auto_charge_confirmed.setBody("0");
-    multiPart->append(auto_charge_confirmed);
+      QHttpPart tpart;
+      tpart.setHeader(QNetworkRequest::ContentDispositionHeader, QVariant("form-data; name=\"" + i.key() + "\""));
+      tpart.setBody(i.value().toUtf8());
+      multiPart->append(tpart);
+    }
   } else if (type == 4) {
     connect(mNewWaku, SIGNAL(finished(QNetworkReply*)), this,
             SLOT(newWakuFinished(QNetworkReply*)));
@@ -73,16 +66,19 @@ void NicoLiveManager::newWakuNewUpdateFinished(QNetworkReply* reply){
 
 void NicoLiveManager::newWakuNewInitFinished(QNetworkReply* reply){
   newWakuAbstractor(reply, 2);
-  reply->deleteLater();
+  delete reply;
+
+  nwin->applySettingsPostData();
+
+  getNewWakuAPI(3);
 }
 
 void NicoLiveManager::newWakuConfirmFinished(QNetworkReply* reply){
-  QString repdata = QString(reply->readAll());
+  newWakuAbstractor(reply, 2);
+  newWakuData.insert("kiyaku", "true");
+  qDebug() << newWakuData;
 
-  StrAbstractor allTagHtml(repdata);
-  qDebug() << repdata;
-
-  reply->deleteLater();
+  delete reply;
 }
 
 void NicoLiveManager::newWakuFinished(QNetworkReply* reply){
@@ -99,9 +95,17 @@ void NicoLiveManager::newWakuAbstractor(QNetworkReply* reply, int mode) {
 
   StrAbstractor allTagHtml(repdata);
   StrAbstractor* mainForm = allTagHtml.mid("<form action=\"editstream\"", "</form>");
+  if (mainForm == nullptr) {
+    mwin->insLog("NicoLiveManager::newWakuAbstractor reading page error");
+    return;
+  }
 
-  if (mode == 2) newWakuData.clear();
-  if (mode <= 1) swin->newWakuListStateSave();
+  if (mode == 2) {
+    newWakuData.clear();
+    categoryPair.clear();
+    communityPair.clear();
+  }
+  if (mode <= 1) nwin->listStateSave();
 
   StrAbstractor* input;
   while ((input = mainForm->mid("<input", ">")) != nullptr) {
@@ -111,8 +115,8 @@ void NicoLiveManager::newWakuAbstractor(QNetworkReply* reply, int mode) {
         input->toString().indexOf("checked") == -1) continue;
     QString name = input->midStr("name=\"", "\"", false);
     if (name == "") continue;
-    QString value = input->midStr("value=\"", "\"", false);
-    if (mode == 0) swin->newWakuSet(name, value);
+    QString value = HTMLdecode(input->midStr("value=\"", "\"", false));
+    if (mode == 0) nwin->set(name, value);
     if (mode == 2) newWakuData.insert(name, value);
   }
 
@@ -124,17 +128,23 @@ void NicoLiveManager::newWakuAbstractor(QNetworkReply* reply, int mode) {
     StrAbstractor* option;
     while ((option = input->mid("<option", "</option>")) != nullptr) {
       StrAbstractor* head = option->mid("", ">");
-      QString value = head->midStr("value=\"", "\"");
+      QString value = HTMLdecode(head->midStr("value=\"", "\""));
       if (value == "") continue;
       QString disp = option->midStr("", "");
       if (mode <= 1) {
         if (name == "tags[]") name = "tags[]c";
-        swin->newWakuSet(name, disp);
+        nwin->set(name, disp);
         if (head->forward("selected") != -1)
-          swin->newWakuSetIndex(name, disp);
+          nwin->setIndex(name, disp);
       }
-      if (mode == 2 && head->forward("selected") != -1) {
-        newWakuData.insert(name, disp);
+      if (mode == 2) {
+        if (name == "tags[]") {
+          categoryPair.insert(disp, value);
+        } else if (name == "default_community") {
+          communityPair.insert(disp, value);
+        } else if (head->forward("selected") != -1) {
+          newWakuData.insert(name, value);
+        }
       }
     }
   }
@@ -144,12 +154,29 @@ void NicoLiveManager::newWakuAbstractor(QNetworkReply* reply, int mode) {
   while ((input = mainForm->mid("<textarea", "</textarea>")) != nullptr) {
     QString name = input->mid("", ">")->midStr("name=\"", "\"", false);
     if (name == "") continue;
-    QString value = input->midStr("", "");
-    if (mode == 0) swin->newWakuSet(name, HTMLdecode(value));
+    QString value = HTMLdecode(input->midStr("", ""));
+    if (mode == 0) nwin->set(name, value);
     if (mode == 2) newWakuData.insert(name, value);
   }
 
-  if (mode == 1) swin->newWakuListStateLoad();
+  if (mode == 1) nwin->listStateLoad();
 
-  qDebug() << newWakuData;
+}
+
+void NicoLiveManager::newWakuSetFormData(QString name, QString value)
+{
+  if (value == "") return;
+  if (name == "tags[]c") {
+    newWakuData.insert("tags[]", categoryPair[value]);
+    return;
+  }
+  if (name == "tags[]") {
+    newWakuData.insert("tags[]", value);
+    return;
+  }
+  if (name == "default_community") {
+    newWakuData.insert("default_community", communityPair[value]);
+    return;
+  }
+  newWakuData.replace(name, value);
 }
