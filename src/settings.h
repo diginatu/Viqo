@@ -32,6 +32,8 @@ public:
   QString getCommandNextWaku();
   bool isCommandNewWakuChecked();
   QString getCommandNewWaku();
+  bool isAutoNewWaku();
+  bool isAutoNewWakuOpenBrowser();
 
   // account
   QString getUserMail() const;

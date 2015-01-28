@@ -140,10 +140,6 @@ void CommTcp::readOneRawComment(const QString rawcomm)
     if ((prem >> 1) % 2 ) broadcaster = true;
   }
 
-  if (comm == "/disconnect" && broadcaster) {
-    mwin->on_disconnect_clicked();
-  }
-
   comm = NicoLiveManager::HTMLdecode(comm);
 
   int nextnum = mwin->lastCommentNum() + 1;
@@ -169,6 +165,12 @@ void CommTcp::readOneRawComment(const QString rawcomm)
 
     pr.start(cmd);
     pr.waitForFinished(5000);
+  }
+
+  if (comm == "/disconnect" && broadcaster) {
+    if (mwin->settings.isAutoNewWaku() && nlwaku->isOwnerBroad())
+      mwin->getNewWakuAPI(2);
+    mwin->on_disconnect_clicked();
   }
 }
 

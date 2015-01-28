@@ -697,8 +697,11 @@
     <property name="title">
      <string>放送</string>
     </property>
-    <addaction name="autoNewWakuChk"/>
     <addaction name="getNewWakuNow"/>
+    <addaction name="separator"/>
+    <addaction name="autoNewWakuChk"/>
+    <addaction name="autoNewWakuOpenBrowser"/>
+    <addaction name="separator"/>
     <addaction name="autoNewWakuSettings"/>
    </widget>
    <addaction name="file"/>
@@ -796,6 +799,14 @@
     <string>今すぐ取得</string>
    </property>
   </action>
+  <action name="autoNewWakuOpenBrowser">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>取得時ブラウザで開く</string>
+   </property>
+  </action>
  </widget>
  <layoutdefault spacing="6" margin="11"/>
  <resources/>
@@ -811,8 +822,8 @@
      <y>90</y>
     </hint>
     <hint type="destinationlabel">
-     <x>100</x>
-     <y>369</y>
+     <x>111</x>
+     <y>425</y>
     </hint>
    </hints>
   </connection>
@@ -824,11 +835,11 @@
    <hints>
     <hint type="sourcelabel">
      <x>152</x>
-     <y>300</y>
+     <y>356</y>
     </hint>
     <hint type="destinationlabel">
      <x>395</x>
-     <y>303</y>
+     <y>359</y>
     </hint>
    </hints>
   </connection>
@@ -840,11 +851,11 @@
    <hints>
     <hint type="sourcelabel">
      <x>134</x>
-     <y>366</y>
+     <y>422</y>
     </hint>
     <hint type="destinationlabel">
      <x>395</x>
-     <y>369</y>
+     <y>425</y>
     </hint>
    </hints>
   </connection>
@@ -888,11 +899,11 @@
    <hints>
     <hint type="sourcelabel">
      <x>104</x>
-     <y>333</y>
+     <y>389</y>
     </hint>
     <hint type="destinationlabel">
      <x>395</x>
-     <y>336</y>
+     <y>392</y>
     </hint>
    </hints>
   </connection>
@@ -904,11 +915,11 @@
    <hints>
     <hint type="sourcelabel">
      <x>119</x>
-     <y>267</y>
+     <y>323</y>
     </hint>
     <hint type="destinationlabel">
-     <x>251</x>
-     <y>270</y>
+     <x>358</x>
+     <y>326</y>
     </hint>
    </hints>
   </connection>

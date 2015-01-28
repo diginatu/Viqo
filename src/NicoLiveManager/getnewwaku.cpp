@@ -91,14 +91,21 @@ void NicoLiveManager::newWakuConfirmFinished(QNetworkReply* reply){
   reply->deleteLater();
 
   newWakuData.insert("kiyaku", "true");
-  qDebug() << newWakuData;
 
-  // getNewWakuAPI(4);
+  getNewWakuAPI(4);
 }
 
 void NicoLiveManager::newWakuFinished(QNetworkReply* reply){
-  QList<QPair<QByteArray, QByteArray>> header = reply->rawHeaderPairs();
-  qDebug() << header;
+  if (mwin->settings.isAutoNewWakuOpenBrowser()) {
+    auto headers = reply->rawHeaderPairs();
+    foreach (auto header, headers) {
+      if (header.first == "Location") {
+        QString url = "http://live.nicovideo.jp/" + header.second;
+        QDesktopServices::openUrl(url);
+        break;
+      }
+    }
+  }
 
   reply->deleteLater();
 }

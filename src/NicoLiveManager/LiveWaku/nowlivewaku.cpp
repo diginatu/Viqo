@@ -1,4 +1,4 @@
-#include "nowlivewaku.h"
+﻿#include "nowlivewaku.h"
 #include "../../mainwindow.h"
 
 NowLiveWaku::NowLiveWaku(MainWindow* mwin, NicoLiveManager* nlman, QObject* parent) :
@@ -78,7 +78,7 @@ void NowLiveWaku::playerStatusFinished(QNetworkReply* reply)
   reply->deleteLater();
 }
 
-bool NowLiveWaku::getOwnerBroad() const
+bool NowLiveWaku::isOwnerBroad() const
 {
   return ownerBroad;
 }

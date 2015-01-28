@@ -29,7 +29,7 @@ public:
   QString getOwnerCommentToken() const;
   void setOwnerCommentToken(const QString& value);
 
-  bool getOwnerBroad() const;
+  bool isOwnerBroad() const;
 
 private slots:
   void playerStatusFinished(QNetworkReply* reply);

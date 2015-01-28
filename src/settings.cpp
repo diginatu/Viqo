@@ -253,6 +253,16 @@ QString Settings::getCommandNewWaku()
   return ui->command_newWaku->text();
 }
 
+bool Settings::isAutoNewWaku()
+{
+  return ui->autoNewWakuChk->isChecked();
+}
+
+bool Settings::isAutoNewWakuOpenBrowser()
+{
+  return ui->autoNewWakuOpenBrowser->isChecked();
+}
+
 QString Settings::getUserMail() const
 {
   return userMail;
