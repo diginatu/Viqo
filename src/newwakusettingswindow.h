@@ -17,6 +17,7 @@ public:
   explicit NewWakuSettingsWindow(MainWindow* mwin, QWidget *parent = 0);
   ~NewWakuSettingsWindow();
 
+  void formInit();
   void listStateSave();
   void setIndex(QString name, QString value);
   void set(QString name, QString value);
@@ -26,6 +27,9 @@ public:
   void setSelectedCategory(const QString& value);
 
   void applySettingsPostData();
+
+  bool isSetNecessary();
+  bool isTwitterTagValid();
 private:
   Ui::NewWakuSettingsWindow *ui;
   MainWindow* mwin;

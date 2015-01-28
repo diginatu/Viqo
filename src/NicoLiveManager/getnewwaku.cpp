@@ -3,7 +3,18 @@
 
 void NicoLiveManager::getNewWakuAPI(int type)
 {
-  if (mNewWaku!=nullptr) delete mNewWaku;
+  if (type == 2) {
+    if (!nwin->isSetNecessary()) {
+      mwin->insLog("NicoLiveManager::getNewWakuAPI type" + QString::number(type) + " no necessary item(s)");
+      return;
+    }
+    if (!nwin->isTwitterTagValid()) {
+      mwin->insLog("NicoLiveManager::getNewWakuAPI type" + QString::number(type) + " twitter tag must start with \"#\"");
+      return;
+    }
+  }
+
+  if (mNewWaku!=nullptr) mNewWaku->deleteLater();
   mNewWaku = new QNetworkAccessManager(this);
 
   QHttpMultiPart *multiPart;
@@ -66,7 +77,7 @@ void NicoLiveManager::newWakuNewUpdateFinished(QNetworkReply* reply){
 
 void NicoLiveManager::newWakuNewInitFinished(QNetworkReply* reply){
   newWakuAbstractor(reply, 2);
-  delete reply;
+  reply->deleteLater();
 
   nwin->applySettingsPostData();
 
@@ -100,12 +111,13 @@ void NicoLiveManager::newWakuAbstractor(QNetworkReply* reply, int mode) {
     return;
   }
 
+  if (mode == 0) nwin->formInit();
+  if (mode <= 1) nwin->listStateSave();
   if (mode == 2) {
     newWakuData.clear();
     categoryPair.clear();
     communityPair.clear();
   }
-  if (mode <= 1) nwin->listStateSave();
 
   StrAbstractor* input;
   while ((input = mainForm->mid("<input", ">")) != nullptr) {
@@ -114,9 +126,12 @@ void NicoLiveManager::newWakuAbstractor(QNetworkReply* reply, int mode) {
     if ((type == "checkbox" || type == "radio") &&
         input->toString().indexOf("checked") == -1) continue;
     QString name = input->midStr("name=\"", "\"", false);
-    if (name == "") continue;
+    // ignore reservation
+    if (name == "" || name == "is_charge") continue;
     QString value = HTMLdecode(input->midStr("value=\"", "\"", false));
     if (mode == 0) nwin->set(name, value);
+    // not to add tags to data
+    if (name.startsWith("livetags") || name.startsWith("taglock")) continue;
     if (mode == 2) newWakuData.insert(name, value);
   }
 
@@ -159,7 +174,7 @@ void NicoLiveManager::newWakuAbstractor(QNetworkReply* reply, int mode) {
     if (mode == 2) newWakuData.insert(name, value);
   }
 
-  if (mode == 1) nwin->listStateLoad();
+  if (mode <= 1) nwin->listStateLoad();
 
 }
 
