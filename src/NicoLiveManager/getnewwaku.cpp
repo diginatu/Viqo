@@ -35,7 +35,12 @@ void NicoLiveManager::getNewWakuAPI(int type)
   } else if (type == 3) {
     connect(mNewWaku, SIGNAL(finished(QNetworkReply*)), this,
             SLOT(newWakuConfirmFinished(QNetworkReply*)));
+  } else if (type == 4) {
+    connect(mNewWaku, SIGNAL(finished(QNetworkReply*)), this,
+            SLOT(newWakuFinished(QNetworkReply*)));
+  }
 
+  if (type == 3 || type == 4) {
     QMapIterator<QString, QString> i(newWakuData);
     while (i.hasNext()) {
       i.next();
@@ -45,9 +50,6 @@ void NicoLiveManager::getNewWakuAPI(int type)
       tpart.setBody(i.value().toUtf8());
       multiPart->append(tpart);
     }
-  } else if (type == 4) {
-    connect(mNewWaku, SIGNAL(finished(QNetworkReply*)), this,
-            SLOT(newWakuFinished(QNetworkReply*)));
   }
 
   // make request
@@ -85,18 +87,18 @@ void NicoLiveManager::newWakuNewInitFinished(QNetworkReply* reply){
 }
 
 void NicoLiveManager::newWakuConfirmFinished(QNetworkReply* reply){
-  newWakuAbstractor(reply, 2);
+  newWakuAbstractor(reply, 3);
+  reply->deleteLater();
+
   newWakuData.insert("kiyaku", "true");
   qDebug() << newWakuData;
 
-  delete reply;
+  // getNewWakuAPI(4);
 }
 
 void NicoLiveManager::newWakuFinished(QNetworkReply* reply){
-  QString repdata = QString(reply->readAll());
-
-  StrAbstractor allTagHtml(repdata);
-  qDebug() << repdata;
+  QList<QPair<QByteArray, QByteArray>> header = reply->rawHeaderPairs();
+  qDebug() << header;
 
   reply->deleteLater();
 }
@@ -113,7 +115,7 @@ void NicoLiveManager::newWakuAbstractor(QNetworkReply* reply, int mode) {
 
   if (mode == 0) nwin->formInit();
   if (mode <= 1) nwin->listStateSave();
-  if (mode == 2) {
+  if (mode >= 2) {
     newWakuData.clear();
     categoryPair.clear();
     communityPair.clear();
@@ -130,9 +132,9 @@ void NicoLiveManager::newWakuAbstractor(QNetworkReply* reply, int mode) {
     if (name == "" || name == "is_charge") continue;
     QString value = HTMLdecode(input->midStr("value=\"", "\"", false));
     if (mode == 0) nwin->set(name, value);
-    // not to add tags to data
-    if (name.startsWith("livetags") || name.startsWith("taglock")) continue;
-    if (mode == 2) newWakuData.insert(name, value);
+    // not to add tags to data when init
+    if (mode == 2 && (name.startsWith("livetags") || name.startsWith("taglock"))) continue;
+    if (mode >= 2) newWakuData.insert(name, value);
   }
 
   mainForm->setPosition(0);
@@ -152,7 +154,7 @@ void NicoLiveManager::newWakuAbstractor(QNetworkReply* reply, int mode) {
         if (head->forward("selected") != -1)
           nwin->setIndex(name, disp);
       }
-      if (mode == 2) {
+      if (mode >= 2) {
         if (name == "tags[]") {
           categoryPair.insert(disp, value);
         } else if (name == "default_community") {
@@ -171,7 +173,7 @@ void NicoLiveManager::newWakuAbstractor(QNetworkReply* reply, int mode) {
     if (name == "") continue;
     QString value = HTMLdecode(input->midStr("", ""));
     if (mode == 0) nwin->set(name, value);
-    if (mode == 2) newWakuData.insert(name, value);
+    if (mode >= 2) newWakuData.insert(name, value);
   }
 
   if (mode <= 1) nwin->listStateLoad();

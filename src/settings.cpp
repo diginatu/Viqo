@@ -24,6 +24,7 @@ void Settings::saveStatus(int num)
   other["auto_getting_user_name"] = ui->auto_getting_user_name_chk->isChecked();
   other["keep_top_comment"] = ui->keep_top_chk->isChecked();
   other["is184_comment"] = ui->is184_chk->isChecked();
+  other["auto_getting_new_waku"] = ui->autoNewWakuChk->isChecked();
 
   QJsonObject command;
   command["comment_check"] = ui->command_comment_chk->isChecked();
@@ -78,6 +79,7 @@ void Settings::loadStatus(int num)
   ui->auto_getting_user_name_chk->setChecked(other["auto_getting_user_name"].toBool());
   ui->keep_top_chk->setChecked(other["keep_top_comment"].toBool());
   ui->is184_chk->setChecked(other["is184_comment"].toBool());
+  ui->autoNewWakuChk->setChecked(other["auto_getting_new_waku"].toBool());
 
   QJsonObject command = jsd.object()["command"].toObject();
   ui->command_comment->setText(command["comment"].toString());
