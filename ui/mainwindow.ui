@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>442</width>
+    <width>450</width>
     <height>487</height>
    </rect>
   </property>
@@ -201,6 +201,9 @@
        <property name="contextMenuPolicy">
         <enum>Qt::CustomContextMenu</enum>
        </property>
+       <property name="openExternalLinks">
+        <bool>true</bool>
+       </property>
       </widget>
       <widget class="QTabWidget" name="tabWidget">
        <property name="sizePolicy">
@@ -313,7 +316,7 @@
              <rect>
               <x>0</x>
               <y>0</y>
-              <width>384</width>
+              <width>392</width>
               <height>216</height>
              </rect>
             </property>
@@ -656,7 +659,7 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>442</width>
+     <width>450</width>
      <height>25</height>
     </rect>
    </property>
