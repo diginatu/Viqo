@@ -41,6 +41,11 @@ void NewWakuSettingsWindow::listStateSave()
   selectedCommunity = ui->community->currentText();
   selectedCategory = ui->category->currentText();
 
+  clearListForm();
+}
+
+void NewWakuSettingsWindow::clearListForm()
+{
   ui->community->clear();
   ui->category->clear();
   ui->tags_list->clear();
@@ -221,7 +226,7 @@ void NewWakuSettingsWindow::on_tag_delete_clicked()
   delete ui->tags_list->currentItem();
 }
 
-void NewWakuSettingsWindow::makeJsonFromForm()
+void NewWakuSettingsWindow::savePresets()
 {
   QStringList dir = QStandardPaths::standardLocations(QStandardPaths::DataLocation);
   if (dir.empty()) {
@@ -229,19 +234,8 @@ void NewWakuSettingsWindow::makeJsonFromForm()
     return;
   }
 
-  QJsonObject necessary;
-  necessary["title"] = ui->title->text();
-  necessary["description"] = ui->description->toPlainText();
-  necessary["community"] = ui->community->currentText();
-  necessary["community_value"] = ui->community->currentText();
-  necessary["category"] = ui->category->currentText();
-  necessary["category_value"] = ui->category->currentText();
-
-  QJsonObject root;
-  root["necessary"] = necessary;
-
   QJsonDocument jsd;
-  jsd.setObject(root);
+  //jsd.setObject(root);
 
   QFile file(dir[0] + "/newWakuSettings.json");
   file.open(QIODevice::WriteOnly);
@@ -250,16 +244,148 @@ void NewWakuSettingsWindow::makeJsonFromForm()
   file.close();
 }
 
+void NewWakuSettingsWindow::loadPresets()
+{
+  QStringList dir = QStandardPaths::standardLocations(QStandardPaths::DataLocation);
+  if (dir.empty()) {
+    mwin->insLog("save directory is not available");
+    return;
+  }
+  QFile file(dir[0] + "/newWakuSettings.json");
+  if ( !file.exists() ) {
+    file.close();
+    mwin->insLog("no preset file");
+    return;
+  }
+
+  file.open(QIODevice::ReadOnly | QIODevice::Text);
+
+  QJsonDocument jsd = QJsonDocument::fromJson(file.readAll());
+
+  auto formArray = jsd.array();
+
+
+  file.close();
+}
+
+QJsonObject NewWakuSettingsWindow::makeJsonFromForm()
+{
+  QJsonObject necessary;
+  {
+    necessary["title"] = ui->title->text();
+    necessary["description"] = ui->description->toPlainText();
+
+    QJsonArray community;
+    for (int i = 0; i < ui->community->count(); ++i) {
+      QJsonArray item;
+      item << ui->community->itemText(i);
+      item << ui->community->itemData(i).toString();
+      community << item;
+    }
+    necessary["community"] = community;
+
+    QJsonArray category;
+    for (int i = 0; i < ui->category->count(); ++i) {
+      QJsonArray item;
+      item << ui->category->itemText(i);
+      item << ui->category->itemData(i).toString();
+      category << item;
+    }
+    necessary["category"] = category;
+  }
+
+  QJsonObject other;
+  {
+    QJsonArray tags;
+    for (int i = 0; i < ui->tags_list->count(); ++i) {
+      QListWidgetItem* item = ui->tags_list->item(i);
+      QJsonArray jitem;
+      jitem << (item->checkState() == Qt::Checked);
+      jitem << item->text();
+      tags << jitem;
+    }
+    other["tags"] = tags;
+
+    other["tag_all_lock"] = ui->tag_allLock->isChecked();
+
+    other["add_unmask"] = ui->additional_unmask->isChecked();
+    other["add_call_me"] = ui->additional_callMe->isChecked();
+    other["add_cruise"] = ui->additional_cruise->isChecked();
+
+    other["community_only"] = ui->communityOnly->isChecked();
+    other["timeshift"] = ui->timeshift->isChecked();
+    other["twitter"] = ui->twitter->isChecked();
+    other["twitter_tag"] = ui->twitterTag->text();
+    other["advertising"] = ui->advertising->isChecked();
+    other["ichiba"] = ui->ichiba->isChecked();
+  }
+
+  QJsonObject root;
+  root["necessary"] = necessary;
+  root["other"] = other;
+
+  return root;
+}
+
+void NewWakuSettingsWindow::setPresetsFromJson(const QJsonObject& jsn)
+{
+  clearListForm();
+
+  {
+    const QJsonObject necessary = jsn["necessary"].toObject();
+
+    ui->title->setText(necessary["title"].toString());
+    ui->description->setPlainText(necessary["description"].toString());
+
+    const QJsonArray community = necessary["community"].toArray();
+    for (int i = 0; i < community.size(); ++i) {
+      ui->community->addItem(community[i].toArray()[0].toString(), community[i].toArray()[1].toString());
+    }
+
+    const QJsonArray category = necessary["category"].toArray();
+    for (int i = 0; i < category.size(); ++i) {
+      ui->category->addItem(category[i].toArray()[0].toString(), category[i].toArray()[1].toString());
+    }
+  }
+
+  {
+    const QJsonObject other = jsn["other"].toObject();
+
+    const QJsonArray tags = other["tags"].toArray();
+    for (int i = 0; i < tags.size(); ++i) {
+      QListWidgetItem* item = new QListWidgetItem(ui->tags_list);
+      const QJsonArray jitem = tags[i].toArray();
+      item->setText(jitem[1].toString());
+      item->setFlags(item->flags() | Qt::ItemIsEditable | Qt::ItemIsUserCheckable);
+      item->setCheckState(jitem[0].toBool()?Qt::Checked:Qt::Unchecked);
+    }
+
+    ui->tag_allLock->setChecked(other["tag_all_lock"].toBool());
+
+    ui->additional_unmask->setChecked(other["add_unmask"].toBool());
+    ui->additional_callMe->setChecked(other["add_call_me"].toBool());
+    ui->additional_cruise->setChecked(other["add_cruise"].toBool());
+
+    ui->communityOnly->setChecked(other["community_only"].toBool());
+    ui->timeshift->setChecked(other["timeshift"].toBool());
+    ui->twitter->setChecked(other["twitter"].toBool());
+    ui->twitterTag->setText(other["twitter_tag"].toString());
+    ui->advertising->setChecked(other["advertising"].toBool());
+    ui->ichiba->setChecked(other["ichiba"].toBool());
+  }
+
+}
+
 void NewWakuSettingsWindow::on_presets_regist_clicked()
 {
   QString text = QInputDialog::getText(this, "プリセット登録", "プリセット名:");
   if (!text.isEmpty()) {
     int indexNew = ui->presetes->findText(text);
     if (indexNew == -1) {
-      ui->presetes->addItem(text);
+      ui->presetes->addItem(text, makeJsonFromForm());
       ui->presetes->setCurrentText(text);
     } else {
-
+      ui->presetes->setItemData(indexNew, makeJsonFromForm());
     }
   }
 }
@@ -267,4 +393,27 @@ void NewWakuSettingsWindow::on_presets_regist_clicked()
 void NewWakuSettingsWindow::on_presets_delete_clicked()
 {
   ui->presetes->removeItem(ui->presetes->currentIndex());
+}
+
+void NewWakuSettingsWindow::on_presetes_activated(int index)
+{
+  setPresetsFromJson(ui->presetes->itemData(index).toJsonObject());
+}
+
+void NewWakuSettingsWindow::on_clear_clicked()
+{
+  ui->title->clear();
+  ui->description->clear();
+  ui->community->unsetCursor();
+  ui->category->unsetCursor();
+  ui->tags_list->clear();
+  ui->additional_unmask->setChecked(false);
+  ui->additional_callMe->setChecked(false);
+  ui->additional_cruise->setChecked(false);
+  ui->communityOnly->setChecked(false);
+  ui->timeshift->setChecked(false);
+  ui->twitter->setChecked(false);
+  ui->twitterTag->clear();
+  ui->advertising->setChecked(false);
+  ui->ichiba->setChecked(false);
 }

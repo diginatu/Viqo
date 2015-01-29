@@ -36,13 +36,19 @@ private:
   MainWindow* mwin;
   QString selectedCommunity, selectedCategory;
 
-  void makeJsonFromForm();
+  QJsonObject makeJsonFromForm();
+  void setPresetsFromJson(const QJsonObject& jsn);
+  void savePresets();
+  void loadPresets();
+  void clearListForm();
 private slots:
   void on_befWakuReuse_clicked();
   void on_tag_add_clicked();
   void on_tag_delete_clicked();
   void on_presets_regist_clicked();
   void on_presets_delete_clicked();
+  void on_presetes_activated(int index);
+  void on_clear_clicked();
 };
 
 #endif // NEWWAKUSETTINGSWINDOW_H
