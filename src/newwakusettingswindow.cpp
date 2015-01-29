@@ -409,14 +409,22 @@ void NewWakuSettingsWindow::setPresetsFromJson(const QJsonObject& jsn)
 
 void NewWakuSettingsWindow::on_presets_regist_clicked()
 {
-  QString text = QInputDialog::getText(this, "プリセット登録", "プリセット名:");
+  QString text = QInputDialog::getText(this, "プリセット登録",
+                             "プリセット名:", QLineEdit::Normal,
+                             ui->presetes->currentText());
   if (!text.isEmpty()) {
     int indexNew = ui->presetes->findText(text);
     if (indexNew == -1) {
       ui->presetes->addItem(text, makeJsonFromForm());
       ui->presetes->setCurrentText(text);
     } else {
-      ui->presetes->setItemData(indexNew, makeJsonFromForm());
+      QMessageBox msgBox;
+      msgBox.setText("上書きしますか？");
+      msgBox.setStandardButtons(QMessageBox::Cancel | QMessageBox::Ok);
+      msgBox.setDefaultButton(QMessageBox::Ok);
+      if (msgBox.exec() == QMessageBox::Ok) {
+        ui->presetes->setItemData(indexNew, makeJsonFromForm());
+      }
     }
   }
 }

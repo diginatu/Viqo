@@ -3,6 +3,7 @@
 
 #include <QDialog>
 #include <QInputDialog>
+#include <QMessageBox>
 
 class MainWindow;
 
