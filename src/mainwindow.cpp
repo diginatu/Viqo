@@ -3,12 +3,13 @@
 
 MainWindow::MainWindow(QWidget *parent) :
   QMainWindow(parent),
+  ui(new Ui::MainWindow),
   settingsWindow(new SettingsWindow(this, this)),
   newWakuSettingsWindow(new NewWakuSettingsWindow(this, this)),
-  ui(new Ui::MainWindow),
   settings(this, ui, this)
 {
   ui->setupUi(this);
+  setAcceptDrops(true);
 
   // set the column width for the comment view list
   ui->comment_view->header()->resizeSection(0, 60);
@@ -43,7 +44,7 @@ MainWindow::MainWindow(QWidget *parent) :
   nicolivemanager->getRawMyLiveHTML();
   QTimer::singleShot(30000, nicolivemanager, SLOT(getRawMyLiveHTML()));
 
-  setAcceptDrops(true);
+  newWakuSettingsWindow->loadPresets();
 }
 
 MainWindow::~MainWindow()
@@ -51,6 +52,7 @@ MainWindow::~MainWindow()
   on_disconnect_clicked();
   delete ui;
 }
+
 void MainWindow::onReceiveStarted()
 {
   qDebug() << "--comment receiving started--";

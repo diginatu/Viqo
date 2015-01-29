@@ -31,6 +31,9 @@ public:
 
   bool isSetNecessary();
   bool isTwitterTagValid();
+
+  void savePresets();
+  void loadPresets();
 private:
   Ui::NewWakuSettingsWindow *ui;
   MainWindow* mwin;
@@ -38,8 +41,6 @@ private:
 
   QJsonObject makeJsonFromForm();
   void setPresetsFromJson(const QJsonObject& jsn);
-  void savePresets();
-  void loadPresets();
   void clearListForm();
 private slots:
   void on_befWakuReuse_clicked();
@@ -49,6 +50,7 @@ private slots:
   void on_presets_delete_clicked();
   void on_presetes_activated(int index);
   void on_clear_clicked();
+  void on_okButton_clicked();
 };
 
 #endif // NEWWAKUSETTINGSWINDOW_H

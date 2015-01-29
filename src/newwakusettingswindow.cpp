@@ -234,8 +234,17 @@ void NewWakuSettingsWindow::savePresets()
     return;
   }
 
+  QJsonArray pages;
+
+  for (int i = 0; i < ui->presetes->count(); ++i) {
+    QJsonObject page;
+    page["title"] = ui->presetes->itemText(i);
+    page["data"] = ui->presetes->itemData(i).toJsonObject();
+    pages << page;
+  }
+
   QJsonDocument jsd;
-  //jsd.setObject(root);
+  jsd.setArray(pages);
 
   QFile file(dir[0] + "/newWakuSettings.json");
   file.open(QIODevice::WriteOnly);
@@ -262,8 +271,11 @@ void NewWakuSettingsWindow::loadPresets()
 
   QJsonDocument jsd = QJsonDocument::fromJson(file.readAll());
 
-  auto formArray = jsd.array();
-
+  QJsonArray pages = jsd.array();
+  for (int i = 0; i < pages.size(); ++i) {
+    ui->presetes->addItem(pages[i].toObject()["title"].toString(),
+        pages[i].toObject()["data"].toObject());
+  }
 
   file.close();
 }
@@ -416,4 +428,9 @@ void NewWakuSettingsWindow::on_clear_clicked()
   ui->twitterTag->clear();
   ui->advertising->setChecked(false);
   ui->ichiba->setChecked(false);
+}
+
+void NewWakuSettingsWindow::on_okButton_clicked()
+{
+  savePresets();
 }

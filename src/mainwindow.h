@@ -45,8 +45,6 @@ public:
 
   void getSessionFromCookie(QString cookie_name);
 
-  SettingsWindow* settingsWindow;
-  NewWakuSettingsWindow* newWakuSettingsWindow;
 
   NicoLiveManager* nicolivemanager;
 
@@ -97,6 +95,9 @@ private slots:
 
 private:
   Ui::MainWindow* ui;
+
+  SettingsWindow* settingsWindow;
+  NewWakuSettingsWindow* newWakuSettingsWindow;
 
   QTimer* watch_count_timer;
   QTimer* elapsed_time_timer;
