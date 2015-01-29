@@ -1,7 +1,7 @@
 ﻿#include "nicolivemanager.h"
 #include "../mainwindow.h"
 
-void NicoLiveManager::getNewWakuAPI(int type)
+void NicoLiveManager::getNewWakuAPI(int type, QString liveNum)
 {
   if (type == 2) {
     if (!nwin->isSetNecessary()) {
@@ -53,7 +53,10 @@ void NicoLiveManager::getNewWakuAPI(int type)
   }
 
   // make request
-  QNetworkRequest rq(QUrl("http://live.nicovideo.jp/editstream"));
+  QString durl = "http://live.nicovideo.jp/editstream";
+  if (liveNum.length() != 0) durl.append(tr("?reuseid=") + liveNum);
+  QNetworkRequest rq;
+  rq.setUrl(QUrl(durl));
 
   QVariant postData = makePostData(mwin->settings.getUserSession());
   rq.setHeader(QNetworkRequest::CookieHeader, postData);

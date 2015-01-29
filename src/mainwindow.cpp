@@ -423,12 +423,12 @@ void MainWindow::on_load_4_triggered()
 
 void MainWindow::on_developtest_clicked()
 {
-  nicolivemanager->getNewWakuAPI(0);
+  getNewWakuAPI(0);
 }
 
-void MainWindow::getNewWakuAPI(int type)
+void MainWindow::getNewWakuAPI(int type, QString livenum)
 {
-  nicolivemanager->getNewWakuAPI(type);
+  nicolivemanager->getNewWakuAPI(type, livenum);
 }
 
 void MainWindow::on_autoNewWakuSettings_triggered()

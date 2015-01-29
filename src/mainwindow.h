@@ -51,7 +51,7 @@ public:
   void bodyClear();
 
   void submittedComment();
-  void getNewWakuAPI(int type);
+  void getNewWakuAPI(int type, QString livenum = "");
 
 public slots:
   // ui slots

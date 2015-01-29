@@ -7,6 +7,7 @@ NewWakuSettingsWindow::NewWakuSettingsWindow(MainWindow* mwin, QWidget *parent) 
   ui(new Ui::NewWakuSettingsWindow)
 {
   ui->setupUi(this);
+  setAcceptDrops(true);
 
   this->mwin = mwin;
 }
@@ -14,6 +15,24 @@ NewWakuSettingsWindow::NewWakuSettingsWindow(MainWindow* mwin, QWidget *parent) 
 NewWakuSettingsWindow::~NewWakuSettingsWindow()
 {
   delete ui;
+}
+
+void NewWakuSettingsWindow::dragEnterEvent(QDragEnterEvent *event)
+{
+  if (event->mimeData()->hasText())
+    event->acceptProposedAction();
+}
+
+void NewWakuSettingsWindow::dropEvent(QDropEvent *event)
+{
+  const QRegExp broadIDrg("^.+lv(\\d+).*$");
+  if (broadIDrg.indexIn(event->mimeData()->text()) != -1) {
+    mwin->getNewWakuAPI(0, broadIDrg.cap(1));
+    event->acceptProposedAction();
+  } else {
+    event->dropAction();
+  }
+
 }
 
 void NewWakuSettingsWindow::on_befWakuReuse_clicked()

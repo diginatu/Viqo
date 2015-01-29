@@ -51,6 +51,8 @@ private slots:
   void on_presetes_activated(int index);
   void on_clear_clicked();
   void on_okButton_clicked();
+  void dragEnterEvent(QDragEnterEvent* event);
+  void dropEvent(QDropEvent* event);
 };
 
 #endif // NEWWAKUSETTINGSWINDOW_H

@@ -122,7 +122,7 @@ void CommTcp::readOneRawComment(const QString rawcomm)
     nlwaku->getPostKeyAPI(thread, block);
   }
 
-  int udate = comminfo.midStr("date=\"", "\"", false).toInt();
+  long long udate = comminfo.midStr("date=\"", "\"", false).toLongLong();
   QDateTime commenttime;
   commenttime.setTime_t(udate);
   QString date = commenttime.toString("yyyy/MM/dd hh:mm:ss");
