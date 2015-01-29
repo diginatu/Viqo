@@ -58,7 +58,7 @@ void NewWakuSettingsWindow::setIndex(QString name, QString value)
   }
 }
 
-void NewWakuSettingsWindow::set(QString name, QString value)
+void NewWakuSettingsWindow::set(QString name, QString value, QString disp)
 {
   if (name == "title") {
     ui->title->setText(value);
@@ -69,11 +69,11 @@ void NewWakuSettingsWindow::set(QString name, QString value)
     return;
   }
   if (name == "default_community") {
-    ui->community->addItem(value);
+    ui->community->addItem(disp, value);
     return;
   }
   if (name == "tags[]c") {
-    ui->category->addItem(value);
+    ui->category->addItem(disp, value);
     return;
   }
   if (name == "tags[]") {
@@ -153,10 +153,9 @@ void NewWakuSettingsWindow::applySettingsPostData()
   // necessary
   mwin->nicolivemanager->newWakuSetFormData("title", ui->title->text());
   mwin->nicolivemanager->newWakuSetFormData("description", ui->description->toPlainText());
-  mwin->nicolivemanager->newWakuSetFormData("default_community", ui->community->currentText());
-  mwin->nicolivemanager->newWakuSetFormData("tags[]c", ui->category->currentText());
+  mwin->nicolivemanager->newWakuSetFormData("default_community", ui->community->currentData().toString());
+  mwin->nicolivemanager->newWakuSetFormData("tags[]c", ui->category->currentData().toString());
 
-  // other
   // tags
   for (int i = 0; i < ui->tags_list->count(); ++i) {
     QListWidgetItem* item = ui->tags_list->item(i);
@@ -164,6 +163,8 @@ void NewWakuSettingsWindow::applySettingsPostData()
     if (item->checkState() == Qt::Checked)
       mwin->nicolivemanager->newWakuSetFormData("taglock" + QString::number(i+1), "ロックする");
   }
+
+  // other
   if (ui->tag_allLock->isChecked())
     mwin->nicolivemanager->newWakuSetFormData("taglock", "ロックする");
   if (ui->additional_unmask->isChecked())
@@ -218,4 +219,52 @@ void NewWakuSettingsWindow::on_tag_add_clicked()
 void NewWakuSettingsWindow::on_tag_delete_clicked()
 {
   delete ui->tags_list->currentItem();
+}
+
+void NewWakuSettingsWindow::makeJsonFromForm()
+{
+  QStringList dir = QStandardPaths::standardLocations(QStandardPaths::DataLocation);
+  if (dir.empty()) {
+    mwin->insLog("save directory is not available");
+    return;
+  }
+
+  QJsonObject necessary;
+  necessary["title"] = ui->title->text();
+  necessary["description"] = ui->description->toPlainText();
+  necessary["community"] = ui->community->currentText();
+  necessary["community_value"] = ui->community->currentText();
+  necessary["category"] = ui->category->currentText();
+  necessary["category_value"] = ui->category->currentText();
+
+  QJsonObject root;
+  root["necessary"] = necessary;
+
+  QJsonDocument jsd;
+  jsd.setObject(root);
+
+  QFile file(dir[0] + "/newWakuSettings.json");
+  file.open(QIODevice::WriteOnly);
+  QTextStream out(&file);
+  out << jsd.toJson();
+  file.close();
+}
+
+void NewWakuSettingsWindow::on_presets_regist_clicked()
+{
+  QString text = QInputDialog::getText(this, "プリセット登録", "プリセット名:");
+  if (!text.isEmpty()) {
+    int indexNew = ui->presetes->findText(text);
+    if (indexNew == -1) {
+      ui->presetes->addItem(text);
+      ui->presetes->setCurrentText(text);
+    } else {
+
+    }
+  }
+}
+
+void NewWakuSettingsWindow::on_presets_delete_clicked()
+{
+  ui->presetes->removeItem(ui->presetes->currentIndex());
 }

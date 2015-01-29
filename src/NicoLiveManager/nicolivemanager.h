@@ -78,8 +78,6 @@ private:
 	QTimer* delWakuTimer;
 
   QMultiMap<QString, QString> newWakuData;
-  QMap<QString, QString> categoryPair;
-  QMap<QString, QString> communityPair;
 
   QNetworkAccessManager* mPostKeyManager;
   QNetworkAccessManager* mLoginAlertManager;

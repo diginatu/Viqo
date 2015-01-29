@@ -484,7 +484,7 @@
    <sender>okButton</sender>
    <signal>clicked()</signal>
    <receiver>NewWakuSettingsWindow</receiver>
-   <slot>close()</slot>
+   <slot>accept()</slot>
    <hints>
     <hint type="sourcelabel">
      <x>417</x>

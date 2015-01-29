@@ -80,9 +80,8 @@ void NicoLiveManager::newWakuNewUpdateFinished(QNetworkReply* reply){
 void NicoLiveManager::newWakuNewInitFinished(QNetworkReply* reply){
   newWakuAbstractor(reply, 2);
   reply->deleteLater();
-
   nwin->applySettingsPostData();
-
+  //qDebug() << newWakuData;
   getNewWakuAPI(3);
 }
 
@@ -124,8 +123,6 @@ void NicoLiveManager::newWakuAbstractor(QNetworkReply* reply, int mode) {
   if (mode <= 1) nwin->listStateSave();
   if (mode >= 2) {
     newWakuData.clear();
-    categoryPair.clear();
-    communityPair.clear();
   }
 
   StrAbstractor* input;
@@ -157,17 +154,14 @@ void NicoLiveManager::newWakuAbstractor(QNetworkReply* reply, int mode) {
       QString disp = option->midStr("", "");
       if (mode <= 1) {
         if (name == "tags[]") name = "tags[]c";
-        nwin->set(name, disp);
+        nwin->set(name, value, disp);
         if (head->forward("selected") != -1)
           nwin->setIndex(name, disp);
       }
       if (mode >= 2) {
-        if (name == "tags[]") {
-          categoryPair.insert(disp, value);
-        } else if (name == "default_community") {
-          communityPair.insert(disp, value);
-        } else if (head->forward("selected") != -1) {
-          newWakuData.insert(name, value);
+        if (name != "tags[]" && name != "default_community") {
+          if (head->forward("selected") != -1)
+            newWakuData.insert(name, value);
         }
       }
     }
@@ -191,15 +185,11 @@ void NicoLiveManager::newWakuSetFormData(QString name, QString value)
 {
   if (value == "") return;
   if (name == "tags[]c") {
-    newWakuData.insert("tags[]", categoryPair[value]);
+    newWakuData.insert("tags[]", value);
     return;
   }
   if (name == "tags[]") {
     newWakuData.insert("tags[]", value);
-    return;
-  }
-  if (name == "default_community") {
-    newWakuData.insert("default_community", communityPair[value]);
     return;
   }
   newWakuData.replace(name, value);

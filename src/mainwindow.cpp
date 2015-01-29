@@ -220,7 +220,7 @@ void MainWindow::on_receive_clicked()
   ui->broadID->setText(broadID);
 
   if ( settings.getUserSession().isEmpty() ) {
-    insLog("MainWindow::on_receive_clicked settionID is not set yet");
+    insLog("MainWindow::on_receive_clicked sessionID is not set yet");
     return;
   }
 
