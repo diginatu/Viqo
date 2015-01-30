@@ -268,7 +268,7 @@ void NewWakuSettingsWindow::savePresets()
   QFile file(dir[0] + "/newWakuSettings.json");
   file.open(QIODevice::WriteOnly);
   QTextStream out(&file);
-  out << jsd.toJson();
+  out << jsd.toJson(QJsonDocument::Compact);
   file.close();
 }
 
@@ -307,21 +307,13 @@ QJsonObject NewWakuSettingsWindow::makeJsonFromForm()
     necessary["description"] = ui->description->toPlainText();
 
     QJsonArray community;
-    for (int i = 0; i < ui->community->count(); ++i) {
-      QJsonArray item;
-      item << ui->community->itemText(i);
-      item << ui->community->itemData(i).toString();
-      community << item;
-    }
+    community << ui->community->currentText();
+    community << ui->community->currentData().toString();
     necessary["community"] = community;
 
     QJsonArray category;
-    for (int i = 0; i < ui->category->count(); ++i) {
-      QJsonArray item;
-      item << ui->category->itemText(i);
-      item << ui->category->itemData(i).toString();
-      category << item;
-    }
+    category << ui->category->currentText();
+    category << ui->category->currentData().toString();
     necessary["category"] = category;
   }
 
@@ -369,14 +361,10 @@ void NewWakuSettingsWindow::setPresetsFromJson(const QJsonObject& jsn)
     ui->description->setPlainText(necessary["description"].toString());
 
     const QJsonArray community = necessary["community"].toArray();
-    for (int i = 0; i < community.size(); ++i) {
-      ui->community->addItem(community[i].toArray()[0].toString(), community[i].toArray()[1].toString());
-    }
+    ui->community->addItem(community[0].toString(), community[1].toString());
 
     const QJsonArray category = necessary["category"].toArray();
-    for (int i = 0; i < category.size(); ++i) {
-      ui->category->addItem(category[i].toArray()[0].toString(), category[i].toArray()[1].toString());
-    }
+    ui->category->addItem(category[0].toString(), category[1].toString());
   }
 
   {
