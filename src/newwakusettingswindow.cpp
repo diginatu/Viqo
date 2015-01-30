@@ -40,6 +40,11 @@ void NewWakuSettingsWindow::on_befWakuReuse_clicked()
   mwin->getNewWakuAPI(0);
 }
 
+void NewWakuSettingsWindow::on_getTag_clicked()
+{
+  mwin->getNewWakuAPI(1);
+}
+
 void NewWakuSettingsWindow::setSelectedCategory(const QString& value)
 {
   selectedCategory = value;

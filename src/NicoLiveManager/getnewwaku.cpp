@@ -84,7 +84,7 @@ void NicoLiveManager::newWakuNewInitFinished(QNetworkReply* reply){
   newWakuAbstractor(reply, 2);
   reply->deleteLater();
   nwin->applySettingsPostData();
-  //qDebug() << newWakuData;
+  qDebug() << newWakuData;
   getNewWakuAPI(3);
 }
 
@@ -140,7 +140,11 @@ void NicoLiveManager::newWakuAbstractor(QNetworkReply* reply, int mode) {
     QString value = HTMLdecode(input->midStr("value=\"", "\"", false));
     if (mode == 0) nwin->set(name, value);
     // not to add tags to data when init
-    if (mode == 2 && (name.startsWith("livetags") || name.startsWith("taglock"))) continue;
+    if (mode == 2 && (name.startsWith("livetags") ||
+                      name.startsWith("taglock") ||
+                      name != "tags[]" ||
+                      name != "public_status" ||
+                      name != "twitter_tag")) continue;
     if (mode >= 2) newWakuData.insert(name, value);
   }
 

@@ -54,6 +54,7 @@ private slots:
   void on_okButton_clicked();
   void dragEnterEvent(QDragEnterEvent* event);
   void dropEvent(QDropEvent* event);
+  void on_getTag_clicked();
 };
 
 #endif // NEWWAKUSETTINGSWINDOW_H

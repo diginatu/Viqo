@@ -89,7 +89,6 @@ private:
   QNetworkAccessManager* mRawMyLiveManager;
   QNetworkAccessManager* mTags;
   QNetworkAccessManager* mNewWaku;
-
 private slots:
 	void heartBeatFinished(QNetworkReply* reply);
 	void loginAlertFinished(QNetworkReply* reply);
@@ -108,7 +107,6 @@ private slots:
   void submitOwnerCommentFinished(QNetworkReply* reply);
 
   void deleteWakuList();
-
 };
 
 
