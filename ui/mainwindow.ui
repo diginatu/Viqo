@@ -297,6 +297,9 @@
            <property name="text">
             <string>カーソルを常にトップ</string>
            </property>
+           <property name="checked">
+            <bool>true</bool>
+           </property>
           </widget>
          </item>
         </layout>
@@ -316,8 +319,8 @@
              <rect>
               <x>0</x>
               <y>0</y>
-              <width>399</width>
-              <height>216</height>
+              <width>396</width>
+              <height>180</height>
              </rect>
             </property>
             <layout class="QVBoxLayout" name="verticalLayout_2">
@@ -660,7 +663,7 @@
      <x>0</x>
      <y>0</y>
      <width>457</width>
-     <height>25</height>
+     <height>21</height>
     </rect>
    </property>
    <widget class="QMenu" name="file">
