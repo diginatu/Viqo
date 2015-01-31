@@ -160,7 +160,7 @@ void CommTcp::readOneRawComment(const QString rawcomm)
     QString cmd = mwin->settings.getCommandComment();
 
     QString escmd = comm;
-    escmd.replace("'", "");
+    escmd.replace("\"", "\"\"\"");
     cmd.replace("%comment%",escmd);
 
     pr.start(cmd);
