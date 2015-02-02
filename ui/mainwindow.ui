@@ -318,9 +318,9 @@
             <property name="geometry">
              <rect>
               <x>0</x>
-              <y>0</y>
-              <width>396</width>
-              <height>180</height>
+              <y>-56</y>
+              <width>399</width>
+              <height>183</height>
              </rect>
             </property>
             <layout class="QVBoxLayout" name="verticalLayout_2">
@@ -560,13 +560,6 @@
               </widget>
              </item>
              <item>
-              <widget class="QPushButton" name="developtest">
-               <property name="text">
-                <string>PushButton</string>
-               </property>
-              </widget>
-             </item>
-             <item>
               <spacer name="verticalSpacer">
                <property name="orientation">
                 <enum>Qt::Vertical</enum>
@@ -663,7 +656,7 @@
      <x>0</x>
      <y>0</y>
      <width>457</width>
-     <height>21</height>
+     <height>25</height>
     </rect>
    </property>
    <widget class="QMenu" name="file">

@@ -422,12 +422,6 @@ void MainWindow::on_load_4_triggered()
   settings.loadStatus(4);
 }
 
-
-void MainWindow::on_developtest_clicked()
-{
-  getNewWakuAPI(0);
-}
-
 void MainWindow::getNewWakuAPI(int type, QString livenum)
 {
   nicolivemanager->getNewWakuAPI(type, livenum);

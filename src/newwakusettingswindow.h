@@ -29,6 +29,7 @@ public:
   void setSelectedCategory(const QString& value);
 
   void applySettingsPostData();
+  void songRightsApply();
 
   bool isSetNecessary();
   bool isTwitterTagValid();
@@ -55,6 +56,8 @@ private slots:
   void dragEnterEvent(QDragEnterEvent* event);
   void dropEvent(QDropEvent* event);
   void on_getTag_clicked();
+  void on_song_csv_open_clicked();
+  void on_song_csv_clear_clicked();
 };
 
 #endif // NEWWAKUSETTINGSWINDOW_H

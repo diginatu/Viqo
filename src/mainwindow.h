@@ -82,8 +82,6 @@ private slots:
   void on_autoNewWakuSettings_triggered();
   void on_getNewWakuNow_triggered();
 
-  void on_developtest_clicked();
-
   void on_save_1_triggered();
   void on_save_2_triggered();
   void on_save_3_triggered();

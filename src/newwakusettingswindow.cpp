@@ -58,6 +58,9 @@ void NewWakuSettingsWindow::setSelectedCommunity(const QString& value)
 void NewWakuSettingsWindow::formInit()
 {
   ui->communityOnly->setChecked(false);
+  ui->additional_callMe->setChecked(false);
+  ui->additional_cruise->setChecked(false);
+  ui->additional_unmask->setChecked(false);
 }
 
 void NewWakuSettingsWindow::listStateSave()
@@ -177,6 +180,122 @@ void NewWakuSettingsWindow::listStateLoad()
   ui->category->setCurrentIndex(ui->category->findText(selectedCategory));
 }
 
+void NewWakuSettingsWindow::songRightsApply()
+{
+  QFile file(ui->song_csv_file->text());
+  if (!file.open(QIODevice::ReadOnly | QIODevice::Text)) {
+    file.close();
+    mwin->insLog("opening csv file failed");
+    return;
+  }
+
+  QTextStream in(&file);
+
+  const QStringList rightsName = {"code", "title", "artist",
+                            "lyric", "composer", "time"};
+
+  for (int numRights = 0; !in.atEnd(); ++numRights) {
+    QString line = in.readLine();
+    int mode = 1;
+    int stringSt = 0;
+    int column = 0;
+    for (int i = 0; i < line.length(); ++i) {
+      if (mode == 0) {
+        if (line[i] == QChar('"')) {
+          mwin->insLog("Song CSV has a syntax error");
+          break;
+        } else if (line[i] == QChar(',')) {
+          mwin->nicolivemanager->newWakuSetFormData(
+                QString("rights[%1][%2]").arg(
+                  QString::number(numRights),
+                  rightsName[column]),
+                line.mid(stringSt, i - stringSt));
+
+          stringSt = i+1;
+          ++ column;
+          mode = 1;
+        } else if (i+1 == line.length()) {
+          mwin->nicolivemanager->newWakuSetFormData(
+                QString("rights[%1][%2]").arg(
+                  QString::number(numRights),
+                  rightsName[column]),
+                line.mid(stringSt));
+
+          ++ column;
+        } else {
+          mode = 0;
+        }
+      } else if (mode == 1) {
+        if (line[i] == QChar('"')) {
+          mode = 2;
+          stringSt = i+1;
+        } else if (line[i] == QChar(',')) {
+          mwin->nicolivemanager->newWakuSetFormData(
+                QString("rights[%1][%2]").arg(
+                  QString::number(numRights),
+                  rightsName[column]),
+                line.mid(stringSt, i - stringSt));
+
+          stringSt = i+1;
+          ++ column;
+          mode = 1;
+        } else if (i+1 == line.length()) {
+          mwin->nicolivemanager->newWakuSetFormData(
+                QString("rights[%1][%2]").arg(
+                  QString::number(numRights),
+                  rightsName[column]),
+                QString());
+
+          ++ column;
+        } else {
+          mode = 0;
+        }
+      } else if (mode == 2) {
+        if (line[i] == QChar('"')) {
+          if (i+1 == line.length()) {
+            mwin->nicolivemanager->newWakuSetFormData(
+                  QString("rights[%1][%2]").arg(
+                    QString::number(numRights),
+                    rightsName[column]),
+                  line.mid(stringSt, i - stringSt).replace("\"\"", "\""));
+
+            ++ column;
+          } else if (line[i+1] == QChar('"')) {
+            ++ i;
+          } else if (line[i+1] == QChar(',')) {
+            mwin->nicolivemanager->newWakuSetFormData(
+                  QString("rights[%1][%2]").arg(
+                    QString::number(numRights),
+                    rightsName[column]),
+                  line.mid(stringSt, i - stringSt).replace("\"\"", "\""));
+
+            ++ i;
+            ++ column;
+            stringSt = i+1;
+            mode = 1;
+          } else {
+            mwin->insLog("Song CSV has a syntax error");
+            break;
+          }
+        } else if (line[i] == QChar(',') || i+1 == line.length()) {
+          mwin->insLog("Song CSV has a syntax error");
+          break;
+        }
+      }
+    }
+
+    for (; column < 6; ++column) {
+      mwin->nicolivemanager->newWakuSetFormData(
+            QString("rights[%1][%2]").arg(
+              QString::number(numRights),
+              rightsName[column]),
+            QString());
+    }
+  }
+
+  file.close();
+}
+
 void NewWakuSettingsWindow::applySettingsPostData()
 {
   // necessary
@@ -222,6 +341,8 @@ void NewWakuSettingsWindow::applySettingsPostData()
   else
     mwin->nicolivemanager->newWakuSetFormData("ichiba_type", "0");
 
+  if (ui->song_csv_file->text() != "")
+    songRightsApply();
 }
 
 bool NewWakuSettingsWindow::isSetNecessary()
@@ -271,7 +392,11 @@ void NewWakuSettingsWindow::savePresets()
   jsd.setArray(pages);
 
   QFile file(dir[0] + "/newWakuSettings.json");
-  file.open(QIODevice::WriteOnly);
+  if (!file.open(QIODevice::WriteOnly)) {
+    file.close();
+    mwin->insLog("opening settings file failed");
+    return;
+  }
   QTextStream out(&file);
   out << jsd.toJson(QJsonDocument::Compact);
   file.close();
@@ -285,13 +410,11 @@ void NewWakuSettingsWindow::loadPresets()
     return;
   }
   QFile file(dir[0] + "/newWakuSettings.json");
-  if ( !file.exists() ) {
+  if (!file.open(QIODevice::ReadOnly | QIODevice::Text)) {
     file.close();
-    mwin->insLog("no preset file");
+    mwin->insLog("opening settings file failed");
     return;
   }
-
-  file.open(QIODevice::ReadOnly | QIODevice::Text);
 
   QJsonDocument jsd = QJsonDocument::fromJson(file.readAll());
 
@@ -346,6 +469,8 @@ QJsonObject NewWakuSettingsWindow::makeJsonFromForm()
     other["twitter_tag"] = ui->twitterTag->text();
     other["advertising"] = ui->advertising->isChecked();
     other["ichiba"] = ui->ichiba->isChecked();
+
+    other["song_csv"] = ui->song_csv_file->text();
   }
 
   QJsonObject root;
@@ -396,6 +521,8 @@ void NewWakuSettingsWindow::setPresetsFromJson(const QJsonObject& jsn)
     ui->twitterTag->setText(other["twitter_tag"].toString());
     ui->advertising->setChecked(other["advertising"].toBool());
     ui->ichiba->setChecked(other["ichiba"].toBool());
+
+    ui->song_csv_file->setText(other["song_csv"].toString());
   }
 
 }
@@ -453,4 +580,16 @@ void NewWakuSettingsWindow::on_clear_clicked()
 void NewWakuSettingsWindow::on_okButton_clicked()
 {
   savePresets();
+}
+
+void NewWakuSettingsWindow::on_song_csv_open_clicked()
+{
+  const QString filePath = QFileDialog::getOpenFileName(this, tr("Open song CSV File"), QDir::homePath(), tr("CSV Files (*.csv);;All Files (*)"));
+  if ( filePath == "" ) return;
+  ui->song_csv_file->setText(filePath);
+}
+
+void NewWakuSettingsWindow::on_song_csv_clear_clicked()
+{
+  ui->song_csv_file->clear();
 }

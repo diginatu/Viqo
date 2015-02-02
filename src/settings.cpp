@@ -46,7 +46,11 @@ void Settings::saveStatus(int num)
   jsd.setObject(root);
 
   QFile file(dir[0] + "/status_0" + QString::number(num) + ".json");
-  file.open(QIODevice::WriteOnly);
+  if (!file.open(QIODevice::WriteOnly)) {
+    file.close();
+    mwin->insLog("opening status file failed");
+    return;
+  }
 
   QTextStream out(&file);
 
@@ -72,7 +76,11 @@ void Settings::loadStatus(int num)
     return;
   }
 
-  file.open(QIODevice::ReadOnly | QIODevice::Text);
+  if (!file.open(QIODevice::ReadOnly | QIODevice::Text)) {
+    file.close();
+    mwin->insLog("opening status file failed");
+    return;
+  }
 
   QJsonDocument jsd = QJsonDocument::fromJson(file.readAll());
 
@@ -105,11 +113,11 @@ void Settings::oldLoad()
     return;
   }
   QFile file(dir[0] + "/settings.json");
-  if ( !file.exists() ) {
+  if (!file.open(QIODevice::ReadOnly | QIODevice::Text)) {
+    file.close();
+    mwin->insLog("opening status file failed");
     return;
   }
-
-  file.open(QIODevice::ReadOnly | QIODevice::Text);
 
   QJsonDocument jsd = QJsonDocument::fromJson(file.readAll());
 
@@ -148,9 +156,10 @@ void Settings::saveSettings()
   }
 
   QFile files(dir[0] + "/status_01.json");
-  if ( !files.exists() ) {
-    files.open(QIODevice::WriteOnly);
+  if (!files.open(QIODevice::WriteOnly)) {
     files.close();
+    mwin->insLog("opening status file failed");
+    return;
   }
 
   QJsonObject login_way;
@@ -176,7 +185,11 @@ void Settings::saveSettings()
   jsd.setObject(root);
 
   QFile file(dir[0] + "/settings.json");
-  file.open(QIODevice::WriteOnly);
+  if (!file.open(QIODevice::WriteOnly)) {
+    file.close();
+    mwin->insLog("opening status file failed");
+    return;
+  }
 
   QTextStream out(&file);
 
@@ -193,12 +206,11 @@ void Settings::loadSettings()
     return;
   }
   QFile file(dir[0] + "/settings.json");
-  if ( !file.exists() ) {
+  if (!file.open(QIODevice::ReadOnly | QIODevice::Text)) {
     file.close();
+    mwin->insLog("opening status file failed");
     return;
   }
-
-  file.open(QIODevice::ReadOnly | QIODevice::Text);
 
   QJsonDocument jsd = QJsonDocument::fromJson(file.readAll());
 

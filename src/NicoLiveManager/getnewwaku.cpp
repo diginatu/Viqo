@@ -84,7 +84,6 @@ void NicoLiveManager::newWakuNewInitFinished(QNetworkReply* reply){
   newWakuAbstractor(reply, 2);
   reply->deleteLater();
   nwin->applySettingsPostData();
-  qDebug() << newWakuData;
   getNewWakuAPI(3);
 }
 
@@ -94,6 +93,9 @@ void NicoLiveManager::newWakuConfirmFinished(QNetworkReply* reply){
 
   newWakuData.insert("kiyaku", "true");
 
+  nwin->songRightsApply();
+
+  // qDebug() << newWakuData;
   getNewWakuAPI(4);
 }
 
@@ -139,12 +141,13 @@ void NicoLiveManager::newWakuAbstractor(QNetworkReply* reply, int mode) {
     if (name == "" || name == "is_charge") continue;
     QString value = HTMLdecode(input->midStr("value=\"", "\"", false));
     if (mode == 0) nwin->set(name, value);
-    // not to add tags to data when init
+    // not to add tags and song rights to data when init
     if (mode == 2 && (name.startsWith("livetags") ||
                       name.startsWith("taglock") ||
                       name != "tags[]" ||
                       name != "public_status" ||
-                      name != "twitter_tag")) continue;
+                      name != "twitter_tag" ||
+                      name.startsWith("rights"))) continue;
     if (mode >= 2) newWakuData.insert(name, value);
   }
 
@@ -190,7 +193,6 @@ void NicoLiveManager::newWakuAbstractor(QNetworkReply* reply, int mode) {
 
 void NicoLiveManager::newWakuSetFormData(QString name, QString value)
 {
-  if (value == "") return;
   if (name == "tags[]c") {
     newWakuData.insert("tags[]", value);
     return;
