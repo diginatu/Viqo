@@ -36,7 +36,7 @@ public:
   void getPublishStatusAPI();
   void submitOwnerCommentAPI(const QString& text, const QString& name);
   void getTagsAPI();
-  void getNewWakuAPI(int type, QString liveNum = "");
+  void getNewWakuAPI(const int type, QString liveNum = "");
 
   void alertReconnect();
 

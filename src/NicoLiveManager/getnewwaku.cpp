@@ -1,7 +1,7 @@
 ﻿#include "nicolivemanager.h"
 #include "../mainwindow.h"
 
-void NicoLiveManager::getNewWakuAPI(int type, QString liveNum)
+void NicoLiveManager::getNewWakuAPI(const int type, QString liveNum)
 {
   if (type == 2) {
     if (!nwin->isSetNecessary()) {
@@ -21,6 +21,8 @@ void NicoLiveManager::getNewWakuAPI(int type, QString liveNum)
   if (type > 2) {
     multiPart = new QHttpMultiPart(QHttpMultiPart::FormDataType);
     multiPart->setParent(mNewWaku);
+  } else {
+    multiPart = nullptr;
   }
 
   if (type == 0) {
