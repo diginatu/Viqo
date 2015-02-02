@@ -165,7 +165,7 @@ void NicoLiveManager::newWakuAbstractor(QNetworkReply* reply, int mode) {
       if (mode <= 1) {
         if (name == "tags[]") name = "tags[]c";
         nwin->set(name, value, disp);
-        if (head->forward("selected") != -1)
+        if (mode == 0 && head->forward("selected") != -1)
           nwin->setIndex(name, disp);
       }
       if (mode >= 2) {
@@ -187,7 +187,7 @@ void NicoLiveManager::newWakuAbstractor(QNetworkReply* reply, int mode) {
     if (mode >= 2) newWakuData.insert(name, value);
   }
 
-  if (mode <= 1) nwin->listStateLoad();
+  if (mode == 1) nwin->listStateLoad();
 
 }
 
