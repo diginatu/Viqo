@@ -1,4 +1,4 @@
-#ifndef SETTINGSWINDOW_H
+﻿#ifndef SETTINGSWINDOW_H
 #define SETTINGSWINDOW_H
 
 #include <QDialog>
@@ -19,6 +19,7 @@ public:
   void init();
   void getUserSessionFinished();
 
+
 private slots:
   void on_login_way_combo_currentIndexChanged(int index);
 
@@ -27,6 +28,7 @@ private slots:
   void on_cookiesetting_file_open_button_clicked();
 
   void on_get_session_clicked();
+
 
 private:
   Ui::SettingsWindow *ui;

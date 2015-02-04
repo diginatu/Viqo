@@ -1,4 +1,4 @@
-#ifndef SETTINGS_H
+﻿#ifndef SETTINGS_H
 #define SETTINGS_H
 
 #include <QObject>
@@ -32,6 +32,8 @@ public:
   QString getCommandNextWaku();
   bool isCommandNewWakuChecked();
   QString getCommandNewWaku();
+  bool isAutoNewWaku();
+  bool isAutoNewWakuOpenBrowser();
 
   // account
   QString getUserMail() const;
@@ -61,6 +63,7 @@ signals:
 public slots:
 
 private slots:
+
 
 
 private:

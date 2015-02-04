@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>442</width>
+    <width>457</width>
     <height>487</height>
    </rect>
   </property>
@@ -15,12 +15,6 @@
     <horstretch>0</horstretch>
     <verstretch>0</verstretch>
    </sizepolicy>
-  </property>
-  <property name="sizeIncrement">
-   <size>
-    <width>0</width>
-    <height>8</height>
-   </size>
   </property>
   <property name="windowTitle">
    <string>Viqo</string>
@@ -52,6 +46,9 @@
          </property>
          <property name="text">
           <string>放送ID lv</string>
+         </property>
+         <property name="buddy">
+          <cstring>broadID</cstring>
          </property>
         </widget>
        </item>
@@ -204,9 +201,6 @@
        <property name="contextMenuPolicy">
         <enum>Qt::CustomContextMenu</enum>
        </property>
-       <property name="styleSheet">
-        <string notr="true"/>
-       </property>
        <property name="openExternalLinks">
         <bool>true</bool>
        </property>
@@ -253,6 +247,9 @@
            <property name="columnCount">
             <number>8</number>
            </property>
+           <attribute name="headerMinimumSectionSize">
+            <number>20</number>
+           </attribute>
            <column>
             <property name="text">
              <string>No.</string>
@@ -300,6 +297,9 @@
            <property name="text">
             <string>カーソルを常にトップ</string>
            </property>
+           <property name="checked">
+            <bool>true</bool>
+           </property>
           </widget>
          </item>
         </layout>
@@ -318,8 +318,8 @@
             <property name="geometry">
              <rect>
               <x>0</x>
-              <y>0</y>
-              <width>384</width>
+              <y>-56</y>
+              <width>399</width>
               <height>183</height>
              </rect>
             </property>
@@ -551,6 +551,9 @@
                   <property name="text">
                    <string>コマンドテスト</string>
                   </property>
+                  <property name="buddy">
+                   <cstring>command_test</cstring>
+                  </property>
                  </widget>
                 </item>
                </layout>
@@ -652,7 +655,7 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>442</width>
+     <width>457</width>
      <height>25</height>
     </rect>
    </property>
@@ -689,13 +692,25 @@
     <addaction name="separator"/>
     <addaction name="setting"/>
    </widget>
+   <widget class="QMenu" name="menu">
+    <property name="title">
+     <string>放送</string>
+    </property>
+    <addaction name="getNewWakuNow"/>
+    <addaction name="separator"/>
+    <addaction name="autoNewWakuChk"/>
+    <addaction name="autoNewWakuOpenBrowser"/>
+    <addaction name="separator"/>
+    <addaction name="autoNewWakuSettings"/>
+   </widget>
    <addaction name="file"/>
    <addaction name="edit"/>
+   <addaction name="menu"/>
   </widget>
   <widget class="QStatusBar" name="statusBar"/>
   <action name="setting">
    <property name="text">
-    <string>設定</string>
+    <string>設定...</string>
    </property>
   </action>
   <action name="clear">
@@ -765,6 +780,35 @@
     <string>4 :</string>
    </property>
   </action>
+  <action name="autoNewWakuChk">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>次枠自動取得する</string>
+   </property>
+  </action>
+  <action name="autoNewWakuSettings">
+   <property name="text">
+    <string>次枠設定...</string>
+   </property>
+  </action>
+  <action name="getNewWakuNow">
+   <property name="text">
+    <string>今すぐ取得</string>
+   </property>
+  </action>
+  <action name="autoNewWakuOpenBrowser">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="checked">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>取得時ブラウザで開く</string>
+   </property>
+  </action>
  </widget>
  <layoutdefault spacing="6" margin="11"/>
  <resources/>
@@ -780,8 +824,8 @@
      <y>90</y>
     </hint>
     <hint type="destinationlabel">
-     <x>89</x>
-     <y>275</y>
+     <x>111</x>
+     <y>425</y>
     </hint>
    </hints>
   </connection>
@@ -792,12 +836,12 @@
    <slot>setEnabled(bool)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>146</x>
-     <y>239</y>
+     <x>152</x>
+     <y>356</y>
     </hint>
     <hint type="destinationlabel">
      <x>395</x>
-     <y>242</y>
+     <y>359</y>
     </hint>
    </hints>
   </connection>
@@ -809,11 +853,11 @@
    <hints>
     <hint type="sourcelabel">
      <x>134</x>
-     <y>272</y>
+     <y>422</y>
     </hint>
     <hint type="destinationlabel">
      <x>395</x>
-     <y>275</y>
+     <y>425</y>
     </hint>
    </hints>
   </connection>
@@ -857,11 +901,11 @@
    <hints>
     <hint type="sourcelabel">
      <x>104</x>
-     <y>305</y>
+     <y>389</y>
     </hint>
     <hint type="destinationlabel">
-     <x>390</x>
-     <y>308</y>
+     <x>395</x>
+     <y>392</y>
     </hint>
    </hints>
   </connection>
@@ -872,12 +916,12 @@
    <slot>setEnabled(bool)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>118</x>
-     <y>325</y>
+     <x>119</x>
+     <y>323</y>
     </hint>
     <hint type="destinationlabel">
-     <x>144</x>
-     <y>328</y>
+     <x>358</x>
+     <y>326</y>
     </hint>
    </hints>
   </connection>

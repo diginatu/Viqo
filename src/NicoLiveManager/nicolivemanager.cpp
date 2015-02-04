@@ -1,21 +1,24 @@
-#include "nicolivemanager.h"
+﻿#include "nicolivemanager.h"
 #include "../mainwindow.h"
 
-NicoLiveManager::NicoLiveManager(MainWindow* mwin, SettingsWindow* swin, QObject *parent) :
+NicoLiveManager::NicoLiveManager(MainWindow* mwin, SettingsWindow* swin, NewWakuSettingsWindow* nwin, QObject *parent) :
   QObject(parent),
   nowWaku(mwin, this, this),
   wakutcp(nullptr),
   mPostKeyManager(nullptr),
   mLoginAlertManager(nullptr),
   mAdminAlertManager(nullptr),
-  mHeartBeatManager(nullptr),
+  mHeartBeat(nullptr),
   mLoginManager(nullptr),
   mOwnerCommentManager(nullptr),
   mOwnerCommentSManager(nullptr),
-  mRawMyLiveManager(nullptr)
+  mRawMyLiveManager(nullptr),
+  mTags(nullptr),
+  mNewWaku(nullptr)
 {
   this->mwin = mwin;
   this->swin = swin;
+  this->nwin = nwin;
 
   // set timer to delete the ended elements in waku list.
   delWakuTimer = new QTimer(this);
@@ -105,4 +108,12 @@ void NicoLiveManager::allGotWakuInfo(QString communityID, QString broadID)
       }
     }
   }
+}
+
+QString NicoLiveManager::HTMLdecode(QString st)
+{
+  st.replace("&amp;", "&");
+  st.replace("&lt;", "<");
+  st.replace("&gt;", ">");
+  return st;
 }

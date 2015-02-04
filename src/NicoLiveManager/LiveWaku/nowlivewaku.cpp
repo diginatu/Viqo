@@ -1,4 +1,4 @@
-#include "nowlivewaku.h"
+﻿#include "nowlivewaku.h"
 #include "../../mainwindow.h"
 
 NowLiveWaku::NowLiveWaku(MainWindow* mwin, NicoLiveManager* nlman, QObject* parent) :
@@ -30,7 +30,7 @@ void NowLiveWaku::getPostKeyAPI(const QString& thread, int block_num)
 void NowLiveWaku::playerStatusFinished(QNetworkReply* reply)
 {
   mwin->insLog(" LiveWaku::playerStatusFinished :");
-  QByteArray repdata = reply->readAll();
+  QString repdata = QString(reply->readAll());
   // qDebug() << repdata;
 
   StrAbstractor commTcpi(repdata);
@@ -78,7 +78,7 @@ void NowLiveWaku::playerStatusFinished(QNetworkReply* reply)
   reply->deleteLater();
 }
 
-bool NowLiveWaku::getOwnerBroad() const
+bool NowLiveWaku::isOwnerBroad() const
 {
   return ownerBroad;
 }

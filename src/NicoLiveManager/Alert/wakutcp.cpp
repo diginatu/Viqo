@@ -67,13 +67,14 @@ void WakuTcp::readyRead()
   rawwakus[0].insert(0, lastRawWaku);
 
   for ( int i = 0; i < rawwakus.size()-1; ++i) {
-    readOneRawWaku(rawwakus[i]);
+    const QString tst(rawwakus[i]);
+    readOneRawWaku(tst);
   }
 
   lastRawWaku = rawwakus.takeLast();
 }
 
-void WakuTcp::readOneRawWaku(QByteArray& rawwaku)
+void WakuTcp::readOneRawWaku(const QString& rawwaku)
 {
   checkConnectionTimer.start();
   if (rawwaku.startsWith("<thread")) {

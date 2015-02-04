@@ -35,7 +35,10 @@ SOURCES += src/main.cpp\
     src/settings.cpp \
     src/NicoLiveManager/loginapi.cpp \
     src/NicoLiveManager/postkeyapi.cpp \
-    src/NicoLiveManager/ownercomment.cpp
+    src/NicoLiveManager/ownercomment.cpp \
+    src/NicoLiveManager/tagapi.cpp \
+    src/NicoLiveManager/getnewwaku.cpp \
+    src/newwakusettingswindow.cpp
 
 HEADERS  += src/NicoLiveManager/nicolivemanager.h \
     src/cookieread.h \
@@ -50,7 +53,9 @@ HEADERS  += src/NicoLiveManager/nicolivemanager.h \
     src/NicoLiveManager/LiveWaku/nowlivewaku.h \
     src/NicoLiveManager/LiveWaku/commtcp.h \
     src/settingswindow.h \
-    src/settings.h
+    src/settings.h \
+    src/newwakusettingswindow.h
 
 FORMS    += ui/mainwindow.ui \
-    ui/settingswindow.ui
+    ui/settingswindow.ui \
+    ui/newwakusettingswindow.ui

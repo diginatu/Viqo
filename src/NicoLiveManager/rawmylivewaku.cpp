@@ -1,4 +1,4 @@
-#include "nicolivemanager.h"
+﻿#include "nicolivemanager.h"
 #include "../mainwindow.h"
 
 void NicoLiveManager::getRawMyLiveHTML()
@@ -29,12 +29,12 @@ void NicoLiveManager::getRawMyLiveHTML()
 void NicoLiveManager::rawMyLivefinished(QNetworkReply* reply)
 {
   mwin->insLog("NicoLiveManager::rawMyLivefinished");
-  QByteArray repdata = reply->readAll();
+  QString repdata = QString(reply->readAll());
 
   StrAbstractor liveID(repdata);
 
   // seek to Programs from the joined channels/communities if exist
-  if (liveID.forwardStr("<div class=\"articleBody \" id=\"ch\">") == -1) {
+  if (liveID.forward("<div class=\"articleBody \" id=\"ch\">") == -1) {
     mwin->insLog("no joined channels/communities\n");
     return;
   }

@@ -1,4 +1,4 @@
-#include "nicolivemanager.h"
+﻿#include "nicolivemanager.h"
 #include "../mainwindow.h"
 
 void NicoLiveManager::login(QString mail, QString pass)
@@ -49,8 +49,8 @@ void NicoLiveManager::loginFinished(QNetworkReply* reply){
 
   if (!success) mwin->insLog("login failed");
 
-  swin->getUserSessionFinished();
-
   mwin->insLog();
   reply->deleteLater();
+
+  swin->getUserSessionFinished();
 }

@@ -1,13 +1,24 @@
-#include "mainwindow.h"
+﻿#include "mainwindow.h"
 #include "ui_mainwindow.h"
 
 MainWindow::MainWindow(QWidget *parent) :
   QMainWindow(parent),
-  settingsWindow(new SettingsWindow(this, this)),
   ui(new Ui::MainWindow),
+  settingsWindow(new SettingsWindow(this, this)),
+  newWakuSettingsWindow(new NewWakuSettingsWindow(this, this)),
   settings(this, ui, this)
 {
   ui->setupUi(this);
+  setAcceptDrops(true);
+
+  QTextCodec::setCodecForLocale(QTextCodec::codecForName("UTF-8"));
+
+  // set the column width for the comment view list
+  ui->comment_view->header()->resizeSection(0, 60);
+  ui->comment_view->header()->resizeSection(1, 30);
+  ui->comment_view->header()->resizeSection(3, 200);
+  ui->comment_view->header()->resizeSection(6, 30);
+  ui->comment_view->header()->resizeSection(7, 30);
 
   QStringList dirs = QStandardPaths::standardLocations(QStandardPaths::DataLocation);
   if (dirs.empty()) {
@@ -21,7 +32,7 @@ MainWindow::MainWindow(QWidget *parent) :
   }
 
   userManager = new UserManager(this);
-  nicolivemanager = new NicoLiveManager(this, settingsWindow, this);
+  nicolivemanager = new NicoLiveManager(this, settingsWindow, newWakuSettingsWindow, this);
 
   settings.loadSettings();
   settings.loadStatus();
@@ -35,7 +46,7 @@ MainWindow::MainWindow(QWidget *parent) :
   nicolivemanager->getRawMyLiveHTML();
   QTimer::singleShot(30000, nicolivemanager, SLOT(getRawMyLiveHTML()));
 
-  setAcceptDrops(true);
+  newWakuSettingsWindow->loadPresets();
 }
 
 MainWindow::~MainWindow()
@@ -43,6 +54,7 @@ MainWindow::~MainWindow()
   on_disconnect_clicked();
   delete ui;
 }
+
 void MainWindow::onReceiveStarted()
 {
   qDebug() << "--comment receiving started--";
@@ -212,7 +224,7 @@ void MainWindow::on_receive_clicked()
   ui->broadID->setText(broadID);
 
   if ( settings.getUserSession().isEmpty() ) {
-    insLog("MainWindow::on_receive_clicked settionID is not set yet");
+    insLog("MainWindow::on_receive_clicked sessionID is not set yet");
     return;
   }
 
@@ -342,7 +354,6 @@ void MainWindow::on_openBrowser_clicked()
 
 void MainWindow::on_comment_view_customContextMenuRequested(const QPoint &pos)
 {
-
 }
 
 void MainWindow::on_one_comment_view_customContextMenuRequested(const QPoint &pos)
@@ -409,4 +420,21 @@ void MainWindow::on_load_3_triggered()
 void MainWindow::on_load_4_triggered()
 {
   settings.loadStatus(4);
+}
+
+void MainWindow::getNewWakuAPI(int type, QString livenum)
+{
+  nicolivemanager->getNewWakuAPI(type, livenum);
+}
+
+void MainWindow::on_autoNewWakuSettings_triggered()
+{
+  newWakuSettingsWindow->show();
+  newWakuSettingsWindow->raise();
+  newWakuSettingsWindow->activateWindow();
+}
+
+void MainWindow::on_getNewWakuNow_triggered()
+{
+  getNewWakuAPI(2);
 }

@@ -1,4 +1,4 @@
-#include "settings.h"
+﻿#include "settings.h"
 #include "mainwindow.h"
 
 Settings::Settings(MainWindow* mwin, Ui::MainWindow* ui, QObject* parent) :
@@ -24,6 +24,8 @@ void Settings::saveStatus(int num)
   other["auto_getting_user_name"] = ui->auto_getting_user_name_chk->isChecked();
   other["keep_top_comment"] = ui->keep_top_chk->isChecked();
   other["is184_comment"] = ui->is184_chk->isChecked();
+  other["auto_getting_new_waku"] = ui->autoNewWakuChk->isChecked();
+  other["new_waku_open_browser"] = ui->autoNewWakuOpenBrowser->isChecked();
 
   QJsonObject command;
   command["comment_check"] = ui->command_comment_chk->isChecked();
@@ -44,7 +46,11 @@ void Settings::saveStatus(int num)
   jsd.setObject(root);
 
   QFile file(dir[0] + "/status_0" + QString::number(num) + ".json");
-  file.open(QIODevice::WriteOnly);
+  if (!file.open(QIODevice::WriteOnly)) {
+    file.close();
+    mwin->insLog("opening status file failed");
+    return;
+  }
 
   QTextStream out(&file);
 
@@ -70,14 +76,20 @@ void Settings::loadStatus(int num)
     return;
   }
 
-  file.open(QIODevice::ReadOnly | QIODevice::Text);
+  if (!file.open(QIODevice::ReadOnly | QIODevice::Text)) {
+    file.close();
+    mwin->insLog("opening status file failed");
+    return;
+  }
 
   QJsonDocument jsd = QJsonDocument::fromJson(file.readAll());
 
   QJsonObject other = jsd.object()["other"].toObject();
-  ui->auto_getting_user_name_chk->setChecked(other["auto_getting_user_name"].toBool());
-  ui->keep_top_chk->setChecked(other["keep_top_comment"].toBool());
+  ui->auto_getting_user_name_chk->setChecked(other["auto_getting_user_name"].toBool(true));
+  ui->keep_top_chk->setChecked(other["keep_top_comment"].toBool(true));
   ui->is184_chk->setChecked(other["is184_comment"].toBool());
+  ui->autoNewWakuChk->setChecked(other["auto_getting_new_waku"].toBool());
+  ui->autoNewWakuOpenBrowser->setChecked(other["new_waku_open_browser"].toBool(true));
 
   QJsonObject command = jsd.object()["command"].toObject();
   ui->command_comment->setText(command["comment"].toString());
@@ -85,8 +97,7 @@ void Settings::loadStatus(int num)
   ui->command_nextWaku->setText(command["nextWaku"].toString());
   ui->command_nextWaku_chk->setChecked(command["nextWaku_check"].toBool());
   ui->command_beforeEnd_chk->setChecked(command["command_beforeEnd_check"].toBool());
-  if (command.contains("command_beforeEnd_minuts"))
-    ui->command_beforeEndMinuts_spn->setValue(command["command_beforeEnd_minuts"].toInt());
+  ui->command_beforeEndMinuts_spn->setValue(command["command_beforeEnd_minuts"].toInt(3));
   ui->command_beforeEnd->setText(command["command_beforeEnd"].toString());
   ui->command_newWaku->setText(command["newWaku"].toString());
   ui->command_newWaku_chk->setChecked(command["newWaku_check"].toBool());
@@ -102,11 +113,11 @@ void Settings::oldLoad()
     return;
   }
   QFile file(dir[0] + "/settings.json");
-  if ( !file.exists() ) {
+  if (!file.open(QIODevice::ReadOnly | QIODevice::Text)) {
+    file.close();
+    mwin->insLog("opening status file failed");
     return;
   }
-
-  file.open(QIODevice::ReadOnly | QIODevice::Text);
 
   QJsonDocument jsd = QJsonDocument::fromJson(file.readAll());
 
@@ -145,9 +156,10 @@ void Settings::saveSettings()
   }
 
   QFile files(dir[0] + "/status_01.json");
-  if ( !files.exists() ) {
-    files.open(QIODevice::WriteOnly);
+  if (!files.open(QIODevice::WriteOnly)) {
     files.close();
+    mwin->insLog("opening status file failed");
+    return;
   }
 
   QJsonObject login_way;
@@ -173,7 +185,11 @@ void Settings::saveSettings()
   jsd.setObject(root);
 
   QFile file(dir[0] + "/settings.json");
-  file.open(QIODevice::WriteOnly);
+  if (!file.open(QIODevice::WriteOnly)) {
+    file.close();
+    mwin->insLog("opening status file failed");
+    return;
+  }
 
   QTextStream out(&file);
 
@@ -190,12 +206,11 @@ void Settings::loadSettings()
     return;
   }
   QFile file(dir[0] + "/settings.json");
-  if ( !file.exists() ) {
+  if (!file.open(QIODevice::ReadOnly | QIODevice::Text)) {
     file.close();
+    mwin->insLog("opening status file failed");
     return;
   }
-
-  file.open(QIODevice::ReadOnly | QIODevice::Text);
 
   QJsonDocument jsd = QJsonDocument::fromJson(file.readAll());
 
@@ -249,6 +264,16 @@ bool Settings::isCommandNewWakuChecked()
 QString Settings::getCommandNewWaku()
 {
   return ui->command_newWaku->text();
+}
+
+bool Settings::isAutoNewWaku()
+{
+  return ui->autoNewWakuChk->isChecked();
+}
+
+bool Settings::isAutoNewWakuOpenBrowser()
+{
+  return ui->autoNewWakuOpenBrowser->isChecked();
 }
 
 QString Settings::getUserMail() const

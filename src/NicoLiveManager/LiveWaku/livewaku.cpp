@@ -91,7 +91,7 @@ void LiveWaku::getPlayyerStatusAPI()
 void LiveWaku::playerStatusFinished(QNetworkReply* reply)
 {
   mwin->insLog(" LiveWaku::playerStatusFinished :");
-  QByteArray repdata = reply->readAll();
+  QString repdata = QString(reply->readAll());
 
   StrAbstractor commTcpi(repdata);
 
@@ -132,7 +132,9 @@ void LiveWaku::playerStatusFinished(QNetworkReply* reply)
     QProcess pr;
     QString cmd = mwin->settings.getCommandNewWaku();
 
-    cmd.replace("%newTitle%", title);
+    QString estitle = title;
+    estitle.replace("\"", "\"\"\"");
+    cmd.replace("%newTitle%", estitle);
 
     pr.start(cmd);
     pr.waitForFinished(5000);

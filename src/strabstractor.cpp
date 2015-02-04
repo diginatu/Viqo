@@ -1,34 +1,48 @@
-#include "strabstractor.h"
+﻿#include "strabstractor.h"
 
-StrAbstractor::StrAbstractor(QByteArray& doc, QObject *parent) :
+StrAbstractor::StrAbstractor(const QString doc, QObject *parent) :
   QObject(parent)
 {
   pos = 0;
-  this->doc = &doc;
+  this->doc = doc;
 }
 
 // Return the QString between "start" and "end".
 // Set current position to the next one of "end" found if foward is true (default).
+// if start is empty string, the returned value starts from begining of doc.
+// if end do so, it ends end of the doc.
 QString StrAbstractor::midStr(QString start, QString end, bool foward)
 {
-  int st = doc->indexOf(start,pos);
+  int st;
+  if (start == "") st = pos;
+  else             st = doc.indexOf(start,pos);
+
   if ( st == -1 ) return "";
   st += start.length();
 
-  const int ed = doc->indexOf(end,st);
+  int ed;
+  if (end == "") ed = doc.length();
+  else           ed = doc.indexOf(end,st);
 
   if ( ed == -1 ) return "";
 
   if (foward) pos = ed + end.length();
 
-  return doc->mid(st, ed-st);
+  return doc.mid(st, ed-st);
+}
+
+StrAbstractor* StrAbstractor::mid(QString start, QString end, bool foward)
+{
+  QString tmp = midStr(start, end, foward);
+  if ( tmp == "" ) return nullptr;
+  else return new StrAbstractor(tmp, this);
 }
 
 // forward position to the position that st found.
 // return -1 if no st found, otherwise return the position that st found.
-int StrAbstractor::forwardStr(QString st)
+int StrAbstractor::forward(QString st)
 {
-  int po = doc->indexOf(st,pos);
+  int po = doc.indexOf(st,pos);
   if ( po == -1 ) return -1;
 
   pos = po;
@@ -40,8 +54,17 @@ void StrAbstractor::setPosition(int pos)
 {
   this->pos = pos;
 }
+void StrAbstractor::setRelativePosition(int pos)
+{
+  this->pos += pos;
+}
 
 int StrAbstractor::getPosition()
 {
   return pos;
+}
+
+QString StrAbstractor::toString()
+{
+  return doc;
 }

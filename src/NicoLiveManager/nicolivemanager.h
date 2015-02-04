@@ -1,4 +1,4 @@
-#ifndef NICOLIVEMANAGER_H
+﻿#ifndef NICOLIVEMANAGER_H
 #define NICOLIVEMANAGER_H
 
 #include <QObject>
@@ -12,6 +12,8 @@
 #include "LiveWaku/livewaku.h"
 #include "LiveWaku/nowlivewaku.h"
 #include "../settingswindow.h"
+#include "../newwakusettingswindow.h"
+
 
 namespace Ui {
 class MainWindow;
@@ -21,7 +23,7 @@ class NicoLiveManager : public QObject
 {
 	Q_OBJECT
 public:
-  explicit NicoLiveManager(MainWindow* mwin, SettingsWindow* swin, QObject *parent = 0);
+  explicit NicoLiveManager(MainWindow* mwin, SettingsWindow* swin, NewWakuSettingsWindow* nwin, QObject *parent = 0);
 	~NicoLiveManager();
 
 	static QVariant makePostData(QString session_id);
@@ -33,6 +35,8 @@ public:
   void getPostKeyAPI(const QString& thread, int block_no);
   void getPublishStatusAPI();
   void submitOwnerCommentAPI(const QString& text, const QString& name);
+  void getTagsAPI();
+  void getNewWakuAPI(const int type, QString liveNum = "");
 
   void alertReconnect();
 
@@ -48,6 +52,9 @@ public:
 	void broadDisconnect();
 	void broadStart();
 
+  void newWakuSetFormData(QString name, QString value);
+
+  static QString HTMLdecode(QString st);
 signals:
 
 public slots:
@@ -55,9 +62,11 @@ public slots:
 
 private:
   void adminAlertAPI(const QString& ticket);
+  void newWakuAbstractor(QNetworkReply* reply, int mode);
 
   MainWindow* mwin;
   SettingsWindow* swin;
+  NewWakuSettingsWindow* nwin;
   WakuTcp* wakutcp;
 
 	QString watchCount;
@@ -68,26 +77,31 @@ private:
 
 	QTimer* delWakuTimer;
 
+  QMultiMap<QString, QString> newWakuData;
+
   QNetworkAccessManager* mPostKeyManager;
   QNetworkAccessManager* mLoginAlertManager;
   QNetworkAccessManager* mAdminAlertManager;
-  QNetworkAccessManager* mHeartBeatManager;
+  QNetworkAccessManager* mHeartBeat;
   QNetworkAccessManager* mLoginManager;
   QNetworkAccessManager* mOwnerCommentManager;
   QNetworkAccessManager* mOwnerCommentSManager;
   QNetworkAccessManager* mRawMyLiveManager;
-
+  QNetworkAccessManager* mTags;
+  QNetworkAccessManager* mNewWaku;
 private slots:
 	void heartBeatFinished(QNetworkReply* reply);
-
 	void loginAlertFinished(QNetworkReply* reply);
 	void adminAlertFinished(QNetworkReply* reply);
-
 	void rawMyLivefinished(QNetworkReply* reply);
-
   void loginFinished(QNetworkReply* reply);
-
   void postKeyFinished(QNetworkReply* reply);
+  void tagsFinished(QNetworkReply* reply);
+  void newWakuNewReuseFinished(QNetworkReply* reply);
+  void newWakuNewUpdateFinished(QNetworkReply* reply);
+  void newWakuNewInitFinished(QNetworkReply* reply);
+  void newWakuConfirmFinished(QNetworkReply* reply);
+  void newWakuFinished(QNetworkReply* reply);
 
   void publishStatusFinished(QNetworkReply* reply);
   void submitOwnerCommentFinished(QNetworkReply* reply);
