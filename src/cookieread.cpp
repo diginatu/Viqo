@@ -1,4 +1,4 @@
-#include "cookieread.h"
+﻿#include "cookieread.h"
 #include "mainwindow.h"
 
 CookieRead::CookieRead(MainWindow* mwin)

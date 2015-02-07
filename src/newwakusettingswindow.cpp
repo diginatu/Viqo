@@ -182,6 +182,8 @@ void NewWakuSettingsWindow::listStateLoad()
 
 void NewWakuSettingsWindow::songRightsApply()
 {
+  if (ui->song_csv_file->text() == "") return;
+
   QFile file(ui->song_csv_file->text());
   if (!file.open(QIODevice::ReadOnly | QIODevice::Text)) {
     file.close();
@@ -341,8 +343,7 @@ void NewWakuSettingsWindow::applySettingsPostData()
   else
     mwin->nicolivemanager->newWakuSetFormData("ichiba_type", "0");
 
-  if (ui->song_csv_file->text() != "")
-    songRightsApply();
+  songRightsApply();
 }
 
 bool NewWakuSettingsWindow::isSetNecessary()

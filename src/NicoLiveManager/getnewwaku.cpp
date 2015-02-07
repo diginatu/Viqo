@@ -102,13 +102,23 @@ void NicoLiveManager::newWakuConfirmFinished(QNetworkReply* reply){
 }
 
 void NicoLiveManager::newWakuFinished(QNetworkReply* reply){
-  if (mwin->settings.isAutoNewWakuOpenBrowser()) {
-    auto headers = reply->rawHeaderPairs();
-    foreach (auto header, headers) {
-      if (header.first == "Location") {
-        QString url = "http://live.nicovideo.jp/" + header.second;
-        QDesktopServices::openUrl(url);
-        break;
+  if (reply->size() >= 10) {
+    mwin->insLog("getting waku failed");
+    QString body = QString(reply->readAll());
+    StrAbstractor bodya(body);
+    if (bodya.forward("<div id=\"wait\">") != -1)
+      mwin->insLog("wating " + bodya.midStr("<span id=\"waiting_users\">", "</span>"));
+    else qDebug() << body;
+
+  } else {
+    if (mwin->settings.isAutoNewWakuOpenBrowser()) {
+      auto headers = reply->rawHeaderPairs();
+      foreach (auto header, headers) {
+        if (header.first == "Location") {
+          QString url = "http://live.nicovideo.jp/" + header.second;
+          QDesktopServices::openUrl(url);
+          break;
+        }
       }
     }
   }
