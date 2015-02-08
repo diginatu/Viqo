@@ -199,7 +199,7 @@ void NicoLiveManager::newWakuAbstractor(QNetworkReply* reply, int mode) {
     if (mode >= 2) newWakuData.insert(name, value);
   }
 
-  if (mode == 1) nwin->listStateLoad();
+  if (mode <= 1) nwin->listStateLoad();
 
 }
 
