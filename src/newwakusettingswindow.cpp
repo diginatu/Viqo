@@ -109,11 +109,11 @@ void NewWakuSettingsWindow::set(QString name, QString value, QString disp)
     return;
   }
   if (name == "tags[]") {
-    if (value == "顔出し") {
+    if (value == QStringLiteral("顔出し")) {
       ui->additional_unmask->setChecked(true);
-    } else if (value == "凸待ち") {
+    } else if (value == QStringLiteral("凸待ち")) {
       ui->additional_callMe->setChecked(true);
-    } else if (value == "クルーズ待ち") {
+    } else if (value == QStringLiteral("クルーズ待ち")) {
       ui->additional_cruise->setChecked(true);
     }
     return;
@@ -311,18 +311,18 @@ void NewWakuSettingsWindow::applySettingsPostData()
     QListWidgetItem* item = ui->tags_list->item(i);
     mwin->nicolivemanager->newWakuSetFormData("livetags" + QString::number(i+1), item->text());
     if (item->checkState() == Qt::Checked)
-      mwin->nicolivemanager->newWakuSetFormData("taglock" + QString::number(i+1), "ロックする");
+      mwin->nicolivemanager->newWakuSetFormData("taglock" + QString::number(i+1), QStringLiteral("ロックする"));
   }
 
   // other
   if (ui->tag_allLock->isChecked())
-    mwin->nicolivemanager->newWakuSetFormData("taglock", "ロックする");
+    mwin->nicolivemanager->newWakuSetFormData("taglock", QStringLiteral("ロックする"));
   if (ui->additional_unmask->isChecked())
-    mwin->nicolivemanager->newWakuSetFormData("tags[]", "顔出し");
+    mwin->nicolivemanager->newWakuSetFormData("tags[]", QStringLiteral("顔出し"));
   if (ui->additional_callMe->isChecked())
-    mwin->nicolivemanager->newWakuSetFormData("tags[]", "凸待ち");
+    mwin->nicolivemanager->newWakuSetFormData("tags[]", QStringLiteral("凸待ち"));
   if (ui->additional_cruise->isChecked())
-    mwin->nicolivemanager->newWakuSetFormData("tags[]", "クルーズ待ち");
+    mwin->nicolivemanager->newWakuSetFormData("tags[]", QStringLiteral("クルーズ待ち"));
   if (ui->communityOnly->isChecked())
     mwin->nicolivemanager->newWakuSetFormData("public_status", "2");
   if (ui->timeshift->isChecked())
@@ -362,7 +362,7 @@ bool NewWakuSettingsWindow::isTwitterTagValid()
 void NewWakuSettingsWindow::on_tag_add_clicked()
 {
   QListWidgetItem* item = new QListWidgetItem(ui->tags_list);
-  item->setText("タグ名");
+  item->setText(QStringLiteral("タグ名"));
   item->setFlags(item->flags() | Qt::ItemIsEditable | Qt::ItemIsUserCheckable);
   item->setCheckState(Qt::Unchecked);
 }
@@ -530,8 +530,8 @@ void NewWakuSettingsWindow::setPresetsFromJson(const QJsonObject& jsn)
 
 void NewWakuSettingsWindow::on_presets_regist_clicked()
 {
-  QString text = QInputDialog::getText(this, "プリセット登録",
-                             "プリセット名:", QLineEdit::Normal,
+  QString text = QInputDialog::getText(this, QStringLiteral("プリセット登録"),
+                             QStringLiteral("プリセット名:"), QLineEdit::Normal,
                              ui->presetes->currentText());
   if (!text.isEmpty()) {
     int indexNew = ui->presetes->findText(text);
@@ -540,7 +540,7 @@ void NewWakuSettingsWindow::on_presets_regist_clicked()
       ui->presetes->setCurrentText(text);
     } else {
       QMessageBox msgBox;
-      msgBox.setText("上書きしますか？");
+      msgBox.setText(QStringLiteral("上書きしますか？"));
       msgBox.setStandardButtons(QMessageBox::Cancel | QMessageBox::Ok);
       msgBox.setDefaultButton(QMessageBox::Ok);
       if (msgBox.exec() == QMessageBox::Ok) {

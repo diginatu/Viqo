@@ -145,13 +145,13 @@ void CommTcp::readOneRawComment(const QString rawcomm)
   int nextnum = mwin->lastCommentNum() + 1;
   if (mwin->settings.getDispNG() && nextnum != num) {
     for (int i = nextnum; i < num; ++i) {
-      mwin->insComment( i, false, "NG", "NGコメント", date,
+      mwin->insComment( i, false, "NG", QStringLiteral("NGコメント"), date,
                         "NGcomment", false, false);
     }
   }
 
   mwin->insComment( num, premium,
-    broadcaster?"放送主":user, comm, date, is_184,
+    broadcaster?QStringLiteral("放送主"):user, comm, date, is_184,
     broadcaster, commenttime > open_time);
 
   // comment command

@@ -117,7 +117,7 @@ void MainWindow::getWatchCount()
 
 void MainWindow::setWatchCount(QString num)
 {
-  ui->num_audience->setText("来場者数: " + num);
+  ui->num_audience->setText(QStringLiteral("来場者数: ") + num);
 }
 
 void MainWindow::updateElapsedTime()
@@ -181,7 +181,7 @@ void MainWindow::insComment(int num, bool prem, QString user,
   ls += QString::number(num);
   ls += prem?"@":"";
   ls += user;
-  ls += comm.replace("\n", "↵");
+  ls += comm.replace('\n', QChar(8629));
   ls += date;
   ls += user;
   ls += is_184?"@":"";
@@ -302,7 +302,7 @@ void MainWindow::on_comment_view_currentItemChanged(QTreeWidgetItem *current)
     tcomme += comme.mid(bpos);
     comme = tcomme;
   }
-  comme.replace("↵", "<br>");
+  comme.replace(QChar(8629), "<br>");
 
   comment_view += "<p>"+comme+"</p>";
 
