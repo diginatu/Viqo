@@ -85,11 +85,11 @@ void Settings::loadStatus(int num)
   QJsonDocument jsd = QJsonDocument::fromJson(file.readAll());
 
   QJsonObject other = jsd.object()["other"].toObject();
-  ui->auto_getting_user_name_chk->setChecked(other["auto_getting_user_name"].toBool(true));
-  ui->keep_top_chk->setChecked(other["keep_top_comment"].toBool(true));
+  ui->auto_getting_user_name_chk->setChecked(other["auto_getting_user_name"].toBool());
+  ui->keep_top_chk->setChecked(other["keep_top_comment"].toBool());
   ui->is184_chk->setChecked(other["is184_comment"].toBool());
   ui->autoNewWakuChk->setChecked(other["auto_getting_new_waku"].toBool());
-  ui->autoNewWakuOpenBrowser->setChecked(other["new_waku_open_browser"].toBool(true));
+  ui->autoNewWakuOpenBrowser->setChecked(other["new_waku_open_browser"].toBool());
 
   QJsonObject command = jsd.object()["command"].toObject();
   ui->command_comment->setText(command["comment"].toString());
@@ -97,7 +97,7 @@ void Settings::loadStatus(int num)
   ui->command_nextWaku->setText(command["nextWaku"].toString());
   ui->command_nextWaku_chk->setChecked(command["nextWaku_check"].toBool());
   ui->command_beforeEnd_chk->setChecked(command["command_beforeEnd_check"].toBool());
-  ui->command_beforeEndMinuts_spn->setValue(command["command_beforeEnd_minuts"].toInt(3));
+  ui->command_beforeEndMinuts_spn->setValue(command["command_beforeEnd_minuts"].toInt());
   ui->command_beforeEnd->setText(command["command_beforeEnd"].toString());
   ui->command_newWaku->setText(command["newWaku"].toString());
   ui->command_newWaku_chk->setChecked(command["newWaku_check"].toBool());
