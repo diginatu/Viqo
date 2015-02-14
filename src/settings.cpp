@@ -155,13 +155,6 @@ void Settings::saveSettings()
     return;
   }
 
-  QFile files(dir[0] + "/status_01.json");
-  if (!files.open(QIODevice::WriteOnly)) {
-    files.close();
-    mwin->insLog("opening status file failed");
-    return;
-  }
-
   QJsonObject login_way;
   login_way["login_way"] = loginWay;
   login_way["user_session"] = userSession;
