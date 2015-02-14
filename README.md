@@ -16,7 +16,7 @@ Viqo はクロスプラットフォームなニコニコ生放送用 コメン�
 ダウンロード
 ------------
 
-### [Version 1.7](https://github.com/diginatu/Viqo/releases/tag/v1.7)
+### [Version 1.7.1](https://github.com/diginatu/Viqo/releases/tag/v1.7.1)
 
 ### [Version 1.6](https://github.com/diginatu/Viqo/releases/tag/v1.6)
 
