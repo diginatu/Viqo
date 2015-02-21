@@ -1,4 +1,4 @@
-#include "livewaku.h"
+﻿#include "livewaku.h"
 #include "../../mainwindow.h"
 #include "../nicolivemanager.h"
 
@@ -8,12 +8,18 @@ LiveWaku::LiveWaku(MainWindow* mwin, NicoLiveManager* nlman, QObject* parent) :
 {
   this->mwin = mwin;
   this->nlman = nlman;
+  flag = 0;
 }
 
-LiveWaku::LiveWaku(MainWindow* mwin, NicoLiveManager* nlman, QString broadID, QString community, QObject *parent) :
+LiveWaku::LiveWaku(MainWindow* mwin, NicoLiveManager* nlman, QString broadID, QObject* parent) :
   LiveWaku(mwin, nlman, parent)
 {
   this->broadID = broadID;
+}
+
+LiveWaku::LiveWaku(MainWindow* mwin, NicoLiveManager* nlman, QString broadID, QString community, QObject *parent) :
+  LiveWaku(mwin, nlman, broadID, parent)
+{
   this->community = community;
 }
 
@@ -72,7 +78,17 @@ void LiveWaku::setEd(uint unixt)
   ed.setTime_t(unixt);
 }
 
-void LiveWaku::getPlayyerStatusAPI()
+void LiveWaku::setFlag(int flag)
+{
+  this->flag = flag;
+}
+
+QString LiveWaku::getBroadcastToken() const
+{
+  return broadcastToken;
+}
+
+void LiveWaku::getPlayerStatusAPI()
 {
   if(mManager!=nullptr)  delete mManager;
   mManager = new QNetworkAccessManager(this);
@@ -117,18 +133,19 @@ void LiveWaku::playerStatusFinished(QNetworkReply* reply)
 
   QString befTitle = title;
 
-  setBroadID(commTcpi.midStr("<id>lv", "</id>"));
-  setTitle(commTcpi.midStr("<title>", "</title>"));
-  setCommunity(commTcpi.midStr("<default_community>", "</default_community>"));
+  broadID = commTcpi.midStr("<id>lv", "</id>");
+  title = commTcpi.midStr("<title>", "</title>");
+  community = commTcpi.midStr("<default_community>", "</default_community>");
   setSt(commTcpi.midStr("<start_time>","</start_time>").toUInt());
   setEd(commTcpi.midStr("<end_time>","</end_time>").toUInt());
+  broadcastToken = commTcpi.midStr("<broadcast_token>","</broadcast_token>");
 
   mwin->refleshLiveWaku();
   mwin->insLog("got a broad info : " + title + "\n");
 
   reply->deleteLater();
 
-  if (mwin->settings.isCommandNewWakuChecked() && befTitle != title) {
+  if (flag == 0 && mwin->settings.isCommandNewWakuChecked() && befTitle != title) {
     QProcess pr;
     QString cmd = mwin->settings.getCommandNewWaku();
 
@@ -138,5 +155,7 @@ void LiveWaku::playerStatusFinished(QNetworkReply* reply)
 
     pr.start(cmd);
     pr.waitForFinished(5000);
+  } else if (flag == 1) {
+    nlman->configureStreamAPI("hq", "1", this);
   }
 }

@@ -318,7 +318,7 @@
             <property name="geometry">
              <rect>
               <x>0</x>
-              <y>-56</y>
+              <y>0</y>
               <width>399</width>
               <height>183</height>
              </rect>
@@ -700,6 +700,7 @@
     <addaction name="separator"/>
     <addaction name="autoNewWakuChk"/>
     <addaction name="autoNewWakuOpenBrowser"/>
+    <addaction name="autoNewWakuStart"/>
     <addaction name="separator"/>
     <addaction name="autoNewWakuSettings"/>
    </widget>
@@ -807,6 +808,14 @@
    </property>
    <property name="text">
     <string>取得時ブラウザで開く</string>
+   </property>
+  </action>
+  <action name="autoNewWakuStart">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>取得後放送開始する</string>
    </property>
   </action>
  </widget>

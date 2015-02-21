@@ -93,7 +93,7 @@ void NicoLiveManager::newWakuConfirmFinished(QNetworkReply* reply){
   newWakuAbstractor(reply, 3);
   reply->deleteLater();
 
-  newWakuData.insert("kiyaku", "true");
+  newWakuData.replace("kiyaku", "true");
 
   nwin->songRightsApply();
 
@@ -102,25 +102,54 @@ void NicoLiveManager::newWakuConfirmFinished(QNetworkReply* reply){
 }
 
 void NicoLiveManager::newWakuFinished(QNetworkReply* reply){
-  if (reply->size() >= 10) {
-    mwin->insLog("getting waku failed");
+  QString location = "";
+
+  auto headers = reply->rawHeaderPairs();
+  foreach (auto header, headers) {
+    if (header.first == "Location") {
+      location = header.second;
+      break;
+    }
+  }
+
+  if (location != "") {
+    if (mwin->settings.isAutoNewWakuOpenBrowser()) {
+      QString url = "http://live.nicovideo.jp/" + location;
+      QDesktopServices::openUrl(url);
+    }
+
+    if (mwin->settings.isAutoNewWakuStart()) {
+      QString broadID;
+      const QRegExp broadIDrg("^.+lv(\\d+).*$");
+      if (broadIDrg.indexIn(location) != -1) {
+        broadID = broadIDrg.cap(1);
+      }
+
+      LiveWaku* myNewWaku = new LiveWaku(mwin, this, broadID, this);
+      myNewWaku->setFlag(1);
+      myNewWaku->getPlayerStatusAPI();
+    }
+  } else {
     QString body = QString(reply->readAll());
     StrAbstractor bodya(body);
-    if (bodya.forward("<div id=\"wait\">") != -1)
-      mwin->insLog("wating " + bodya.midStr("<span id=\"waiting_users\">", "</span>"));
-    else qDebug() << body;
 
-  } else {
-    if (mwin->settings.isAutoNewWakuOpenBrowser()) {
+    if (bodya.forward("<div id=\"wait\">") != -1) {
+      mwin->insLog("wating " + bodya.midStr("<span id=\"waiting_users\">", "</span>"));
+
+      newWakuAbstractor(reply, 3);
+      reply->deleteLater();
+
+      newWakuData.replace("is_wait", "wait");
+      nwin->songRightsApply();
+
+      getNewWakuAPI(4);
+    } else {
+      mwin->insLog("getting waku failed");
       auto headers = reply->rawHeaderPairs();
-      foreach (auto header, headers) {
-        if (header.first == "Location") {
-          QString url = "http://live.nicovideo.jp/" + header.second;
-          QDesktopServices::openUrl(url);
-          break;
-        }
-      }
+      qDebug() << headers;
+      qDebug() << body;
     }
+
   }
 
   reply->deleteLater();

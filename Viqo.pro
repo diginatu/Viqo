@@ -38,7 +38,8 @@ SOURCES += src/main.cpp\
     src/NicoLiveManager/ownercomment.cpp \
     src/NicoLiveManager/tagapi.cpp \
     src/NicoLiveManager/getnewwaku.cpp \
-    src/newwakusettingswindow.cpp
+    src/newwakusettingswindow.cpp \
+    src/NicoLiveManager/configurestream.cpp
 
 HEADERS  += src/NicoLiveManager/nicolivemanager.h \
     src/cookieread.h \

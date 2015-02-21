@@ -37,6 +37,7 @@ public:
   void submitOwnerCommentAPI(const QString& text, const QString& name);
   void getTagsAPI();
   void getNewWakuAPI(const int type, QString liveNum = "");
+  void configureStreamAPI(QString key, QString value, LiveWaku* nowWaku = nullptr);
 
   void alertReconnect();
 
@@ -79,6 +80,8 @@ private:
 
   QMultiMap<QString, QString> newWakuData;
 
+  LiveWaku* gotNewWaku;
+
   QNetworkAccessManager* mPostKeyManager;
   QNetworkAccessManager* mLoginAlertManager;
   QNetworkAccessManager* mAdminAlertManager;
@@ -89,6 +92,7 @@ private:
   QNetworkAccessManager* mRawMyLiveManager;
   QNetworkAccessManager* mTags;
   QNetworkAccessManager* mNewWaku;
+  QNetworkAccessManager* mConfigure;
 private slots:
 	void heartBeatFinished(QNetworkReply* reply);
 	void loginAlertFinished(QNetworkReply* reply);
@@ -107,6 +111,7 @@ private slots:
   void submitOwnerCommentFinished(QNetworkReply* reply);
 
   void deleteWakuList();
+  void configureStreamFinished(QNetworkReply* reply);
 };
 
 

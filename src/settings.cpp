@@ -26,6 +26,7 @@ void Settings::saveStatus(int num)
   other["is184_comment"] = ui->is184_chk->isChecked();
   other["auto_getting_new_waku"] = ui->autoNewWakuChk->isChecked();
   other["new_waku_open_browser"] = ui->autoNewWakuOpenBrowser->isChecked();
+  other["new_waku_start"] = ui->autoNewWakuStart->isChecked();
 
   QJsonObject command;
   command["comment_check"] = ui->command_comment_chk->isChecked();
@@ -90,6 +91,7 @@ void Settings::loadStatus(int num)
   ui->is184_chk->setChecked(other["is184_comment"].toBool());
   ui->autoNewWakuChk->setChecked(other["auto_getting_new_waku"].toBool());
   ui->autoNewWakuOpenBrowser->setChecked(other["new_waku_open_browser"].toBool(true));
+  ui->autoNewWakuStart->setChecked(other["new_waku_start"].toBool());
 
   QJsonObject command = jsd.object()["command"].toObject();
   ui->command_comment->setText(command["comment"].toString());
@@ -267,6 +269,11 @@ bool Settings::isAutoNewWaku()
 bool Settings::isAutoNewWakuOpenBrowser()
 {
   return ui->autoNewWakuOpenBrowser->isChecked();
+}
+
+bool Settings::isAutoNewWakuStart()
+{
+  return ui->autoNewWakuStart->isChecked();
 }
 
 QString Settings::getUserMail() const

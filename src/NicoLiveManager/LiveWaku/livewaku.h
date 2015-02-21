@@ -1,4 +1,4 @@
-#ifndef LIVEWAKU_H
+﻿#ifndef LIVEWAKU_H
 #define LIVEWAKU_H
 
 #include <QObject>
@@ -13,12 +13,13 @@ class LiveWaku : public QObject
 	Q_OBJECT
 public:
   explicit LiveWaku(MainWindow* mwin, NicoLiveManager* nlman, QObject *parent = 0);
+  explicit LiveWaku(MainWindow* mwin, NicoLiveManager* nlman, QString broadID, QObject *parent = 0);
   explicit LiveWaku(MainWindow* mwin, NicoLiveManager* nlman, QString broadID, QString community, QObject *parent = 0);
 
   void init();
   bool didAlermCommand;
 
-	void getPlayyerStatusAPI();
+  void getPlayerStatusAPI();
 
 	QString getTitle() const;
   void setTitle(QString value);
@@ -37,13 +38,17 @@ public:
 	QDateTime getEd() const;
 	void setEd(uint unixt);
 
+  void setFlag(int flag);
+
+  QString getBroadcastToken() const;
+
 signals:
 
 public slots:
 
 private slots:
 protected slots:
-	void playerStatusFinished(QNetworkReply* reply);
+  void playerStatusFinished(QNetworkReply* reply);
 
 private:
   QNetworkAccessManager* mManager;
@@ -51,9 +56,12 @@ private:
   QString title;
 	QString broadID;
 	QString community;
+  QString broadcastToken;
 
 	QDateTime st;
 	QDateTime ed;
+
+  int flag;
 
 protected:
   MainWindow* mwin;

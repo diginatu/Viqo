@@ -34,6 +34,7 @@ public:
   QString getCommandNewWaku();
   bool isAutoNewWaku();
   bool isAutoNewWakuOpenBrowser();
+  bool isAutoNewWakuStart();
 
   // account
   QString getUserMail() const;

@@ -63,14 +63,14 @@ void NicoLiveManager::insertLiveWakuList(LiveWaku* livewaku)
     }
   }
 
-  livewaku->getPlayyerStatusAPI();
+  livewaku->getPlayerStatusAPI();
   liveWakuList << livewaku;
 }
 
 void NicoLiveManager::broadStart()
 {
   nowWaku.init();
-  nowWaku.getPlayyerStatusAPI();
+  nowWaku.getPlayerStatusAPI();
 }
 
 void NicoLiveManager::broadDisconnect()
@@ -83,7 +83,7 @@ void NicoLiveManager::deleteWakuList()
   QDateTime nowTime = QDateTime::currentDateTimeUtc();
   for (int i = 0; i < liveWakuList.size(); ++i) {
     if ( nowTime > liveWakuList[i]->getEd() ) {
-      liveWakuList[i]->getPlayyerStatusAPI();
+      liveWakuList[i]->getPlayerStatusAPI();
     }
   }
 }

@@ -215,18 +215,18 @@ void MainWindow::getSessionFromCookie(QString cookie_name)
 
 void MainWindow::on_receive_clicked()
 {
+  if ( settings.getUserSession().isEmpty() ) {
+    insLog("MainWindow::on_receive_clicked sessionID is not set yet");
+    return;
+  }
+
+  // trim into only broad number
   const QRegExp broadIDrg("^.+lv(\\d+).*$");
   QString broadID = ui->broadID->text();
   if (broadIDrg.indexIn(broadID) != -1) {
     broadID = broadIDrg.cap(1);
   }
-
   ui->broadID->setText(broadID);
-
-  if ( settings.getUserSession().isEmpty() ) {
-    insLog("MainWindow::on_receive_clicked sessionID is not set yet");
-    return;
-  }
 
   on_disconnect_clicked();
   bodyClear();
