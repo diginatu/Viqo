@@ -356,7 +356,10 @@ bool NewWakuSettingsWindow::isSetNecessary()
 
 bool NewWakuSettingsWindow::isTwitterTagValid()
 {
-  return !ui->twitter->isChecked() || ui->twitter->text().startsWith('#');
+  return
+      !ui->twitter->isChecked() ||
+      ui->twitter->text() == "" ||
+      ui->twitter->text().startsWith('#');
 }
 
 void NewWakuSettingsWindow::on_tag_add_clicked()

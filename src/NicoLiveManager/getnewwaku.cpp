@@ -118,7 +118,8 @@ void NicoLiveManager::newWakuFinished(QNetworkReply* reply){
       QDesktopServices::openUrl(url);
     }
 
-    if (mwin->settings.isAutoNewWakuStart()) {
+    if (location.startsWith("watch") &&
+        mwin->settings.isAutoNewWakuStart()) {
       QString broadID;
       const QRegExp broadIDrg("^.+lv(\\d+).*$");
       if (broadIDrg.indexIn(location) != -1) {

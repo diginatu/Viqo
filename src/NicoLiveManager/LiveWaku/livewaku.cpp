@@ -157,5 +157,6 @@ void LiveWaku::playerStatusFinished(QNetworkReply* reply)
     pr.waitForFinished(5000);
   } else if (flag == 1) {
     nlman->configureStreamAPI("hq", "1", this);
+    this->deleteLater();
   }
 }
