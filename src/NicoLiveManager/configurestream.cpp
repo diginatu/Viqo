@@ -6,7 +6,7 @@ void NicoLiveManager::configureStreamAPI(QString key, QString value, LiveWaku* w
   if (waku != nullptr)
     gotNewWaku = waku;
 
-  if(mConfigure!=nullptr)  delete mConfigure;
+  if(mConfigure!=nullptr) mConfigure->deleteLater();
   mConfigure = new QNetworkAccessManager(this);
 
   connect(mConfigure, SIGNAL(finished(QNetworkReply*)), this,
@@ -27,14 +27,21 @@ void NicoLiveManager::configureStreamAPI(QString key, QString value, LiveWaku* w
 }
 
 void NicoLiveManager::configureStreamFinished(QNetworkReply* reply){
-  qDebug() << reply->readAll();
-
-  StrAbstractor rep(reply->readAll());
+  StrAbstractor rep(QString(reply->readAll()));
   reply->deleteLater();
+
+  QString status = rep.midStr("status=\"", "\"/");
+  if (status != "ok") {
+    mwin->insLog("auto start failed");
+    mwin->insLog(rep.toString());
+    return;
+  }
+
   QString key = rep.midStr("key=\"", "\"/>");
+
   if (key == "hq") {
-    configureStreamAPI("excluded", "0");
-  } else if (key == "excluded") {
-    delete gotNewWaku;
+    configureStreamAPI("exclude", "0");
+  } else if (key == "exclude") {
+    gotNewWaku->deleteLater();
   }
 }

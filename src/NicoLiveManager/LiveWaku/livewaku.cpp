@@ -107,9 +107,7 @@ void LiveWaku::getPlayerStatusAPI()
 void LiveWaku::playerStatusFinished(QNetworkReply* reply)
 {
   mwin->insLog(" LiveWaku::playerStatusFinished :");
-  QString repdata = QString(reply->readAll());
-
-  StrAbstractor commTcpi(repdata);
+  StrAbstractor commTcpi(QString(reply->readAll()));
 
   QString status = commTcpi.midStr("status=\"","\"");
   if (status == "fail") {
@@ -157,6 +155,5 @@ void LiveWaku::playerStatusFinished(QNetworkReply* reply)
     pr.waitForFinished(5000);
   } else if (flag == 1) {
     nlman->configureStreamAPI("hq", "1", this);
-    this->deleteLater();
   }
 }
