@@ -656,7 +656,7 @@
      <x>0</x>
      <y>0</y>
      <width>457</width>
-     <height>25</height>
+     <height>28</height>
     </rect>
    </property>
    <widget class="QMenu" name="file">
@@ -683,6 +683,8 @@
     </widget>
     <addaction name="stateSave"/>
     <addaction name="stateLoad"/>
+    <addaction name="separator"/>
+    <addaction name="quit"/>
    </widget>
    <widget class="QMenu" name="edit">
     <property name="title">
@@ -692,7 +694,7 @@
     <addaction name="separator"/>
     <addaction name="setting"/>
    </widget>
-   <widget class="QMenu" name="menu">
+   <widget class="QMenu" name="broadcasting">
     <property name="title">
      <string>放送</string>
     </property>
@@ -704,9 +706,16 @@
     <addaction name="separator"/>
     <addaction name="autoNewWakuSettings"/>
    </widget>
+   <widget class="QMenu" name="help">
+    <property name="title">
+     <string>ヘルプ</string>
+    </property>
+    <addaction name="aboutViqo"/>
+   </widget>
    <addaction name="file"/>
    <addaction name="edit"/>
-   <addaction name="menu"/>
+   <addaction name="broadcasting"/>
+   <addaction name="help"/>
   </widget>
   <widget class="QStatusBar" name="statusBar"/>
   <action name="setting">
@@ -816,6 +825,16 @@
    </property>
    <property name="text">
     <string>取得後放送開始する</string>
+   </property>
+  </action>
+  <action name="aboutViqo">
+   <property name="text">
+    <string>about Viqo...</string>
+   </property>
+  </action>
+  <action name="quit">
+   <property name="text">
+    <string>終了</string>
    </property>
   </action>
  </widget>

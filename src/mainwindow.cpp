@@ -438,3 +438,13 @@ void MainWindow::on_getNewWakuNow_triggered()
 {
   getNewWakuAPI(2);
 }
+
+void MainWindow::on_aboutViqo_triggered()
+{
+
+}
+
+void MainWindow::on_quit_triggered()
+{
+  QApplication::quit();
+}
