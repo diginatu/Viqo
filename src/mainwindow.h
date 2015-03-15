@@ -21,6 +21,7 @@
 #include "settingswindow.h"
 #include "settings.h"
 #include "newwakusettingswindow.h"
+#include "accountwindow.h"
 
 class MainWindow : public QMainWindow
 {
@@ -96,11 +97,14 @@ private slots:
   void on_AboutViqo_triggered();
   void on_AboutQt_triggered();
 
+  void on_AccountSettings_triggered();
+
 private:
   Ui::MainWindow* ui;
 
   SettingsWindow* settingsWindow;
   NewWakuSettingsWindow* newWakuSettingsWindow;
+  AccountWindow* accountWindow;
 
   QTimer* watch_count_timer;
   QTimer* elapsed_time_timer;

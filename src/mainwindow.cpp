@@ -6,6 +6,7 @@ MainWindow::MainWindow(QWidget *parent) :
   ui(new Ui::MainWindow),
   settingsWindow(new SettingsWindow(this, this)),
   newWakuSettingsWindow(new NewWakuSettingsWindow(this, this)),
+  accountWindow(new AccountWindow(this, this)),
   settings(this, ui, this)
 {
   ui->setupUi(this);
@@ -32,7 +33,7 @@ MainWindow::MainWindow(QWidget *parent) :
   }
 
   userManager = new UserManager(this);
-  nicolivemanager = new NicoLiveManager(this, settingsWindow, newWakuSettingsWindow, this);
+  nicolivemanager = new NicoLiveManager(this, accountWindow, newWakuSettingsWindow, this);
 
   settings.loadSettings();
   settings.loadStatus();
@@ -323,6 +324,14 @@ void MainWindow::on_setting_triggered()
   settingsWindow->show();
   settingsWindow->raise();
   settingsWindow->activateWindow();
+}
+
+void MainWindow::on_AccountSettings_triggered()
+{
+  accountWindow->init();
+  accountWindow->show();
+  accountWindow->raise();
+  accountWindow->activateWindow();
 }
 
 void MainWindow::on_clear_triggered()

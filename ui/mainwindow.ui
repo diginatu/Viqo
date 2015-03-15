@@ -693,6 +693,7 @@
     <addaction name="clear"/>
     <addaction name="separator"/>
     <addaction name="setting"/>
+    <addaction name="AccountSettings"/>
    </widget>
    <widget class="QMenu" name="broadcasting">
     <property name="title">
@@ -841,6 +842,11 @@
   <action name="AboutQt">
    <property name="text">
     <string>about Qt...</string>
+   </property>
+  </action>
+  <action name="AccountSettings">
+   <property name="text">
+    <string>アカウント設定...</string>
    </property>
   </action>
  </widget>

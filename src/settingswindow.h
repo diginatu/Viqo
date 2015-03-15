@@ -21,14 +21,7 @@ public:
 
 
 private slots:
-  void on_login_way_combo_currentIndexChanged(int index);
-
   void on_buttonBox_accepted();
-
-  void on_cookiesetting_file_open_button_clicked();
-
-  void on_get_session_clicked();
-
 
 private:
   Ui::SettingsWindow *ui;

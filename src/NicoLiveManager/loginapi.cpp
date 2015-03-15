@@ -52,5 +52,5 @@ void NicoLiveManager::loginFinished(QNetworkReply* reply){
   mwin->insLog();
   reply->deleteLater();
 
-  swin->getUserSessionFinished();
+  awin->getUserSessionFinished();
 }

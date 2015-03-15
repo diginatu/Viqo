@@ -168,7 +168,7 @@ void Settings::saveSettings()
 
   QJsonObject comment;
   comment["owner_comment"] = ownerComment;
-  comment["viewNG"] = dispNG;
+  comment["dispNG"] = dispNG;
 
 
   QJsonObject root;
@@ -221,8 +221,8 @@ void Settings::loadSettings()
   QJsonObject comment = jsd.object()["comment"].toObject();
   if (comment.contains("owner_comment"))
     ownerComment = comment["owner_comment"].toBool();
-  if (comment.contains("viewNG"))
-    ownerComment = comment["viewNG"].toBool();
+  if (comment.contains("dispNG"))
+    dispNG = comment["dispNG"].toBool();
 
   file.close();
 }

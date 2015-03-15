@@ -39,7 +39,8 @@ SOURCES += src/main.cpp\
     src/NicoLiveManager/tagapi.cpp \
     src/NicoLiveManager/getnewwaku.cpp \
     src/newwakusettingswindow.cpp \
-    src/NicoLiveManager/configurestream.cpp
+    src/NicoLiveManager/configurestream.cpp \
+    src/accountwindow.cpp
 
 HEADERS  += src/NicoLiveManager/nicolivemanager.h \
     src/cookieread.h \
@@ -55,8 +56,10 @@ HEADERS  += src/NicoLiveManager/nicolivemanager.h \
     src/NicoLiveManager/LiveWaku/commtcp.h \
     src/settingswindow.h \
     src/settings.h \
-    src/newwakusettingswindow.h
+    src/newwakusettingswindow.h \
+    src/accountwindow.h
 
 FORMS    += ui/mainwindow.ui \
     ui/settingswindow.ui \
-    ui/newwakusettingswindow.ui
+    ui/newwakusettingswindow.ui \
+    ui/accountwindow.ui
