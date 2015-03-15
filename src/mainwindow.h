@@ -91,9 +91,10 @@ private slots:
   void on_load_3_triggered();
   void on_load_4_triggered();
 
-  void on_aboutViqo_triggered();
-
   void on_quit_triggered();
+
+  void on_AboutViqo_triggered();
+  void on_AboutQt_triggered();
 
 private:
   Ui::MainWindow* ui;

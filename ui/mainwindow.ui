@@ -710,7 +710,8 @@
     <property name="title">
      <string>ヘルプ</string>
     </property>
-    <addaction name="aboutViqo"/>
+    <addaction name="AboutViqo"/>
+    <addaction name="AboutQt"/>
    </widget>
    <addaction name="file"/>
    <addaction name="edit"/>
@@ -827,7 +828,7 @@
     <string>取得後放送開始する</string>
    </property>
   </action>
-  <action name="aboutViqo">
+  <action name="AboutViqo">
    <property name="text">
     <string>about Viqo...</string>
    </property>
@@ -835,6 +836,11 @@
   <action name="quit">
    <property name="text">
     <string>終了</string>
+   </property>
+  </action>
+  <action name="AboutQt">
+   <property name="text">
+    <string>about Qt...</string>
    </property>
   </action>
  </widget>

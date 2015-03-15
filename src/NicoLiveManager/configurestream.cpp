@@ -30,14 +30,14 @@ void NicoLiveManager::configureStreamFinished(QNetworkReply* reply){
   StrAbstractor rep(QString(reply->readAll()));
   reply->deleteLater();
 
-  QString status = rep.midStr("status=\"", "\"/");
+  QString status = rep.midStr("status=\"", "\"", false);
   if (status != "ok") {
     mwin->insLog("auto start failed");
     mwin->insLog(rep.toString());
     return;
   }
 
-  QString key = rep.midStr("key=\"", "\"/>");
+  QString key = rep.midStr("key=\"", "\"", false);
 
   if (key == "hq") {
     configureStreamAPI("exclude", "0");
