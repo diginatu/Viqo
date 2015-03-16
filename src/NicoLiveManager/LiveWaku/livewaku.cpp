@@ -35,7 +35,7 @@ QString LiveWaku::getTitle() const
 
 void LiveWaku::setTitle(QString value)
 {
-  title = value;
+  title = NicoLiveManager::HTMLdecode(value);
 }
 
 QString LiveWaku::getBroadID() const
@@ -56,6 +56,15 @@ QString LiveWaku::getCommunity() const
 void LiveWaku::setCommunity(QString value)
 {
   community = value;
+}
+
+QString LiveWaku::getOwnerName() const
+{
+    return ownerName;
+}
+void LiveWaku::setOwnerName(const QString &value)
+{
+    ownerName = NicoLiveManager::HTMLdecode(value);
 }
 
 QDateTime LiveWaku::getSt() const
@@ -131,9 +140,10 @@ void LiveWaku::playerStatusFinished(QNetworkReply* reply)
 
   QString befTitle = title;
 
-  broadID = commTcpi.midStr("<id>lv", "</id>");
-  title = commTcpi.midStr("<title>", "</title>");
-  community = commTcpi.midStr("<default_community>", "</default_community>");
+  setBroadID(commTcpi.midStr("<id>lv", "</id>"));
+  setTitle(commTcpi.midStr("<title>", "</title>"));
+  setCommunity(commTcpi.midStr("<default_community>", "</default_community>"));
+  setOwnerName(commTcpi.midStr("<owner_name>", "</owner_name>"));
   setSt(commTcpi.midStr("<start_time>","</start_time>").toUInt());
   setEd(commTcpi.midStr("<end_time>","</end_time>").toUInt());
   broadcastToken = commTcpi.midStr("<broadcast_token>","</broadcast_token>");

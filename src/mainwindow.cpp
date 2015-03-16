@@ -161,7 +161,10 @@ void MainWindow::refleshLiveWaku()
   for(int i = 0; i < nicolivemanager->liveWakuList.size(); ++i) {
     if (nicolivemanager->liveWakuList.at(i)->getBroadID() == nicolivemanager->nowWaku.getBroadID())
       now_no = i;
-    ui->live_waku_list->addItem(nicolivemanager->liveWakuList.at(i)->getTitle());
+    ui->live_waku_list->addItem(
+                nicolivemanager->liveWakuList.at(i)->getTitle() + " - " +
+                nicolivemanager->liveWakuList.at(i)->getCommunity() + "さん"
+                );
   }
 
   if (now_no != -1)
@@ -455,7 +458,9 @@ void MainWindow::on_quit_triggered()
 
 void MainWindow::on_AboutViqo_triggered()
 {
-  QMessageBox::about(this, "about Viqo", "Qt で作成されたマルチプラットフォームコメビュです");
+    QMessageBox::about(this, "About Viqo",
+         "Qt で作成されたマルチプラットフォームコメビュです<br>"
+         "<a href=\"https://github.com/diginatu/Viqo\">GitHub Viqo repository</a>");
 }
 
 void MainWindow::on_AboutQt_triggered()
