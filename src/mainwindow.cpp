@@ -166,7 +166,7 @@ void MainWindow::refleshLiveWaku()
       now_no = i;
     ui->live_waku_list->addItem(
                 nicolivemanager->liveWakuList.at(i)->getTitle() + " - " +
-                nicolivemanager->liveWakuList.at(i)->getCommunity() + "さん"
+                nicolivemanager->liveWakuList.at(i)->getOwnerName() + "さん"
                 );
   }
 
