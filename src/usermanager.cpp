@@ -18,6 +18,7 @@ UserManager::UserManager(MainWindow* mwin, QObject *parent) :
     mwin->insLog("db open succeeded");
   } else {
     mwin->insLog("db open error occured");
+    QMessageBox::information(mwin, "Viqo", "ユーザのデータベースオープンに失敗しました");
   }
 
   QSqlQuery query(db);

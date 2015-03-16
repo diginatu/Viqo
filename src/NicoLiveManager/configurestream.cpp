@@ -34,6 +34,7 @@ void NicoLiveManager::configureStreamFinished(QNetworkReply* reply){
   if (status != "ok") {
     mwin->insLog("auto start failed");
     mwin->insLog(rep.toString());
+    QMessageBox::information(mwin, "Viqo", "自動放送開始に失敗しました");
     return;
   }
 

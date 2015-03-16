@@ -39,6 +39,7 @@ void NicoLiveManager::loginFinished(QNetworkReply* reply){
             cookie.value() != "") {
           mwin->settings.setUserSession(cookie.value());
           mwin->insLog("login succeeded");
+          QMessageBox::information(awin, "Viqo", "ログインに成功しました");
           success = true;
           break;
         }
@@ -47,7 +48,10 @@ void NicoLiveManager::loginFinished(QNetworkReply* reply){
     }
   }
 
-  if (!success) mwin->insLog("login failed");
+  if (!success) {
+    mwin->insLog("login failed");
+    QMessageBox::information(awin, "Viqo", "ログインに失敗しました\nメールアドレスとパスワードを確認してください");
+  }
 
   mwin->insLog();
   reply->deleteLater();

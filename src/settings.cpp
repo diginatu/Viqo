@@ -17,6 +17,7 @@ void Settings::saveStatus(int num)
   QStringList dir = QStandardPaths::standardLocations(QStandardPaths::DataLocation);
   if (dir.empty()) {
     mwin->insLog("save directory is not available");
+    QMessageBox::information(mwin, "Viqo", "保存領域がないので保存できません");
     return;
   }
 
@@ -50,6 +51,7 @@ void Settings::saveStatus(int num)
   if (!file.open(QIODevice::WriteOnly)) {
     file.close();
     mwin->insLog("opening status file failed");
+    QMessageBox::information(mwin, "Viqo", "ファイル書き込みができません");
     return;
   }
 
@@ -65,6 +67,7 @@ void Settings::loadStatus(int num)
   QStringList dir = QStandardPaths::standardLocations(QStandardPaths::DataLocation);
   if (dir.empty()) {
     mwin->insLog("save directory is not available");
+    QMessageBox::information(mwin, "Viqo", "保存領域がないので保存できません");
     return;
   }
   QFile file(dir[0] + "/status_0" + QString::number(num) + ".json");
@@ -80,6 +83,7 @@ void Settings::loadStatus(int num)
   if (!file.open(QIODevice::ReadOnly | QIODevice::Text)) {
     file.close();
     mwin->insLog("opening status file failed");
+    QMessageBox::information(mwin, "Viqo", "ステートファイルオープンに失敗しました");
     return;
   }
 
@@ -154,6 +158,7 @@ void Settings::saveSettings()
   QStringList dir = QStandardPaths::standardLocations(QStandardPaths::DataLocation);
   if (dir.empty()) {
     mwin->insLog("save directory is not available");
+    QMessageBox::information(mwin, "Viqo", "保存領域がないので保存できません");
     return;
   }
 
@@ -183,6 +188,7 @@ void Settings::saveSettings()
   if (!file.open(QIODevice::WriteOnly)) {
     file.close();
     mwin->insLog("opening status file failed");
+    QMessageBox::information(mwin, "Viqo", "設定ファイルに書き込みがせきません");
     return;
   }
 
@@ -203,7 +209,7 @@ void Settings::loadSettings()
   QFile file(dir[0] + "/settings.json");
   if (!file.open(QIODevice::ReadOnly | QIODevice::Text)) {
     file.close();
-    mwin->insLog("opening status file failed");
+    mwin->insLog("opening setting file failed");
     return;
   }
 

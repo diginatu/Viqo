@@ -28,7 +28,12 @@ void CommTcp::doConnect()
 
   if(!socket->waitForConnected(5000)) {
     mwin->insLog("CommTcp::doConnect Error: " + socket->errorString());
-    doConnect();
+    QMessageBox msgBox;
+    msgBox.setText(QStringLiteral("受信開始に失敗しました再接続しますか？"));
+    msgBox.setStandardButtons(QMessageBox::No | QMessageBox::Yes);
+    msgBox.setDefaultButton(QMessageBox::Yes);
+    if (msgBox.exec() == QMessageBox::Yes)
+      doConnect();
   }
 }
 
@@ -41,6 +46,7 @@ void CommTcp::connected()
 
   if (socket->write(send) == -1) {
     mwin->insLog("CommTcp::connected Error: " + socket->errorString());
+    doConnect();
   }
 
   // set timer to send NULL data.

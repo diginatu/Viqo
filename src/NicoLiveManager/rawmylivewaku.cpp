@@ -5,16 +5,17 @@ void NicoLiveManager::getRawMyLiveHTML()
 {
   mwin->insLog("NicoLiveManager::getRawMyLiveHTML");
   mwin->insLog("getting joined community with the web page");
-  if(mRawMyLiveManager!=nullptr)  delete mRawMyLiveManager;
-  mRawMyLiveManager = new QNetworkAccessManager(this);
-
-  connect(mRawMyLiveManager, SIGNAL(finished(QNetworkReply*)), this,
-          SLOT(rawMyLivefinished(QNetworkReply*)));
 
   if (mwin->settings.getUserSession() == "") {
     mwin->insLog("user_session is not set yet");
     return;
   }
+
+  if(mRawMyLiveManager!=nullptr)  delete mRawMyLiveManager;
+  mRawMyLiveManager = new QNetworkAccessManager(this);
+
+  connect(mRawMyLiveManager, SIGNAL(finished(QNetworkReply*)), this,
+          SLOT(rawMyLivefinished(QNetworkReply*)));
 
   // make request
   QNetworkRequest rq;

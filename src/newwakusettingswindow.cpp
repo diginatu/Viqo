@@ -188,6 +188,7 @@ void NewWakuSettingsWindow::songRightsApply()
   if (!file.open(QIODevice::ReadOnly | QIODevice::Text)) {
     file.close();
     mwin->insLog("opening csv file failed");
+    QMessageBox::information(this, "Viqo", "CSV ファイルのオープンに失敗しました");
     return;
   }
 
@@ -204,7 +205,8 @@ void NewWakuSettingsWindow::songRightsApply()
     for (int i = 0; i < line.length(); ++i) {
       if (mode == 0) {
         if (line[i] == QChar('"')) {
-          mwin->insLog("Song CSV has a syntax error");
+          mwin->insLog("Song CSV : syntax error");
+          QMessageBox::information(this, "Viqo", "CSV ファイルに文法誤りがあります");
           break;
         } else if (line[i] == QChar(',')) {
           mwin->nicolivemanager->newWakuSetFormData(
@@ -277,10 +279,12 @@ void NewWakuSettingsWindow::songRightsApply()
             mode = 1;
           } else {
             mwin->insLog("Song CSV has a syntax error");
+            QMessageBox::information(this, "Viqo", "CSV ファイルに文法誤りがあります");
             break;
           }
         } else if (line[i] == QChar(',') || i+1 == line.length()) {
           mwin->insLog("Song CSV has a syntax error");
+          QMessageBox::information(this, "Viqo", "CSV ファイルに文法誤りがあります");
           break;
         }
       }
@@ -380,6 +384,7 @@ void NewWakuSettingsWindow::savePresets()
   QStringList dir = QStandardPaths::standardLocations(QStandardPaths::DataLocation);
   if (dir.empty()) {
     mwin->insLog("save directory is not available");
+    QMessageBox::information(this, "Viqo", "保存領域がないので保存できません");
     return;
   }
 
@@ -399,6 +404,7 @@ void NewWakuSettingsWindow::savePresets()
   if (!file.open(QIODevice::WriteOnly)) {
     file.close();
     mwin->insLog("opening settings file failed");
+    QMessageBox::information(this, "Viqo", "設定ファイルに書き込めません");
     return;
   }
   QTextStream out(&file);

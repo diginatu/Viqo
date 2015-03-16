@@ -30,7 +30,12 @@ void WakuTcp::doConnect()
 
   if(!socket->waitForConnected(5000)) {
     mwin->insLog("Error: " + socket->errorString() + "\n");
-    QTimer::singleShot(30000, this, SLOT(doConnect()));
+    QMessageBox msgBox;
+    msgBox.setText(QStringLiteral("アラート受信開始に失敗しました再接続しますか？"));
+    msgBox.setStandardButtons(QMessageBox::No | QMessageBox::Yes);
+    msgBox.setDefaultButton(QMessageBox::Yes);
+    if (msgBox.exec() == QMessageBox::Yes)
+      doConnect();
   }
 
   mwin->insLog();
@@ -48,7 +53,7 @@ void WakuTcp::connected()
   if (socket->write(send) == -1) {
     mwin->insLog("Error: " + socket->errorString() + "\n");
     socket->close();
-    QTimer::singleShot(30000, this, SLOT(doConnect()));
+    doConnect();
     return;
   }
 

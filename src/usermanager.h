@@ -4,6 +4,7 @@
 #include <QObject>
 #include <QTreeWidgetItem>
 #include <QtSql/QtSql>
+#include <QMessageBox>
 
 #include "usergetter.h"
 
