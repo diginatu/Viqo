@@ -692,6 +692,7 @@
     </property>
     <addaction name="clear"/>
     <addaction name="separator"/>
+    <addaction name="FollowCommunity"/>
     <addaction name="setting"/>
     <addaction name="AccountSettings"/>
    </widget>
@@ -847,6 +848,11 @@
   <action name="AccountSettings">
    <property name="text">
     <string>アカウント設定...</string>
+   </property>
+  </action>
+  <action name="FollowCommunity">
+   <property name="text">
+    <string>フォローコミュニティ...</string>
    </property>
   </action>
  </widget>

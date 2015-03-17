@@ -18,7 +18,6 @@ TEMPLATE = app
 SOURCES += src/main.cpp\
     src/cookieread.cpp \
     src/livedata.cpp \
-    src/mainwindow.cpp \
     src/nicohttp.cpp \
     src/strabstractor.cpp \
     src/usergetter.cpp \
@@ -31,21 +30,22 @@ SOURCES += src/main.cpp\
     src/NicoLiveManager/LiveWaku/livewaku.cpp \
     src/NicoLiveManager/LiveWaku/nowlivewaku.cpp \
     src/NicoLiveManager/LiveWaku/commtcp.cpp \
-    src/settingswindow.cpp \
     src/settings.cpp \
     src/NicoLiveManager/loginapi.cpp \
     src/NicoLiveManager/postkeyapi.cpp \
     src/NicoLiveManager/ownercomment.cpp \
     src/NicoLiveManager/tagapi.cpp \
     src/NicoLiveManager/getnewwaku.cpp \
-    src/newwakusettingswindow.cpp \
     src/NicoLiveManager/configurestream.cpp \
-    src/accountwindow.cpp
+    ui/accountwindow.cpp \
+    ui/followcommunity.cpp \
+    ui/mainwindow.cpp \
+    ui/newwakusettingswindow.cpp \
+    ui/settingswindow.cpp
 
 HEADERS  += src/NicoLiveManager/nicolivemanager.h \
     src/cookieread.h \
     src/livedata.h \
-    src/mainwindow.h \
     src/nicohttp.h \
     src/strabstractor.h \
     src/usergetter.h \
@@ -56,10 +56,14 @@ HEADERS  += src/NicoLiveManager/nicolivemanager.h \
     src/NicoLiveManager/LiveWaku/commtcp.h \
     src/settingswindow.h \
     src/settings.h \
-    src/newwakusettingswindow.h \
-    src/accountwindow.h
+    ui/accountwindow.h \
+    ui/followcommunity.h \
+    ui/mainwindow.h \
+    ui/newwakusettingswindow.h \
+    ui/settingswindow.h
 
 FORMS    += ui/mainwindow.ui \
     ui/settingswindow.ui \
     ui/newwakusettingswindow.ui \
-    ui/accountwindow.ui
+    ui/accountwindow.ui \
+    ui/followcommunity.ui

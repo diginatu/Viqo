@@ -1,5 +1,5 @@
 #include "nicolivemanager.h"
-#include "../mainwindow.h"
+#include "../../ui/mainwindow.h"
 
 void NicoLiveManager::getHeartBeatAPI()
 {

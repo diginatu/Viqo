@@ -1,5 +1,5 @@
 ﻿#include "livewaku.h"
-#include "../../mainwindow.h"
+#include "../../../ui/mainwindow.h"
 #include "../nicolivemanager.h"
 
 LiveWaku::LiveWaku(MainWindow* mwin, NicoLiveManager* nlman, QObject* parent) :

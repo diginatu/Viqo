@@ -1,5 +1,5 @@
 ﻿#include "commtcp.h"
-#include "../../mainwindow.h"
+#include "../../../ui/mainwindow.h"
 #include "nowlivewaku.h"
 
 CommTcp::CommTcp(QString domain, int port, QString thread, MainWindow* mwin, NowLiveWaku* nlwaku, QObject* parent) :

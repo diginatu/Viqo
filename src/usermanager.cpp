@@ -1,5 +1,5 @@
 #include "usermanager.h"
-#include "mainwindow.h"
+#include "../ui/mainwindow.h"
 
 UserManager::UserManager(MainWindow* mwin, QObject *parent) :
   NicoHttp(mwin, parent)

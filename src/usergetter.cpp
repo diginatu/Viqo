@@ -1,5 +1,5 @@
 #include "usergetter.h"
-#include "mainwindow.h"
+#include "../ui/mainwindow.h"
 
 UserGetter::UserGetter(MainWindow* mwin, QObject *parent) :
   NicoHttp(mwin, parent)

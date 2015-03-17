@@ -11,10 +11,9 @@
 #include "Alert/wakutcp.h"
 #include "LiveWaku/livewaku.h"
 #include "LiveWaku/nowlivewaku.h"
-#include "../settingswindow.h"
-#include "../newwakusettingswindow.h"
-#include "../accountwindow.h"
-
+#include "../../ui/settingswindow.h"
+#include "../../ui/newwakusettingswindow.h"
+#include "../../ui/accountwindow.h"
 
 namespace Ui {
 class MainWindow;

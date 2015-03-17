@@ -1,5 +1,5 @@
 ﻿#include "settings.h"
-#include "mainwindow.h"
+#include "../ui/mainwindow.h"
 
 Settings::Settings(MainWindow* mwin, Ui::MainWindow* ui, QObject* parent) :
   QObject(parent)

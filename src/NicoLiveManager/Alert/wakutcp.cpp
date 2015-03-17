@@ -1,5 +1,5 @@
 #include "wakutcp.h"
-#include "../../mainwindow.h"
+#include "../../../ui/mainwindow.h"
 #include "../nicolivemanager.h"
 
 WakuTcp::WakuTcp(QString domain, int port, QString thread, MainWindow* mwin, NicoLiveManager* nicolivemanager)

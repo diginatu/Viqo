@@ -1,5 +1,5 @@
 ﻿#include "nicolivemanager.h"
-#include "../mainwindow.h"
+#include "../../ui/mainwindow.h"
 
 NicoLiveManager::NicoLiveManager(MainWindow* mwin, AccountWindow* awin, NewWakuSettingsWindow* nwin, QObject *parent) :
   QObject(parent),

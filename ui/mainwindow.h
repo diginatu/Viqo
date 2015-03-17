@@ -13,13 +13,13 @@
 #include <QDesktopServices>
 #include <QClipboard>
 
-#include "cookieread.h"
-#include "usermanager.h"
-#include "livedata.h"
-#include "strabstractor.h"
-#include "NicoLiveManager/nicolivemanager.h"
+#include "../src/cookieread.h"
+#include "../src/usermanager.h"
+#include "../src/livedata.h"
+#include "../src/strabstractor.h"
+#include "../src/NicoLiveManager/nicolivemanager.h"
 #include "settingswindow.h"
-#include "settings.h"
+#include "../src/settings.h"
 #include "newwakusettingswindow.h"
 #include "accountwindow.h"
 
