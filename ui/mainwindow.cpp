@@ -36,10 +36,10 @@ MainWindow::MainWindow(QWidget *parent) :
     }
   }
 
+  settings.loadAll();
+
   userManager = new UserManager(this);
   nicolivemanager = new NicoLiveManager(this, accountWindow, newWakuSettingsWindow, followCommunity, this);
-
-  settings.loadAll();
 
   const QString mail = settings.getUserMail();
   const QString pass = settings.getUserPass();

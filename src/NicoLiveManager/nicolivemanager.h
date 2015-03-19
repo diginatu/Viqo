@@ -46,6 +46,7 @@ public:
   void allGotWakuInfo(QString communityID, QString broadID);
   void login(QString mail, QString pass);
 
+  QStringList officialMyCommunities;
   QStringList mycommunities;
 
   NowLiveWaku nowWaku;
@@ -58,6 +59,8 @@ public:
   void newWakuSetFormData(QString name, QString value);
 
   static QString HTMLdecode(QString st);
+
+  void updateMyCommunities();
 signals:
 
 public slots:

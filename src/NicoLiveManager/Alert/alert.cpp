@@ -77,14 +77,13 @@ void NicoLiveManager::adminAlertFinished(QNetworkReply* reply)
     return;
   }
 
-  QString mycommunities = wakuTcpi.midStr("<communities>","</communities>");
-
-  StrAbstractor communityi(mycommunities);
+  StrAbstractor* communityi = wakuTcpi.mid("<communities>","</communities>");
   QString mycommunity;
-  this->mycommunities.clear();
-  while ((mycommunity = communityi.midStr("<community_id>","</community_id>")) != "") {
-    this->mycommunities << mycommunity;
+  officialMyCommunities.clear();
+  while (!(mycommunity = communityi->midStr("<community_id>","</community_id>")).isNull()) {
+    officialMyCommunities << mycommunity;
   }
+  updateMyCommunities();
 
   waku_addr = wakuTcpi.midStr("<addr>", "</addr>");
   waku_port = wakuTcpi.midStr("<port>", "</port>").toInt();
@@ -120,4 +119,17 @@ void NicoLiveManager::alertReconnect()
   loginAlertAPI(mail, pass);
   getRawMyLiveHTML();
   QTimer::singleShot(30000, this, SLOT(getRawMyLiveHTML()));
+}
+
+
+void NicoLiveManager::updateMyCommunities()
+{
+  mycommunities.clear();
+  mycommunities.append(officialMyCommunities);
+
+  // add Follow Communities
+  typedef QPair<QString, QString> StringPair;
+  foreach (StringPair community, mwin->settings.followCommunities) {
+    mycommunities << community.first;
+  }
 }

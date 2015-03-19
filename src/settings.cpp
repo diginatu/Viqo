@@ -292,10 +292,9 @@ void Settings::loadFollowCommunities()
   QJsonDocument jsd = QJsonDocument::fromJson(file.readAll());
 
   QJsonArray follow_communities = jsd.object()["follow_communities"].toArray();
+  followCommunities.clear();
   foreach (QJsonValue community, follow_communities) {
-    followCommunities.append(
-          qMakePair(community.toArray()[0].toString(),
-          community.toArray()[1].toString()));
+    followCommunities << qMakePair(community.toArray()[0].toString(), community.toArray()[1].toString());
   }
 
   file.close();
