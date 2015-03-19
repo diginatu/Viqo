@@ -7,6 +7,7 @@ MainWindow::MainWindow(QWidget *parent) :
   settingsWindow(new SettingsWindow(this, this)),
   newWakuSettingsWindow(new NewWakuSettingsWindow(this, this)),
   accountWindow(new AccountWindow(this, this)),
+  followCommunity(new FollowCommunity(this, this)),
   settings(this, ui, this)
 {
   ui->setupUi(this);
@@ -15,7 +16,7 @@ MainWindow::MainWindow(QWidget *parent) :
   QTextCodec::setCodecForLocale(QTextCodec::codecForName("UTF-8"));
 
   // set the column width for the comment view list
-  ui->comment_view->header()->resizeSection(0, 60);
+  ui->comment_view->header()->resizeSection(0, 40);
   ui->comment_view->header()->resizeSection(1, 30);
   ui->comment_view->header()->resizeSection(3, 200);
   ui->comment_view->header()->resizeSection(6, 30);
@@ -36,10 +37,9 @@ MainWindow::MainWindow(QWidget *parent) :
   }
 
   userManager = new UserManager(this);
-  nicolivemanager = new NicoLiveManager(this, accountWindow, newWakuSettingsWindow, this);
+  nicolivemanager = new NicoLiveManager(this, accountWindow, newWakuSettingsWindow, followCommunity, this);
 
-  settings.loadSettings();
-  settings.loadStatus();
+  settings.loadAll();
 
   const QString mail = settings.getUserMail();
   const QString pass = settings.getUserPass();
@@ -470,4 +470,12 @@ void MainWindow::on_AboutViqo_triggered()
 void MainWindow::on_AboutQt_triggered()
 {
   QMessageBox::aboutQt(this);
+}
+
+void MainWindow::on_FollowCommunity_triggered()
+{
+  followCommunity->init();
+  followCommunity->show();
+  followCommunity->raise();
+  followCommunity->activateWindow();
 }

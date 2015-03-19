@@ -5,10 +5,12 @@
 #include <QJsonObject>
 #include <QStandardPaths>
 #include <QFile>
+#include <QPair>
 
 #include "ui_mainwindow.h"
 
 class MainWindow;
+class FollowCommunity;
 
 class Settings : public QObject
 {
@@ -16,12 +18,17 @@ class Settings : public QObject
 public:
   explicit Settings(MainWindow* mwin, Ui::MainWindow* ui, QObject* parent = 0);
 
+  void loadAll();
+
   void saveStatus(int num = 1);
   void loadStatus(int num = 1);
   void oldLoad();
 
   void saveSettings();
   void loadSettings();
+
+  void saveFollowCommunities();
+  void loadFollowCommunities();
 
   // main window settings
   bool getIs184();
@@ -59,6 +66,7 @@ public:
   bool getDispNG() const;
   void setDispNG(bool value);
 
+  QList< QPair<QString,QString> > followCommunities;
 signals:
 
 public slots:

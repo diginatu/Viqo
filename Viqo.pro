@@ -41,7 +41,8 @@ SOURCES += src/main.cpp\
     ui/followcommunity.cpp \
     ui/mainwindow.cpp \
     ui/newwakusettingswindow.cpp \
-    ui/settingswindow.cpp
+    ui/settingswindow.cpp \
+    src/NicoLiveManager/communityinfo.cpp
 
 HEADERS  += src/NicoLiveManager/nicolivemanager.h \
     src/cookieread.h \

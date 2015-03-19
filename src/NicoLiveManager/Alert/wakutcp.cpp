@@ -31,11 +31,7 @@ void WakuTcp::doConnect()
   if(!socket->waitForConnected(5000)) {
     mwin->insLog("Error: " + socket->errorString() + "\n");
     QMessageBox msgBox;
-    msgBox.setText(QStringLiteral("アラート受信開始に失敗しました再接続しますか？"));
-    msgBox.setStandardButtons(QMessageBox::No | QMessageBox::Yes);
-    msgBox.setDefaultButton(QMessageBox::Yes);
-    if (msgBox.exec() == QMessageBox::Yes)
-      doConnect();
+    doConnect();
   }
 
   mwin->insLog();

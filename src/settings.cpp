@@ -12,6 +12,13 @@ Settings::Settings(MainWindow* mwin, Ui::MainWindow* ui, QObject* parent) :
   this->ui = ui;
 }
 
+void Settings::loadAll()
+{
+  loadSettings();
+  loadStatus();
+  loadFollowCommunities();
+}
+
 void Settings::saveStatus(int num)
 {
   QStringList dir = QStandardPaths::standardLocations(QStandardPaths::DataLocation);
@@ -194,7 +201,7 @@ void Settings::saveSettings()
 
   QTextStream out(&file);
 
-  out << jsd.toJson().data();
+  out << jsd.toJson();
 
   file.close();
 }
@@ -233,6 +240,66 @@ void Settings::loadSettings()
   file.close();
 }
 
+void Settings::saveFollowCommunities()
+{
+  QStringList dir = QStandardPaths::standardLocations(QStandardPaths::DataLocation);
+  if (dir.empty()) {
+    mwin->insLog("save directory is not available");
+    QMessageBox::information(mwin, "Viqo", "保存領域がないので保存できません");
+    return;
+  }
+
+  QJsonArray follow_communities;
+
+  typedef QPair<QString,QString> StringPair;
+  foreach (StringPair community, followCommunities) {
+    follow_communities.append(QJsonArray() << community.first << community.second);
+  }
+
+  QJsonObject root;
+  root["follow_communities"] = follow_communities;
+
+  QJsonDocument jsd;
+  jsd.setObject(root);
+
+  QFile file(dir[0] + "/follow_communities.json");
+  if (!file.open(QIODevice::WriteOnly)) {
+    file.close();
+    mwin->insLog("opening status file failed");
+    QMessageBox::information(mwin, "Viqo", "設定ファイルに書き込みがせきません");
+    return;
+  }
+
+  QTextStream out(&file);
+  out << jsd.toJson(QJsonDocument::Compact);
+  file.close();
+}
+
+void Settings::loadFollowCommunities()
+{
+  QStringList dir = QStandardPaths::standardLocations(QStandardPaths::DataLocation);
+  if (dir.empty()) {
+    mwin->insLog("save directory is not available");
+    return;
+  }
+  QFile file(dir[0] + "/follow_communities.json");
+  if (!file.open(QIODevice::ReadOnly | QIODevice::Text)) {
+    file.close();
+    mwin->insLog("opening Follow Communities setting file failed");
+    return;
+  }
+
+  QJsonDocument jsd = QJsonDocument::fromJson(file.readAll());
+
+  QJsonArray follow_communities = jsd.object()["follow_communities"].toArray();
+  foreach (QJsonValue community, follow_communities) {
+    followCommunities.append(
+          qMakePair(community.toArray()[0].toString(),
+          community.toArray()[1].toString()));
+  }
+
+  file.close();
+}
 
 bool Settings::getIs184()
 {

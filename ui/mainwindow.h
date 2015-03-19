@@ -22,6 +22,7 @@
 #include "../src/settings.h"
 #include "newwakusettingswindow.h"
 #include "accountwindow.h"
+#include "followcommunity.h"
 
 class MainWindow : public QMainWindow
 {
@@ -99,12 +100,15 @@ private slots:
 
   void on_AccountSettings_triggered();
 
+  void on_FollowCommunity_triggered();
+
 private:
   Ui::MainWindow* ui;
 
   SettingsWindow* settingsWindow;
   NewWakuSettingsWindow* newWakuSettingsWindow;
   AccountWindow* accountWindow;
+  FollowCommunity* followCommunity;
 
   QTimer* watch_count_timer;
   QTimer* elapsed_time_timer;

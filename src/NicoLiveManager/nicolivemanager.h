@@ -14,6 +14,7 @@
 #include "../../ui/settingswindow.h"
 #include "../../ui/newwakusettingswindow.h"
 #include "../../ui/accountwindow.h"
+#include "../../ui/followcommunity.h"
 
 namespace Ui {
 class MainWindow;
@@ -23,7 +24,7 @@ class NicoLiveManager : public QObject
 {
   Q_OBJECT
 public:
-  explicit NicoLiveManager(MainWindow* mwin, AccountWindow* awin, NewWakuSettingsWindow* nwin, QObject *parent = 0);
+  explicit NicoLiveManager(MainWindow* mwin, AccountWindow* awin, NewWakuSettingsWindow* nwin, FollowCommunity* fwin, QObject *parent = 0);
   ~NicoLiveManager();
 
   static QVariant makePostData(QString session_id);
@@ -38,6 +39,7 @@ public:
   void getTagsAPI();
   void getNewWakuAPI(const int type, QString liveNum = "");
   void configureStreamAPI(QString key, QString value, LiveWaku* nowWaku = nullptr);
+  void communityInfoAPI(QString commID);
 
   void alertReconnect();
 
@@ -68,6 +70,7 @@ private:
   MainWindow* mwin;
   AccountWindow* awin;
   NewWakuSettingsWindow* nwin;
+  FollowCommunity* fwin;
   WakuTcp* wakutcp;
 
   QString watchCount;
@@ -93,6 +96,7 @@ private:
   QNetworkAccessManager* mTags;
   QNetworkAccessManager* mNewWaku;
   QNetworkAccessManager* mConfigure;
+  QNetworkAccessManager* mCommunityInfo;
 private slots:
   void heartBeatFinished(QNetworkReply* reply);
   void loginAlertFinished(QNetworkReply* reply);
@@ -112,6 +116,7 @@ private slots:
 
   void deleteWakuList();
   void configureStreamFinished(QNetworkReply* reply);
+  void communityInfoFinished(QNetworkReply* reply);
 };
 
 
