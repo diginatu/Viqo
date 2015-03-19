@@ -478,4 +478,21 @@ void MainWindow::on_FollowCommunity_triggered()
   followCommunity->show();
   followCommunity->raise();
   followCommunity->activateWindow();
+
+
+  QStringList dir = QStandardPaths::standardLocations(QStandardPaths::DataLocation);
+  if (dir.empty()) {
+    insLog("save directory is not available");
+    return;
+  }
+  QFile file(dir[0] + "/follow_communities.json");
+  if (!file.exists()) {
+    QMessageBox::information(followCommunity, "Viqo - フォローコミュニティ",
+                             "<b>フォローコミュニティ</b>\n\n"
+                             "ここにコミュニティを登録することで、"
+                             "お気に入りに登録しているコミュニティ同様、"
+                             "放送開始時に通知されます。\n"
+                             "ただし、コメビュ起動時にすでに放送開始されているフォローコミュニティは"
+                             "検知することができません。");
+  }
 }
