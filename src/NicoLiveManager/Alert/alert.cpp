@@ -31,9 +31,10 @@ void NicoLiveManager::loginAlertFinished(QNetworkReply* reply)
     const QString code = commTcpi.midStr("<code>","</code>");
     const QString description = commTcpi.midStr("<description>","</description>");
     mwin->insLog(code + "\n" + description + "\n");
-    QMessageBox::information(mwin, "Viqo", "放送開始通知のログイン(LoginAlert)に失敗しました\n"
-                                           "メールアドレスとパスワードを確認してください\n"
-                                           "code : " + code + "\n" + description);
+    QMessageBox::information(mwin, "Viqo",
+                             "放送開始通知のログイン(LoginAlert)に失敗しました\n"
+                             "メールアドレスとパスワードを確認してください\n"
+                             "code : " + code + "\n" + description);
     return;
   }
 

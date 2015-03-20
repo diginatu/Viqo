@@ -30,13 +30,18 @@ void NicoLiveManager::getRawMyLiveHTML()
 void NicoLiveManager::rawMyLivefinished(QNetworkReply* reply)
 {
   mwin->insLog("NicoLiveManager::rawMyLivefinished");
-  QString repdata = QString(reply->readAll());
 
-  StrAbstractor liveID(repdata);
+  StrAbstractor liveID(QString(reply->readAll()));
+
+  if (liveID.toString().isEmpty()) {
+    mwin->insLog("HTML was empty. you may be not logged in.");
+    mwin->userSessionDisabled();
+    return;
+  }
 
   // seek to Programs from the joined channels/communities if exist
   if (liveID.forward("<div class=\"articleBody \" id=\"ch\">") == -1) {
-    mwin->insLog("no joined channels/communities\n");
+    mwin->insLog("no joined channels/communities");
     return;
   }
 

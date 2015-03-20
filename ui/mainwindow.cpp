@@ -8,6 +8,7 @@ MainWindow::MainWindow(QWidget *parent) :
   newWakuSettingsWindow(new NewWakuSettingsWindow(this, this)),
   accountWindow(new AccountWindow(this, this)),
   followCommunity(new FollowCommunity(this, this)),
+  userSessionDisabledDialogAppeared(false),
   settings(this, ui, this)
 {
   ui->setupUi(this);
@@ -441,6 +442,39 @@ void MainWindow::on_load_4_triggered()
 void MainWindow::getNewWakuAPI(int type, QString livenum)
 {
   nicolivemanager->getNewWakuAPI(type, livenum);
+}
+
+void MainWindow::userSessionDisabled()
+{
+  if (userSessionDisabledDialogAppeared) return;
+  userSessionDisabledDialogAppeared = true;
+
+  const UserSessionWay usw = settings.getLoginWay();
+  if (usw == UserSessionWay::Direct) {
+    QMessageBox msgBox(this);
+    msgBox.setText(QStringLiteral("ユーザセッションが無効です\n"
+                                   "設定画面を開きますか？"));
+    msgBox.setStandardButtons(QMessageBox::Cancel | QMessageBox::Ok);
+    msgBox.setDefaultButton(QMessageBox::Ok);
+    if (msgBox.exec() == QMessageBox::Ok) {
+      on_AccountSettings_triggered();
+    }
+  } else if (usw == UserSessionWay::Firefox ||
+             usw == UserSessionWay::Login) {
+    QMessageBox msgBox(this);
+    msgBox.setText(QStringLiteral("ユーザセッションが無効です\n"
+                                   "取得しなおしますか？"));
+    msgBox.setStandardButtons(QMessageBox::Cancel | QMessageBox::Ok);
+    msgBox.setDefaultButton(QMessageBox::Ok);
+    if (msgBox.exec() == QMessageBox::Ok) {
+      accountWindow->init();
+      accountWindow->updateSessionAndSave();
+    }
+    return;
+  }
+
+  userSessionDisabledDialogAppeared = false;
+  return;
 }
 
 void MainWindow::on_autoNewWakuSettings_triggered()

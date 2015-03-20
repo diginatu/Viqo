@@ -54,6 +54,7 @@ public:
 
   void submittedComment();
   void getNewWakuAPI(int type, QString livenum = "");
+  void userSessionDisabled();
 
 public slots:
   // ui slots
@@ -68,8 +69,6 @@ private slots:
   void on_live_waku_list_activated(int index);
   void updateElapsedTime();
 
-  void on_setting_triggered();
-  void on_clear_triggered();
   void on_submit_button_clicked();
   void on_submit_text_returnPressed();
   void dropEvent(QDropEvent* event);
@@ -98,8 +97,9 @@ private slots:
   void on_AboutViqo_triggered();
   void on_AboutQt_triggered();
 
+  void on_clear_triggered();
+  void on_setting_triggered();
   void on_AccountSettings_triggered();
-
   void on_FollowCommunity_triggered();
 
 private:
@@ -113,6 +113,7 @@ private:
   QTimer* watch_count_timer;
   QTimer* elapsed_time_timer;
 
+  bool userSessionDisabledDialogAppeared;
 public:
   Settings settings;
 

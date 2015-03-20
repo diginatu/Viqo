@@ -548,7 +548,7 @@ void NewWakuSettingsWindow::on_presets_regist_clicked()
       ui->presetes->addItem(text, makeJsonFromForm());
       ui->presetes->setCurrentText(text);
     } else {
-      QMessageBox msgBox;
+      QMessageBox msgBox(this);
       msgBox.setText(QStringLiteral("上書きしますか？"));
       msgBox.setStandardButtons(QMessageBox::Cancel | QMessageBox::Ok);
       msgBox.setDefaultButton(QMessageBox::Ok);

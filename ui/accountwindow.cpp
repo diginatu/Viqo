@@ -33,20 +33,26 @@ void AccountWindow::getUserSessionFinished()
   ui->usersession->setText(mwin->settings.getUserSession());
 }
 
+void AccountWindow::updateSessionAndSave()
+{
+  on_get_session_clicked();
+  on_buttonBox_accepted();
+}
+
 void AccountWindow::on_login_way_combo_currentIndexChanged(int index)
 {
   switch (index) {
-  case 0:
+  case UserSessionWay::Direct:
     ui->cookie_group->setEnabled(false);
     ui->usersession->setEnabled(true);
     ui->get_session->setEnabled(false);
     break;
-  case 1:
+  case UserSessionWay::Firefox:
     ui->cookie_group->setEnabled(true);
     ui->usersession->setEnabled(false);
     ui->get_session->setEnabled(true);
     break;
-  case 2:
+  case UserSessionWay::Login:
     ui->cookie_group->setEnabled(false);
     ui->usersession->setEnabled(false);
     ui->get_session->setEnabled(true);
@@ -58,7 +64,7 @@ void AccountWindow::on_buttonBox_accepted()
 {
   mwin->settings.setUserMail(ui->userdata_mail->text());
   mwin->settings.setUserPass(ui->userdata_pass->text());
-  mwin->settings.setLoginWay(ui->login_way_combo->currentIndex());
+  mwin->settings.setLoginWay(UserSessionWay(ui->login_way_combo->currentIndex()));
   mwin->settings.setUserSession(ui->usersession->text());
   mwin->settings.setCookieFile(ui->cookiesetting_filename->text());
 
@@ -78,11 +84,11 @@ void AccountWindow::on_cookiesetting_file_open_button_clicked()
 void AccountWindow::on_get_session_clicked()
 {
   switch (ui->login_way_combo->currentIndex()) {
-  case 1:
+  case UserSessionWay::Firefox:
     mwin->getSessionFromCookie(ui->cookiesetting_filename->text());
     getUserSessionFinished();
     break;
-  case 2:
+  case UserSessionWay::Login:
     mwin->nicolivemanager->login(ui->userdata_mail->text(), ui->userdata_pass->text());
     break;
   default:

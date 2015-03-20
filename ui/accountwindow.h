@@ -19,6 +19,7 @@ public:
 
   void init();
   void getUserSessionFinished();
+  void updateSessionAndSave();
 
 private slots:
   void on_login_way_combo_currentIndexChanged(int index);

@@ -4,7 +4,7 @@
 Settings::Settings(MainWindow* mwin, Ui::MainWindow* ui, QObject* parent) :
   QObject(parent)
 {
-  loginWay = 0;
+  userSessionWay = UserSessionWay::Direct;
   ownerComment = true;
   dispNG = true;
 
@@ -136,7 +136,7 @@ void Settings::oldLoad()
 
   QJsonObject cookie;
   cookie = jsd.object()["cookie"].toObject();
-  loginWay = cookie["browser"].toInt();
+  userSessionWay = UserSessionWay(cookie["browser"].toInt());
   userSession = cookie["user_session"].toString();
   cookieFile = cookie["file_name"].toString();
 
@@ -170,7 +170,7 @@ void Settings::saveSettings()
   }
 
   QJsonObject login_way;
-  login_way["login_way"] = loginWay;
+  login_way["login_way"] = userSessionWay;
   login_way["user_session"] = userSession;
   login_way["cookie_file_name"] = cookieFile;
 
@@ -223,7 +223,7 @@ void Settings::loadSettings()
   QJsonDocument jsd = QJsonDocument::fromJson(file.readAll());
 
   QJsonObject login_way = jsd.object()["login_way"].toObject();
-  loginWay = login_way["login_way"].toInt();
+  userSessionWay = UserSessionWay(login_way["login_way"].toInt());
   userSession = login_way["user_session"].toString();
   cookieFile = login_way["cookie_file_name"].toString();
 
@@ -366,13 +366,13 @@ void Settings::setUserPass(QString value)
   userPass = value;
 }
 
-int Settings::getLoginWay() const
+UserSessionWay Settings::getLoginWay() const
 {
-  return loginWay;
+  return userSessionWay;
 }
-void Settings::setLoginWay(int value)
+void Settings::setLoginWay(UserSessionWay value)
 {
-  loginWay = value;
+  userSessionWay = value;
 }
 
 QString Settings::getUserSession() const

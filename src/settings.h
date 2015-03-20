@@ -12,6 +12,8 @@
 class MainWindow;
 class FollowCommunity;
 
+enum UserSessionWay { Direct, Firefox, Login };
+
 class Settings : public QObject
 {
   Q_OBJECT
@@ -50,8 +52,8 @@ public:
   QString getUserPass() const;
   void setUserPass(QString value);
 
-  int getLoginWay() const;
-  void setLoginWay(int value);
+  UserSessionWay getLoginWay() const;
+  void setLoginWay(UserSessionWay value);
 
   QString getUserSession() const;
   void setUserSession(QString value);
@@ -73,10 +75,8 @@ public slots:
 
 private slots:
 
-
-
 private:
-  int loginWay;
+  UserSessionWay userSessionWay;
   QString userSession;
   QString cookieFile;
 
