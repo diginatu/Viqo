@@ -170,7 +170,7 @@ void Settings::saveSettings()
   }
 
   QJsonObject login_way;
-  login_way["login_way"] = userSessionWay;
+  login_way["login_way"] = static_cast<int>(userSessionWay);
   login_way["user_session"] = userSession;
   login_way["cookie_file_name"] = cookieFile;
 

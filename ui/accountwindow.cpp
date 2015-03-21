@@ -23,7 +23,7 @@ void AccountWindow::init()
 {
   ui->userdata_mail->setText(mwin->settings.getUserMail());
   ui->userdata_pass->setText(mwin->settings.getUserPass());
-  ui->login_way_combo->setCurrentIndex(mwin->settings.getLoginWay());
+  ui->login_way_combo->setCurrentIndex(static_cast<int>(mwin->settings.getLoginWay()));
   ui->usersession->setText(mwin->settings.getUserSession());
   ui->cookiesetting_filename->setText(mwin->settings.getCookieFile());
 }
@@ -41,7 +41,7 @@ void AccountWindow::updateSessionAndSave()
 
 void AccountWindow::on_login_way_combo_currentIndexChanged(int index)
 {
-  switch (index) {
+  switch (static_cast<UserSessionWay>(index)) {
   case UserSessionWay::Direct:
     ui->cookie_group->setEnabled(false);
     ui->usersession->setEnabled(true);
@@ -83,7 +83,7 @@ void AccountWindow::on_cookiesetting_file_open_button_clicked()
 
 void AccountWindow::on_get_session_clicked()
 {
-  switch (ui->login_way_combo->currentIndex()) {
+  switch (static_cast<UserSessionWay>(ui->login_way_combo->currentIndex())) {
   case UserSessionWay::Firefox:
     mwin->getSessionFromCookie(ui->cookiesetting_filename->text());
     getUserSessionFinished();
