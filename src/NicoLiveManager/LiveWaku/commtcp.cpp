@@ -131,7 +131,7 @@ void CommTcp::readOneRawComment(const QString rawcomm)
   long long udate = comminfo.midStr("date=\"", "\"", false).toLongLong();
   QDateTime commenttime;
   commenttime.setTime_t(udate);
-  QString date = commenttime.toString("yyyy/MM/dd hh:mm:ss");
+  QString date = commenttime.toString("hh:mm:ss");
 
   QString mail = comminfo.midStr("mail=\"", "\"", false);
   bool is_184 = (mail.indexOf("184")!=-1) ? true : false;
@@ -149,7 +149,7 @@ void CommTcp::readOneRawComment(const QString rawcomm)
   comm = NicoLiveManager::HTMLdecode(comm);
 
   int nextnum = mwin->lastCommentNum() + 1;
-  if (mwin->settings.getDispNG() && nextnum != num) {
+  if (mwin->settings.getDispNG() && nextnum != num && nextnum != 1) {
     for (int i = nextnum; i < num; ++i) {
       mwin->insComment( i, false, "NG", QStringLiteral("NGコメント"), date,
                         "NGcomment", false, false);

@@ -18,15 +18,19 @@ UserManager::UserManager(MainWindow* mwin, QObject *parent) :
     mwin->insLog("db open succeeded");
   } else {
     mwin->insLog("db open error occured");
-    QMessageBox::information(mwin, "Viqo", "ユーザのデータベースオープンに失敗しました");
+    QMessageBox::information(mwin, "Viqo",
+                             "ユーザのデータベースオープンに失敗しました");
   }
 
   QSqlQuery query(db);
 
-  query.prepare("create table if not exists user (id integer unique primary key, name varchar(60))");
+  query.prepare("create table if not exists user "
+                "(id integer unique primary key, name varchar(60))");
 
   if (!query.exec()) {
     mwin->insLog("UserManager::UserManager create table error");
+    QMessageBox::information(mwin, "Viqo",
+                             "ユーザのデータベーステーブル作成に失敗しました");
   }
 
   mwin->insLog();
@@ -41,7 +45,8 @@ void UserManager::getUserName(QTreeWidgetItem* item, QString userID, bool useHTT
 
   if (useDB) {
     QSqlQuery query(db);
-    query.prepare("select distinct name from user where id=" + userID);
+    query.prepare("select distinct name from user where id=:id");
+    query.bindValue(":id", userID);
 
     if (query.exec()) {
       if (query.next()) {
@@ -52,11 +57,27 @@ void UserManager::getUserName(QTreeWidgetItem* item, QString userID, bool useHTT
       }
     } else {
       mwin->insLog("UserManager::getUserName user db get error\n");
+      QMessageBox::information(mwin, "Viqo",
+                               "ユーザのデータベーステーブル取得に失敗しました");
     }
   } else if (useHTTP) {
     UserGetter* ug = new UserGetter(mwin,this);
     ug->getUserName(item, userID, db);
   }
-
 }
 
+void UserManager::setUserName(QTreeWidgetItem* item, QString username)
+{
+  item->setText(2, username);
+
+  QSqlQuery query(db);
+  query.prepare("insert or replace into user (id, name) values (:id, :name)");
+  query.bindValue(":id", item->text(5));
+  query.bindValue(":name", username);
+
+  if (!query.exec()) {
+    mwin->insLog("user db set error");
+    QMessageBox::information(mwin, "Viqo",
+                             "ユーザのデータベーステーブル書き込みに失敗しました");
+  }
+}

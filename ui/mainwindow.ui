@@ -199,7 +199,7 @@
         </sizepolicy>
        </property>
        <property name="contextMenuPolicy">
-        <enum>Qt::CustomContextMenu</enum>
+        <enum>Qt::ActionsContextMenu</enum>
        </property>
        <property name="openExternalLinks">
         <bool>true</bool>
@@ -240,6 +240,9 @@
              <horstretch>0</horstretch>
              <verstretch>0</verstretch>
             </sizepolicy>
+           </property>
+           <property name="contextMenuPolicy">
+            <enum>Qt::ActionsContextMenu</enum>
            </property>
            <property name="styleSheet">
             <string notr="true"/>
@@ -306,6 +309,9 @@
           </widget>
          </item>
         </layout>
+        <zorder>comment_view</zorder>
+        <zorder>auto_getting_user_name_chk</zorder>
+        <zorder>keep_top_chk</zorder>
        </widget>
        <widget class="QWidget" name="tab">
         <attribute name="title">
@@ -856,6 +862,22 @@
   <action name="FollowCommunity">
    <property name="text">
     <string>フォローコミュニティ...</string>
+   </property>
+  </action>
+  <action name="CommentViewEditKotehan">
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
+   <property name="text">
+    <string>コテハン編集</string>
+   </property>
+  </action>
+  <action name="CommentViewGetKotehan">
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
+   <property name="text">
+    <string>コテハン取得</string>
    </property>
   </action>
  </widget>

@@ -23,6 +23,11 @@ MainWindow::MainWindow(QWidget *parent) :
   ui->comment_view->header()->resizeSection(6, 30);
   ui->comment_view->header()->resizeSection(7, 30);
 
+  ui->comment_view->insertAction(0,ui->CommentViewEditKotehan);
+  ui->comment_view->insertAction(0,ui->CommentViewGetKotehan);
+  ui->one_comment_view->insertAction(0,ui->oneCommentActionCopy);
+  ui->one_comment_view->insertAction(0,ui->oneCommentActionSearchByGoogle);
+
   QStringList dirs = QStandardPaths::standardLocations(QStandardPaths::DataLocation);
   if (dirs.empty()) {
     insLog("save directory is not found");
@@ -262,14 +267,6 @@ void MainWindow::submittedComment()
   ui->submit_button->setEnabled(true);
 }
 
-void MainWindow::on_comment_view_itemDoubleClicked(QTreeWidgetItem *item, int column)
-{
-  if (column == 2) {
-    QString userid = item->text(5);
-    userManager->getUserName(item, userid, true, false);
-  }
-}
-
 void MainWindow::on_comment_view_currentItemChanged(QTreeWidgetItem *current)
 {
   if (current == NULL) return;
@@ -369,18 +366,6 @@ void MainWindow::on_openBrowser_clicked()
   QDesktopServices::openUrl("http://live.nicovideo.jp/watch/lv" + ui->broadID->text());
 }
 
-void MainWindow::on_comment_view_customContextMenuRequested(const QPoint &pos)
-{
-}
-
-void MainWindow::on_one_comment_view_customContextMenuRequested(const QPoint &pos)
-{
-  QMenu *menu = new QMenu(this);
-  menu->addAction(ui->oneCommentActionCopy);
-  menu->addAction(ui->oneCommentActionSearchByGoogle);
-  menu->popup(ui->one_comment_view->mapToGlobal(pos) + QPoint(2,1));
-}
-
 void MainWindow::on_oneCommentActionSearchByGoogle_triggered()
 {
   const QString url = "https://www.google.co.jp/search?q=" +
@@ -390,8 +375,7 @@ void MainWindow::on_oneCommentActionSearchByGoogle_triggered()
 
 void MainWindow::on_oneCommentActionCopy_triggered()
 {
-  QClipboard *clipboard = QApplication::clipboard();
-  clipboard->setText(ui->one_comment_view->textCursor().selectedText());
+  QApplication::clipboard()->setText(ui->one_comment_view->textCursor().selectedText());
 }
 
 void MainWindow::on_command_test_button_clicked()
@@ -529,4 +513,36 @@ void MainWindow::on_FollowCommunity_triggered()
                              "ただし、コメビュ起動時にすでに放送開始されているフォローコミュニティは"
                              "検知することができません。");
   }
+}
+
+void MainWindow::on_comment_view_currentItemChanged(QTreeWidgetItem *current, QTreeWidgetItem *previous)
+{
+  if (!current ^ !previous) {
+    if (current == 0) {
+      ui->CommentViewEditKotehan->setEnabled(false);
+      ui->CommentViewGetKotehan->setEnabled(false);
+    } else {
+      ui->CommentViewEditKotehan->setEnabled(true);
+      ui->CommentViewGetKotehan->setEnabled(true);
+    }
+  }
+}
+
+void MainWindow::on_CommentViewEditKotehan_triggered()
+{
+  QTreeWidgetItem* const citem = ui->comment_view->currentItem();
+
+  QString name = QInputDialog::getText(this, QStringLiteral("コテハン編集"),
+                             QStringLiteral("コテハン:"), QLineEdit::Normal,
+                             citem->text(2));
+
+  if (name.isEmpty()) return;
+
+  userManager->setUserName(citem, name);
+}
+
+void MainWindow::on_CommentViewGetKotehan_triggered()
+{
+  QTreeWidgetItem* const citem = ui->comment_view->currentItem();
+  userManager->getUserName(citem, citem->text(5), true, false);
 }

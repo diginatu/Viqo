@@ -64,7 +64,6 @@ public slots:
   void getWatchCount();
 
 private slots:
-  void on_comment_view_itemDoubleClicked(QTreeWidgetItem *item, int column);
   void on_comment_view_currentItemChanged(QTreeWidgetItem *current);
   void on_live_waku_list_activated(int index);
   void updateElapsedTime();
@@ -74,8 +73,6 @@ private slots:
   void dropEvent(QDropEvent* event);
   void dragEnterEvent(QDragEnterEvent* event);
   void on_openBrowser_clicked();
-  void on_comment_view_customContextMenuRequested(const QPoint &pos);
-  void on_one_comment_view_customContextMenuRequested(const QPoint &pos);
   void on_oneCommentActionSearchByGoogle_triggered();
   void on_oneCommentActionCopy_triggered();
 
@@ -101,6 +98,12 @@ private slots:
   void on_setting_triggered();
   void on_AccountSettings_triggered();
   void on_FollowCommunity_triggered();
+
+  void on_comment_view_currentItemChanged(QTreeWidgetItem *current, QTreeWidgetItem *previous);
+
+  void on_CommentViewEditKotehan_triggered();
+
+  void on_CommentViewGetKotehan_triggered();
 
 private:
   Ui::MainWindow* ui;
