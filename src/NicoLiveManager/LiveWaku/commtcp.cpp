@@ -176,7 +176,9 @@ void CommTcp::readOneRawComment(const QString rawcomm)
   if (comm == "/disconnect" && broadcaster) {
     if (mwin->settings.isAutoNewWaku() && nlwaku->isOwnerBroad())
       mwin->getNewWakuAPI(2);
-    mwin->on_disconnect_clicked();
+
+    mwin->setWatchCount("0");
+    nlwaku->broadDisconnect();
   }
 }
 

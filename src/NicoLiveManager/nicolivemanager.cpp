@@ -74,9 +74,12 @@ void NicoLiveManager::broadStart()
   nowWaku.getPlayerStatusAPI();
 }
 
-void NicoLiveManager::broadDisconnect()
+void NicoLiveManager::broadDisconnect(bool disableFollow)
 {
+  mwin->setWatchCount("0");
   nowWaku.broadDisconnect();
+  if (disableFollow)
+    nowWaku.setCommunity("");
 }
 
 void NicoLiveManager::deleteWakuList()

@@ -53,7 +53,7 @@ public:
 
   QList<LiveWaku*> liveWakuList;
 
-  void broadDisconnect();
+  void broadDisconnect(bool disableFollow = false);
   void broadStart();
 
   void newWakuSetFormData(QString name, QString value);

@@ -61,7 +61,7 @@ MainWindow::MainWindow(QWidget *parent) :
 
 MainWindow::~MainWindow()
 {
-  on_disconnect_clicked();
+  nicolivemanager->broadDisconnect();
   delete ui;
 }
 
@@ -242,7 +242,7 @@ void MainWindow::on_receive_clicked()
   }
   ui->broadID->setText(broadID);
 
-  on_disconnect_clicked();
+  nicolivemanager->broadDisconnect();
   bodyClear();
 
   nicolivemanager->nowWaku.setBroadID(broadID);
@@ -252,8 +252,7 @@ void MainWindow::on_receive_clicked()
 
 void MainWindow::on_disconnect_clicked()
 {
-  setWatchCount("0");
-  nicolivemanager->broadDisconnect();
+  nicolivemanager->broadDisconnect(true);
 }
 
 void MainWindow::bodyClear()
