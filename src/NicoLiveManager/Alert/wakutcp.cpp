@@ -1,5 +1,5 @@
 #include "wakutcp.h"
-#include "../../mainwindow.h"
+#include "../../../ui/mainwindow.h"
 #include "../nicolivemanager.h"
 
 WakuTcp::WakuTcp(QString domain, int port, QString thread, MainWindow* mwin, NicoLiveManager* nicolivemanager)
@@ -30,7 +30,8 @@ void WakuTcp::doConnect()
 
   if(!socket->waitForConnected(5000)) {
     mwin->insLog("Error: " + socket->errorString() + "\n");
-    QTimer::singleShot(30000, this, SLOT(doConnect()));
+    QMessageBox msgBox;
+    doConnect();
   }
 
   mwin->insLog();
@@ -48,7 +49,7 @@ void WakuTcp::connected()
   if (socket->write(send) == -1) {
     mwin->insLog("Error: " + socket->errorString() + "\n");
     socket->close();
-    QTimer::singleShot(30000, this, SLOT(doConnect()));
+    doConnect();
     return;
   }
 

@@ -1,5 +1,5 @@
 ﻿#include "commtcp.h"
-#include "../../mainwindow.h"
+#include "../../../ui/mainwindow.h"
 #include "nowlivewaku.h"
 
 CommTcp::CommTcp(QString domain, int port, QString thread, MainWindow* mwin, NowLiveWaku* nlwaku, QObject* parent) :
@@ -28,7 +28,12 @@ void CommTcp::doConnect()
 
   if(!socket->waitForConnected(5000)) {
     mwin->insLog("CommTcp::doConnect Error: " + socket->errorString());
-    doConnect();
+    QMessageBox msgBox;
+    msgBox.setText(QStringLiteral("コメント受信が切断されました。再接続しますか？"));
+    msgBox.setStandardButtons(QMessageBox::No | QMessageBox::Yes);
+    msgBox.setDefaultButton(QMessageBox::Yes);
+    if (msgBox.exec() == QMessageBox::Yes)
+      doConnect();
   }
 }
 
@@ -41,6 +46,7 @@ void CommTcp::connected()
 
   if (socket->write(send) == -1) {
     mwin->insLog("CommTcp::connected Error: " + socket->errorString());
+    doConnect();
   }
 
   // set timer to send NULL data.
@@ -125,7 +131,7 @@ void CommTcp::readOneRawComment(const QString rawcomm)
   long long udate = comminfo.midStr("date=\"", "\"", false).toLongLong();
   QDateTime commenttime;
   commenttime.setTime_t(udate);
-  QString date = commenttime.toString("yyyy/MM/dd hh:mm:ss");
+  QString date = commenttime.toString("hh:mm:ss");
 
   QString mail = comminfo.midStr("mail=\"", "\"", false);
   bool is_184 = (mail.indexOf("184")!=-1) ? true : false;
@@ -143,7 +149,7 @@ void CommTcp::readOneRawComment(const QString rawcomm)
   comm = NicoLiveManager::HTMLdecode(comm);
 
   int nextnum = mwin->lastCommentNum() + 1;
-  if (mwin->settings.getDispNG() && nextnum != num) {
+  if (mwin->settings.getDispNG() && nextnum != num && nextnum != 1) {
     for (int i = nextnum; i < num; ++i) {
       mwin->insComment( i, false, "NG", QStringLiteral("NGコメント"), date,
                         "NGcomment", false, false);
@@ -170,7 +176,9 @@ void CommTcp::readOneRawComment(const QString rawcomm)
   if (comm == "/disconnect" && broadcaster) {
     if (mwin->settings.isAutoNewWaku() && nlwaku->isOwnerBroad())
       mwin->getNewWakuAPI(2);
-    mwin->on_disconnect_clicked();
+
+    mwin->setWatchCount("0");
+    nlwaku->broadDisconnect();
   }
 }
 

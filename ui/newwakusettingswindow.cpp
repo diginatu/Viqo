@@ -188,6 +188,7 @@ void NewWakuSettingsWindow::songRightsApply()
   if (!file.open(QIODevice::ReadOnly | QIODevice::Text)) {
     file.close();
     mwin->insLog("opening csv file failed");
+    QMessageBox::information(this, "Viqo", "CSV ファイルのオープンに失敗しました");
     return;
   }
 
@@ -204,7 +205,8 @@ void NewWakuSettingsWindow::songRightsApply()
     for (int i = 0; i < line.length(); ++i) {
       if (mode == 0) {
         if (line[i] == QChar('"')) {
-          mwin->insLog("Song CSV has a syntax error");
+          mwin->insLog("Song CSV : syntax error");
+          QMessageBox::information(this, "Viqo", "CSV ファイルに文法誤りがあります");
           break;
         } else if (line[i] == QChar(',')) {
           mwin->nicolivemanager->newWakuSetFormData(
@@ -277,10 +279,12 @@ void NewWakuSettingsWindow::songRightsApply()
             mode = 1;
           } else {
             mwin->insLog("Song CSV has a syntax error");
+            QMessageBox::information(this, "Viqo", "CSV ファイルに文法誤りがあります");
             break;
           }
         } else if (line[i] == QChar(',') || i+1 == line.length()) {
           mwin->insLog("Song CSV has a syntax error");
+          QMessageBox::information(this, "Viqo", "CSV ファイルに文法誤りがあります");
           break;
         }
       }
@@ -356,7 +360,10 @@ bool NewWakuSettingsWindow::isSetNecessary()
 
 bool NewWakuSettingsWindow::isTwitterTagValid()
 {
-  return !ui->twitter->isChecked() || ui->twitter->text().startsWith('#');
+  return
+      !ui->twitter->isChecked() ||
+      ui->twitter->text() == "" ||
+      ui->twitter->text().startsWith('#');
 }
 
 void NewWakuSettingsWindow::on_tag_add_clicked()
@@ -377,6 +384,7 @@ void NewWakuSettingsWindow::savePresets()
   QStringList dir = QStandardPaths::standardLocations(QStandardPaths::DataLocation);
   if (dir.empty()) {
     mwin->insLog("save directory is not available");
+    QMessageBox::information(this, "Viqo", "保存領域がないので保存できません");
     return;
   }
 
@@ -396,6 +404,7 @@ void NewWakuSettingsWindow::savePresets()
   if (!file.open(QIODevice::WriteOnly)) {
     file.close();
     mwin->insLog("opening settings file failed");
+    QMessageBox::information(this, "Viqo", "設定ファイルに書き込めません");
     return;
   }
   QTextStream out(&file);
@@ -539,7 +548,7 @@ void NewWakuSettingsWindow::on_presets_regist_clicked()
       ui->presetes->addItem(text, makeJsonFromForm());
       ui->presetes->setCurrentText(text);
     } else {
-      QMessageBox msgBox;
+      QMessageBox msgBox(this);
       msgBox.setText(QStringLiteral("上書きしますか？"));
       msgBox.setStandardButtons(QMessageBox::Cancel | QMessageBox::Ok);
       msgBox.setDefaultButton(QMessageBox::Ok);

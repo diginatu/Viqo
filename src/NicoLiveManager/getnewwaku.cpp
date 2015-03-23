@@ -1,15 +1,17 @@
 ﻿#include "nicolivemanager.h"
-#include "../mainwindow.h"
+#include "../../ui/mainwindow.h"
 
 void NicoLiveManager::getNewWakuAPI(const int type, QString liveNum)
 {
   if (type == 2) {
     if (!nwin->isSetNecessary()) {
       mwin->insLog("NicoLiveManager::getNewWakuAPI type" + QString::number(type) + " no necessary item(s)");
+      QMessageBox::information(mwin, "Viqo", "設定されていない必須項目があります");
       return;
     }
     if (!nwin->isTwitterTagValid()) {
       mwin->insLog("NicoLiveManager::getNewWakuAPI type" + QString::number(type) + " twitter tag must start with \"#\"");
+      QMessageBox::information(mwin, "Viqo", "ツイッタータグは # で始めてください");
       return;
     }
   }
@@ -93,7 +95,7 @@ void NicoLiveManager::newWakuConfirmFinished(QNetworkReply* reply){
   newWakuAbstractor(reply, 3);
   reply->deleteLater();
 
-  newWakuData.insert("kiyaku", "true");
+  newWakuData.replace("kiyaku", "true");
 
   nwin->songRightsApply();
 
@@ -102,25 +104,58 @@ void NicoLiveManager::newWakuConfirmFinished(QNetworkReply* reply){
 }
 
 void NicoLiveManager::newWakuFinished(QNetworkReply* reply){
-  if (reply->size() >= 10) {
-    mwin->insLog("getting waku failed");
+  QString location = "";
+
+  auto headers = reply->rawHeaderPairs();
+  foreach (auto header, headers) {
+    if (header.first == "Location") {
+      location = header.second;
+      break;
+    }
+  }
+
+  if (location != "") {
+    if (mwin->settings.isAutoNewWakuOpenBrowser()) {
+      QString url = "http://live.nicovideo.jp/" + location;
+      QDesktopServices::openUrl(url);
+    }
+
+    if (location.startsWith("watch") &&
+        mwin->settings.isAutoNewWakuStart()) {
+      QString broadID;
+      const QRegExp broadIDrg("^.+lv(\\d+).*$");
+      if (broadIDrg.indexIn(location) != -1) {
+        broadID = broadIDrg.cap(1);
+      }
+
+      LiveWaku* myNewWaku = new LiveWaku(mwin, this, broadID, this);
+      myNewWaku->setFlag(1);
+      myNewWaku->getPlayerStatusAPI();
+    }
+  } else {
     QString body = QString(reply->readAll());
     StrAbstractor bodya(body);
-    if (bodya.forward("<div id=\"wait\">") != -1)
-      mwin->insLog("wating " + bodya.midStr("<span id=\"waiting_users\">", "</span>"));
-    else qDebug() << body;
 
-  } else {
-    if (mwin->settings.isAutoNewWakuOpenBrowser()) {
+    if (bodya.forward("<div id=\"wait\">") != -1) {
+      QString waitingUsers = bodya.midStr("<span id=\"waiting_users\">", "</span>");
+      mwin->insLog("wating " + waitingUsers + "users");
+      QMessageBox::information(mwin, "Viqo", "順番待ちが発生しているので並びます （" + waitingUsers + "人）");
+
+      newWakuAbstractor(reply, 3);
+      reply->deleteLater();
+
+      newWakuData.replace("is_wait", "wait");
+      nwin->songRightsApply();
+
+      getNewWakuAPI(4);
+    } else {
+      mwin->insLog("getting waku failed");
+      QMessageBox::information(mwin, "Viqo", "枠取りに失敗しました");
       auto headers = reply->rawHeaderPairs();
-      foreach (auto header, headers) {
-        if (header.first == "Location") {
-          QString url = "http://live.nicovideo.jp/" + header.second;
-          QDesktopServices::openUrl(url);
-          break;
-        }
-      }
+      qDebug() << headers;
+      qDebug() << body;
     }
+
   }
 
   reply->deleteLater();

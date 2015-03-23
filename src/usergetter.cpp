@@ -1,5 +1,5 @@
 #include "usergetter.h"
-#include "mainwindow.h"
+#include "../ui/mainwindow.h"
 
 UserGetter::UserGetter(MainWindow* mwin, QObject *parent) :
   NicoHttp(mwin, parent)
@@ -22,16 +22,7 @@ void UserGetter::finished()
   userinfo.midStr("class=\"userDetail\"","class=\"avatar\""); //set position
   QString username = userinfo.midStr("alt=\"", "\"");
 
-  item->setText(2, username);
-
-
-  QSqlQuery query(*db);
-  query.prepare("insert or replace into user (id, name) values ("
-                + userID + ", '" + username + "')");
-
-  if (!query.exec()) {
-    mwin->insLog("UserGetter::finished user db got error");
-  }
+  mwin->userManager->setUserName(item, username);
 
   this->deleteLater();
 }

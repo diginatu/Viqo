@@ -1,10 +1,10 @@
 ﻿#include "settings.h"
-#include "mainwindow.h"
+#include "../ui/mainwindow.h"
 
 Settings::Settings(MainWindow* mwin, Ui::MainWindow* ui, QObject* parent) :
   QObject(parent)
 {
-  loginWay = 0;
+  userSessionWay = UserSessionWay::Direct;
   ownerComment = true;
   dispNG = true;
 
@@ -12,11 +12,19 @@ Settings::Settings(MainWindow* mwin, Ui::MainWindow* ui, QObject* parent) :
   this->ui = ui;
 }
 
+void Settings::loadAll()
+{
+  loadSettings();
+  loadStatus();
+  loadFollowCommunities();
+}
+
 void Settings::saveStatus(int num)
 {
   QStringList dir = QStandardPaths::standardLocations(QStandardPaths::DataLocation);
   if (dir.empty()) {
     mwin->insLog("save directory is not available");
+    QMessageBox::information(mwin, "Viqo", "保存領域がないので保存できません");
     return;
   }
 
@@ -26,6 +34,7 @@ void Settings::saveStatus(int num)
   other["is184_comment"] = ui->is184_chk->isChecked();
   other["auto_getting_new_waku"] = ui->autoNewWakuChk->isChecked();
   other["new_waku_open_browser"] = ui->autoNewWakuOpenBrowser->isChecked();
+  other["new_waku_start"] = ui->autoNewWakuStart->isChecked();
 
   QJsonObject command;
   command["comment_check"] = ui->command_comment_chk->isChecked();
@@ -49,6 +58,7 @@ void Settings::saveStatus(int num)
   if (!file.open(QIODevice::WriteOnly)) {
     file.close();
     mwin->insLog("opening status file failed");
+    QMessageBox::information(mwin, "Viqo", "ファイル書き込みができません");
     return;
   }
 
@@ -64,6 +74,7 @@ void Settings::loadStatus(int num)
   QStringList dir = QStandardPaths::standardLocations(QStandardPaths::DataLocation);
   if (dir.empty()) {
     mwin->insLog("save directory is not available");
+    QMessageBox::information(mwin, "Viqo", "保存領域がないので保存できません");
     return;
   }
   QFile file(dir[0] + "/status_0" + QString::number(num) + ".json");
@@ -79,6 +90,7 @@ void Settings::loadStatus(int num)
   if (!file.open(QIODevice::ReadOnly | QIODevice::Text)) {
     file.close();
     mwin->insLog("opening status file failed");
+    QMessageBox::information(mwin, "Viqo", "ステートファイルオープンに失敗しました");
     return;
   }
 
@@ -90,6 +102,7 @@ void Settings::loadStatus(int num)
   ui->is184_chk->setChecked(other["is184_comment"].toBool());
   ui->autoNewWakuChk->setChecked(other["auto_getting_new_waku"].toBool());
   ui->autoNewWakuOpenBrowser->setChecked(other["new_waku_open_browser"].toBool(true));
+  ui->autoNewWakuStart->setChecked(other["new_waku_start"].toBool());
 
   QJsonObject command = jsd.object()["command"].toObject();
   ui->command_comment->setText(command["comment"].toString());
@@ -123,7 +136,7 @@ void Settings::oldLoad()
 
   QJsonObject cookie;
   cookie = jsd.object()["cookie"].toObject();
-  loginWay = cookie["browser"].toInt();
+  userSessionWay = UserSessionWay(cookie["browser"].toInt());
   userSession = cookie["user_session"].toString();
   cookieFile = cookie["file_name"].toString();
 
@@ -152,11 +165,12 @@ void Settings::saveSettings()
   QStringList dir = QStandardPaths::standardLocations(QStandardPaths::DataLocation);
   if (dir.empty()) {
     mwin->insLog("save directory is not available");
+    QMessageBox::information(mwin, "Viqo", "保存領域がないので保存できません");
     return;
   }
 
   QJsonObject login_way;
-  login_way["login_way"] = loginWay;
+  login_way["login_way"] = static_cast<int>(userSessionWay);
   login_way["user_session"] = userSession;
   login_way["cookie_file_name"] = cookieFile;
 
@@ -166,7 +180,7 @@ void Settings::saveSettings()
 
   QJsonObject comment;
   comment["owner_comment"] = ownerComment;
-  comment["viewNG"] = dispNG;
+  comment["dispNG"] = dispNG;
 
 
   QJsonObject root;
@@ -181,12 +195,13 @@ void Settings::saveSettings()
   if (!file.open(QIODevice::WriteOnly)) {
     file.close();
     mwin->insLog("opening status file failed");
+    QMessageBox::information(mwin, "Viqo", "設定ファイルに書き込みがせきません");
     return;
   }
 
   QTextStream out(&file);
 
-  out << jsd.toJson().data();
+  out << jsd.toJson();
 
   file.close();
 }
@@ -201,14 +216,14 @@ void Settings::loadSettings()
   QFile file(dir[0] + "/settings.json");
   if (!file.open(QIODevice::ReadOnly | QIODevice::Text)) {
     file.close();
-    mwin->insLog("opening status file failed");
+    mwin->insLog("opening setting file failed");
     return;
   }
 
   QJsonDocument jsd = QJsonDocument::fromJson(file.readAll());
 
   QJsonObject login_way = jsd.object()["login_way"].toObject();
-  loginWay = login_way["login_way"].toInt();
+  userSessionWay = UserSessionWay(login_way["login_way"].toInt());
   userSession = login_way["user_session"].toString();
   cookieFile = login_way["cookie_file_name"].toString();
 
@@ -219,12 +234,71 @@ void Settings::loadSettings()
   QJsonObject comment = jsd.object()["comment"].toObject();
   if (comment.contains("owner_comment"))
     ownerComment = comment["owner_comment"].toBool();
-  if (comment.contains("viewNG"))
-    ownerComment = comment["viewNG"].toBool();
+  if (comment.contains("dispNG"))
+    dispNG = comment["dispNG"].toBool();
 
   file.close();
 }
 
+void Settings::saveFollowCommunities()
+{
+  QStringList dir = QStandardPaths::standardLocations(QStandardPaths::DataLocation);
+  if (dir.empty()) {
+    mwin->insLog("save directory is not available");
+    QMessageBox::information(mwin, "Viqo", "保存領域がないので保存できません");
+    return;
+  }
+
+  QJsonArray follow_communities;
+
+  typedef QPair<QString,QString> StringPair;
+  foreach (StringPair community, followCommunities) {
+    follow_communities.append(QJsonArray() << community.first << community.second);
+  }
+
+  QJsonObject root;
+  root["follow_communities"] = follow_communities;
+
+  QJsonDocument jsd;
+  jsd.setObject(root);
+
+  QFile file(dir[0] + "/follow_communities.json");
+  if (!file.open(QIODevice::WriteOnly)) {
+    file.close();
+    mwin->insLog("opening status file failed");
+    QMessageBox::information(mwin, "Viqo", "設定ファイルに書き込みがせきません");
+    return;
+  }
+
+  QTextStream out(&file);
+  out << jsd.toJson(QJsonDocument::Compact);
+  file.close();
+}
+
+void Settings::loadFollowCommunities()
+{
+  QStringList dir = QStandardPaths::standardLocations(QStandardPaths::DataLocation);
+  if (dir.empty()) {
+    mwin->insLog("save directory is not available");
+    return;
+  }
+  QFile file(dir[0] + "/follow_communities.json");
+  if (!file.open(QIODevice::ReadOnly | QIODevice::Text)) {
+    file.close();
+    mwin->insLog("opening Follow Communities setting file failed");
+    return;
+  }
+
+  QJsonDocument jsd = QJsonDocument::fromJson(file.readAll());
+
+  QJsonArray follow_communities = jsd.object()["follow_communities"].toArray();
+  followCommunities.clear();
+  foreach (QJsonValue community, follow_communities) {
+    followCommunities << qMakePair(community.toArray()[0].toString(), community.toArray()[1].toString());
+  }
+
+  file.close();
+}
 
 bool Settings::getIs184()
 {
@@ -269,6 +343,11 @@ bool Settings::isAutoNewWakuOpenBrowser()
   return ui->autoNewWakuOpenBrowser->isChecked();
 }
 
+bool Settings::isAutoNewWakuStart()
+{
+  return ui->autoNewWakuStart->isChecked();
+}
+
 QString Settings::getUserMail() const
 {
   return userMail;
@@ -287,13 +366,13 @@ void Settings::setUserPass(QString value)
   userPass = value;
 }
 
-int Settings::getLoginWay() const
+UserSessionWay Settings::getLoginWay() const
 {
-  return loginWay;
+  return userSessionWay;
 }
-void Settings::setLoginWay(int value)
+void Settings::setLoginWay(UserSessionWay value)
 {
-  loginWay = value;
+  userSessionWay = value;
 }
 
 QString Settings::getUserSession() const

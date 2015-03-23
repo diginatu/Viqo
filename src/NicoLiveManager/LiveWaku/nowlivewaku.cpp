@@ -1,5 +1,5 @@
 ﻿#include "nowlivewaku.h"
-#include "../../mainwindow.h"
+#include "../../../ui/mainwindow.h"
 
 NowLiveWaku::NowLiveWaku(MainWindow* mwin, NicoLiveManager* nlman, QObject* parent) :
   LiveWaku(mwin, nlman, parent),
@@ -44,11 +44,9 @@ void NowLiveWaku::playerStatusFinished(QNetworkReply* reply)
   }
 
   setBroadID(commTcpi.midStr("<id>lv", "</id>"));
-
   setTitle(commTcpi.midStr("<title>", "</title>"));
-
   setCommunity(commTcpi.midStr("<default_community>", "</default_community>"));
-
+  setOwnerName(commTcpi.midStr("<owner_name>", "</owner_name>"));
   owner_id = commTcpi.midStr("<owner_id>", "</owner_id>");
 
   setSt(commTcpi.midStr("<start_time>","</start_time>").toUInt());

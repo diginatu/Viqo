@@ -1,20 +1,21 @@
 ﻿#include "nicolivemanager.h"
-#include "../mainwindow.h"
+#include "../../ui/mainwindow.h"
 
 void NicoLiveManager::getRawMyLiveHTML()
 {
   mwin->insLog("NicoLiveManager::getRawMyLiveHTML");
   mwin->insLog("getting joined community with the web page");
-  if(mRawMyLiveManager!=nullptr)  delete mRawMyLiveManager;
-  mRawMyLiveManager = new QNetworkAccessManager(this);
-
-  connect(mRawMyLiveManager, SIGNAL(finished(QNetworkReply*)), this,
-          SLOT(rawMyLivefinished(QNetworkReply*)));
 
   if (mwin->settings.getUserSession() == "") {
     mwin->insLog("user_session is not set yet");
     return;
   }
+
+  if(mRawMyLiveManager!=nullptr)  delete mRawMyLiveManager;
+  mRawMyLiveManager = new QNetworkAccessManager(this);
+
+  connect(mRawMyLiveManager, SIGNAL(finished(QNetworkReply*)), this,
+          SLOT(rawMyLivefinished(QNetworkReply*)));
 
   // make request
   QNetworkRequest rq;
@@ -29,13 +30,18 @@ void NicoLiveManager::getRawMyLiveHTML()
 void NicoLiveManager::rawMyLivefinished(QNetworkReply* reply)
 {
   mwin->insLog("NicoLiveManager::rawMyLivefinished");
-  QString repdata = QString(reply->readAll());
 
-  StrAbstractor liveID(repdata);
+  StrAbstractor liveID(QString(reply->readAll()));
+
+  if (liveID.toString().isEmpty()) {
+    mwin->insLog("HTML was empty. you may be not logged in.");
+    mwin->userSessionDisabled();
+    return;
+  }
 
   // seek to Programs from the joined channels/communities if exist
   if (liveID.forward("<div class=\"articleBody \" id=\"ch\">") == -1) {
-    mwin->insLog("no joined channels/communities\n");
+    mwin->insLog("no joined channels/communities");
     return;
   }
 

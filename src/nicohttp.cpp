@@ -1,5 +1,5 @@
 #include "nicohttp.h"
-#include "mainwindow.h"
+#include "../ui/mainwindow.h"
 
 NicoHttp::NicoHttp(MainWindow* mwin, QObject *parent) :
   QObject(parent)

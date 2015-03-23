@@ -199,7 +199,7 @@
         </sizepolicy>
        </property>
        <property name="contextMenuPolicy">
-        <enum>Qt::CustomContextMenu</enum>
+        <enum>Qt::ActionsContextMenu</enum>
        </property>
        <property name="openExternalLinks">
         <bool>true</bool>
@@ -241,8 +241,14 @@
              <verstretch>0</verstretch>
             </sizepolicy>
            </property>
+           <property name="contextMenuPolicy">
+            <enum>Qt::ActionsContextMenu</enum>
+           </property>
            <property name="styleSheet">
             <string notr="true"/>
+           </property>
+           <property name="indentation">
+            <number>0</number>
            </property>
            <property name="columnCount">
             <number>8</number>
@@ -303,6 +309,9 @@
           </widget>
          </item>
         </layout>
+        <zorder>comment_view</zorder>
+        <zorder>auto_getting_user_name_chk</zorder>
+        <zorder>keep_top_chk</zorder>
        </widget>
        <widget class="QWidget" name="tab">
         <attribute name="title">
@@ -318,7 +327,7 @@
             <property name="geometry">
              <rect>
               <x>0</x>
-              <y>-56</y>
+              <y>0</y>
               <width>399</width>
               <height>183</height>
              </rect>
@@ -656,7 +665,7 @@
      <x>0</x>
      <y>0</y>
      <width>457</width>
-     <height>25</height>
+     <height>28</height>
     </rect>
    </property>
    <widget class="QMenu" name="file">
@@ -683,6 +692,8 @@
     </widget>
     <addaction name="stateSave"/>
     <addaction name="stateLoad"/>
+    <addaction name="separator"/>
+    <addaction name="quit"/>
    </widget>
    <widget class="QMenu" name="edit">
     <property name="title">
@@ -690,9 +701,11 @@
     </property>
     <addaction name="clear"/>
     <addaction name="separator"/>
+    <addaction name="FollowCommunity"/>
     <addaction name="setting"/>
+    <addaction name="AccountSettings"/>
    </widget>
-   <widget class="QMenu" name="menu">
+   <widget class="QMenu" name="broadcasting">
     <property name="title">
      <string>放送</string>
     </property>
@@ -700,12 +713,21 @@
     <addaction name="separator"/>
     <addaction name="autoNewWakuChk"/>
     <addaction name="autoNewWakuOpenBrowser"/>
+    <addaction name="autoNewWakuStart"/>
     <addaction name="separator"/>
     <addaction name="autoNewWakuSettings"/>
    </widget>
+   <widget class="QMenu" name="help">
+    <property name="title">
+     <string>ヘルプ</string>
+    </property>
+    <addaction name="AboutViqo"/>
+    <addaction name="AboutQt"/>
+   </widget>
    <addaction name="file"/>
    <addaction name="edit"/>
-   <addaction name="menu"/>
+   <addaction name="broadcasting"/>
+   <addaction name="help"/>
   </widget>
   <widget class="QStatusBar" name="statusBar"/>
   <action name="setting">
@@ -807,6 +829,55 @@
    </property>
    <property name="text">
     <string>取得時ブラウザで開く</string>
+   </property>
+  </action>
+  <action name="autoNewWakuStart">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>取得後放送開始する</string>
+   </property>
+  </action>
+  <action name="AboutViqo">
+   <property name="text">
+    <string>about Viqo...</string>
+   </property>
+  </action>
+  <action name="quit">
+   <property name="text">
+    <string>終了</string>
+   </property>
+  </action>
+  <action name="AboutQt">
+   <property name="text">
+    <string>about Qt...</string>
+   </property>
+  </action>
+  <action name="AccountSettings">
+   <property name="text">
+    <string>アカウント設定...</string>
+   </property>
+  </action>
+  <action name="FollowCommunity">
+   <property name="text">
+    <string>フォローコミュニティ...</string>
+   </property>
+  </action>
+  <action name="CommentViewEditKotehan">
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
+   <property name="text">
+    <string>コテハン編集</string>
+   </property>
+  </action>
+  <action name="CommentViewGetKotehan">
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
+   <property name="text">
+    <string>コテハン取得</string>
    </property>
   </action>
  </widget>

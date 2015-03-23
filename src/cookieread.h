@@ -3,6 +3,7 @@
 
 #include <QObject>
 #include <QtSql/QtSql>
+#include <QMessageBox>
 
 class MainWindow;
 

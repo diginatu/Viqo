@@ -6,6 +6,9 @@ MainWindow::MainWindow(QWidget *parent) :
   ui(new Ui::MainWindow),
   settingsWindow(new SettingsWindow(this, this)),
   newWakuSettingsWindow(new NewWakuSettingsWindow(this, this)),
+  accountWindow(new AccountWindow(this, this)),
+  followCommunity(new FollowCommunity(this, this)),
+  userSessionDisabledDialogAppeared(false),
   settings(this, ui, this)
 {
   ui->setupUi(this);
@@ -14,28 +17,35 @@ MainWindow::MainWindow(QWidget *parent) :
   QTextCodec::setCodecForLocale(QTextCodec::codecForName("UTF-8"));
 
   // set the column width for the comment view list
-  ui->comment_view->header()->resizeSection(0, 60);
+  ui->comment_view->header()->resizeSection(0, 40);
   ui->comment_view->header()->resizeSection(1, 30);
   ui->comment_view->header()->resizeSection(3, 200);
   ui->comment_view->header()->resizeSection(6, 30);
   ui->comment_view->header()->resizeSection(7, 30);
 
+  ui->comment_view->insertAction(0,ui->CommentViewEditKotehan);
+  ui->comment_view->insertAction(0,ui->CommentViewGetKotehan);
+  ui->one_comment_view->insertAction(0,ui->oneCommentActionCopy);
+  ui->one_comment_view->insertAction(0,ui->oneCommentActionSearchByGoogle);
+
   QStringList dirs = QStandardPaths::standardLocations(QStandardPaths::DataLocation);
   if (dirs.empty()) {
     insLog("save directory is not found");
+    QMessageBox::information(this, "Viqo", "アプリケーション保存領域がありません");
   } else {
     QDir dir(dirs[0]);
     if (!dir.exists()) {
-      if (!dir.mkpath(dirs[0]))
+      if (!dir.mkpath(dirs[0])) {
         insLog("making save path failed");
+        QMessageBox::information(this, "Viqo", "保存ディレクトリの作成に失敗しました");
+      }
     }
   }
 
-  userManager = new UserManager(this);
-  nicolivemanager = new NicoLiveManager(this, settingsWindow, newWakuSettingsWindow, this);
+  settings.loadAll();
 
-  settings.loadSettings();
-  settings.loadStatus();
+  userManager = new UserManager(this);
+  nicolivemanager = new NicoLiveManager(this, accountWindow, newWakuSettingsWindow, followCommunity, this);
 
   const QString mail = settings.getUserMail();
   const QString pass = settings.getUserPass();
@@ -51,7 +61,7 @@ MainWindow::MainWindow(QWidget *parent) :
 
 MainWindow::~MainWindow()
 {
-  on_disconnect_clicked();
+  nicolivemanager->broadDisconnect();
   delete ui;
 }
 
@@ -160,7 +170,10 @@ void MainWindow::refleshLiveWaku()
   for(int i = 0; i < nicolivemanager->liveWakuList.size(); ++i) {
     if (nicolivemanager->liveWakuList.at(i)->getBroadID() == nicolivemanager->nowWaku.getBroadID())
       now_no = i;
-    ui->live_waku_list->addItem(nicolivemanager->liveWakuList.at(i)->getTitle());
+    ui->live_waku_list->addItem(
+                nicolivemanager->liveWakuList.at(i)->getTitle() + " - " +
+                nicolivemanager->liveWakuList.at(i)->getOwnerName() + "さん"
+                );
   }
 
   if (now_no != -1)
@@ -215,20 +228,21 @@ void MainWindow::getSessionFromCookie(QString cookie_name)
 
 void MainWindow::on_receive_clicked()
 {
+  if ( settings.getUserSession().isEmpty() ) {
+    insLog("MainWindow::on_receive_clicked sessionID is not set yet");
+    QMessageBox::information(this, "Viqo", "セッションIDが設定されていません");
+    return;
+  }
+
+  // trim into only broad number
   const QRegExp broadIDrg("^.+lv(\\d+).*$");
   QString broadID = ui->broadID->text();
   if (broadIDrg.indexIn(broadID) != -1) {
     broadID = broadIDrg.cap(1);
   }
-
   ui->broadID->setText(broadID);
 
-  if ( settings.getUserSession().isEmpty() ) {
-    insLog("MainWindow::on_receive_clicked sessionID is not set yet");
-    return;
-  }
-
-  on_disconnect_clicked();
+  nicolivemanager->broadDisconnect();
   bodyClear();
 
   nicolivemanager->nowWaku.setBroadID(broadID);
@@ -238,8 +252,7 @@ void MainWindow::on_receive_clicked()
 
 void MainWindow::on_disconnect_clicked()
 {
-  setWatchCount("0");
-  nicolivemanager->broadDisconnect();
+  nicolivemanager->broadDisconnect(true);
 }
 
 void MainWindow::bodyClear()
@@ -251,14 +264,6 @@ void MainWindow::bodyClear()
 void MainWindow::submittedComment()
 {
   ui->submit_button->setEnabled(true);
-}
-
-void MainWindow::on_comment_view_itemDoubleClicked(QTreeWidgetItem *item, int column)
-{
-  if (column == 2) {
-    QString userid = item->text(5);
-    userManager->getUserName(item, userid, true, false);
-  }
 }
 
 void MainWindow::on_comment_view_currentItemChanged(QTreeWidgetItem *current)
@@ -325,6 +330,14 @@ void MainWindow::on_setting_triggered()
   settingsWindow->activateWindow();
 }
 
+void MainWindow::on_AccountSettings_triggered()
+{
+  accountWindow->init();
+  accountWindow->show();
+  accountWindow->raise();
+  accountWindow->activateWindow();
+}
+
 void MainWindow::on_clear_triggered()
 {
   bodyClear();
@@ -352,18 +365,6 @@ void MainWindow::on_openBrowser_clicked()
   QDesktopServices::openUrl("http://live.nicovideo.jp/watch/lv" + ui->broadID->text());
 }
 
-void MainWindow::on_comment_view_customContextMenuRequested(const QPoint &pos)
-{
-}
-
-void MainWindow::on_one_comment_view_customContextMenuRequested(const QPoint &pos)
-{
-  QMenu *menu = new QMenu(this);
-  menu->addAction(ui->oneCommentActionCopy);
-  menu->addAction(ui->oneCommentActionSearchByGoogle);
-  menu->popup(ui->one_comment_view->mapToGlobal(pos) + QPoint(2,1));
-}
-
 void MainWindow::on_oneCommentActionSearchByGoogle_triggered()
 {
   const QString url = "https://www.google.co.jp/search?q=" +
@@ -373,8 +374,7 @@ void MainWindow::on_oneCommentActionSearchByGoogle_triggered()
 
 void MainWindow::on_oneCommentActionCopy_triggered()
 {
-  QClipboard *clipboard = QApplication::clipboard();
-  clipboard->setText(ui->one_comment_view->textCursor().selectedText());
+  QApplication::clipboard()->setText(ui->one_comment_view->textCursor().selectedText());
 }
 
 void MainWindow::on_command_test_button_clicked()
@@ -427,6 +427,39 @@ void MainWindow::getNewWakuAPI(int type, QString livenum)
   nicolivemanager->getNewWakuAPI(type, livenum);
 }
 
+void MainWindow::userSessionDisabled()
+{
+  if (userSessionDisabledDialogAppeared) return;
+  userSessionDisabledDialogAppeared = true;
+
+  const UserSessionWay usw = settings.getLoginWay();
+  if (usw == UserSessionWay::Direct) {
+    QMessageBox msgBox(this);
+    msgBox.setText(QStringLiteral("ユーザセッションが無効です\n"
+                                   "設定画面を開きますか？"));
+    msgBox.setStandardButtons(QMessageBox::Cancel | QMessageBox::Ok);
+    msgBox.setDefaultButton(QMessageBox::Ok);
+    if (msgBox.exec() == QMessageBox::Ok) {
+      on_AccountSettings_triggered();
+    }
+  } else if (usw == UserSessionWay::Firefox ||
+             usw == UserSessionWay::Login) {
+    QMessageBox msgBox(this);
+    msgBox.setText(QStringLiteral("ユーザセッションが無効です\n"
+                                   "取得しなおしますか？"));
+    msgBox.setStandardButtons(QMessageBox::Cancel | QMessageBox::Ok);
+    msgBox.setDefaultButton(QMessageBox::Ok);
+    if (msgBox.exec() == QMessageBox::Ok) {
+      accountWindow->init();
+      accountWindow->updateSessionAndSave();
+    }
+    return;
+  }
+
+  userSessionDisabledDialogAppeared = false;
+  return;
+}
+
 void MainWindow::on_autoNewWakuSettings_triggered()
 {
   newWakuSettingsWindow->show();
@@ -437,4 +470,78 @@ void MainWindow::on_autoNewWakuSettings_triggered()
 void MainWindow::on_getNewWakuNow_triggered()
 {
   getNewWakuAPI(2);
+}
+
+void MainWindow::on_quit_triggered()
+{
+  QApplication::quit();
+}
+
+void MainWindow::on_AboutViqo_triggered()
+{
+    QMessageBox::about(this, "About Viqo",
+         "Qt で作成されたマルチプラットフォームコメビュです<br>"
+         "<a href=\"https://github.com/diginatu/Viqo\">GitHub Viqo repository</a>");
+}
+
+void MainWindow::on_AboutQt_triggered()
+{
+  QMessageBox::aboutQt(this);
+}
+
+void MainWindow::on_FollowCommunity_triggered()
+{
+  followCommunity->init();
+  followCommunity->show();
+  followCommunity->raise();
+  followCommunity->activateWindow();
+
+
+  QStringList dir = QStandardPaths::standardLocations(QStandardPaths::DataLocation);
+  if (dir.empty()) {
+    insLog("save directory is not available");
+    return;
+  }
+  QFile file(dir[0] + "/follow_communities.json");
+  if (!file.exists()) {
+    QMessageBox::information(followCommunity, "Viqo - フォローコミュニティ",
+                             "<b>フォローコミュニティ</b>\n\n"
+                             "ここにコミュニティを登録することで、"
+                             "お気に入りに登録しているコミュニティ同様、"
+                             "放送開始時に通知されます。\n"
+                             "ただし、コメビュ起動時にすでに放送開始されているフォローコミュニティは"
+                             "検知することができません。");
+  }
+}
+
+void MainWindow::on_comment_view_currentItemChanged(QTreeWidgetItem *current, QTreeWidgetItem *previous)
+{
+  if (!current ^ !previous) {
+    if (current == 0) {
+      ui->CommentViewEditKotehan->setEnabled(false);
+      ui->CommentViewGetKotehan->setEnabled(false);
+    } else {
+      ui->CommentViewEditKotehan->setEnabled(true);
+      ui->CommentViewGetKotehan->setEnabled(true);
+    }
+  }
+}
+
+void MainWindow::on_CommentViewEditKotehan_triggered()
+{
+  QTreeWidgetItem* const citem = ui->comment_view->currentItem();
+
+  QString name = QInputDialog::getText(this, QStringLiteral("コテハン編集"),
+                             QStringLiteral("コテハン:"), QLineEdit::Normal,
+                             citem->text(2));
+
+  if (name.isEmpty()) return;
+
+  userManager->setUserName(citem, name);
+}
+
+void MainWindow::on_CommentViewGetKotehan_triggered()
+{
+  QTreeWidgetItem* const citem = ui->comment_view->currentItem();
+  userManager->getUserName(citem, citem->text(5), true, false);
 }

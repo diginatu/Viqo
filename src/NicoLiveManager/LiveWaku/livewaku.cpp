@@ -1,5 +1,5 @@
-#include "livewaku.h"
-#include "../../mainwindow.h"
+﻿#include "livewaku.h"
+#include "../../../ui/mainwindow.h"
 #include "../nicolivemanager.h"
 
 LiveWaku::LiveWaku(MainWindow* mwin, NicoLiveManager* nlman, QObject* parent) :
@@ -8,12 +8,18 @@ LiveWaku::LiveWaku(MainWindow* mwin, NicoLiveManager* nlman, QObject* parent) :
 {
   this->mwin = mwin;
   this->nlman = nlman;
+  flag = 0;
 }
 
-LiveWaku::LiveWaku(MainWindow* mwin, NicoLiveManager* nlman, QString broadID, QString community, QObject *parent) :
+LiveWaku::LiveWaku(MainWindow* mwin, NicoLiveManager* nlman, QString broadID, QObject* parent) :
   LiveWaku(mwin, nlman, parent)
 {
   this->broadID = broadID;
+}
+
+LiveWaku::LiveWaku(MainWindow* mwin, NicoLiveManager* nlman, QString broadID, QString community, QObject *parent) :
+  LiveWaku(mwin, nlman, broadID, parent)
+{
   this->community = community;
 }
 
@@ -29,7 +35,7 @@ QString LiveWaku::getTitle() const
 
 void LiveWaku::setTitle(QString value)
 {
-  title = value;
+  title = NicoLiveManager::HTMLdecode(value);
 }
 
 QString LiveWaku::getBroadID() const
@@ -52,6 +58,15 @@ void LiveWaku::setCommunity(QString value)
   community = value;
 }
 
+QString LiveWaku::getOwnerName() const
+{
+    return ownerName;
+}
+void LiveWaku::setOwnerName(const QString &value)
+{
+    ownerName = NicoLiveManager::HTMLdecode(value);
+}
+
 QDateTime LiveWaku::getSt() const
 {
   return st;
@@ -72,7 +87,17 @@ void LiveWaku::setEd(uint unixt)
   ed.setTime_t(unixt);
 }
 
-void LiveWaku::getPlayyerStatusAPI()
+void LiveWaku::setFlag(int flag)
+{
+  this->flag = flag;
+}
+
+QString LiveWaku::getBroadcastToken() const
+{
+  return broadcastToken;
+}
+
+void LiveWaku::getPlayerStatusAPI()
 {
   if(mManager!=nullptr)  delete mManager;
   mManager = new QNetworkAccessManager(this);
@@ -91,9 +116,7 @@ void LiveWaku::getPlayyerStatusAPI()
 void LiveWaku::playerStatusFinished(QNetworkReply* reply)
 {
   mwin->insLog(" LiveWaku::playerStatusFinished :");
-  QString repdata = QString(reply->readAll());
-
-  StrAbstractor commTcpi(repdata);
+  StrAbstractor commTcpi(QString(reply->readAll()));
 
   QString status = commTcpi.midStr("status=\"","\"");
   if (status == "fail") {
@@ -120,15 +143,17 @@ void LiveWaku::playerStatusFinished(QNetworkReply* reply)
   setBroadID(commTcpi.midStr("<id>lv", "</id>"));
   setTitle(commTcpi.midStr("<title>", "</title>"));
   setCommunity(commTcpi.midStr("<default_community>", "</default_community>"));
+  setOwnerName(commTcpi.midStr("<owner_name>", "</owner_name>"));
   setSt(commTcpi.midStr("<start_time>","</start_time>").toUInt());
   setEd(commTcpi.midStr("<end_time>","</end_time>").toUInt());
+  broadcastToken = commTcpi.midStr("<broadcast_token>","</broadcast_token>");
 
   mwin->refleshLiveWaku();
   mwin->insLog("got a broad info : " + title + "\n");
 
   reply->deleteLater();
 
-  if (mwin->settings.isCommandNewWakuChecked() && befTitle != title) {
+  if (flag == 0 && mwin->settings.isCommandNewWakuChecked() && befTitle != title) {
     QProcess pr;
     QString cmd = mwin->settings.getCommandNewWaku();
 
@@ -138,5 +163,7 @@ void LiveWaku::playerStatusFinished(QNetworkReply* reply)
 
     pr.start(cmd);
     pr.waitForFinished(5000);
+  } else if (flag == 1) {
+    nlman->configureStreamAPI("hq", "1", this);
   }
 }

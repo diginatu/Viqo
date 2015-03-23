@@ -13,14 +13,16 @@
 #include <QDesktopServices>
 #include <QClipboard>
 
-#include "cookieread.h"
-#include "usermanager.h"
-#include "livedata.h"
-#include "strabstractor.h"
-#include "NicoLiveManager/nicolivemanager.h"
+#include "../src/cookieread.h"
+#include "../src/usermanager.h"
+#include "../src/livedata.h"
+#include "../src/strabstractor.h"
+#include "../src/NicoLiveManager/nicolivemanager.h"
 #include "settingswindow.h"
-#include "settings.h"
+#include "../src/settings.h"
 #include "newwakusettingswindow.h"
+#include "accountwindow.h"
+#include "followcommunity.h"
 
 class MainWindow : public QMainWindow
 {
@@ -52,6 +54,7 @@ public:
 
   void submittedComment();
   void getNewWakuAPI(int type, QString livenum = "");
+  void userSessionDisabled();
 
 public slots:
   // ui slots
@@ -61,20 +64,15 @@ public slots:
   void getWatchCount();
 
 private slots:
-  void on_comment_view_itemDoubleClicked(QTreeWidgetItem *item, int column);
   void on_comment_view_currentItemChanged(QTreeWidgetItem *current);
   void on_live_waku_list_activated(int index);
   void updateElapsedTime();
 
-  void on_setting_triggered();
-  void on_clear_triggered();
   void on_submit_button_clicked();
   void on_submit_text_returnPressed();
   void dropEvent(QDropEvent* event);
   void dragEnterEvent(QDragEnterEvent* event);
   void on_openBrowser_clicked();
-  void on_comment_view_customContextMenuRequested(const QPoint &pos);
-  void on_one_comment_view_customContextMenuRequested(const QPoint &pos);
   void on_oneCommentActionSearchByGoogle_triggered();
   void on_oneCommentActionCopy_triggered();
 
@@ -91,15 +89,34 @@ private slots:
   void on_load_3_triggered();
   void on_load_4_triggered();
 
+  void on_quit_triggered();
+
+  void on_AboutViqo_triggered();
+  void on_AboutQt_triggered();
+
+  void on_clear_triggered();
+  void on_setting_triggered();
+  void on_AccountSettings_triggered();
+  void on_FollowCommunity_triggered();
+
+  void on_comment_view_currentItemChanged(QTreeWidgetItem *current, QTreeWidgetItem *previous);
+
+  void on_CommentViewEditKotehan_triggered();
+
+  void on_CommentViewGetKotehan_triggered();
+
 private:
   Ui::MainWindow* ui;
 
   SettingsWindow* settingsWindow;
   NewWakuSettingsWindow* newWakuSettingsWindow;
+  AccountWindow* accountWindow;
+  FollowCommunity* followCommunity;
 
   QTimer* watch_count_timer;
   QTimer* elapsed_time_timer;
 
+  bool userSessionDisabledDialogAppeared;
 public:
   Settings settings;
 

@@ -11,9 +11,10 @@
 #include "Alert/wakutcp.h"
 #include "LiveWaku/livewaku.h"
 #include "LiveWaku/nowlivewaku.h"
-#include "../settingswindow.h"
-#include "../newwakusettingswindow.h"
-
+#include "../../ui/settingswindow.h"
+#include "../../ui/newwakusettingswindow.h"
+#include "../../ui/accountwindow.h"
+#include "../../ui/followcommunity.h"
 
 namespace Ui {
 class MainWindow;
@@ -21,40 +22,45 @@ class MainWindow;
 
 class NicoLiveManager : public QObject
 {
-	Q_OBJECT
+  Q_OBJECT
 public:
-  explicit NicoLiveManager(MainWindow* mwin, SettingsWindow* swin, NewWakuSettingsWindow* nwin, QObject *parent = 0);
-	~NicoLiveManager();
+  explicit NicoLiveManager(MainWindow* mwin, AccountWindow* awin, NewWakuSettingsWindow* nwin, FollowCommunity* fwin, QObject *parent = 0);
+  ~NicoLiveManager();
 
-	static QVariant makePostData(QString session_id);
+  static QVariant makePostData(QString session_id);
 
-	void insertLiveWakuList(LiveWaku* livewaku);
+  void insertLiveWakuList(LiveWaku* livewaku);
 
-	void getHeartBeatAPI();
+  void getHeartBeatAPI();
   void loginAlertAPI(const QString& mail, const QString& pass);
   void getPostKeyAPI(const QString& thread, int block_no);
   void getPublishStatusAPI();
   void submitOwnerCommentAPI(const QString& text, const QString& name);
   void getTagsAPI();
   void getNewWakuAPI(const int type, QString liveNum = "");
+  void configureStreamAPI(QString key, QString value, LiveWaku* nowWaku = nullptr);
+  void communityInfoAPI(QString commID);
 
   void alertReconnect();
 
   void allGotWakuInfo(QString communityID, QString broadID);
   void login(QString mail, QString pass);
 
-	QStringList mycommunities;
+  QStringList officialMyCommunities;
+  QStringList mycommunities;
 
-	NowLiveWaku nowWaku;
+  NowLiveWaku nowWaku;
 
-	QList<LiveWaku*> liveWakuList;
+  QList<LiveWaku*> liveWakuList;
 
-	void broadDisconnect();
-	void broadStart();
+  void broadDisconnect(bool disableFollow = false);
+  void broadStart();
 
   void newWakuSetFormData(QString name, QString value);
 
   static QString HTMLdecode(QString st);
+
+  void updateMyCommunities();
 signals:
 
 public slots:
@@ -65,19 +71,22 @@ private:
   void newWakuAbstractor(QNetworkReply* reply, int mode);
 
   MainWindow* mwin;
-  SettingsWindow* swin;
+  AccountWindow* awin;
   NewWakuSettingsWindow* nwin;
+  FollowCommunity* fwin;
   WakuTcp* wakutcp;
 
-	QString watchCount;
+  QString watchCount;
 
-	QString waku_addr;
-	QString waku_thread;
-	int waku_port;
+  QString waku_addr;
+  QString waku_thread;
+  int waku_port;
 
-	QTimer* delWakuTimer;
+  QTimer* delWakuTimer;
 
   QMultiMap<QString, QString> newWakuData;
+
+  LiveWaku* gotNewWaku;
 
   QNetworkAccessManager* mPostKeyManager;
   QNetworkAccessManager* mLoginAlertManager;
@@ -89,11 +98,13 @@ private:
   QNetworkAccessManager* mRawMyLiveManager;
   QNetworkAccessManager* mTags;
   QNetworkAccessManager* mNewWaku;
+  QNetworkAccessManager* mConfigure;
+  QNetworkAccessManager* mCommunityInfo;
 private slots:
-	void heartBeatFinished(QNetworkReply* reply);
-	void loginAlertFinished(QNetworkReply* reply);
-	void adminAlertFinished(QNetworkReply* reply);
-	void rawMyLivefinished(QNetworkReply* reply);
+  void heartBeatFinished(QNetworkReply* reply);
+  void loginAlertFinished(QNetworkReply* reply);
+  void adminAlertFinished(QNetworkReply* reply);
+  void rawMyLivefinished(QNetworkReply* reply);
   void loginFinished(QNetworkReply* reply);
   void postKeyFinished(QNetworkReply* reply);
   void tagsFinished(QNetworkReply* reply);
@@ -107,6 +118,8 @@ private slots:
   void submitOwnerCommentFinished(QNetworkReply* reply);
 
   void deleteWakuList();
+  void configureStreamFinished(QNetworkReply* reply);
+  void communityInfoFinished(QNetworkReply* reply);
 };
 
 

@@ -5,10 +5,15 @@
 #include <QJsonObject>
 #include <QStandardPaths>
 #include <QFile>
+#include <QPair>
 
 #include "ui_mainwindow.h"
 
 class MainWindow;
+class FollowCommunity;
+
+enum class UserSessionWay { Direct, Firefox, Login };
+
 
 class Settings : public QObject
 {
@@ -16,12 +21,17 @@ class Settings : public QObject
 public:
   explicit Settings(MainWindow* mwin, Ui::MainWindow* ui, QObject* parent = 0);
 
+  void loadAll();
+
   void saveStatus(int num = 1);
   void loadStatus(int num = 1);
   void oldLoad();
 
   void saveSettings();
   void loadSettings();
+
+  void saveFollowCommunities();
+  void loadFollowCommunities();
 
   // main window settings
   bool getIs184();
@@ -34,6 +44,7 @@ public:
   QString getCommandNewWaku();
   bool isAutoNewWaku();
   bool isAutoNewWakuOpenBrowser();
+  bool isAutoNewWakuStart();
 
   // account
   QString getUserMail() const;
@@ -42,8 +53,8 @@ public:
   QString getUserPass() const;
   void setUserPass(QString value);
 
-  int getLoginWay() const;
-  void setLoginWay(int value);
+  UserSessionWay getLoginWay() const;
+  void setLoginWay(UserSessionWay value);
 
   QString getUserSession() const;
   void setUserSession(QString value);
@@ -58,16 +69,15 @@ public:
   bool getDispNG() const;
   void setDispNG(bool value);
 
+  QList< QPair<QString,QString> > followCommunities;
 signals:
 
 public slots:
 
 private slots:
 
-
-
 private:
-  int loginWay;
+  UserSessionWay userSessionWay;
   QString userSession;
   QString cookieFile;
 

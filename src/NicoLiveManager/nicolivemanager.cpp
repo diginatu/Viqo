@@ -1,7 +1,7 @@
 ﻿#include "nicolivemanager.h"
-#include "../mainwindow.h"
+#include "../../ui/mainwindow.h"
 
-NicoLiveManager::NicoLiveManager(MainWindow* mwin, SettingsWindow* swin, NewWakuSettingsWindow* nwin, QObject *parent) :
+NicoLiveManager::NicoLiveManager(MainWindow* mwin, AccountWindow* awin, NewWakuSettingsWindow* nwin, FollowCommunity* fwin, QObject *parent) :
   QObject(parent),
   nowWaku(mwin, this, this),
   wakutcp(nullptr),
@@ -17,8 +17,9 @@ NicoLiveManager::NicoLiveManager(MainWindow* mwin, SettingsWindow* swin, NewWaku
   mNewWaku(nullptr)
 {
   this->mwin = mwin;
-  this->swin = swin;
+  this->awin = awin;
   this->nwin = nwin;
+  this->fwin = fwin;
 
   // set timer to delete the ended elements in waku list.
   delWakuTimer = new QTimer(this);
@@ -63,19 +64,22 @@ void NicoLiveManager::insertLiveWakuList(LiveWaku* livewaku)
     }
   }
 
-  livewaku->getPlayyerStatusAPI();
+  livewaku->getPlayerStatusAPI();
   liveWakuList << livewaku;
 }
 
 void NicoLiveManager::broadStart()
 {
   nowWaku.init();
-  nowWaku.getPlayyerStatusAPI();
+  nowWaku.getPlayerStatusAPI();
 }
 
-void NicoLiveManager::broadDisconnect()
+void NicoLiveManager::broadDisconnect(bool disableFollow)
 {
+  mwin->setWatchCount("0");
   nowWaku.broadDisconnect();
+  if (disableFollow)
+    nowWaku.setCommunity("");
 }
 
 void NicoLiveManager::deleteWakuList()
@@ -83,7 +87,7 @@ void NicoLiveManager::deleteWakuList()
   QDateTime nowTime = QDateTime::currentDateTimeUtc();
   for (int i = 0; i < liveWakuList.size(); ++i) {
     if ( nowTime > liveWakuList[i]->getEd() ) {
-      liveWakuList[i]->getPlayyerStatusAPI();
+      liveWakuList[i]->getPlayerStatusAPI();
     }
   }
 }

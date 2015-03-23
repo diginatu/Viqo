@@ -1,13 +1,12 @@
-﻿#include "settingswindow.h"
-#include "ui_settingswindow.h"
+#include "accountwindow.h"
+#include "ui_accountwindow.h"
 #include "mainwindow.h"
 
-SettingsWindow::SettingsWindow(MainWindow* mwin, QWidget* parent) :
+AccountWindow::AccountWindow(MainWindow* mwin, QWidget* parent) :
   QDialog(parent),
-  ui(new Ui::SettingsWindow)
+  ui(new Ui::AccountWindow)
 {
   ui->setupUi(this);
-
   this->mwin = mwin;
 
   ui->userdata_mail->setEchoMode(QLineEdit::Password);
@@ -15,60 +14,59 @@ SettingsWindow::SettingsWindow(MainWindow* mwin, QWidget* parent) :
   ui->usersession->setEchoMode(QLineEdit::Password);
 }
 
-SettingsWindow::~SettingsWindow()
+AccountWindow::~AccountWindow()
 {
   delete ui;
 }
 
-void SettingsWindow::init()
+void AccountWindow::init()
 {
   ui->userdata_mail->setText(mwin->settings.getUserMail());
   ui->userdata_pass->setText(mwin->settings.getUserPass());
-  ui->login_way_combo->setCurrentIndex(mwin->settings.getLoginWay());
+  ui->login_way_combo->setCurrentIndex(static_cast<int>(mwin->settings.getLoginWay()));
   ui->usersession->setText(mwin->settings.getUserSession());
   ui->cookiesetting_filename->setText(mwin->settings.getCookieFile());
-
-  ui->comment_ownercomment_chk->setChecked(mwin->settings.getOwnerComment());
-  ui->comment_dipspNG_chk->setChecked(mwin->settings.getDispNG());
 }
 
-void SettingsWindow::getUserSessionFinished()
+void AccountWindow::getUserSessionFinished()
 {
   ui->usersession->setText(mwin->settings.getUserSession());
-  ui->buttonBox->setEnabled(true);
 }
 
-void SettingsWindow::on_login_way_combo_currentIndexChanged(int index)
+void AccountWindow::updateSessionAndSave()
 {
-  switch (index) {
-  case 0:
+  on_get_session_clicked();
+  on_buttonBox_accepted();
+}
+
+void AccountWindow::on_login_way_combo_currentIndexChanged(int index)
+{
+  switch (static_cast<UserSessionWay>(index)) {
+  case UserSessionWay::Direct:
     ui->cookie_group->setEnabled(false);
-    ui->usersession_groupe->setEnabled(true);
+    ui->usersession->setEnabled(true);
     ui->get_session->setEnabled(false);
     break;
-  case 1:
+  case UserSessionWay::Firefox:
     ui->cookie_group->setEnabled(true);
-    ui->usersession_groupe->setEnabled(false);
+    ui->usersession->setEnabled(false);
     ui->get_session->setEnabled(true);
     break;
-  case 2:
+  case UserSessionWay::Login:
     ui->cookie_group->setEnabled(false);
-    ui->usersession_groupe->setEnabled(false);
+    ui->usersession->setEnabled(false);
     ui->get_session->setEnabled(true);
     break;
   }
 }
 
-void SettingsWindow::on_buttonBox_accepted()
+void AccountWindow::on_buttonBox_accepted()
 {
   mwin->settings.setUserMail(ui->userdata_mail->text());
   mwin->settings.setUserPass(ui->userdata_pass->text());
-  mwin->settings.setLoginWay(ui->login_way_combo->currentIndex());
+  mwin->settings.setLoginWay(UserSessionWay(ui->login_way_combo->currentIndex()));
   mwin->settings.setUserSession(ui->usersession->text());
   mwin->settings.setCookieFile(ui->cookiesetting_filename->text());
-
-  mwin->settings.setOwnerComment(ui->comment_ownercomment_chk->isChecked());
-  mwin->settings.setDispNG(ui->comment_dipspNG_chk->isChecked());
 
   mwin->settings.saveSettings();
 
@@ -76,23 +74,21 @@ void SettingsWindow::on_buttonBox_accepted()
 }
 
 
-void SettingsWindow::on_cookiesetting_file_open_button_clicked()
+void AccountWindow::on_cookiesetting_file_open_button_clicked()
 {
   const QString filePath = QFileDialog::getOpenFileName(this, tr("Open Cookies File"), QDir::homePath(), tr("sqlite Files (*.sqlite)"));
   if ( filePath == "" ) return;
   ui->cookiesetting_filename->setText(filePath);
 }
 
-void SettingsWindow::on_get_session_clicked()
+void AccountWindow::on_get_session_clicked()
 {
-  switch (ui->login_way_combo->currentIndex()) {
-  case 1:
-    ui->buttonBox->setEnabled(false);
+  switch (static_cast<UserSessionWay>(ui->login_way_combo->currentIndex())) {
+  case UserSessionWay::Firefox:
     mwin->getSessionFromCookie(ui->cookiesetting_filename->text());
     getUserSessionFinished();
     break;
-  case 2:
-    ui->buttonBox->setEnabled(false);
+  case UserSessionWay::Login:
     mwin->nicolivemanager->login(ui->userdata_mail->text(), ui->userdata_pass->text());
     break;
   default:
