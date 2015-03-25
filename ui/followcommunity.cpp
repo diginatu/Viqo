@@ -1,8 +1,8 @@
-#include "followcommunity.h"
+﻿#include "followcommunity.h"
 #include "ui_followcommunity.h"
 
 #include "mainwindow.h"
-#include "src/NicoLiveManager/nicolivemanager.h"
+#include "../src/NicoLiveManager/nicolivemanager.h"
 
 FollowCommunity::FollowCommunity(MainWindow *mwin, QWidget *parent) :
   QDialog(parent),
@@ -30,7 +30,7 @@ void FollowCommunity::init()
 void FollowCommunity::gotCommunityInfo(QString commid, QString title)
 {
   if (title.isEmpty()) {
-    QMessageBox::information(this, "Viqo", "コミュニティが見つかりませんでした");
+    QMessageBox::information(this, "Viqo", QStringLiteral("コミュニティが見つかりませんでした"));
     return;
   }
 
@@ -41,8 +41,8 @@ void FollowCommunity::gotCommunityInfo(QString commid, QString title)
 void FollowCommunity::on_addList_clicked()
 {
   QString commid =
-      QInputDialog::getText(this, "コミュニティ追加",
-                            "コミュニティIDを入力してください",
+      QInputDialog::getText(this, QStringLiteral("コミュニティ追加"),
+                            QStringLiteral("コミュニティIDを入力してください"),
                             QLineEdit::Normal, "co");
 
   if (commid.isNull()) return;
