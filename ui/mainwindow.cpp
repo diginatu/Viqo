@@ -31,13 +31,13 @@ MainWindow::MainWindow(QWidget *parent) :
   QStringList dirs = QStandardPaths::standardLocations(QStandardPaths::DataLocation);
   if (dirs.empty()) {
     insLog("save directory is not found");
-    QMessageBox::information(this, "Viqo", "アプリケーション保存領域がありません");
+    QMessageBox::information(this, "Viqo", QStringLiteral("アプリケーション保存領域がありません"));
   } else {
     QDir dir(dirs[0]);
     if (!dir.exists()) {
       if (!dir.mkpath(dirs[0])) {
         insLog("making save path failed");
-        QMessageBox::information(this, "Viqo", "保存ディレクトリの作成に失敗しました");
+        QMessageBox::information(this, "Viqo", QStringLiteral("保存ディレクトリの作成に失敗しました"));
       }
     }
   }
@@ -172,7 +172,7 @@ void MainWindow::refleshLiveWaku()
       now_no = i;
     ui->live_waku_list->addItem(
                 nicolivemanager->liveWakuList.at(i)->getTitle() + " - " +
-                nicolivemanager->liveWakuList.at(i)->getOwnerName() + "さん"
+                nicolivemanager->liveWakuList.at(i)->getOwnerName() + QStringLiteral("さん")
                 );
   }
 
@@ -230,7 +230,7 @@ void MainWindow::on_receive_clicked()
 {
   if ( settings.getUserSession().isEmpty() ) {
     insLog("MainWindow::on_receive_clicked sessionID is not set yet");
-    QMessageBox::information(this, "Viqo", "セッションIDが設定されていません");
+    QMessageBox::information(this, "Viqo", QStringLiteral("セッションIDが設定されていません"));
     return;
   }
 
