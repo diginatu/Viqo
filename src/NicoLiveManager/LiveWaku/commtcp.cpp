@@ -28,7 +28,7 @@ void CommTcp::doConnect()
 
   if(!socket->waitForConnected(5000)) {
     mwin->insLog("CommTcp::doConnect Error: " + socket->errorString());
-    QMessageBox msgBox;
+    QMessageBox msgBox(mwin);
     msgBox.setText(QStringLiteral("コメント受信が切断されました。再接続しますか？"));
     msgBox.setStandardButtons(QMessageBox::No | QMessageBox::Yes);
     msgBox.setDefaultButton(QMessageBox::Yes);
