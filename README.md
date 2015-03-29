@@ -98,7 +98,7 @@ MIT ライセンス
 %userID%      :  ユーザID (数字)
 %commentNo%   :  コメント番号
 %userName%    :  ユーザ名 (登録済みのみ)
-%comment%     :  コメントのテキスト
+%comment%     :  コメント内容
 %lastTime%    :  終了前何分に設定されているか（数字のみ）
 %wakuURL%     :  現在受信しているの放送URL
 ```

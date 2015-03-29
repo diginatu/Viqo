@@ -45,7 +45,6 @@ void NicoLiveManager::loginAlertFinished(QNetworkReply* reply)
   reply->deleteLater();
 }
 
-
 void NicoLiveManager::adminAlertAPI(const QString& ticket)
 {
   if(mAdminAlertManager!=nullptr)  delete mAdminAlertManager;
@@ -113,7 +112,7 @@ void NicoLiveManager::alertReconnect()
   QString mail = mwin->settings.getUserMail();
   QString pass = mwin->settings.getUserPass();
 
-  if ( mail == "" || pass == "") {
+  if ( mail.isEmpty() || pass.isEmpty() ) {
     mwin->insLog("mail or pass are not specified");
     QMessageBox::information(mwin, "Viqo",
                              QStringLiteral("メールまたはパスワードが設定されていません"));
