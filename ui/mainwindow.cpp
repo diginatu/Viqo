@@ -31,13 +31,13 @@ MainWindow::MainWindow(QWidget *parent) :
   QStringList dirs = QStandardPaths::standardLocations(QStandardPaths::DataLocation);
   if (dirs.empty()) {
     insLog("save directory is not found");
-    QMessageBox::information(this, "Viqo", "アプリケーション保存領域がありません");
+    QMessageBox::information(this, "Viqo", QStringLiteral("アプリケーション保存領域がありません"));
   } else {
     QDir dir(dirs[0]);
     if (!dir.exists()) {
       if (!dir.mkpath(dirs[0])) {
         insLog("making save path failed");
-        QMessageBox::information(this, "Viqo", "保存ディレクトリの作成に失敗しました");
+        QMessageBox::information(this, "Viqo", QStringLiteral("保存ディレクトリの作成に失敗しました"));
       }
     }
   }
@@ -172,7 +172,7 @@ void MainWindow::refleshLiveWaku()
       now_no = i;
     ui->live_waku_list->addItem(
                 nicolivemanager->liveWakuList.at(i)->getTitle() + " - " +
-                nicolivemanager->liveWakuList.at(i)->getOwnerName() + "さん"
+                nicolivemanager->liveWakuList.at(i)->getOwnerName() + QStringLiteral("さん")
                 );
   }
 
@@ -247,7 +247,7 @@ void MainWindow::on_receive_clicked()
 {
   if ( settings.getUserSession().isEmpty() ) {
     insLog("MainWindow::on_receive_clicked sessionID is not set yet");
-    QMessageBox::information(this, "Viqo", "セッションIDが設定されていません");
+    QMessageBox::information(this, "Viqo", QStringLiteral("セッションIDが設定されていません"));
     return;
   }
 
@@ -452,8 +452,7 @@ void MainWindow::userSessionDisabled()
   const UserSessionWay usw = settings.getLoginWay();
   if (usw == UserSessionWay::Direct) {
     QMessageBox msgBox(this);
-    msgBox.setText(QStringLiteral("ユーザセッションが無効です\n"
-                                   "設定画面を開きますか？"));
+    msgBox.setText(QStringLiteral("ユーザセッションが無効です\n設定画面を開きますか？"));
     msgBox.setStandardButtons(QMessageBox::Cancel | QMessageBox::Ok);
     msgBox.setDefaultButton(QMessageBox::Ok);
     if (msgBox.exec() == QMessageBox::Ok) {
@@ -462,8 +461,7 @@ void MainWindow::userSessionDisabled()
   } else if (usw == UserSessionWay::Firefox ||
              usw == UserSessionWay::Login) {
     QMessageBox msgBox(this);
-    msgBox.setText(QStringLiteral("ユーザセッションが無効です\n"
-                                   "取得しなおしますか？"));
+    msgBox.setText(QStringLiteral("ユーザセッションが無効です\n取得しなおしますか？"));
     msgBox.setStandardButtons(QMessageBox::Cancel | QMessageBox::Ok);
     msgBox.setDefaultButton(QMessageBox::Ok);
     if (msgBox.exec() == QMessageBox::Ok) {
@@ -497,8 +495,8 @@ void MainWindow::on_quit_triggered()
 void MainWindow::on_AboutViqo_triggered()
 {
     QMessageBox::about(this, "About Viqo",
-         "Qt で作成されたマルチプラットフォームコメビュです<br>"
-         "<a href=\"https://github.com/diginatu/Viqo\">GitHub Viqo repository</a>");
+         QStringLiteral("Qt で作成されたマルチプラットフォームコメビュです<br>\
+         <a href=\"https://github.com/diginatu/Viqo\">GitHub Viqo repository</a>"));
 }
 
 void MainWindow::on_AboutQt_triggered()
@@ -521,13 +519,13 @@ void MainWindow::on_FollowCommunity_triggered()
   }
   QFile file(dir[0] + "/follow_communities.json");
   if (!file.exists()) {
-    QMessageBox::information(followCommunity, "Viqo - フォローコミュニティ",
-                             "<b>フォローコミュニティ</b>\n\n"
-                             "ここにコミュニティを登録することで、"
-                             "お気に入りに登録しているコミュニティ同様、"
-                             "放送開始時に通知されます。\n"
-                             "ただし、コメビュ起動時にすでに放送開始されているフォローコミュニティは"
-                             "検知することができません。");
+    QMessageBox::information(followCommunity, QStringLiteral("Viqo - フォローコミュニティ"),
+                             QStringLiteral("<b>フォローコミュニティ</b><br>\
+                             ここにコミュニティを登録することで、\
+                             お気に入りに登録しているコミュニティ同様、\
+                             放送開始時に通知されます。<br>\
+                             ただし、コメビュ起動時にすでに放送開始されているフォローコミュニティは\
+                             検知することができません。"));
   }
 }
 

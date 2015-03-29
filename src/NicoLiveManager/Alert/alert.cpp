@@ -75,7 +75,8 @@ void NicoLiveManager::adminAlertFinished(QNetworkReply* reply)
     QString code = wakuTcpi.midStr("<code>","</code>");
     mwin->insLog(code);
     QMessageBox::information(mwin, "Viqo",
-                             QStringLiteral("放送開始通知の情報取得(AdminAlert)に失敗しました\ncode : ") + code);
+                             QStringLiteral("放送開始通知の情報取得(AdminAlert)に失敗しました\ncode : ")
+                             + code);
     return;
   }
 
