@@ -193,7 +193,7 @@ void MainWindow::insComment(int num, bool prem, QString user,
 
   ls += QString::number(num);
   ls += prem?"@":"";
-  ls += user;
+  ls += broadcaster?"放送主":user;
   ls += comm.replace('\n', QChar(8629));
   ls += date;
   ls += user;
@@ -225,7 +225,25 @@ void MainWindow::insComment(int num, bool prem, QString user,
     }
   }
 
-  if (after_open && ui->keep_top_chk->isChecked()) {
+  // comment command
+  if ( after_open && settings.isCommandCommentChecked() ) {
+    QProcess pr;
+
+    QString cmd = settings.getCommandComment();
+    cmd.replace("%userID%",user);
+    cmd.replace("%commentNo%",item->text(0));
+    QString esuser = user;
+    esuser.replace("\"", "\"\"\"");
+    cmd.replace("%userName%",item->text(2) == user?"":item->text(2));
+    QString escmd = comm;
+    escmd.replace("\"", "\"\"\"");
+    cmd.replace("%comment%",escmd);
+
+    pr.start(cmd);
+    pr.waitForFinished(5000);
+  }
+
+  if (after_open && ui->keepTop->isChecked()) {
     ui->comment_view->setCurrentItem(item);
   }
 }

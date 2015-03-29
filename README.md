@@ -95,6 +95,9 @@ MIT ライセンス
 
 ```
 %newTitle%    :  放送開始した放送のタイトル
+%userID%      :  ユーザID (数字)
+%commentNo%   :  コメント番号
+%userName%    :  ユーザ名 (登録済みのみ)
 %comment%     :  コメントのテキスト
 %lastTime%    :  終了前何分に設定されているか（数字のみ）
 %wakuURL%     :  現在受信しているの放送URL
@@ -105,6 +108,9 @@ MIT ライセンス
 ```
             開始  コメント 終了 次枠
 %newTitle%    O      X      X    X
+%userID%      X      O      X    X  
+%commentNo%   X      O      X    X  
+%userName%    X      O      X    X  
 %comment%     X      O      X    X  
 %lastTime%    X      X      O    X  
 %wakuURL%     X      X      X    O  
