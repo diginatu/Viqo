@@ -6,101 +6,14 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>429</width>
-    <height>386</height>
+    <width>440</width>
+    <height>487</height>
    </rect>
   </property>
   <property name="windowTitle">
    <string>アカウント設定</string>
   </property>
   <layout class="QVBoxLayout" name="verticalLayout">
-   <item>
-    <widget class="QGroupBox" name="loginWay">
-     <property name="title">
-      <string>ログイン方法</string>
-     </property>
-     <layout class="QGridLayout" name="gridLayout_2">
-      <item row="3" column="0">
-       <widget class="QWidget" name="usersession_groupe" native="true">
-        <layout class="QHBoxLayout" name="horizontalLayout">
-         <item>
-          <widget class="QLabel" name="usersession_label">
-           <property name="text">
-            <string>user_session</string>
-           </property>
-           <property name="buddy">
-            <cstring>usersession</cstring>
-           </property>
-          </widget>
-         </item>
-         <item>
-          <widget class="QLineEdit" name="usersession">
-           <property name="placeholderText">
-            <string>user_session_12345678_abc...</string>
-           </property>
-          </widget>
-         </item>
-        </layout>
-       </widget>
-      </item>
-      <item row="1" column="0" colspan="2">
-       <widget class="QWidget" name="cookie_group" native="true">
-        <property name="enabled">
-         <bool>false</bool>
-        </property>
-        <layout class="QGridLayout" name="gridLayout_4">
-         <item row="1" column="1">
-          <widget class="QLineEdit" name="cookiesetting_filename"/>
-         </item>
-         <item row="1" column="0">
-          <widget class="QLabel" name="cookiesetting_file_label">
-           <property name="text">
-            <string>cookie db</string>
-           </property>
-          </widget>
-         </item>
-         <item row="1" column="2">
-          <widget class="QToolButton" name="cookiesetting_file_open_button">
-           <property name="text">
-            <string>...</string>
-           </property>
-          </widget>
-         </item>
-        </layout>
-       </widget>
-      </item>
-      <item row="0" column="0">
-       <widget class="QComboBox" name="login_way_combo">
-        <item>
-         <property name="text">
-          <string>直接入力</string>
-         </property>
-        </item>
-        <item>
-         <property name="text">
-          <string>firefox</string>
-         </property>
-        </item>
-        <item>
-         <property name="text">
-          <string>コメビュからログイン</string>
-         </property>
-        </item>
-       </widget>
-      </item>
-      <item row="2" column="0">
-       <widget class="QPushButton" name="get_session">
-        <property name="enabled">
-         <bool>false</bool>
-        </property>
-        <property name="text">
-         <string>↓取得</string>
-        </property>
-       </widget>
-      </item>
-     </layout>
-    </widget>
-   </item>
    <item>
     <widget class="QGroupBox" name="userdata">
      <property name="title">
@@ -142,6 +55,103 @@
          <string>ログインで使わなくても次枠追従などで必要となります</string>
         </property>
        </widget>
+      </item>
+     </layout>
+    </widget>
+   </item>
+   <item>
+    <widget class="QGroupBox" name="loginWay">
+     <property name="title">
+      <string>ログイン方法</string>
+     </property>
+     <layout class="QGridLayout" name="gridLayout_2">
+      <item row="4" column="0">
+       <widget class="QWidget" name="usersession_groupe" native="true">
+        <layout class="QHBoxLayout" name="horizontalLayout">
+         <item>
+          <widget class="QLabel" name="usersession_label">
+           <property name="text">
+            <string>ユーザーセッション</string>
+           </property>
+           <property name="buddy">
+            <cstring>usersession</cstring>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QLineEdit" name="usersession">
+           <property name="placeholderText">
+            <string>user_session_12345678_abc...</string>
+           </property>
+          </widget>
+         </item>
+        </layout>
+       </widget>
+      </item>
+      <item row="2" column="0" colspan="2">
+       <widget class="QWidget" name="cookie_group" native="true">
+        <property name="enabled">
+         <bool>false</bool>
+        </property>
+        <layout class="QGridLayout" name="gridLayout_4">
+         <item row="1" column="1">
+          <widget class="QLineEdit" name="cookiesetting_filename"/>
+         </item>
+         <item row="1" column="0">
+          <widget class="QLabel" name="cookiesetting_file_label">
+           <property name="text">
+            <string>cookie db</string>
+           </property>
+          </widget>
+         </item>
+         <item row="1" column="2">
+          <widget class="QToolButton" name="cookiesetting_file_open_button">
+           <property name="text">
+            <string>...</string>
+           </property>
+          </widget>
+         </item>
+        </layout>
+       </widget>
+      </item>
+      <item row="1" column="0">
+       <widget class="QComboBox" name="login_way_combo">
+        <item>
+         <property name="text">
+          <string>firefox</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>直接入力</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>コメビュからログイン</string>
+         </property>
+        </item>
+       </widget>
+      </item>
+      <item row="3" column="0">
+       <widget class="QPushButton" name="get_session">
+        <property name="enabled">
+         <bool>false</bool>
+        </property>
+        <property name="text">
+         <string>↓取得</string>
+        </property>
+       </widget>
+      </item>
+      <item row="0" column="0">
+       <widget class="QLabel" name="label_4">
+        <property name="text">
+         <string>ユーザーセッションはいずれかの方法で必ず入力してください</string>
+        </property>
+       </widget>
+      </item>
+      <item row="5" column="0">
+       <widget class="QTextBrowser" name="userSessionWayDiscription"/>
       </item>
      </layout>
     </widget>

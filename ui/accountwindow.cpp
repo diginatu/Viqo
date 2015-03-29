@@ -1,4 +1,4 @@
-#include "accountwindow.h"
+﻿#include "accountwindow.h"
 #include "ui_accountwindow.h"
 #include "mainwindow.h"
 
@@ -12,6 +12,8 @@ AccountWindow::AccountWindow(MainWindow* mwin, QWidget* parent) :
   ui->userdata_mail->setEchoMode(QLineEdit::Password);
   ui->userdata_pass->setEchoMode(QLineEdit::Password);
   ui->usersession->setEchoMode(QLineEdit::Password);
+
+  on_login_way_combo_currentIndexChanged(static_cast<int>(UserSessionWay::Firefox));
 }
 
 AccountWindow::~AccountWindow()
@@ -42,20 +44,32 @@ void AccountWindow::updateSessionAndSave()
 void AccountWindow::on_login_way_combo_currentIndexChanged(int index)
 {
   switch (static_cast<UserSessionWay>(index)) {
-  case UserSessionWay::Direct:
-    ui->cookie_group->setEnabled(false);
-    ui->usersession->setEnabled(true);
-    ui->get_session->setEnabled(false);
-    break;
   case UserSessionWay::Firefox:
     ui->cookie_group->setEnabled(true);
     ui->usersession->setEnabled(false);
     ui->get_session->setEnabled(true);
+    ui->userSessionWayDiscription->setText(
+          QStringLiteral("firefoxのクッキーからユーザーセッションを取得します<br>\
+                         firefoxのユーザプロファイルが保存されているディレクトリの中の\
+                         cookie.sqliteを指定して取得を押してください。"));
+    break;
+  case UserSessionWay::Direct:
+    ui->cookie_group->setEnabled(false);
+    ui->usersession->setEnabled(true);
+    ui->get_session->setEnabled(false);
+    ui->userSessionWayDiscription->setText(
+          QStringLiteral("ユーザーセッションを直接入力します<br>\
+                         選択肢に無いブラウザのセッションidを使う場合などに使用してください。"));
     break;
   case UserSessionWay::Login:
     ui->cookie_group->setEnabled(false);
     ui->usersession->setEnabled(false);
     ui->get_session->setEnabled(true);
+    ui->userSessionWayDiscription->setText(
+          QStringLiteral("Viqoからログインしてユーザーセッションを取得します<br>\
+                         ニコ生のログインセッションを一つ消費するので、\
+                         他のブラウザなどがログアウトされる可能性があります。<br>\
+                         <b>上のメールとパスワードを入力したあと、必ず取得ボタンを押してください。</b>"));
     break;
   }
 }

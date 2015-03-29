@@ -12,7 +12,7 @@
 class MainWindow;
 class FollowCommunity;
 
-enum class UserSessionWay { Direct, Firefox, Login };
+enum class UserSessionWay { Firefox, Direct, Login };
 
 
 class Settings : public QObject
