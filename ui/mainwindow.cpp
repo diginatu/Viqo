@@ -193,7 +193,7 @@ void MainWindow::insComment(int num, bool prem, QString user,
 
   ls += QString::number(num);
   ls += prem?"@":"";
-  ls += broadcaster?"放送主":user;
+  ls += broadcaster?QStringLiteral("放送主"):user;
   ls += comm.replace('\n', QChar(8629));
   ls += date;
   ls += user;
