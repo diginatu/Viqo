@@ -437,6 +437,11 @@ void NewWakuSettingsWindow::loadPresets()
   file.close();
 }
 
+QString NewWakuSettingsWindow::getCommunity()
+{
+  return ui->community->currentData().toString();
+}
+
 QJsonObject NewWakuSettingsWindow::makeJsonFromForm()
 {
   QJsonObject necessary;

@@ -504,6 +504,8 @@ void MainWindow::on_autoNewWakuSettings_triggered()
 
 void MainWindow::on_getNewWakuNow_triggered()
 {
+  nicolivemanager->broadDisconnect();
+  nicolivemanager->nowWaku.setCommunity(newWakuSettingsWindow->getCommunity());
   getNewWakuAPI(2);
 }
 
@@ -514,9 +516,9 @@ void MainWindow::on_quit_triggered()
 
 void MainWindow::on_AboutViqo_triggered()
 {
-    QMessageBox::about(this, "About Viqo",
-         "Qt で作成されたマルチプラットフォームコメビュです<br>"
-         "<a href=\"https://github.com/diginatu/Viqo\">GitHub Viqo repository</a>");
+  QMessageBox::about(this, "About Viqo",
+                     "Qt で作成されたマルチプラットフォームコメビュです<br>"
+                     "<a href=\"https://github.com/diginatu/Viqo\">GitHub Viqo repository</a>");
 }
 
 void MainWindow::on_AboutQt_triggered()

@@ -36,6 +36,8 @@ public:
 
   void savePresets();
   void loadPresets();
+
+  QString getCommunity();
 private:
   Ui::NewWakuSettingsWindow *ui;
   MainWindow* mwin;
