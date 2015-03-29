@@ -105,6 +105,8 @@ private slots:
 
   void on_CommentViewGetKotehan_triggered();
 
+  void on_autoGettingUserName_toggled(bool status);
+
 private:
   Ui::MainWindow* ui;
 

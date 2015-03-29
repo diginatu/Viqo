@@ -29,12 +29,17 @@ void Settings::saveStatus(int num)
   }
 
   QJsonObject other;
-  other["auto_getting_user_name"] = ui->auto_getting_user_name_chk->isChecked();
   other["keep_top_comment"] = ui->keep_top_chk->isChecked();
   other["is184_comment"] = ui->is184_chk->isChecked();
   other["auto_getting_new_waku"] = ui->autoNewWakuChk->isChecked();
   other["new_waku_open_browser"] = ui->autoNewWakuOpenBrowser->isChecked();
   other["new_waku_start"] = ui->autoNewWakuStart->isChecked();
+
+  QJsonObject comment;
+  comment["autoGettingUserName"] = ui->autoGettingUserName->isChecked();
+  comment["autoGetUserNameUseAt"] = ui->autoGetUserNameUseAt->isChecked();
+  comment["autoGetUserNameUsePage"] = ui->autoGetUserNameUsePage->isChecked();
+  comment["autoGetUserNameOverWrite"] = ui->autoGetUserNameOverWrite->isChecked();
 
   QJsonObject command;
   command["comment_check"] = ui->command_comment_chk->isChecked();
@@ -49,6 +54,7 @@ void Settings::saveStatus(int num)
 
   QJsonObject root;
   root["other"] = other;
+  root["comment"] = comment;
   root["command"] = command;
 
   QJsonDocument jsd;
@@ -97,12 +103,17 @@ void Settings::loadStatus(int num)
   QJsonDocument jsd = QJsonDocument::fromJson(file.readAll());
 
   QJsonObject other = jsd.object()["other"].toObject();
-  ui->auto_getting_user_name_chk->setChecked(other["auto_getting_user_name"].toBool(true));
   ui->keep_top_chk->setChecked(other["keep_top_comment"].toBool(true));
   ui->is184_chk->setChecked(other["is184_comment"].toBool());
   ui->autoNewWakuChk->setChecked(other["auto_getting_new_waku"].toBool());
   ui->autoNewWakuOpenBrowser->setChecked(other["new_waku_open_browser"].toBool(true));
   ui->autoNewWakuStart->setChecked(other["new_waku_start"].toBool());
+
+  QJsonObject comment = jsd.object()["comment"].toObject();
+  ui->autoGettingUserName->setChecked(comment["autoGettingUserName"].toBool(true));
+  ui->autoGetUserNameUseAt->setChecked(comment["autoGetUserNameUseAt"].toBool(true));
+  ui->autoGetUserNameUsePage->setChecked(comment["autoGetUserNameUsePage"].toBool(true));
+  ui->autoGetUserNameOverWrite->setChecked(comment["autoGetUserNameOverWrite"].toBool(true));
 
   QJsonObject command = jsd.object()["command"].toObject();
   ui->command_comment->setText(command["comment"].toString());
@@ -142,7 +153,6 @@ void Settings::oldLoad()
 
   QJsonObject other;
   other = jsd.object()["other"].toObject();
-  ui->auto_getting_user_name_chk->setChecked(other["auto_getting_user_name"].toBool());
   ui->keep_top_chk->setChecked(other["keep_top_comment"].toBool());
 
   QJsonObject command;
@@ -346,6 +356,26 @@ bool Settings::isAutoNewWakuOpenBrowser()
 bool Settings::isAutoNewWakuStart()
 {
   return ui->autoNewWakuStart->isChecked();
+}
+
+bool Settings::isAutoGettingUserName()
+{
+  return ui->autoGettingUserName->isChecked();
+}
+
+bool Settings::isAutoGetUserNameUseAt()
+{
+  return ui->autoGetUserNameUseAt->isChecked();
+}
+
+bool Settings::isAutoGetUserNameUsePage()
+{
+  return ui->autoGetUserNameUsePage->isChecked();
+}
+
+bool Settings::isAutoGetUserNameOverWrite()
+{
+  return ui->autoGetUserNameOverWrite->isChecked();
 }
 
 QString Settings::getUserMail() const

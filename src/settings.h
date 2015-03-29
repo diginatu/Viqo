@@ -45,6 +45,10 @@ public:
   bool isAutoNewWaku();
   bool isAutoNewWakuOpenBrowser();
   bool isAutoNewWakuStart();
+  bool isAutoGettingUserName();
+  bool isAutoGetUserNameUseAt();
+  bool isAutoGetUserNameUsePage();
+  bool isAutoGetUserNameOverWrite();
 
   // account
   QString getUserMail() const;

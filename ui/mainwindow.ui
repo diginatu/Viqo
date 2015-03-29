@@ -220,19 +220,6 @@
          <string>コメント</string>
         </attribute>
         <layout class="QGridLayout" name="gridLayout">
-         <item row="1" column="0">
-          <widget class="QCheckBox" name="auto_getting_user_name_chk">
-           <property name="whatsThis">
-            <string/>
-           </property>
-           <property name="text">
-            <string>自動名前取得</string>
-           </property>
-           <property name="checked">
-            <bool>true</bool>
-           </property>
-          </widget>
-         </item>
          <item row="0" column="0" colspan="3">
           <widget class="QTreeWidget" name="comment_view">
            <property name="sizePolicy">
@@ -298,7 +285,7 @@
            </column>
           </widget>
          </item>
-         <item row="1" column="1">
+         <item row="1" column="0">
           <widget class="QCheckBox" name="keep_top_chk">
            <property name="text">
             <string>カーソルを常にトップ</string>
@@ -309,9 +296,6 @@
           </widget>
          </item>
         </layout>
-        <zorder>comment_view</zorder>
-        <zorder>auto_getting_user_name_chk</zorder>
-        <zorder>keep_top_chk</zorder>
        </widget>
        <widget class="QWidget" name="tab">
         <attribute name="title">
@@ -665,7 +649,7 @@
      <x>0</x>
      <y>0</y>
      <width>457</width>
-     <height>28</height>
+     <height>25</height>
     </rect>
    </property>
    <widget class="QMenu" name="file">
@@ -724,8 +708,30 @@
     <addaction name="AboutViqo"/>
     <addaction name="AboutQt"/>
    </widget>
+   <widget class="QMenu" name="menu">
+    <property name="title">
+     <string>コメント</string>
+    </property>
+    <widget class="QMenu" name="comment">
+     <property name="title">
+      <string>コテハン</string>
+     </property>
+     <widget class="QMenu" name="autoGetUserWay">
+      <property name="title">
+       <string>取得方法</string>
+      </property>
+      <addaction name="autoGetUserNameUsePage"/>
+      <addaction name="autoGetUserNameUseAt"/>
+     </widget>
+     <addaction name="autoGettingUserName"/>
+     <addaction name="autoGetUserWay"/>
+     <addaction name="autoGetUserNameOverWrite"/>
+    </widget>
+    <addaction name="comment"/>
+   </widget>
    <addaction name="file"/>
    <addaction name="edit"/>
+   <addaction name="menu"/>
    <addaction name="broadcasting"/>
    <addaction name="help"/>
   </widget>
@@ -878,6 +884,50 @@
    </property>
    <property name="text">
     <string>コテハン取得</string>
+   </property>
+  </action>
+  <action name="autoGettingUserName">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="checked">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>自動登録を有効</string>
+   </property>
+  </action>
+  <action name="autoGetUserNameUseAt">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="checked">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>@で登録</string>
+   </property>
+  </action>
+  <action name="autoGetUserNameUsePage">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="checked">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>ページから取得</string>
+   </property>
+  </action>
+  <action name="autoGetUserNameOverWrite">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="checked">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>上書きを許可</string>
    </property>
   </action>
  </widget>

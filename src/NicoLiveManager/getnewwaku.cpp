@@ -162,9 +162,8 @@ void NicoLiveManager::newWakuFinished(QNetworkReply* reply){
 }
 
 void NicoLiveManager::newWakuAbstractor(QNetworkReply* reply, int mode) {
-  QString repdata = QString(reply->readAll());
+  StrAbstractor allTagHtml(QString(reply->readAll()));
 
-  StrAbstractor allTagHtml(repdata);
   StrAbstractor* mainForm = allTagHtml.mid("<form action=\"editstream\"", "</form>");
   if (mainForm == nullptr) {
     mwin->insLog("NicoLiveManager::newWakuAbstractor reading page error");
@@ -173,9 +172,7 @@ void NicoLiveManager::newWakuAbstractor(QNetworkReply* reply, int mode) {
 
   if (mode == 0) nwin->formInit();
   if (mode <= 1) nwin->listStateSave();
-  if (mode >= 2) {
-    newWakuData.clear();
-  }
+  if (mode >= 2) newWakuData.clear();
 
   StrAbstractor* input;
   while ((input = mainForm->mid("<input", ">")) != nullptr) {

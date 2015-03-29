@@ -203,9 +203,26 @@ void MainWindow::insComment(int num, bool prem, QString user,
   QTreeWidgetItem* item = new QTreeWidgetItem(ls);
   ui->comment_view->insertTopLevelItem(0, item);
 
-  if ( !broadcaster && !is_184 ) {
-    // use HTTP connection for only received comment after started.
-    userManager->getUserName(item, user, ui->auto_getting_user_name_chk->isChecked() && after_open);
+  // get user name
+  if (!broadcaster && !is_184) {
+    userManager->getUserName(item, user, false);
+    if (after_open && settings.isAutoGettingUserName() &&
+        (settings.isAutoGetUserNameOverWrite() || item->text(2) == user)) {
+      if (settings.isAutoGetUserNameUseAt()) {
+        // at-mark Kotehan
+        const QRegExp kotehanrg("[@＠]\\s*(\\S+)");
+        if (kotehanrg.indexIn(comm) != -1) {
+          userManager->setUserName(item, kotehanrg.cap(1));
+        } else if (settings.isAutoGetUserNameUsePage() &&
+                   item->text(2) == user) {
+          // use pgae to get the name
+          userManager->getUserName(item, user, true);
+        }
+      } else if (settings.isAutoGetUserNameUsePage() &&
+                 item->text(2) == user) {
+        userManager->getUserName(item, user, true);
+      }
+    }
   }
 
   if (after_open && ui->keep_top_chk->isChecked()) {
@@ -544,4 +561,10 @@ void MainWindow::on_CommentViewGetKotehan_triggered()
 {
   QTreeWidgetItem* const citem = ui->comment_view->currentItem();
   userManager->getUserName(citem, citem->text(5), true, false);
+}
+
+void MainWindow::on_autoGettingUserName_toggled(bool status)
+{
+  ui->autoGetUserNameOverWrite->setEnabled(status);
+  ui->autoGetUserWay->setEnabled(status);
 }

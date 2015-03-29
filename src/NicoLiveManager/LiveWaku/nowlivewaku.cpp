@@ -46,8 +46,8 @@ void NowLiveWaku::playerStatusFinished(QNetworkReply* reply)
   setBroadID(commTcpi.midStr("<id>lv", "</id>"));
   setTitle(commTcpi.midStr("<title>", "</title>"));
   setCommunity(commTcpi.midStr("<default_community>", "</default_community>"));
-  setOwnerName(commTcpi.midStr("<owner_name>", "</owner_name>"));
   owner_id = commTcpi.midStr("<owner_id>", "</owner_id>");
+  setOwnerName(commTcpi.midStr("<owner_name>", "</owner_name>"));
 
   setSt(commTcpi.midStr("<start_time>","</start_time>").toUInt());
   setEd(commTcpi.midStr("<end_time>","</end_time>").toUInt());
