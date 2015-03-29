@@ -270,7 +270,7 @@ void MainWindow::on_receive_clicked()
   }
 
   // trim into only broad number
-  const QRegExp broadIDrg("^.+lv(\\d+).*$");
+  const QRegExp broadIDrg("lv(\\d+)");
   QString broadID = ui->broadID->text();
   if (broadIDrg.indexIn(broadID) != -1) {
     broadID = broadIDrg.cap(1);
