@@ -51,7 +51,7 @@ void AccountWindow::on_login_way_combo_currentIndexChanged(int index)
     ui->userSessionWayDiscription->setText(
           QStringLiteral("firefoxのクッキーからユーザーセッションを取得します<br>\
                          firefoxのユーザプロファイルが保存されているディレクトリの中の\
-                         cookie.sqliteを指定して取得を押してください。"));
+                         cookies.sqliteを指定して取得を押してください。"));
     break;
   case UserSessionWay::Direct:
     ui->cookie_group->setEnabled(false);

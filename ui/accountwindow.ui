@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>440</width>
-    <height>487</height>
+    <height>510</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -17,13 +17,13 @@
    <item>
     <widget class="QGroupBox" name="userdata">
      <property name="title">
-      <string>ユーザーデータ</string>
+      <string>ニコ生のユーザーデータ</string>
      </property>
      <layout class="QFormLayout" name="formLayout_3">
       <property name="fieldGrowthPolicy">
        <enum>QFormLayout::AllNonFixedFieldsGrow</enum>
       </property>
-      <item row="1" column="0">
+      <item row="2" column="0">
        <widget class="QLabel" name="label">
         <property name="text">
          <string>Mail</string>
@@ -33,10 +33,10 @@
         </property>
        </widget>
       </item>
-      <item row="1" column="1">
+      <item row="2" column="1">
        <widget class="QLineEdit" name="userdata_mail"/>
       </item>
-      <item row="2" column="0">
+      <item row="3" column="0">
        <widget class="QLabel" name="label_2">
         <property name="text">
          <string>Pass</string>
@@ -46,13 +46,20 @@
         </property>
        </widget>
       </item>
-      <item row="2" column="1">
+      <item row="3" column="1">
        <widget class="QLineEdit" name="userdata_pass"/>
       </item>
       <item row="0" column="0" colspan="2">
        <widget class="QLabel" name="label_3">
         <property name="text">
          <string>ログインで使わなくても次枠追従などで必要となります</string>
+        </property>
+       </widget>
+      </item>
+      <item row="1" column="0" colspan="2">
+       <widget class="QLabel" name="label_5">
+        <property name="text">
+         <string>ここに入力しても通常のセッションは消費されません</string>
         </property>
        </widget>
       </item>
@@ -65,30 +72,46 @@
       <string>ログイン方法</string>
      </property>
      <layout class="QGridLayout" name="gridLayout_2">
-      <item row="4" column="0">
-       <widget class="QWidget" name="usersession_groupe" native="true">
-        <layout class="QHBoxLayout" name="horizontalLayout">
-         <item>
-          <widget class="QLabel" name="usersession_label">
-           <property name="text">
-            <string>ユーザーセッション</string>
-           </property>
-           <property name="buddy">
-            <cstring>usersession</cstring>
-           </property>
-          </widget>
-         </item>
-         <item>
-          <widget class="QLineEdit" name="usersession">
-           <property name="placeholderText">
-            <string>user_session_12345678_abc...</string>
-           </property>
-          </widget>
-         </item>
-        </layout>
+      <item row="0" column="0">
+       <widget class="QLabel" name="label_4">
+        <property name="text">
+         <string>ユーザーセッションはいずれかの方法で必ず入力してください</string>
+        </property>
        </widget>
       </item>
-      <item row="2" column="0" colspan="2">
+      <item row="4" column="0">
+       <widget class="QPushButton" name="get_session">
+        <property name="enabled">
+         <bool>false</bool>
+        </property>
+        <property name="text">
+         <string>↓取得</string>
+        </property>
+       </widget>
+      </item>
+      <item row="6" column="0">
+       <widget class="QTextBrowser" name="userSessionWayDiscription"/>
+      </item>
+      <item row="2" column="0">
+       <widget class="QComboBox" name="login_way_combo">
+        <item>
+         <property name="text">
+          <string>firefox</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>直接入力</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>コメビュからログイン</string>
+         </property>
+        </item>
+       </widget>
+      </item>
+      <item row="3" column="0" colspan="2">
        <widget class="QWidget" name="cookie_group" native="true">
         <property name="enabled">
          <bool>false</bool>
@@ -114,44 +137,28 @@
         </layout>
        </widget>
       </item>
-      <item row="1" column="0">
-       <widget class="QComboBox" name="login_way_combo">
-        <item>
-         <property name="text">
-          <string>firefox</string>
-         </property>
-        </item>
-        <item>
-         <property name="text">
-          <string>直接入力</string>
-         </property>
-        </item>
-        <item>
-         <property name="text">
-          <string>コメビュからログイン</string>
-         </property>
-        </item>
-       </widget>
-      </item>
-      <item row="3" column="0">
-       <widget class="QPushButton" name="get_session">
-        <property name="enabled">
-         <bool>false</bool>
-        </property>
-        <property name="text">
-         <string>↓取得</string>
-        </property>
-       </widget>
-      </item>
-      <item row="0" column="0">
-       <widget class="QLabel" name="label_4">
-        <property name="text">
-         <string>ユーザーセッションはいずれかの方法で必ず入力してください</string>
-        </property>
-       </widget>
-      </item>
       <item row="5" column="0">
-       <widget class="QTextBrowser" name="userSessionWayDiscription"/>
+       <widget class="QWidget" name="usersession_groupe" native="true">
+        <layout class="QHBoxLayout" name="horizontalLayout">
+         <item>
+          <widget class="QLabel" name="usersession_label">
+           <property name="text">
+            <string>ユーザーセッション</string>
+           </property>
+           <property name="buddy">
+            <cstring>usersession</cstring>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QLineEdit" name="usersession">
+           <property name="placeholderText">
+            <string>user_session_12345678_abc...</string>
+           </property>
+          </widget>
+         </item>
+        </layout>
+       </widget>
       </item>
      </layout>
     </widget>

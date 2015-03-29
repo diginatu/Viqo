@@ -29,7 +29,7 @@ void Settings::saveStatus(int num)
   }
 
   QJsonObject other;
-  other["keep_top_comment"] = ui->keep_top_chk->isChecked();
+  other["keep_top_comment"] = ui->keepTop->isChecked();
   other["is184_comment"] = ui->is184_chk->isChecked();
   other["auto_getting_new_waku"] = ui->autoNewWakuChk->isChecked();
   other["new_waku_open_browser"] = ui->autoNewWakuOpenBrowser->isChecked();
@@ -103,7 +103,7 @@ void Settings::loadStatus(int num)
   QJsonDocument jsd = QJsonDocument::fromJson(file.readAll());
 
   QJsonObject other = jsd.object()["other"].toObject();
-  ui->keep_top_chk->setChecked(other["keep_top_comment"].toBool(true));
+  ui->keepTop->setChecked(other["keep_top_comment"].toBool(true));
   ui->is184_chk->setChecked(other["is184_comment"].toBool());
   ui->autoNewWakuChk->setChecked(other["auto_getting_new_waku"].toBool());
   ui->autoNewWakuOpenBrowser->setChecked(other["new_waku_open_browser"].toBool(true));
@@ -153,7 +153,7 @@ void Settings::oldLoad()
 
   QJsonObject other;
   other = jsd.object()["other"].toObject();
-  ui->keep_top_chk->setChecked(other["keep_top_comment"].toBool());
+  ui->keepTop->setChecked(other["keep_top_comment"].toBool());
 
   QJsonObject command;
   command = jsd.object()["command"].toObject();

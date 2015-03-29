@@ -285,16 +285,6 @@
            </column>
           </widget>
          </item>
-         <item row="1" column="0">
-          <widget class="QCheckBox" name="keep_top_chk">
-           <property name="text">
-            <string>カーソルを常にトップ</string>
-           </property>
-           <property name="checked">
-            <bool>true</bool>
-           </property>
-          </widget>
-         </item>
         </layout>
        </widget>
        <widget class="QWidget" name="tab">
@@ -728,6 +718,7 @@
      <addaction name="autoGetUserNameOverWrite"/>
     </widget>
     <addaction name="comment"/>
+    <addaction name="keepTop"/>
    </widget>
    <addaction name="file"/>
    <addaction name="edit"/>
@@ -928,6 +919,14 @@
    </property>
    <property name="text">
     <string>上書きを許可</string>
+   </property>
+  </action>
+  <action name="keepTop">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>コメント一覧を常にトップ</string>
    </property>
   </action>
  </widget>

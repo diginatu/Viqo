@@ -157,21 +157,8 @@ void CommTcp::readOneRawComment(const QString rawcomm)
   }
 
   mwin->insComment( num, premium,
-    broadcaster?QStringLiteral("放送主"):user, comm, date, is_184,
+    broadcaster?QStringLiteral("broadcaster"):user, comm, date, is_184,
     broadcaster, commenttime > open_time);
-
-  // comment command
-  if ( mwin->settings.isCommandCommentChecked() && commenttime > open_time ) {
-    QProcess pr;
-    QString cmd = mwin->settings.getCommandComment();
-
-    QString escmd = comm;
-    escmd.replace("\"", "\"\"\"");
-    cmd.replace("%comment%",escmd);
-
-    pr.start(cmd);
-    pr.waitForFinished(5000);
-  }
 
   if (comm == "/disconnect" && broadcaster) {
     if (mwin->settings.isAutoNewWaku() && nlwaku->isOwnerBroad())

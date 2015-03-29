@@ -194,15 +194,15 @@ void NewWakuSettingsWindow::songRightsApply()
 
   QTextStream in(&file);
 
-  const QStringList rightsName = {"code", "title", "artist",
-                            "lyric", "composer", "time"};
+  const QStringList rightsName =
+    {"code", "title", "artist", "lyric", "composer", "time"};
 
   for (int numRights = 0; !in.atEnd(); ++numRights) {
     QString line = in.readLine();
     int mode = 1;
     int stringSt = 0;
     int column = 0;
-    for (int i = 0; i < line.length(); ++i) {
+    for (int i = 0; i < line.length() && column < rightsName.length(); ++i) {
       if (mode == 0) {
         if (line[i] == QChar('"')) {
           mwin->insLog("Song CSV : syntax error");
@@ -435,6 +435,11 @@ void NewWakuSettingsWindow::loadPresets()
   }
 
   file.close();
+}
+
+QString NewWakuSettingsWindow::getCommunity()
+{
+  return ui->community->currentData().toString();
 }
 
 QJsonObject NewWakuSettingsWindow::makeJsonFromForm()
