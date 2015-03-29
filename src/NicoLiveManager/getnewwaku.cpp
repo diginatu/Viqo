@@ -114,7 +114,7 @@ void NicoLiveManager::newWakuFinished(QNetworkReply* reply){
     }
   }
 
-  if (location != "") {
+  if (!location.isEmpty()) {
     if (mwin->settings.isAutoNewWakuOpenBrowser()) {
       QString url = "http://live.nicovideo.jp/" + location;
       QDesktopServices::openUrl(url);
