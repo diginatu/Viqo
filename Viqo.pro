@@ -4,12 +4,14 @@
 #
 #-------------------------------------------------
 
+CONFIG += c++11
+
+RC_ICONS = :/img/icon.ico
+
+greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 QT += core gui
 QT += network
 QT += sql
-CONFIG += c++11
-
-greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
 TARGET = Viqo
 TEMPLATE = app
@@ -68,3 +70,6 @@ FORMS    += ui/mainwindow.ui \
     ui/newwakusettingswindow.ui \
     ui/accountwindow.ui \
     ui/followcommunity.ui
+
+RESOURCES += \
+    resources.qrc

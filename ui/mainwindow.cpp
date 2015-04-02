@@ -14,6 +14,8 @@ MainWindow::MainWindow(QWidget *parent) :
   ui->setupUi(this);
   setAcceptDrops(true);
 
+  this->setWindowIcon(QIcon(":/img/icon.svg"));
+
   QTextCodec::setCodecForLocale(QTextCodec::codecForName("UTF-8"));
 
   // set the column width for the comment view list
