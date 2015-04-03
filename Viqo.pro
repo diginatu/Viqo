@@ -6,7 +6,7 @@
 
 CONFIG += c++11
 
-RC_ICONS = :/img/icon.ico
+RC_ICONS = img/icon.ico
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 QT += core gui
