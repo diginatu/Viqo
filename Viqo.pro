@@ -57,7 +57,6 @@ HEADERS  += src/NicoLiveManager/nicolivemanager.h \
     src/NicoLiveManager/LiveWaku/livewaku.h \
     src/NicoLiveManager/LiveWaku/nowlivewaku.h \
     src/NicoLiveManager/LiveWaku/commtcp.h \
-    src/settingswindow.h \
     src/settings.h \
     ui/accountwindow.h \
     ui/followcommunity.h \
