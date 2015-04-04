@@ -13,7 +13,7 @@ QT += core gui
 QT += network
 QT += sql
 
-TARGET = Viqo
+TARGET = viqo
 TEMPLATE = app
 
 
