@@ -516,9 +516,12 @@ void MainWindow::on_quit_triggered()
 
 void MainWindow::on_AboutViqo_triggered()
 {
-    QMessageBox::about(this, "About Viqo",
-                       QStringLiteral("Qt で作成されたマルチプラットフォームコメビュです<br>\
-                                      <a href=\"https://github.com/diginatu/Viqo\">GitHub Viqo repository</a>"));
+  QMessageBox::about(this, QStringLiteral("About Viqo"),
+         QCoreApplication::applicationName() + " version " +
+         QCoreApplication::applicationVersion() +
+         QStringLiteral("<br>\
+            Qt で作成されたマルチプラットフォームコメントビューワです<br>\
+            <a href=\"https://github.com/diginatu/Viqo\">GitHub Viqo repository</a>"));
 }
 
 void MainWindow::on_AboutQt_triggered()

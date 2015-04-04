@@ -6,11 +6,11 @@ int main(int argc, char *argv[])
   QApplication a(argc, argv);
 
   QCoreApplication::setApplicationName("Viqo");
-  QCoreApplication::setApplicationVersion("2.0");
+  QCoreApplication::setApplicationVersion("2.0 - develop");
 
   QCommandLineParser parser;
   parser.setApplicationDescription(
-        QStringLiteral("Qt で作成されたマルチプラットフォームコメビュです"));
+        QStringLiteral("Qt で作成されたマルチプラットフォームコメントビューワです"));
   parser.addHelpOption();
   parser.addVersionOption();
 
