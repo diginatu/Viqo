@@ -8,6 +8,12 @@ CONFIG += c++11
 
 RC_ICONS = img/icon.ico
 
+@
+unix:!mac{
+QMAKE_LFLAGS += -Wl,--rpath="/usr/lib/viqo"
+}
+@
+
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 QT += core gui
 QT += network
@@ -72,3 +78,5 @@ FORMS    += ui/mainwindow.ui \
 
 RESOURCES += \
     resources.qrc
+
+DISTFILES +=

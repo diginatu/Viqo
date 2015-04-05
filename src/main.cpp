@@ -3,10 +3,14 @@
 
 int main(int argc, char *argv[])
 {
+#ifdef Q_OS_LINUX
+  QCoreApplication::addLibraryPath("/usr/lib/viqo");
+#endif
+
   QApplication a(argc, argv);
 
   QCoreApplication::setApplicationName("Viqo");
-  QCoreApplication::setApplicationVersion("2.0 - develop");
+  QCoreApplication::setApplicationVersion("2.0");
 
   QCommandLineParser parser;
   parser.setApplicationDescription(
