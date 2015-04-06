@@ -8,6 +8,7 @@ void NicoLiveManager::getRawMyLiveHTML()
 
   if (mwin->settings.getUserSession() == "") {
     mwin->insLog("user_session is not set yet");
+    QMessageBox::information(mwin, "Viqo", QStringLiteral("セッションIDが設定されていません"));
     return;
   }
 

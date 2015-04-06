@@ -488,7 +488,6 @@ void MainWindow::userSessionDisabled()
       accountWindow->init();
       accountWindow->updateSessionAndSave();
     }
-    return;
   }
 
   userSessionDisabledDialogAppeared = false;
