@@ -246,8 +246,7 @@ void MainWindow::insComment(int num, bool prem, QString user,
     pr.waitForFinished(5000);
   }
 
-  if (after_open && ui->keepTop->isChecked() &&
-      ui->comment_view->currentIndex().row() <= 1) {
+  if (after_open && ui->keepTop->isChecked() && isCursorTop) {
     ui->comment_view->setCurrentItem(item);
   }
 }
@@ -312,7 +311,7 @@ void MainWindow::on_comment_view_currentItemChanged(QTreeWidgetItem *current)
     return;
   }
 
-  if (ui->comment_view->currentIndex().row() > 1) {
+  if (ui->comment_view->currentIndex().row() >= 1) {
     isCursorTop = false;
   } else {
     isCursorTop = true;
