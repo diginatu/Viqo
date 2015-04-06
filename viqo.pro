@@ -4,14 +4,22 @@
 #
 #-------------------------------------------------
 
+CONFIG += c++11
+
+RC_ICONS = img/icon.ico
+
+@
+unix:!mac{
+QMAKE_LFLAGS += -Wl,--rpath="/usr/lib/viqo"
+}
+@
+
+greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 QT += core gui
 QT += network
 QT += sql
-CONFIG += c++11
 
-greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
-
-TARGET = Viqo
+TARGET = viqo
 TEMPLATE = app
 
 
@@ -55,7 +63,6 @@ HEADERS  += src/NicoLiveManager/nicolivemanager.h \
     src/NicoLiveManager/LiveWaku/livewaku.h \
     src/NicoLiveManager/LiveWaku/nowlivewaku.h \
     src/NicoLiveManager/LiveWaku/commtcp.h \
-    src/settingswindow.h \
     src/settings.h \
     ui/accountwindow.h \
     ui/followcommunity.h \
@@ -68,3 +75,8 @@ FORMS    += ui/mainwindow.ui \
     ui/newwakusettingswindow.ui \
     ui/accountwindow.ui \
     ui/followcommunity.ui
+
+RESOURCES += \
+    resources.qrc
+
+DISTFILES +=

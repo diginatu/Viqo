@@ -86,9 +86,6 @@ void Settings::loadStatus(int num)
   QFile file(dir[0] + "/status_0" + QString::number(num) + ".json");
   if ( !file.exists() ) {
     file.close();
-    if (num == 0) {
-      oldLoad();
-    }
     mwin->insLog("no save file : " + QString::number(num));
     return;
   }
@@ -125,47 +122,6 @@ void Settings::loadStatus(int num)
   ui->command_beforeEnd->setText(command["command_beforeEnd"].toString());
   ui->command_newWaku->setText(command["newWaku"].toString());
   ui->command_newWaku_chk->setChecked(command["newWaku_check"].toBool());
-
-  file.close();
-}
-
-void Settings::oldLoad()
-{
-  QStringList dir = QStandardPaths::standardLocations(QStandardPaths::DataLocation);
-  if (dir.empty()) {
-    mwin->insLog("save directory is not available");
-    return;
-  }
-  QFile file(dir[0] + "/settings.json");
-  if (!file.open(QIODevice::ReadOnly | QIODevice::Text)) {
-    file.close();
-    mwin->insLog("opening status file failed");
-    return;
-  }
-
-  QJsonDocument jsd = QJsonDocument::fromJson(file.readAll());
-
-  QJsonObject cookie;
-  cookie = jsd.object()["cookie"].toObject();
-  userSessionWay = UserSessionWay(cookie["browser"].toInt());
-  userSession = cookie["user_session"].toString();
-  cookieFile = cookie["file_name"].toString();
-
-  QJsonObject other;
-  other = jsd.object()["other"].toObject();
-  ui->keepTop->setChecked(other["keep_top_comment"].toBool());
-
-  QJsonObject command;
-  command = jsd.object()["command"].toObject();
-  ui->command_comment->setText(command["comment"].toString());
-  ui->command_comment_chk->setChecked(command["comment_check"].toBool());
-  ui->command_nextWaku->setText(command["nextWaku"].toString());
-  ui->command_nextWaku_chk->setChecked(command["nextWaku_check"].toBool());
-
-  QJsonObject user_data;
-  user_data = jsd.object()["user_data"].toObject();
-  userMail = user_data["mail"].toString();
-  userPass = user_data["pass"].toString();
 
   file.close();
 }
