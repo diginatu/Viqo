@@ -245,7 +245,8 @@ void MainWindow::insComment(int num, bool prem, QString user,
     pr.waitForFinished(5000);
   }
 
-  if (after_open && ui->keepTop->isChecked()) {
+  if (after_open && ui->keepTop->isChecked() &&
+      ui->comment_view->currentIndex().row() <= 1) {
     ui->comment_view->setCurrentItem(item);
   }
 }
@@ -488,7 +489,6 @@ void MainWindow::userSessionDisabled()
       accountWindow->init();
       accountWindow->updateSessionAndSave();
     }
-    return;
   }
 
   userSessionDisabledDialogAppeared = false;
