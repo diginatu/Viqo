@@ -164,6 +164,8 @@ void CommTcp::readOneRawComment(const QString rawcomm)
     if (mwin->settings.isAutoNewWaku() && nlwaku->isOwnerBroad())
       mwin->getNewWakuAPI(2);
 
+    mwin->deleteCommunityFromList(nlwaku->getCommunity());
+
     mwin->setWatchCount("0");
     nlwaku->broadDisconnect();
   }

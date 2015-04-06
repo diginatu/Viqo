@@ -9,6 +9,7 @@ MainWindow::MainWindow(QWidget *parent) :
   accountWindow(new AccountWindow(this, this)),
   followCommunity(new FollowCommunity(this, this)),
   userSessionDisabledDialogAppeared(false),
+  isCursorTop(true),
   settings(this, ui, this)
 {
   ui->setupUi(this);
@@ -306,7 +307,17 @@ void MainWindow::submittedComment()
 
 void MainWindow::on_comment_view_currentItemChanged(QTreeWidgetItem *current)
 {
-  if (current == NULL) return;
+  if (current == NULL) {
+    isCursorTop = true;
+    return;
+  }
+
+  if (ui->comment_view->currentIndex().row() > 1) {
+    isCursorTop = false;
+  } else {
+    isCursorTop = true;
+  }
+
   const bool owner = current->text(7)=="@"?true:false;
 
   QString comment_view("");
@@ -493,6 +504,24 @@ void MainWindow::userSessionDisabled()
 
   userSessionDisabledDialogAppeared = false;
   return;
+}
+
+void MainWindow::deleteCommunityFromList(QString communityID)
+{
+  LiveWaku* listElement(nullptr);
+
+  foreach (LiveWaku* awaku, nicolivemanager->liveWakuList) {
+    if (awaku->getCommunity() == communityID) {
+      listElement = awaku;
+      break;
+    }
+  }
+
+  if (listElement != nullptr) {
+    nicolivemanager->liveWakuList.removeOne(listElement);
+    refleshLiveWaku();
+    listElement->deleteLater();
+  }
 }
 
 void MainWindow::on_autoNewWakuSettings_triggered()

@@ -56,6 +56,8 @@ public:
   void getNewWakuAPI(int type, QString livenum = "");
   void userSessionDisabled();
 
+  void deleteCommunityFromList(QString communityID);
+
 public slots:
   // ui slots
   void on_receive_clicked();
@@ -119,6 +121,7 @@ private:
   QTimer* elapsed_time_timer;
 
   bool userSessionDisabledDialogAppeared;
+  bool isCursorTop;
 public:
   Settings settings;
 
