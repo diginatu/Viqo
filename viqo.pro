@@ -8,6 +8,8 @@ CONFIG += c++11
 
 RC_ICONS = img/icon.ico
 
+ICON = img/icon.icns
+
 @
 unix:!mac{
 QMAKE_LFLAGS += -Wl,--rpath="/usr/lib/viqo"
