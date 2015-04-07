@@ -8,7 +8,9 @@ CONFIG += c++11
 
 RC_ICONS = img/icon.ico
 
+mac{
 ICON = img/icon.icns
+}
 
 @
 unix:!mac{
