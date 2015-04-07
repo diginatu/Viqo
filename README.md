@@ -16,16 +16,13 @@ Viqo はクロスプラットフォームなニコニコ生放送用 コメン�
 ダウンロード
 ------------
 
-### [Version 1.7.1](https://github.com/diginatu/Viqo/releases/tag/v1.7.1)
-
-### [Version 1.6](https://github.com/diginatu/Viqo/releases/tag/v1.6)
+### [Version 2.0](https://github.com/diginatu/Viqo/releases/tag/v2.0)
 
 Ubuntu 14.04, Debian 7.7, OSX Yosemite, Windows 7, 8.1 などで動作確認されています。
 
 使い方
 ------
 
-Linux 版の方は Viqo.sh を実行しアカウントを設定してください。
 
 [詳しくはWikiへ](https://github.com/diginatu/Viqo/wiki)
 
