@@ -1,0 +1,35 @@
+<manifest alg="2" build="10" opt="true" iceEnabled="true" iceMarkupVersion="2" exportTarget="other" resolutions="1x" timestamp="1428529109914">
+  <folder name="css">
+    <file name="site_global.css" crc="4259388319"/>
+    <file name="index.css" crc="3782886788" ref="index"/>
+  </folder>
+  <folder name="scripts">
+    <file name="jquery-1.8.3.min.js" crc="4164521501" ref="index"/>
+    <file name="museutils.js" crc="3777594392" ref="index"/>
+    <file name="webpro.js" crc="474087315" ref="index"/>
+    <file name="musewpslideshow.js" crc="274584885" ref="index"/>
+    <file name="jquery.museoverlay.js" crc="170414611" ref="index"/>
+    <file name="touchswipe.js" crc="100683906" ref="index"/>
+    <file name="jquery.scrolleffects.js" crc="117544926" ref="index"/>
+    <file name="jquery.watch.js" crc="4144919381" ref="index"/>
+    <file name="pie.js" crc="3827607177" ref="index"/>
+    <file name="jquery.musepolyfill.bgsize.js" crc="4259541792" ref="index"/>
+  </folder>
+  <folder name="images">
+    <file name="slideshow-1.jpg" crc="4039792184" ref="index"/>
+    <file name="blank.gif" crc="4208392903" ref="index"/>
+    <file name="slideshow-2.jpg" crc="233747551" ref="index"/>
+    <file name="slideshow-3.jpg" crc="2981954" ref="index"/>
+    <file name="slideshow-5.jpg" crc="132398100" ref="index"/>
+    <file name="loading.gif" crc="3815509949" ref="index"/>
+    <file name="icon-u1199.png" crc="152442719" ref="index"/>
+    <file name="ubuntu-2-u1100-fr.jpg" crc="3806269360" ref="index"/>
+    <file name="yosemite-logo-u1104-fr.jpg" crc="3912524423" ref="index"/>
+    <file name="windows-2-u1110-fr.jpg" crc="3852216348" ref="index"/>
+    <file name="slideshow-4.jpg" crc="3786175536" ref="index"/>
+    <file name="qoutes.png" crc="49248888" ref="index"/>
+    <file name="デジネイ.jpg" crc="94907350" ref="index"/>
+    <file name="heart.png" crc="117585526" ref="index"/>
+  </folder>
+  <file name="index.html" crc="24136043" mt="1428528841203" redirect="true"/>
+</manifest>
