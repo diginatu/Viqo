@@ -1,6 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
+    <loc>http://diginatu.github.io/Viqo/images/favicon.ico</loc>
+    <lastmod>2015-04-09</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  <url>
     <loc>http://diginatu.github.io/Viqo/images/slideshow-1.jpg</loc>
     <lastmod>2015-04-09</lastmod>
     <changefreq>weekly</changefreq>
@@ -37,7 +43,7 @@
     <priority>0.5</priority>
   </url>
   <url>
-    <loc>http://diginatu.github.io/Viqo/images/icon-u1199.png</loc>
+    <loc>http://diginatu.github.io/Viqo/images/ubuntu-2-u1100-fr-ieu1100-fr.png</loc>
     <lastmod>2015-04-09</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
@@ -67,12 +73,6 @@
     <priority>0.5</priority>
   </url>
   <url>
-    <loc>http://diginatu.github.io/Viqo/images/qoutes.png</loc>
-    <lastmod>2015-04-09</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.5</priority>
-  </url>
-  <url>
     <loc>http://diginatu.github.io/Viqo/images/%E3%83%86%E3%82%99%E3%82%B7%E3%82%99%E3%83%8D%E3%82%A4.jpg</loc>
     <lastmod>2015-04-09</lastmod>
     <changefreq>weekly</changefreq>
@@ -80,6 +80,30 @@
   </url>
   <url>
     <loc>http://diginatu.github.io/Viqo/images/heart.png</loc>
+    <lastmod>2015-04-09</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  <url>
+    <loc>http://diginatu.github.io/Viqo/images/icon-u1199-u1199.png</loc>
+    <lastmod>2015-04-09</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  <url>
+    <loc>http://diginatu.github.io/Viqo/images/yosemite-logo-u1104-fr-ieu1104-fr.png</loc>
+    <lastmod>2015-04-09</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  <url>
+    <loc>http://diginatu.github.io/Viqo/images/windows-2-u1110-fr-ieu1110-fr.png</loc>
+    <lastmod>2015-04-09</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  <url>
+    <loc>http://diginatu.github.io/Viqo/images/184-crop-u2003.jpg</loc>
     <lastmod>2015-04-09</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
