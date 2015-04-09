@@ -1,4 +1,4 @@
-<manifest alg="2" build="10" opt="true" iceEnabled="true" iceMarkupVersion="2" exportTarget="other" resolutions="1x" timestamp="1428581793156">
+<manifest alg="2" build="10" opt="true" iceEnabled="true" iceMarkupVersion="2" exportTarget="other" resolutions="1x" timestamp="1428584824135">
   <folder name="fonts">
     <file name="adobesongstd-light.woff" crc="4293775370"/>
     <file name="adobesongstd-light.eot" crc="250309299"/>
@@ -13,7 +13,7 @@
   </folder>
   <folder name="css">
     <file name="site_global.css" crc="96699461"/>
-    <file name="index.css" crc="189581471" ref="index"/>
+    <file name="index.css" crc="3964710065" ref="index"/>
   </folder>
   <folder name="scripts">
     <file name="jquery-1.8.3.min.js" crc="4164521501" ref="index"/>
@@ -53,5 +53,5 @@
     <file name="octcat_poster_.png" crc="281756487" ref="index"/>
     <file name="184-crop-u2003-crop-u2003.jpg" crc="4049468500" ref="index"/>
   </folder>
-  <file name="index.html" crc="3975251539" mt="1428580547260" redirect="true"/>
+  <file name="index.html" crc="189748411" mt="1428584810927" redirect="true"/>
 </manifest>

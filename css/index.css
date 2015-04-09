@@ -4,8 +4,8 @@
 
 .version.index /* version checker */
 {
-	color: #00000B;
-	background-color: #4CC89F;
+	color: #0000EC;
+	background-color: #50ACB1;
 }
 
 .html
@@ -35,7 +35,7 @@
 
 #slideshowu1136
 {
-	z-index: 142;
+	z-index: 141;
 	width: 0.01px;
 	height: 595px;
 	position: fixed;
@@ -53,12 +53,12 @@
 
 #u1138popup
 {
-	z-index: 143;
+	z-index: 142;
 }
 
 #u1398
 {
-	z-index: 144;
+	z-index: 143;
 	width: 1220px;
 	height: 595px;
 	border-style: none;
@@ -70,7 +70,7 @@
 
 #u1407
 {
-	z-index: 146;
+	z-index: 145;
 	width: 1220px;
 	height: 595px;
 	border-style: none;
@@ -82,7 +82,7 @@
 
 #u1416
 {
-	z-index: 148;
+	z-index: 147;
 	width: 1220px;
 	height: 595px;
 	border-style: none;
@@ -94,7 +94,7 @@
 
 #u1425
 {
-	z-index: 150;
+	z-index: 149;
 	width: 1220px;
 	height: 595px;
 	border-style: none;
@@ -111,7 +111,7 @@
 
 #u1199
 {
-	z-index: 152;
+	z-index: 151;
 	display: block;
 	vertical-align: top;
 	margin-left: 282px;
@@ -120,7 +120,7 @@
 
 #u2108
 {
-	z-index: 154;
+	z-index: 153;
 	height: 53px;
 	border-width: 1px;
 	border-style: solid;
@@ -130,7 +130,7 @@
 
 #u2108-bw
 {
-	z-index: 154;
+	z-index: 153;
 	position: fixed;
 	left: 0px;
 	right: 0px;
@@ -139,7 +139,7 @@
 
 #u2114
 {
-	z-index: 155;
+	z-index: 154;
 	width: 476px;
 	border-style: none;
 	border-color: transparent;
@@ -151,7 +151,7 @@
 
 #u2109-4
 {
-	z-index: 156;
+	z-index: 155;
 	width: 133px;
 	min-height: 45px;
 	background-color: transparent;
@@ -167,7 +167,7 @@
 
 #u2110
 {
-	z-index: 160;
+	z-index: 159;
 	width: 108px;
 	min-height: 24px;
 	border-style: none;
@@ -530,7 +530,7 @@
 	left: 236px;
 }
 
-#u1744-6
+#u1744-5
 {
 	z-index: 136;
 	width: 307px;
@@ -544,7 +544,7 @@
 	left: 337px;
 }
 
-#u1744-6:hover
+#u1744-5:hover
 {
 	padding-top: 0px;
 	padding-bottom: 0px;
@@ -552,13 +552,13 @@
 	margin: 417px -10000px 0px 0px;
 }
 
-#u1744-6:hover p,#u1744-6:hover span,#u1744-6:hover a
+#u1744-5:hover p,#u1744-5:hover a,#u1744-5:hover span
 {
 	color: #D09EBE;
 	visibility: inherit;
 }
 
-#u1744,#u1744-2
+#u1744
 {
 	color: #000000;
 	font-family: '__LaudatioC_5';
@@ -1061,28 +1061,10 @@
 
 @font-face
 {
-	font-family: '__Adobe Song Std_5';
-	src: url('../fonts/adobesongstd-light.eot');
-	src: local('☺'), url('../fonts/adobesongstd-light.woff') format('woff');
-	font-weight: 300;
-	font-style: normal;
-}
-
-@font-face
-{
-	font-family: '__Hiragino Kaku Gothic ProN_5';
-	src: url('../fonts/%e3%83%92%e3%83%a9%e3%82%ae%e3%83%8e%e8%a7%92%e3%82%b4%20pron%20w3.eot');
-	src: local('☺'), url('../fonts/%e3%83%92%e3%83%a9%e3%82%ae%e3%83%8e%e8%a7%92%e3%82%b4%20pron%20w3.woff') format('woff');
-	font-weight: 300;
-	font-style: normal;
-}
-
-@font-face
-{
-	font-family: '__Hiragino Mincho Pro_5';
-	src: url('../fonts/%e3%83%92%e3%83%a9%e3%82%ae%e3%83%8e%e6%98%8e%e6%9c%9d%20pro%20w3.eot');
-	src: local('☺'), url('../fonts/%e3%83%92%e3%83%a9%e3%82%ae%e3%83%8e%e6%98%8e%e6%9c%9d%20pro%20w3.woff') format('woff');
-	font-weight: 300;
+	font-family: '__Noto Sans CJK JP_5';
+	src: url('../fonts/notosanscjkjp-thin.eot');
+	src: local('☺'), url('../fonts/notosanscjkjp-thin.woff') format('woff');
+	font-weight: 200;
 	font-style: normal;
 }
 
@@ -1097,10 +1079,28 @@
 
 @font-face
 {
-	font-family: '__Noto Sans CJK JP_5';
-	src: url('../fonts/notosanscjkjp-thin.eot');
-	src: local('☺'), url('../fonts/notosanscjkjp-thin.woff') format('woff');
-	font-weight: 200;
+	font-family: '__Hiragino Mincho Pro_5';
+	src: url('../fonts/%e3%83%92%e3%83%a9%e3%82%ae%e3%83%8e%e6%98%8e%e6%9c%9d%20pro%20w3.eot');
+	src: local('☺'), url('../fonts/%e3%83%92%e3%83%a9%e3%82%ae%e3%83%8e%e6%98%8e%e6%9c%9d%20pro%20w3.woff') format('woff');
+	font-weight: 300;
+	font-style: normal;
+}
+
+@font-face
+{
+	font-family: '__Adobe Song Std_5';
+	src: url('../fonts/adobesongstd-light.eot');
+	src: local('☺'), url('../fonts/adobesongstd-light.woff') format('woff');
+	font-weight: 300;
+	font-style: normal;
+}
+
+@font-face
+{
+	font-family: '__Hiragino Kaku Gothic ProN_5';
+	src: url('../fonts/%e3%83%92%e3%83%a9%e3%82%ae%e3%83%8e%e8%a7%92%e3%82%b4%20pron%20w3.eot');
+	src: local('☺'), url('../fonts/%e3%83%92%e3%83%a9%e3%82%ae%e3%83%8e%e8%a7%92%e3%82%b4%20pron%20w3.woff') format('woff');
+	font-weight: 300;
 	font-style: normal;
 }
 
