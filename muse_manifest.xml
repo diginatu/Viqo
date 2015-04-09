@@ -1,7 +1,7 @@
-<manifest alg="2" build="10" opt="true" iceEnabled="true" iceMarkupVersion="2" exportTarget="other" resolutions="1x" timestamp="1428537259594">
+<manifest alg="2" build="10" opt="true" iceEnabled="true" iceMarkupVersion="2" exportTarget="other" resolutions="1x" timestamp="1428538431357">
   <folder name="css">
     <file name="site_global.css" crc="3933448141"/>
-    <file name="index.css" crc="35278756" ref="index"/>
+    <file name="index.css" crc="87926381" ref="index"/>
   </folder>
   <folder name="scripts">
     <file name="jquery-1.8.3.min.js" crc="4164521501" ref="index"/>
@@ -35,5 +35,5 @@
     <file name="windows-2-u1110-fr-ieu1110-fr.png" crc="128272639" ref="index"/>
     <file name="184-crop-u2003.jpg" crc="319566038" ref="index"/>
   </folder>
-  <file name="index.html" crc="4204661749" mt="1428536688403" redirect="true"/>
+  <file name="index.html" crc="406849159" mt="1428538415926" redirect="true"/>
 </manifest>

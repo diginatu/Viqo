@@ -1,7 +1,7 @@
 .version.index /* version checker */
 {
-	color: #000002;
-	background-color: #1A4FA4;
+	color: #000005;
+	background-color: #3DA66D;
 }
 
 .html
@@ -128,6 +128,28 @@
 	left: 0px;
 	right: 0px;
 	top: 595px;
+}
+
+#u2021-5
+{
+	z-index: 154;
+	width: 453px;
+	min-height: 55px;
+	background-color: transparent;
+	line-height: 55px;
+	font-size: 46px;
+	color: #D09EBE;
+	text-align: center;
+	font-family: nova-mono, sans-serif;
+	font-weight: 400;
+	position: fixed;
+	top: 603px;
+	left: 283px;
+}
+
+#u2021-2
+{
+	letter-spacing: 12px;
 }
 
 #u1098-4
@@ -589,8 +611,9 @@
 	font-size: 200px;
 	color: #D09EBE;
 	text-align: center;
-	margin-left: 453px;
-	margin-top: 40px;
+	font-weight: bold;
+	margin-left: 446px;
+	margin-top: 39px;
 	position: relative;
 }
 
@@ -895,7 +918,7 @@
 	font-family: nova-mono, sans-serif;
 	font-weight: 400;
 	margin-left: 20px;
-	margin-top: 375px;
+	margin-top: 376px;
 	position: relative;
 }
 
