@@ -4,8 +4,8 @@
 
 .version.index /* version checker */
 {
-	color: #0000EC;
-	background-color: #50ACB1;
+	color: #0000EF;
+	background-color: #93F1D4;
 }
 
 .html
@@ -185,8 +185,7 @@
 	width: 980px;
 	min-height: 60px;
 	background-color: transparent;
-	font-family: '__Hiragino Kaku Gothic ProN_5';
-	font-weight: 300;
+	font-family: ヒラギノ角ゴ Pro W3, Hiragino Kaku Gothic Pro, メイリオ, Meiryo, ＭＳ Ｐゴシック, MS PGothic, sans-serif;
 	margin-left: 20px;
 	margin-top: 183px;
 	position: relative;
@@ -282,8 +281,7 @@
 	width: 307px;
 	min-height: 93px;
 	background-color: transparent;
-	font-family: '__Hiragino Kaku Gothic ProN_5';
-	font-weight: 300;
+	font-family: ヒラギノ角ゴ Pro W3, Hiragino Kaku Gothic Pro, メイリオ, Meiryo, ＭＳ Ｐゴシック, MS PGothic, sans-serif;
 	margin-top: 14px;
 	position: relative;
 }
@@ -356,8 +354,8 @@
 #u1106
 {
 	color: #000000;
-	font-family: '__Noto Sans CJK JP_5';
-	font-weight: 200;
+	font-family: open-sans, sans-serif;
+	font-weight: 300;
 }
 
 #u1105-4
@@ -368,8 +366,7 @@
 	background-color: transparent;
 	line-height: 32px;
 	font-size: 19px;
-	font-family: '__Adobe Song Std_5';
-	font-weight: 300;
+	font-family: ヒラギノ明朝 Pro W3, Hiragino Mincho Pro, ＭＳ Ｐ明朝, MS PMincho, serif;
 	margin-top: 14px;
 	position: relative;
 }
@@ -519,11 +516,10 @@
 	width: 523px;
 	min-height: 20px;
 	background-color: transparent;
-	line-height: 14px;
-	font-size: 12px;
 	text-align: center;
-	font-family: '__Hiragino Kaku Gothic ProN_5';
-	font-weight: 300;
+	font-size: 12px;
+	line-height: 14px;
+	font-family: ヒラギノ角ゴ Pro W3, Hiragino Kaku Gothic Pro, メイリオ, Meiryo, ＭＳ Ｐゴシック, MS PGothic, sans-serif;
 	position: relative;
 	margin-right: -10000px;
 	margin-top: 447px;
@@ -784,8 +780,7 @@
 	width: 856px;
 	min-height: 79px;
 	background-color: transparent;
-	font-family: '__Hiragino Mincho Pro_5';
-	font-weight: 300;
+	font-family: ヒラギノ明朝 Pro W3, Hiragino Mincho Pro, ＭＳ Ｐ明朝, MS PMincho, serif;
 	font-style: normal;
 	position: relative;
 }
@@ -836,8 +831,7 @@
 	min-height: 46px;
 	background-color: transparent;
 	line-height: 36px;
-	font-family: '__Hiragino Mincho Pro_5';
-	font-weight: 300;
+	font-family: ヒラギノ明朝 Pro W3, Hiragino Mincho Pro, ＭＳ Ｐ明朝, MS PMincho, serif;
 	margin-left: 273px;
 	margin-top: 23px;
 	position: relative;
@@ -881,8 +875,7 @@
 	width: 856px;
 	min-height: 79px;
 	background-color: transparent;
-	font-family: '__Hiragino Mincho Pro_5';
-	font-weight: 300;
+	font-family: ヒラギノ明朝 Pro W3, Hiragino Mincho Pro, ＭＳ Ｐ明朝, MS PMincho, serif;
 	font-style: normal;
 	position: relative;
 }
@@ -945,8 +938,7 @@
 	min-height: 46px;
 	background-color: transparent;
 	line-height: 36px;
-	font-family: '__Hiragino Mincho Pro_5';
-	font-weight: 300;
+	font-family: ヒラギノ明朝 Pro W3, Hiragino Mincho Pro, ＭＳ Ｐ明朝, MS PMincho, serif;
 	margin-left: 273px;
 	margin-top: 23px;
 	position: relative;
@@ -1061,46 +1053,10 @@
 
 @font-face
 {
-	font-family: '__Noto Sans CJK JP_5';
-	src: url('../fonts/notosanscjkjp-thin.eot');
-	src: local('☺'), url('../fonts/notosanscjkjp-thin.woff') format('woff');
-	font-weight: 200;
-	font-style: normal;
-}
-
-@font-face
-{
 	font-family: '__LaudatioC_5';
 	src: url('../fonts/laudcn_2.eot');
 	src: local('☺'), url('../fonts/laudcn_2.woff') format('woff');
 	font-weight: 400;
-	font-style: normal;
-}
-
-@font-face
-{
-	font-family: '__Hiragino Mincho Pro_5';
-	src: url('../fonts/%e3%83%92%e3%83%a9%e3%82%ae%e3%83%8e%e6%98%8e%e6%9c%9d%20pro%20w3.eot');
-	src: local('☺'), url('../fonts/%e3%83%92%e3%83%a9%e3%82%ae%e3%83%8e%e6%98%8e%e6%9c%9d%20pro%20w3.woff') format('woff');
-	font-weight: 300;
-	font-style: normal;
-}
-
-@font-face
-{
-	font-family: '__Adobe Song Std_5';
-	src: url('../fonts/adobesongstd-light.eot');
-	src: local('☺'), url('../fonts/adobesongstd-light.woff') format('woff');
-	font-weight: 300;
-	font-style: normal;
-}
-
-@font-face
-{
-	font-family: '__Hiragino Kaku Gothic ProN_5';
-	src: url('../fonts/%e3%83%92%e3%83%a9%e3%82%ae%e3%83%8e%e8%a7%92%e3%82%b4%20pron%20w3.eot');
-	src: local('☺'), url('../fonts/%e3%83%92%e3%83%a9%e3%82%ae%e3%83%8e%e8%a7%92%e3%82%b4%20pron%20w3.woff') format('woff');
-	font-weight: 300;
 	font-style: normal;
 }
 
