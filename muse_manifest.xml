@@ -1,4 +1,4 @@
-<manifest alg="2" build="10" opt="true" iceEnabled="true" iceMarkupVersion="2" exportTarget="other" resolutions="1x" timestamp="1428538431357">
+<manifest alg="2" build="10" opt="true" iceEnabled="true" iceMarkupVersion="2" exportTarget="other" resolutions="1x" timestamp="1428539112017">
   <folder name="css">
     <file name="site_global.css" crc="3933448141"/>
     <file name="index.css" crc="87926381" ref="index"/>
@@ -28,12 +28,12 @@
     <file name="yosemite-logo-u1104-fr.jpg" crc="3912524423" ref="index"/>
     <file name="windows-2-u1110-fr.jpg" crc="3852216348" ref="index"/>
     <file name="slideshow-4.jpg" crc="3786175536" ref="index"/>
-    <file name="デジネイ.jpg" crc="94907350" ref="index"/>
     <file name="heart.png" crc="117585526" ref="index"/>
-    <file name="icon-u1199-u1199.png" crc="409019634" ref="index"/>
     <file name="yosemite-logo-u1104-fr-ieu1104-fr.png" crc="423368087" ref="index"/>
     <file name="windows-2-u1110-fr-ieu1110-fr.png" crc="128272639" ref="index"/>
     <file name="184-crop-u2003.jpg" crc="319566038" ref="index"/>
+    <file name="icon-u1199-u1199-u1199.png" crc="3856802981" ref="index"/>
+    <file name="digi.jpg" crc="94907350" ref="index"/>
   </folder>
-  <file name="index.html" crc="406849159" mt="1428538415926" redirect="true"/>
+  <file name="index.html" crc="4070445622" mt="1428539073817" redirect="true"/>
 </manifest>
