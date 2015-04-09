@@ -81,6 +81,12 @@ body
 	body { text-rendering:auto; }
 }
 
+a
+{
+	color: inherit;
+	text-decoration: inherit;
+}
+
 a:link
 {
 	color: #0000FF;

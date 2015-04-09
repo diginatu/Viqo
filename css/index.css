@@ -1,7 +1,11 @@
+/*
+
+*/
+
 .version.index /* version checker */
 {
-	color: #000005;
-	background-color: #3DA66D;
+	color: #00000B;
+	background-color: #4CC89F;
 }
 
 .html
@@ -13,27 +17,30 @@
 {
 	z-index: 1;
 	width: 1020px;
-	min-height: 2404px;
+	min-height: 2444.8676767676757px;
 	background-image: none;
 	border-style: none;
 	border-color: #000000;
 	background-color: transparent;
+	padding-bottom: 0px;
 	margin-left: auto;
 	margin-right: auto;
 }
 
 #page_position_content
 {
-	padding-bottom: 29px;
+	margin-bottom: -10px;
+	padding-top: 67px;
 }
 
 #slideshowu1136
 {
-	z-index: 141;
+	z-index: 142;
 	width: 0.01px;
 	height: 595px;
+	position: fixed;
+	top: 0px;
 	left: -100px;
-	position: relative;
 }
 
 #u1138
@@ -46,12 +53,12 @@
 
 #u1138popup
 {
-	z-index: 142;
+	z-index: 143;
 }
 
 #u1398
 {
-	z-index: 143;
+	z-index: 144;
 	width: 1220px;
 	height: 595px;
 	border-style: none;
@@ -63,7 +70,7 @@
 
 #u1407
 {
-	z-index: 145;
+	z-index: 146;
 	width: 1220px;
 	height: 595px;
 	border-style: none;
@@ -75,7 +82,7 @@
 
 #u1416
 {
-	z-index: 147;
+	z-index: 148;
 	width: 1220px;
 	height: 595px;
 	border-style: none;
@@ -87,7 +94,7 @@
 
 #u1425
 {
-	z-index: 149;
+	z-index: 150;
 	width: 1220px;
 	height: 595px;
 	border-style: none;
@@ -108,72 +115,105 @@
 	display: block;
 	vertical-align: top;
 	margin-left: 282px;
-	top: -528px;
-	margin-bottom: -460px;
 	position: relative;
 }
 
-#u1162
+#u2108
 {
-	z-index: 151;
-	height: 70px;
+	z-index: 154;
+	height: 53px;
+	border-width: 1px;
+	border-style: solid;
 	border-color: #000000;
 	background-color: #000000;
 }
 
-#u1162-bw
+#u2108-bw
 {
-	z-index: 151;
+	z-index: 154;
 	position: fixed;
 	left: 0px;
 	right: 0px;
-	top: 595px;
+	top: 590px;
 }
 
-#u2021-5
+#u2114
 {
-	z-index: 154;
-	width: 453px;
-	min-height: 55px;
+	z-index: 155;
+	width: 476px;
+	border-style: none;
+	border-color: transparent;
 	background-color: transparent;
-	line-height: 55px;
-	font-size: 46px;
+	position: fixed;
+	top: 600px;
+	left: 443px;
+}
+
+#u2109-4
+{
+	z-index: 156;
+	width: 133px;
+	min-height: 45px;
+	background-color: transparent;
+	line-height: 30px;
+	font-size: 30px;
 	color: #D09EBE;
 	text-align: center;
 	font-family: nova-mono, sans-serif;
 	font-weight: 400;
-	position: fixed;
-	top: 603px;
-	left: 283px;
+	position: relative;
+	margin-right: -10000px;
 }
 
-#u2021-2
+#u2110
 {
-	letter-spacing: 12px;
+	z-index: 160;
+	width: 108px;
+	min-height: 24px;
+	border-style: none;
+	border-color: transparent;
+	background-color: transparent;
+	position: relative;
+	margin-right: -10000px;
+	margin-top: 5px;
+	left: 368px;
 }
 
-#u1098-4
+#u1098-6
 {
 	z-index: 75;
 	width: 980px;
 	min-height: 60px;
 	background-color: transparent;
-	line-height: 58px;
+	font-family: '__Hiragino Kaku Gothic ProN_5';
+	font-weight: 300;
 	margin-left: 20px;
-	margin-top: 110px;
+	margin-top: 183px;
 	position: relative;
+}
+
+#u1098-2
+{
+	font-size: 30px;
+	line-height: 36px;
+}
+
+#u1098-4
+{
+	font-size: 17px;
+	line-height: 20px;
 }
 
 #pbuttonu1099
 {
 	width: 0.01px;
 	margin-left: 20px;
-	margin-top: 39px;
+	margin-top: 40px;
 }
 
 #buttonu1099
 {
-	z-index: 79;
+	z-index: 81;
 	width: 307px;
 	border-color: #787878;
 	background-color: transparent;
@@ -188,7 +228,7 @@
 
 #u1100
 {
-	z-index: 80;
+	z-index: 82;
 	width: 307px;
 	height: 221px;
 	border-color: #000000;
@@ -205,12 +245,12 @@
 
 #u1101-5
 {
-	z-index: 81;
+	z-index: 83;
 	width: 307px;
 	min-height: 41px;
 	background-color: transparent;
-	line-height: 36px;
 	color: #000000;
+	line-height: 36px;
 	margin-top: 20px;
 	position: relative;
 }
@@ -229,12 +269,21 @@
 	visibility: inherit;
 }
 
+#u1101
+{
+	color: #000000;
+	font-family: ubuntu, sans-serif;
+	font-weight: 300;
+}
+
 #u1102-9
 {
-	z-index: 86;
+	z-index: 88;
 	width: 307px;
 	min-height: 93px;
 	background-color: transparent;
+	font-family: '__Hiragino Kaku Gothic ProN_5';
+	font-weight: 300;
 	margin-top: 14px;
 	position: relative;
 }
@@ -247,7 +296,7 @@
 
 #buttonu1103
 {
-	z-index: 95;
+	z-index: 97;
 	width: 307px;
 	border-color: #787878;
 	background-color: transparent;
@@ -263,7 +312,7 @@
 
 #u1104
 {
-	z-index: 96;
+	z-index: 98;
 	width: 307px;
 	height: 221px;
 	border-color: #000000;
@@ -280,12 +329,12 @@
 
 #u1106-5
 {
-	z-index: 102;
+	z-index: 103;
 	width: 307px;
 	min-height: 41px;
 	background-color: transparent;
-	line-height: 36px;
 	color: #000000;
+	line-height: 36px;
 	margin-top: 20px;
 	position: relative;
 }
@@ -304,21 +353,30 @@
 	visibility: inherit;
 }
 
-#u1105-5
+#u1106
 {
-	z-index: 97;
+	color: #000000;
+	font-family: '__Noto Sans CJK JP_5';
+	font-weight: 200;
+}
+
+#u1105-4
+{
+	z-index: 99;
 	width: 307px;
 	min-height: 93px;
 	background-color: transparent;
-	line-height: 29px;
-	font-size: 17px;
+	line-height: 32px;
+	font-size: 19px;
+	font-family: '__Adobe Song Std_5';
+	font-weight: 300;
 	margin-top: 14px;
 	position: relative;
 }
 
 #buttonu1107
 {
-	z-index: 107;
+	z-index: 108;
 	width: 307px;
 	border-color: #787878;
 	background-color: transparent;
@@ -344,7 +402,7 @@
 
 #u1110
 {
-	z-index: 108;
+	z-index: 109;
 	width: 307px;
 	height: 221px;
 	border-color: #000000;
@@ -367,19 +425,21 @@
 	background-size: cover;
 }
 
-#u1108-5
+#u1108-4
 {
-	z-index: 124;
+	z-index: 125;
 	width: 307px;
 	min-height: 41px;
 	background-color: transparent;
 	line-height: 36px;
 	color: #000000;
+	font-family: asap, sans-serif;
+	font-weight: 400;
 	margin-top: 20px;
 	position: relative;
 }
 
-#buttonu1103.ButtonSelected #u1106-5,#buttonu1107:hover #u1108-5
+#buttonu1103.ButtonSelected #u1106-5,#buttonu1107:hover #u1108-4
 {
 	padding-top: 0px;
 	padding-bottom: 0px;
@@ -387,7 +447,7 @@
 	margin: 20px 0px 0px;
 }
 
-#buttonu1107.ButtonSelected #u1108-5
+#buttonu1107.ButtonSelected #u1108-4
 {
 	padding-top: 0px;
 	padding-bottom: 0px;
@@ -395,21 +455,27 @@
 	margin: 20px 0px 0px;
 }
 
-#buttonu1107:hover #u1108-5 p,#buttonu1107:hover #u1108-5 a,#buttonu1107:hover #u1108-5 span
+#buttonu1107:hover #u1108-4 p,#buttonu1107:hover #u1108-4 span
 {
 	color: #D09EBE;
 	visibility: inherit;
 }
 
-#buttonu1099.ButtonSelected #u1101-5 p,#buttonu1099.ButtonSelected #u1101-5 a,#buttonu1099.ButtonSelected #u1101-5 span,#buttonu1103.ButtonSelected #u1106-5 p,#buttonu1103.ButtonSelected #u1106-5 a,#buttonu1103.ButtonSelected #u1106-5 span,#buttonu1107.ButtonSelected #u1108-5 p,#buttonu1107.ButtonSelected #u1108-5 a,#buttonu1107.ButtonSelected #u1108-5 span
+#buttonu1099.ButtonSelected #u1101-5 p,#buttonu1099.ButtonSelected #u1101-5 a,#buttonu1099.ButtonSelected #u1101-5 span,#buttonu1103.ButtonSelected #u1106-5 p,#buttonu1103.ButtonSelected #u1106-5 a,#buttonu1103.ButtonSelected #u1106-5 span,#buttonu1107.ButtonSelected #u1108-4 p,#buttonu1107.ButtonSelected #u1108-4 span
 {
 	color: #000000;
 	visibility: inherit;
 }
 
+#u1108
+{
+	font-family: asap, sans-serif;
+	font-weight: 400;
+}
+
 #u1109-15
 {
-	z-index: 109;
+	z-index: 110;
 	width: 307px;
 	min-height: 93px;
 	background-color: transparent;
@@ -417,7 +483,7 @@
 	position: relative;
 }
 
-#buttonu1099.ButtonSelected #u1102-9,#buttonu1103.ButtonSelected #u1105-5,#buttonu1107.ButtonSelected #u1109-15
+#buttonu1099.ButtonSelected #u1102-9,#buttonu1103.ButtonSelected #u1105-4,#buttonu1107.ButtonSelected #u1109-15
 {
 	padding-top: 0px;
 	padding-bottom: 0px;
@@ -453,30 +519,32 @@
 	width: 523px;
 	min-height: 20px;
 	background-color: transparent;
-	font-size: 12px;
 	line-height: 14px;
+	font-size: 12px;
 	text-align: center;
+	font-family: '__Hiragino Kaku Gothic ProN_5';
+	font-weight: 300;
 	position: relative;
 	margin-right: -10000px;
 	margin-top: 447px;
 	left: 236px;
 }
 
-#u1744-5
+#u1744-6
 {
 	z-index: 136;
 	width: 307px;
 	min-height: 41px;
 	background-color: transparent;
-	line-height: 36px;
 	color: #000000;
+	line-height: 36px;
 	position: relative;
 	margin-right: -10000px;
 	margin-top: 417px;
 	left: 337px;
 }
 
-#u1744-5:hover
+#u1744-6:hover
 {
 	padding-top: 0px;
 	padding-bottom: 0px;
@@ -484,28 +552,29 @@
 	margin: 417px -10000px 0px 0px;
 }
 
-#u1744-5:hover p,#u1744-5:hover a,#u1744-5:hover span
+#u1744-6:hover p,#u1744-6:hover span,#u1744-6:hover a
 {
 	color: #D09EBE;
 	visibility: inherit;
 }
 
-#u1101,#u1106,#u1108,#u1744
+#u1744,#u1744-2
 {
-	text-decoration: none;
 	color: #000000;
+	font-family: '__LaudatioC_5';
+	font-weight: 400;
 }
 
 #pu1081
 {
 	width: 0.01px;
 	margin-left: -100px;
-	margin-top: 21px;
+	margin-top: 22px;
 }
 
 #u1081
 {
-	z-index: 61;
+	z-index: 60;
 	border-color: #000000;
 	background: #FFFFFF url("../images/slideshow-4.jpg") no-repeat center bottom;
 	background-size: cover;
@@ -518,19 +587,19 @@
 	width: 1020px;
 	position: relative;
 	left: -100px;
-	padding-top: 77px;
-	padding-bottom: 164px;
+	padding-top: 124px;
+	padding-bottom: 173px;
 }
 
 #u1082-3
 {
-	z-index: 62;
+	z-index: 61;
 	width: 980px;
 	min-height: 33px;
 	background-color: transparent;
-	line-height: 29px;
 	font-size: 24px;
 	color: #FFFFFF;
+	line-height: 29px;
 	font-family: nova-mono, sans-serif;
 	font-weight: 400;
 	left: 120px;
@@ -539,13 +608,13 @@
 
 #u1083-6
 {
-	z-index: 65;
+	z-index: 64;
 	width: 980px;
 	min-height: 89px;
 	background-color: transparent;
-	line-height: 44px;
 	font-size: 37px;
 	color: #FFFFFF;
+	line-height: 44px;
 	font-family: nova-mono, sans-serif;
 	font-weight: 400;
 	left: 127px;
@@ -555,16 +624,16 @@
 
 #u1081-bw
 {
-	z-index: 61;
-	height: 387px;
+	z-index: 60;
+	height: 443px;
 }
 
 #u1084-4
 {
-	z-index: 71;
-	width: 168px;
+	z-index: 70;
+	width: 185px;
 	min-height: 52px;
-	background-color: #D09EBE;
+	background-color: #D2A0BE;
 	-moz-border-radius: 5px;
 	-webkit-border-radius: 5px;
 	-khtml-border-radius: 5px;
@@ -572,13 +641,13 @@
 	line-height: 29px;
 	font-size: 24px;
 	color: #FFFFFF;
-	text-align: center;
+	text-align: left;
 	font-family: nova-mono, sans-serif;
 	font-weight: 400;
 	position: relative;
 	margin-right: -10000px;
-	margin-top: 132px;
-	left: 932px;
+	margin-top: 179px;
+	left: 915px;
 }
 
 #u1084-4:hover
@@ -587,7 +656,7 @@
 	padding-top: 0px;
 	padding-bottom: 0px;
 	min-height: 52px;
-	margin: 132px -10000px 0px 0px;
+	margin: 179px -10000px 0px 0px;
 }
 
 #u1084-4:hover p
@@ -601,40 +670,45 @@
 	padding-top: 11px;
 }
 
-#u2011-4
+#u2061
 {
-	z-index: 57;
-	width: 114px;
-	min-height: 182px;
-	background-color: transparent;
-	line-height: 240px;
-	font-size: 200px;
-	color: #D09EBE;
-	text-align: center;
-	font-weight: bold;
-	margin-left: 446px;
-	margin-top: 39px;
+	z-index: 74;
+	width: 39px;
+	min-height: 45px;
+	position: relative;
+	margin-right: -10000px;
+	margin-top: 180px;
+	left: 1055px;
+}
+
+#u2046
+{
+	z-index: 59;
+	width: 115px;
+	min-height: 121px;
+	margin-left: 452px;
+	margin-top: 43px;
 	position: relative;
 }
 
 #pamphletu1909
 {
-	z-index: 12;
+	z-index: 14;
 	width: 0.01px;
 	height: 397px;
 	position: fixed;
-	top: 1872px;
+	top: 1966px;
 	left: 20px;
 }
 
 #u1939
 {
-	z-index: 13;
-	width: 51px;
+	z-index: 15;
+	width: 44px;
 	position: relative;
 	margin-right: -10000px;
 	margin-top: 382px;
-	left: 467px;
+	left: 468px;
 }
 
 #u1941
@@ -665,7 +739,7 @@
 	-webkit-border-radius: 10px;
 	-khtml-border-radius: 10px;
 	border-radius: 10px;
-	left: 36px;
+	left: 29px;
 }
 
 #u1941.PamphletThumbSelected,#u1942.PamphletThumbSelected
@@ -686,12 +760,12 @@
 
 #u1914popup
 {
-	z-index: 16;
+	z-index: 18;
 }
 
 #u1915
 {
-	z-index: 17;
+	z-index: 19;
 	width: 856px;
 	height: 332px;
 	border-style: none;
@@ -706,23 +780,19 @@
 
 #u1922-4
 {
-	z-index: 18;
+	z-index: 20;
 	width: 856px;
 	min-height: 79px;
 	background-color: transparent;
+	font-family: '__Hiragino Mincho Pro_5';
+	font-weight: 300;
+	font-style: normal;
 	position: relative;
-}
-
-#pu1921
-{
-	width: 0.01px;
-	margin-left: 100px;
-	margin-top: 34px;
 }
 
 #u1921
 {
-	z-index: 22;
+	z-index: 24;
 	width: 224px;
 	height: 1px;
 	border-color: #000000;
@@ -734,7 +804,7 @@
 
 #u1997
 {
-	z-index: 33;
+	z-index: 35;
 	width: 125px;
 	background-color: transparent;
 	-moz-border-radius: 75px;
@@ -743,12 +813,12 @@
 	border-radius: 75px;
 	position: relative;
 	margin-right: -10000px;
-	left: 269px;
+	left: 266px;
 }
 
 #u1918
 {
-	z-index: 23;
+	z-index: 25;
 	width: 224px;
 	height: 1px;
 	border-color: #000000;
@@ -761,11 +831,13 @@
 
 #u1920-4
 {
-	z-index: 24;
+	z-index: 26;
 	width: 310px;
 	min-height: 46px;
 	background-color: transparent;
 	line-height: 36px;
+	font-family: '__Hiragino Mincho Pro_5';
+	font-weight: 300;
 	margin-left: 273px;
 	margin-top: 23px;
 	position: relative;
@@ -773,7 +845,7 @@
 
 #u1919-5
 {
-	z-index: 28;
+	z-index: 30;
 	width: 310px;
 	min-height: 23px;
 	background-color: transparent;
@@ -786,7 +858,7 @@
 
 #u1923
 {
-	z-index: 35;
+	z-index: 37;
 	width: 856px;
 	height: 332px;
 	border-style: none;
@@ -805,36 +877,39 @@
 
 #u1925-8
 {
-	z-index: 36;
+	z-index: 38;
 	width: 856px;
 	min-height: 79px;
 	background-color: transparent;
+	font-family: '__Hiragino Mincho Pro_5';
+	font-weight: 300;
+	font-style: normal;
 	position: relative;
 }
 
-#pu1926
+#pu1921,#pu1926
 {
 	width: 0.01px;
 	margin-left: 100px;
-	margin-top: 37px;
+	margin-top: 34px;
 }
 
 #u1926
 {
-	z-index: 44;
+	z-index: 46;
 	width: 224px;
 	height: 1px;
 	border-color: #000000;
 	background-color: #D09EBE;
 	position: relative;
 	margin-right: -10000px;
-	margin-top: 60px;
+	margin-top: 63px;
 }
 
 #u2003
 {
-	z-index: 55;
-	width: 120px;
+	z-index: 57;
+	width: 125px;
 	background-color: transparent;
 	-moz-border-radius: 75px;
 	-webkit-border-radius: 75px;
@@ -842,7 +917,7 @@
 	border-radius: 75px;
 	position: relative;
 	margin-right: -10000px;
-	left: 272px;
+	left: 266px;
 }
 
 #u1997 .clip_frame,#u2003 .clip_frame
@@ -852,32 +927,34 @@
 
 #u1930
 {
-	z-index: 45;
+	z-index: 47;
 	width: 224px;
 	height: 1px;
 	border-color: #000000;
 	background-color: #D09EBE;
 	position: relative;
 	margin-right: -10000px;
-	margin-top: 60px;
+	margin-top: 63px;
 	left: 439px;
 }
 
 #u1924-4
 {
-	z-index: 46;
+	z-index: 48;
 	width: 310px;
 	min-height: 46px;
 	background-color: transparent;
 	line-height: 36px;
+	font-family: '__Hiragino Mincho Pro_5';
+	font-weight: 300;
 	margin-left: 273px;
-	margin-top: 25px;
+	margin-top: 23px;
 	position: relative;
 }
 
 #u1927-5
 {
-	z-index: 50;
+	z-index: 52;
 	width: 310px;
 	min-height: 23px;
 	background-color: transparent;
@@ -905,26 +982,50 @@
 	cursor: pointer;
 }
 
-#u742-7
+#u2054
 {
 	z-index: 2;
-	width: 980px;
-	min-height: 23px;
+	border-width: 1px;
+	border-style: solid;
+	border-color: #000000;
+	background-color: #000000;
+	padding-bottom: 10px;
+}
+
+#u2054_align_to_page
+{
+	margin-left: auto;
+	margin-right: auto;
+	width: 1019px;
+	position: relative;
+	left: -100px;
+}
+
+#u742-7
+{
+	z-index: 3;
+	width: 196px;
+	min-height: 31px;
 	background-color: transparent;
-	line-height: 16px;
 	font-size: 13px;
-	color: #000000;
 	text-align: center;
+	line-height: 16px;
 	font-family: nova-mono, sans-serif;
 	font-weight: 400;
-	margin-left: 20px;
-	margin-top: 376px;
 	position: relative;
+	margin-right: -10000px;
+	margin-top: 19px;
+	left: 516px;
+}
+
+#u742-4
+{
+	color: #FFFFFF;
 }
 
 #u750
 {
-	z-index: 8;
+	z-index: 9;
 	width: 11px;
 	background-color: transparent;
 }
@@ -932,6 +1033,75 @@
 #u750_img
 {
 	vertical-align: bottom;
+}
+
+#u742-5
+{
+	color: #000000;
+}
+
+#u2055
+{
+	z-index: 13;
+	width: 41px;
+	min-height: 44px;
+	overflow: hidden;
+	position: relative;
+	margin-right: -10000px;
+	margin-top: 7px;
+	left: 931px;
+}
+
+#u2054-bw
+{
+	z-index: 2;
+	margin-top: 461px;
+	height: 61px;
+}
+
+@font-face
+{
+	font-family: '__Adobe Song Std_5';
+	src: url('../fonts/adobesongstd-light.eot');
+	src: local('☺'), url('../fonts/adobesongstd-light.woff') format('woff');
+	font-weight: 300;
+	font-style: normal;
+}
+
+@font-face
+{
+	font-family: '__Hiragino Kaku Gothic ProN_5';
+	src: url('../fonts/%e3%83%92%e3%83%a9%e3%82%ae%e3%83%8e%e8%a7%92%e3%82%b4%20pron%20w3.eot');
+	src: local('☺'), url('../fonts/%e3%83%92%e3%83%a9%e3%82%ae%e3%83%8e%e8%a7%92%e3%82%b4%20pron%20w3.woff') format('woff');
+	font-weight: 300;
+	font-style: normal;
+}
+
+@font-face
+{
+	font-family: '__Hiragino Mincho Pro_5';
+	src: url('../fonts/%e3%83%92%e3%83%a9%e3%82%ae%e3%83%8e%e6%98%8e%e6%9c%9d%20pro%20w3.eot');
+	src: local('☺'), url('../fonts/%e3%83%92%e3%83%a9%e3%82%ae%e3%83%8e%e6%98%8e%e6%9c%9d%20pro%20w3.woff') format('woff');
+	font-weight: 300;
+	font-style: normal;
+}
+
+@font-face
+{
+	font-family: '__LaudatioC_5';
+	src: url('../fonts/laudcn_2.eot');
+	src: local('☺'), url('../fonts/laudcn_2.woff') format('woff');
+	font-weight: 400;
+	font-style: normal;
+}
+
+@font-face
+{
+	font-family: '__Noto Sans CJK JP_5';
+	src: url('../fonts/notosanscjkjp-thin.eot');
+	src: local('☺'), url('../fonts/notosanscjkjp-thin.woff') format('woff');
+	font-weight: 200;
+	font-style: normal;
 }
 
 body

@@ -1,7 +1,19 @@
-<manifest alg="2" build="10" opt="true" iceEnabled="true" iceMarkupVersion="2" exportTarget="other" resolutions="1x" timestamp="1428539112017">
+<manifest alg="2" build="10" opt="true" iceEnabled="true" iceMarkupVersion="2" exportTarget="other" resolutions="1x" timestamp="1428581793156">
+  <folder name="fonts">
+    <file name="adobesongstd-light.woff" crc="4293775370"/>
+    <file name="adobesongstd-light.eot" crc="250309299"/>
+    <file name="ヒラギノ角ゴ pron w3.woff" crc="4050806290"/>
+    <file name="ヒラギノ角ゴ pron w3.eot" crc="3983672838"/>
+    <file name="ヒラギノ明朝 pro w3.woff" crc="499260806"/>
+    <file name="ヒラギノ明朝 pro w3.eot" crc="4280576509"/>
+    <file name="laudcn_2.woff" crc="361013442"/>
+    <file name="laudcn_2.eot" crc="233835926"/>
+    <file name="notosanscjkjp-thin.woff" crc="4223772811"/>
+    <file name="notosanscjkjp-thin.eot" crc="4034885817"/>
+  </folder>
   <folder name="css">
-    <file name="site_global.css" crc="3933448141"/>
-    <file name="index.css" crc="87926381" ref="index"/>
+    <file name="site_global.css" crc="96699461"/>
+    <file name="index.css" crc="189581471" ref="index"/>
   </folder>
   <folder name="scripts">
     <file name="jquery-1.8.3.min.js" crc="4164521501" ref="index"/>
@@ -31,9 +43,15 @@
     <file name="heart.png" crc="117585526" ref="index"/>
     <file name="yosemite-logo-u1104-fr-ieu1104-fr.png" crc="423368087" ref="index"/>
     <file name="windows-2-u1110-fr-ieu1110-fr.png" crc="128272639" ref="index"/>
-    <file name="184-crop-u2003.jpg" crc="319566038" ref="index"/>
-    <file name="icon-u1199-u1199-u1199.png" crc="3856802981" ref="index"/>
     <file name="digi.jpg" crc="94907350" ref="index"/>
+    <file name="icon-u1199-u1199-u1199-u1199.png" crc="319206279" ref="index"/>
+    <file name="octcat_ol.svg" crc="352984611" ref="index"/>
+    <file name="octcat_ol_poster_.png" crc="201193682" ref="index"/>
+    <file name="double_tilda.svg" crc="504688683" ref="index"/>
+    <file name="double_tilda_poster_.png" crc="194810856" ref="index"/>
+    <file name="octcat.svg" crc="3832614542" ref="index"/>
+    <file name="octcat_poster_.png" crc="281756487" ref="index"/>
+    <file name="184-crop-u2003-crop-u2003.jpg" crc="4049468500" ref="index"/>
   </folder>
-  <file name="index.html" crc="4070445622" mt="1428539073817" redirect="true"/>
+  <file name="index.html" crc="3975251539" mt="1428580547260" redirect="true"/>
 </manifest>
