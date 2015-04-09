@@ -4,8 +4,8 @@
 
 .version.index /* version checker */
 {
-	color: #0000E3;
-	background-color: #D69A19;
+	color: #00000B;
+	background-color: #C3EB73;
 }
 
 .html
@@ -35,7 +35,7 @@
 
 #slideshowu1136
 {
-	z-index: 142;
+	z-index: 145;
 	width: 0.01px;
 	height: 595px;
 	position: fixed;
@@ -53,12 +53,12 @@
 
 #u1138popup
 {
-	z-index: 143;
+	z-index: 146;
 }
 
 #u1398
 {
-	z-index: 144;
+	z-index: 147;
 	width: 1220px;
 	height: 595px;
 	border-style: none;
@@ -70,7 +70,7 @@
 
 #u1407
 {
-	z-index: 146;
+	z-index: 149;
 	width: 1220px;
 	height: 595px;
 	border-style: none;
@@ -82,7 +82,7 @@
 
 #u1416
 {
-	z-index: 148;
+	z-index: 151;
 	width: 1220px;
 	height: 595px;
 	border-style: none;
@@ -94,7 +94,7 @@
 
 #u1425
 {
-	z-index: 150;
+	z-index: 153;
 	width: 1220px;
 	height: 595px;
 	border-style: none;
@@ -111,7 +111,7 @@
 
 #u1199
 {
-	z-index: 152;
+	z-index: 155;
 	display: block;
 	vertical-align: top;
 	margin-left: 282px;
@@ -120,7 +120,7 @@
 
 #u2108
 {
-	z-index: 154;
+	z-index: 157;
 	height: 53px;
 	border-width: 1px;
 	border-style: solid;
@@ -130,7 +130,7 @@
 
 #u2108-bw
 {
-	z-index: 154;
+	z-index: 157;
 	position: fixed;
 	left: 0px;
 	right: 0px;
@@ -139,7 +139,7 @@
 
 #u2114
 {
-	z-index: 155;
+	z-index: 158;
 	width: 476px;
 	border-style: none;
 	border-color: transparent;
@@ -151,7 +151,7 @@
 
 #u2109-4
 {
-	z-index: 156;
+	z-index: 159;
 	width: 133px;
 	min-height: 45px;
 	background-color: transparent;
@@ -167,7 +167,7 @@
 
 #u2110
 {
-	z-index: 160;
+	z-index: 163;
 	width: 108px;
 	min-height: 24px;
 	border-style: none;
@@ -220,38 +220,22 @@
 	-webkit-border-radius: 10px;
 	-khtml-border-radius: 10px;
 	border-radius: 10px;
-	padding-bottom: 0px;
+	padding-bottom: 108px;
 	position: relative;
 	margin-right: -10000px;
 }
 
-#u1100
-{
-	z-index: 82;
-	width: 307px;
-	height: 221px;
-	border-color: #000000;
-	-moz-border-radius: 8px;
-	-webkit-border-radius: 8px;
-	-khtml-border-radius: 8px;
-	border-radius: 8px;
-	position: relative;
-	background: transparent url("../images/ubuntu-2-u1100-fr-ieu1100-fr.png") no-repeat center center;
-	background: rgba(0,0,0,0) url("../images/ubuntu-2-u1100-fr.jpg") no-repeat center center;
-	background-color: transparent;
-	background-size: cover;
-}
-
 #u1101-5
 {
-	z-index: 83;
+	z-index: 82;
 	width: 307px;
 	min-height: 41px;
 	background-color: transparent;
 	color: #000000;
 	line-height: 36px;
-	margin-top: 20px;
 	position: relative;
+	margin-right: -10000px;
+	margin-top: 241px;
 }
 
 #buttonu1099:hover #u1101-5
@@ -259,7 +243,7 @@
 	padding-top: 0px;
 	padding-bottom: 0px;
 	min-height: 41px;
-	margin: 20px 0px 0px;
+	margin: 241px -10000px 0px 0px;
 }
 
 #buttonu1099:hover #u1101-5 p,#buttonu1099:hover #u1101-5 a,#buttonu1099:hover #u1101-5 span
@@ -275,26 +259,9 @@
 	font-weight: 300;
 }
 
-#u1102-9
-{
-	z-index: 88;
-	width: 307px;
-	min-height: 93px;
-	background-color: transparent;
-	font-family: ヒラギノ角ゴ Pro W3, Hiragino Kaku Gothic Pro, メイリオ, Meiryo, ＭＳ Ｐゴシック, MS PGothic, sans-serif;
-	margin-top: 14px;
-	position: relative;
-}
-
-#u1102-3,#u1102-7
-{
-	font-size: 10px;
-	line-height: 17px;
-}
-
 #buttonu1103
 {
-	z-index: 97;
+	z-index: 87;
 	width: 307px;
 	border-color: #787878;
 	background-color: transparent;
@@ -302,39 +269,23 @@
 	-webkit-border-radius: 10px;
 	-khtml-border-radius: 10px;
 	border-radius: 10px;
-	padding-bottom: 0px;
+	padding-bottom: 108px;
 	position: relative;
 	margin-right: -10000px;
 	left: 336px;
 }
 
-#u1104
-{
-	z-index: 98;
-	width: 307px;
-	height: 221px;
-	border-color: #000000;
-	-moz-border-radius: 8px;
-	-webkit-border-radius: 8px;
-	-khtml-border-radius: 8px;
-	border-radius: 8px;
-	position: relative;
-	background: transparent url("../images/yosemite-logo-u1104-fr-ieu1104-fr.png") no-repeat center center;
-	background: rgba(0,0,0,0) url("../images/yosemite-logo-u1104-fr.jpg") no-repeat center center;
-	background-color: transparent;
-	background-size: cover;
-}
-
 #u1106-5
 {
-	z-index: 103;
+	z-index: 88;
 	width: 307px;
 	min-height: 41px;
 	background-color: transparent;
 	color: #000000;
 	line-height: 36px;
-	margin-top: 20px;
 	position: relative;
+	margin-right: -10000px;
+	margin-top: 241px;
 }
 
 #buttonu1099.ButtonSelected #u1101-5,#buttonu1103:hover #u1106-5
@@ -342,7 +293,7 @@
 	padding-top: 0px;
 	padding-bottom: 0px;
 	min-height: 41px;
-	margin: 20px 0px 0px;
+	margin: 241px -10000px 0px 0px;
 }
 
 #buttonu1103:hover #u1106-5 p,#buttonu1103:hover #u1106-5 a,#buttonu1103:hover #u1106-5 span
@@ -358,23 +309,9 @@
 	font-weight: 300;
 }
 
-#u1105-4
-{
-	z-index: 99;
-	width: 307px;
-	min-height: 93px;
-	background-color: transparent;
-	line-height: 32px;
-	font-size: 19px;
-	font-family: '__HanaMinA_5';
-	font-weight: 500;
-	margin-top: 14px;
-	position: relative;
-}
-
 #buttonu1107
 {
-	z-index: 108;
+	z-index: 93;
 	width: 307px;
 	border-color: #787878;
 	background-color: transparent;
@@ -382,7 +319,7 @@
 	-webkit-border-radius: 10px;
 	-khtml-border-radius: 10px;
 	border-radius: 10px;
-	padding-bottom: 0px;
+	padding-bottom: 156px;
 	position: relative;
 	margin-right: -10000px;
 	left: 673px;
@@ -393,39 +330,9 @@
 	margin: 0px -10000px 0px 0px;
 }
 
-#buttonu1107_position_content
-{
-	padding-bottom: 20px;
-}
-
-#u1110
-{
-	z-index: 109;
-	width: 307px;
-	height: 221px;
-	border-color: #000000;
-	-moz-border-radius: 8px;
-	-webkit-border-radius: 8px;
-	-khtml-border-radius: 8px;
-	border-radius: 8px;
-	position: relative;
-	background: transparent url("../images/windows-2-u1110-fr-ieu1110-fr.png") no-repeat center center;
-	background: rgba(0,0,0,0) url("../images/windows-2-u1110-fr.jpg") no-repeat center center;
-	background-color: transparent;
-	background-size: cover;
-}
-
-#buttonu1099.ButtonSelected #u1100,#buttonu1103.ButtonSelected #u1104,#buttonu1107.ButtonSelected #u1110
-{
-	background-repeat: no-repeat;
-	background-position: center center;
-	margin: 0px;
-	background-size: cover;
-}
-
 #u1108-5
 {
-	z-index: 125;
+	z-index: 94;
 	width: 307px;
 	min-height: 41px;
 	background-color: transparent;
@@ -433,8 +340,9 @@
 	color: #000000;
 	font-family: asap, sans-serif;
 	font-weight: 400;
-	margin-top: 20px;
 	position: relative;
+	margin-right: -10000px;
+	margin-top: 241px;
 }
 
 #buttonu1103.ButtonSelected #u1106-5,#buttonu1107:hover #u1108-5
@@ -442,7 +350,7 @@
 	padding-top: 0px;
 	padding-bottom: 0px;
 	min-height: 41px;
-	margin: 20px 0px 0px;
+	margin: 241px -10000px 0px 0px;
 }
 
 #buttonu1107.ButtonSelected #u1108-5
@@ -450,7 +358,7 @@
 	padding-top: 0px;
 	padding-bottom: 0px;
 	min-height: 41px;
-	margin: 20px 0px 0px;
+	margin: 241px -10000px 0px 0px;
 }
 
 #buttonu1107:hover #u1108-5 p,#buttonu1107:hover #u1108-5 a,#buttonu1107:hover #u1108-5 span
@@ -465,22 +373,96 @@
 	visibility: inherit;
 }
 
-#u1109-15
+#u1100
+{
+	z-index: 99;
+	width: 307px;
+	height: 221px;
+	border-color: #000000;
+	-moz-border-radius: 8px;
+	-webkit-border-radius: 8px;
+	-khtml-border-radius: 8px;
+	border-radius: 8px;
+	position: relative;
+	margin-right: -10000px;
+	background: transparent url("../images/ubuntu-2-u1100-fr-ieu1100-fr.png") no-repeat center center;
+	background: rgba(0,0,0,0) url("../images/ubuntu-2-u1100-fr.jpg") no-repeat center center;
+	background-color: transparent;
+	background-size: cover;
+}
+
+#u1102-9
+{
+	z-index: 100;
+	width: 307px;
+	min-height: 93px;
+	background-color: transparent;
+	font-family: ヒラギノ角ゴ Pro W3, Hiragino Kaku Gothic Pro, メイリオ, Meiryo, ＭＳ Ｐゴシック, MS PGothic, sans-serif;
+	position: relative;
+	margin-right: -10000px;
+	margin-top: 296px;
+}
+
+#u1102-3,#u1102-7
+{
+	font-size: 10px;
+	line-height: 17px;
+}
+
+#u1104
+{
+	z-index: 109;
+	width: 307px;
+	height: 221px;
+	border-color: #000000;
+	-moz-border-radius: 8px;
+	-webkit-border-radius: 8px;
+	-khtml-border-radius: 8px;
+	border-radius: 8px;
+	position: relative;
+	margin-right: -10000px;
+	left: 336px;
+	background: transparent url("../images/yosemite-logo-u1104-fr-ieu1104-fr.png") no-repeat center center;
+	background: rgba(0,0,0,0) url("../images/yosemite-logo-u1104-fr.jpg") no-repeat center center;
+	background-color: transparent;
+	background-size: cover;
+}
+
+#u1105-7
 {
 	z-index: 110;
 	width: 307px;
 	min-height: 93px;
 	background-color: transparent;
-	margin-top: 14px;
 	position: relative;
+	margin-right: -10000px;
+	margin-top: 296px;
+	left: 336px;
 }
 
-#buttonu1099.ButtonSelected #u1102-9,#buttonu1103.ButtonSelected #u1105-4,#buttonu1107.ButtonSelected #u1109-15
+#u1105-2,#u1105-3
 {
-	padding-top: 0px;
-	padding-bottom: 0px;
+	font-family: ヒラギノ角ゴ Pro W3, Hiragino Kaku Gothic Pro, メイリオ, Meiryo, ＭＳ Ｐゴシック, MS PGothic, sans-serif;
+}
+
+#u1105-5
+{
+	font-size: 19px;
+	line-height: 32px;
+	font-family: '__HanaMinA_5';
+	font-weight: 500;
+}
+
+#u1109-15
+{
+	z-index: 117;
+	width: 307px;
 	min-height: 93px;
-	margin: 14px 0px 0px;
+	background-color: transparent;
+	position: relative;
+	margin-right: -10000px;
+	margin-top: 296px;
+	left: 673px;
 }
 
 #u1109-7
@@ -505,9 +487,28 @@
 	line-height: 19px;
 }
 
+#u1110
+{
+	z-index: 132;
+	width: 307px;
+	height: 221px;
+	border-color: #000000;
+	-moz-border-radius: 8px;
+	-webkit-border-radius: 8px;
+	-khtml-border-radius: 8px;
+	border-radius: 8px;
+	position: relative;
+	margin-right: -10000px;
+	left: 673px;
+	background: transparent url("../images/windows-2-u1110-fr-ieu1110-fr.png") no-repeat center center;
+	background: rgba(0,0,0,0) url("../images/windows-2-u1110-fr.jpg") no-repeat center center;
+	background-color: transparent;
+	background-size: cover;
+}
+
 #u1743-7
 {
-	z-index: 130;
+	z-index: 133;
 	width: 523px;
 	min-height: 20px;
 	background-color: transparent;
@@ -523,7 +524,7 @@
 
 #u1744-5
 {
-	z-index: 137;
+	z-index: 140;
 	width: 307px;
 	min-height: 41px;
 	background-color: transparent;
