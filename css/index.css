@@ -4,8 +4,8 @@
 
 .version.index /* version checker */
 {
-	color: #0000EF;
-	background-color: #93F1D4;
+	color: #0000E3;
+	background-color: #D69A19;
 }
 
 .html
@@ -35,7 +35,7 @@
 
 #slideshowu1136
 {
-	z-index: 141;
+	z-index: 142;
 	width: 0.01px;
 	height: 595px;
 	position: fixed;
@@ -53,12 +53,12 @@
 
 #u1138popup
 {
-	z-index: 142;
+	z-index: 143;
 }
 
 #u1398
 {
-	z-index: 143;
+	z-index: 144;
 	width: 1220px;
 	height: 595px;
 	border-style: none;
@@ -70,7 +70,7 @@
 
 #u1407
 {
-	z-index: 145;
+	z-index: 146;
 	width: 1220px;
 	height: 595px;
 	border-style: none;
@@ -82,7 +82,7 @@
 
 #u1416
 {
-	z-index: 147;
+	z-index: 148;
 	width: 1220px;
 	height: 595px;
 	border-style: none;
@@ -94,7 +94,7 @@
 
 #u1425
 {
-	z-index: 149;
+	z-index: 150;
 	width: 1220px;
 	height: 595px;
 	border-style: none;
@@ -111,7 +111,7 @@
 
 #u1199
 {
-	z-index: 151;
+	z-index: 152;
 	display: block;
 	vertical-align: top;
 	margin-left: 282px;
@@ -120,7 +120,7 @@
 
 #u2108
 {
-	z-index: 153;
+	z-index: 154;
 	height: 53px;
 	border-width: 1px;
 	border-style: solid;
@@ -130,7 +130,7 @@
 
 #u2108-bw
 {
-	z-index: 153;
+	z-index: 154;
 	position: fixed;
 	left: 0px;
 	right: 0px;
@@ -139,7 +139,7 @@
 
 #u2114
 {
-	z-index: 154;
+	z-index: 155;
 	width: 476px;
 	border-style: none;
 	border-color: transparent;
@@ -151,7 +151,7 @@
 
 #u2109-4
 {
-	z-index: 155;
+	z-index: 156;
 	width: 133px;
 	min-height: 45px;
 	background-color: transparent;
@@ -167,7 +167,7 @@
 
 #u2110
 {
-	z-index: 159;
+	z-index: 160;
 	width: 108px;
 	min-height: 24px;
 	border-style: none;
@@ -366,7 +366,8 @@
 	background-color: transparent;
 	line-height: 32px;
 	font-size: 19px;
-	font-family: ヒラギノ明朝 Pro W3, Hiragino Mincho Pro, ＭＳ Ｐ明朝, MS PMincho, serif;
+	font-family: '__HanaMinA_5';
+	font-weight: 500;
 	margin-top: 14px;
 	position: relative;
 }
@@ -422,7 +423,7 @@
 	background-size: cover;
 }
 
-#u1108-4
+#u1108-5
 {
 	z-index: 125;
 	width: 307px;
@@ -436,7 +437,7 @@
 	position: relative;
 }
 
-#buttonu1103.ButtonSelected #u1106-5,#buttonu1107:hover #u1108-4
+#buttonu1103.ButtonSelected #u1106-5,#buttonu1107:hover #u1108-5
 {
 	padding-top: 0px;
 	padding-bottom: 0px;
@@ -444,7 +445,7 @@
 	margin: 20px 0px 0px;
 }
 
-#buttonu1107.ButtonSelected #u1108-4
+#buttonu1107.ButtonSelected #u1108-5
 {
 	padding-top: 0px;
 	padding-bottom: 0px;
@@ -452,22 +453,16 @@
 	margin: 20px 0px 0px;
 }
 
-#buttonu1107:hover #u1108-4 p,#buttonu1107:hover #u1108-4 span
+#buttonu1107:hover #u1108-5 p,#buttonu1107:hover #u1108-5 a,#buttonu1107:hover #u1108-5 span
 {
 	color: #D09EBE;
 	visibility: inherit;
 }
 
-#buttonu1099.ButtonSelected #u1101-5 p,#buttonu1099.ButtonSelected #u1101-5 a,#buttonu1099.ButtonSelected #u1101-5 span,#buttonu1103.ButtonSelected #u1106-5 p,#buttonu1103.ButtonSelected #u1106-5 a,#buttonu1103.ButtonSelected #u1106-5 span,#buttonu1107.ButtonSelected #u1108-4 p,#buttonu1107.ButtonSelected #u1108-4 span
+#buttonu1099.ButtonSelected #u1101-5 p,#buttonu1099.ButtonSelected #u1101-5 a,#buttonu1099.ButtonSelected #u1101-5 span,#buttonu1103.ButtonSelected #u1106-5 p,#buttonu1103.ButtonSelected #u1106-5 a,#buttonu1103.ButtonSelected #u1106-5 span,#buttonu1107.ButtonSelected #u1108-5 p,#buttonu1107.ButtonSelected #u1108-5 a,#buttonu1107.ButtonSelected #u1108-5 span
 {
 	color: #000000;
 	visibility: inherit;
-}
-
-#u1108
-{
-	font-family: asap, sans-serif;
-	font-weight: 400;
 }
 
 #u1109-15
@@ -512,7 +507,7 @@
 
 #u1743-7
 {
-	z-index: 129;
+	z-index: 130;
 	width: 523px;
 	min-height: 20px;
 	background-color: transparent;
@@ -528,7 +523,7 @@
 
 #u1744-5
 {
-	z-index: 136;
+	z-index: 137;
 	width: 307px;
 	min-height: 41px;
 	background-color: transparent;
@@ -780,7 +775,8 @@
 	width: 856px;
 	min-height: 79px;
 	background-color: transparent;
-	font-family: ヒラギノ明朝 Pro W3, Hiragino Mincho Pro, ＭＳ Ｐ明朝, MS PMincho, serif;
+	font-family: '__HanaMinA_5';
+	font-weight: 500;
 	font-style: normal;
 	position: relative;
 }
@@ -831,7 +827,8 @@
 	min-height: 46px;
 	background-color: transparent;
 	line-height: 36px;
-	font-family: ヒラギノ明朝 Pro W3, Hiragino Mincho Pro, ＭＳ Ｐ明朝, MS PMincho, serif;
+	font-family: '__HanaMinA_5';
+	font-weight: 500;
 	margin-left: 273px;
 	margin-top: 23px;
 	position: relative;
@@ -875,7 +872,8 @@
 	width: 856px;
 	min-height: 79px;
 	background-color: transparent;
-	font-family: ヒラギノ明朝 Pro W3, Hiragino Mincho Pro, ＭＳ Ｐ明朝, MS PMincho, serif;
+	font-family: '__HanaMinA_5';
+	font-weight: 500;
 	font-style: normal;
 	position: relative;
 }
@@ -938,7 +936,8 @@
 	min-height: 46px;
 	background-color: transparent;
 	line-height: 36px;
-	font-family: ヒラギノ明朝 Pro W3, Hiragino Mincho Pro, ＭＳ Ｐ明朝, MS PMincho, serif;
+	font-family: '__HanaMinA_5';
+	font-weight: 500;
 	margin-left: 273px;
 	margin-top: 23px;
 	position: relative;
@@ -1027,7 +1026,7 @@
 	vertical-align: bottom;
 }
 
-#u742-5
+#u1108,#u742-5
 {
 	color: #000000;
 }
@@ -1057,6 +1056,15 @@
 	src: url('../fonts/laudcn_2.eot');
 	src: local('☺'), url('../fonts/laudcn_2.woff') format('woff');
 	font-weight: 400;
+	font-style: normal;
+}
+
+@font-face
+{
+	font-family: '__HanaMinA_5';
+	src: url('../fonts/hanamina.eot');
+	src: local('☺'), url('../fonts/hanamina.woff') format('woff');
+	font-weight: 500;
 	font-style: normal;
 }
 
