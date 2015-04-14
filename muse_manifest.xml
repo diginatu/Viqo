@@ -1,4 +1,4 @@
-<manifest alg="2" build="10" opt="true" iceEnabled="true" iceMarkupVersion="2" exportTarget="other" resolutions="1x" timestamp="1428598275666">
+<manifest alg="2" build="10" opt="true" iceEnabled="true" iceMarkupVersion="2" exportTarget="other" resolutions="1x" timestamp="1429037747345">
   <folder name="fonts">
     <file name="adobesongstd-light.woff" crc="4293775370"/>
     <file name="adobesongstd-light.eot" crc="250309299"/>
@@ -14,46 +14,51 @@
     <file name="hanamina.eot" crc="132759400"/>
   </folder>
   <folder name="css">
-    <file name="site_global.css" crc="96699461"/>
-    <file name="index.css" crc="197389171" ref="index"/>
+    <file name="site_global.css" crc="3933448141"/>
+    <file name="index.css" crc="215933180" ref="index"/>
+    <file name="iefonts_index.css" crc="83161930" ref="index"/>
   </folder>
   <folder name="scripts">
     <file name="jquery-1.8.3.min.js" crc="4164521501" ref="index"/>
     <file name="museutils.js" crc="3777594392" ref="index"/>
     <file name="webpro.js" crc="474087315" ref="index"/>
+    <file name="jquery.watch.js" crc="4144919381" ref="index"/>
+    <file name="jquery.musepolyfill.bgsize.js" crc="4259541792" ref="index"/>
     <file name="musewpslideshow.js" crc="274584885" ref="index"/>
     <file name="jquery.museoverlay.js" crc="170414611" ref="index"/>
     <file name="touchswipe.js" crc="100683906" ref="index"/>
     <file name="jquery.scrolleffects.js" crc="117544926" ref="index"/>
-    <file name="jquery.watch.js" crc="4144919381" ref="index"/>
     <file name="pie.js" crc="3827607177" ref="index"/>
-    <file name="jquery.musepolyfill.bgsize.js" crc="4259541792" ref="index"/>
   </folder>
   <folder name="images">
     <file name="favicon.ico" crc="4055628316" ref="index"/>
     <file name="slideshow-1.jpg" crc="4039792184" ref="index"/>
     <file name="blank.gif" crc="4208392903" ref="index"/>
-    <file name="slideshow-2.jpg" crc="233747551" ref="index"/>
     <file name="slideshow-3.jpg" crc="2981954" ref="index"/>
     <file name="slideshow-5.jpg" crc="132398100" ref="index"/>
     <file name="loading.gif" crc="3815509949" ref="index"/>
+    <file name="icon-u1199-u1199-u1199-u1199.png" crc="319206279" ref="index"/>
     <file name="ubuntu-2-u1100-fr-ieu1100-fr.png" crc="3984433149" ref="index"/>
     <file name="ubuntu-2-u1100-fr.jpg" crc="3806269360" ref="index"/>
-    <file name="yosemite-logo-u1104-fr.jpg" crc="3912524423" ref="index"/>
-    <file name="windows-2-u1110-fr.jpg" crc="3852216348" ref="index"/>
-    <file name="slideshow-4.jpg" crc="3786175536" ref="index"/>
-    <file name="heart.png" crc="117585526" ref="index"/>
     <file name="yosemite-logo-u1104-fr-ieu1104-fr.png" crc="423368087" ref="index"/>
+    <file name="yosemite-logo-u1104-fr.jpg" crc="3912524423" ref="index"/>
     <file name="windows-2-u1110-fr-ieu1110-fr.png" crc="128272639" ref="index"/>
-    <file name="digi.jpg" crc="94907350" ref="index"/>
-    <file name="icon-u1199-u1199-u1199-u1199.png" crc="319206279" ref="index"/>
+    <file name="windows-2-u1110-fr.jpg" crc="3852216348" ref="index"/>
+    <file name="slideshow-2-u2127-fr.png" crc="4090291882" ref="index"/>
+    <file name="vicolinuxwakushot.jpg" crc="3931537209" ref="index"/>
+    <file name="viqolinuxshot.jpg" crc="41904074" ref="index"/>
+    <file name="vicomacshot.jpg" crc="4004668449" ref="index"/>
+    <file name="viqowinshot.jpg" crc="4076865955" ref="index"/>
+    <file name="slideshow-4.jpg" crc="3786175536" ref="index"/>
     <file name="octcat_ol.svg" crc="352984611" ref="index"/>
     <file name="octcat_ol_poster_.png" crc="201193682" ref="index"/>
     <file name="double_tilda.svg" crc="504688683" ref="index"/>
     <file name="double_tilda_poster_.png" crc="194810856" ref="index"/>
+    <file name="digi.jpg" crc="94907350" ref="index"/>
+    <file name="184-crop-u2003-crop-u2003.jpg" crc="4049468500" ref="index"/>
+    <file name="heart.png" crc="117585526" ref="index"/>
     <file name="octcat.svg" crc="3832614542" ref="index"/>
     <file name="octcat_poster_.png" crc="281756487" ref="index"/>
-    <file name="184-crop-u2003-crop-u2003.jpg" crc="4049468500" ref="index"/>
   </folder>
-  <file name="index.html" crc="4069646479" mt="1428597767506" redirect="true"/>
+  <file name="index.html" crc="4062661185" mt="1429037374723" redirect="true"/>
 </manifest>
