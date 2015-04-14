@@ -1,4 +1,4 @@
-<manifest alg="2" build="10" opt="true" iceEnabled="true" iceMarkupVersion="2" exportTarget="other" resolutions="1x" timestamp="1429037747345">
+<manifest alg="2" build="10" opt="true" iceEnabled="true" iceMarkupVersion="2" exportTarget="other" resolutions="1x" timestamp="1429037934218">
   <folder name="fonts">
     <file name="adobesongstd-light.woff" crc="4293775370"/>
     <file name="adobesongstd-light.eot" crc="250309299"/>
@@ -15,7 +15,7 @@
   </folder>
   <folder name="css">
     <file name="site_global.css" crc="3933448141"/>
-    <file name="index.css" crc="215933180" ref="index"/>
+    <file name="index.css" crc="46779155" ref="index"/>
     <file name="iefonts_index.css" crc="83161930" ref="index"/>
   </folder>
   <folder name="scripts">
@@ -60,5 +60,5 @@
     <file name="octcat.svg" crc="3832614542" ref="index"/>
     <file name="octcat_poster_.png" crc="281756487" ref="index"/>
   </folder>
-  <file name="index.html" crc="4062661185" mt="1429037374723" redirect="true"/>
+  <file name="index.html" crc="4062661185" mt="1429037929557" redirect="true"/>
 </manifest>
