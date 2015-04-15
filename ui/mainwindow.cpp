@@ -342,7 +342,6 @@ void MainWindow::on_comment_view_currentItemChanged(QTreeWidgetItem *current)
   const QRegExp urlrg("(https?://[\\w/:%#\\$&\\?\\(\\)~\\.=\\+\\-]+)");
 
   if (!owner) {
-    comme = comme.toHtmlEscaped();
     QString tcomme;
     int bpos = 0;
     int pos = 0;
@@ -352,7 +351,7 @@ void MainWindow::on_comment_view_currentItemChanged(QTreeWidgetItem *current)
       pos += urlrg.matchedLength();
       bpos = pos;
     }
-    tcomme += comme.mid(bpos);
+    tcomme += comme.mid(bpos).toHtmlEscaped();
     comme = tcomme;
   }
   comme.replace(QChar(8629), "<br>");
