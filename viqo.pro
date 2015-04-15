@@ -28,7 +28,6 @@ TEMPLATE = app
 
 
 SOURCES += src/main.cpp\
-    src/cookieread.cpp \
     src/livedata.cpp \
     src/nicohttp.cpp \
     src/strabstractor.cpp \
@@ -57,7 +56,6 @@ SOURCES += src/main.cpp\
     src/NicoLiveManager/communityinfo.cpp
 
 HEADERS  += src/NicoLiveManager/nicolivemanager.h \
-    src/cookieread.h \
     src/livedata.h \
     src/nicohttp.h \
     src/strabstractor.h \

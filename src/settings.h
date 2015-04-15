@@ -12,7 +12,7 @@
 class MainWindow;
 class FollowCommunity;
 
-enum class UserSessionWay { Firefox, Direct, Login };
+enum class UserSessionWay { Browser, Direct, Login };
 
 
 class Settings : public QObject
@@ -83,7 +83,6 @@ private slots:
 private:
   UserSessionWay userSessionWay;
   QString userSession;
-  QString cookieFile;
 
   QString userMail;
   QString userPass;
