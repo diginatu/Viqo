@@ -60,6 +60,9 @@ public:
   UserSessionWay getLoginWay() const;
   void setLoginWay(UserSessionWay value);
 
+  QString getBrowser() const;
+  void setBrowser(QString value);
+
   QString getUserSession() const;
   void setUserSession(QString value);
 
@@ -74,6 +77,8 @@ public:
   void setDispNG(bool value);
 
   QList< QPair<QString,QString> > followCommunities;
+
+
 signals:
 
 public slots:
@@ -82,6 +87,7 @@ private slots:
 
 private:
   UserSessionWay userSessionWay;
+  QString browser;
   QString userSession;
 
   QString userMail;

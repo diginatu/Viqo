@@ -137,6 +137,7 @@ void Settings::saveSettings()
 
   QJsonObject login_way;
   login_way["login_way"] = static_cast<int>(userSessionWay);
+  login_way["browser"] = browser;
   login_way["user_session"] = userSession;
 
   QJsonObject user_data;
@@ -189,6 +190,7 @@ void Settings::loadSettings()
 
   QJsonObject login_way = jsd.object()["login_way"].toObject();
   userSessionWay = UserSessionWay(login_way["login_way"].toInt());
+  browser = login_way["browser"].toString();
   userSession = login_way["user_session"].toString();
 
   QJsonObject user_data = jsd.object()["user_data"].toObject();
@@ -387,3 +389,13 @@ void Settings::setDispNG(bool value)
 {
   dispNG = value;
 }
+
+QString Settings::getBrowser() const
+{
+  return browser;
+}
+void Settings::setBrowser(QString value)
+{
+  browser = value;
+}
+

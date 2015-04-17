@@ -29,6 +29,7 @@ void AccountWindow::init()
   ui->userdata_mail->setText(mwin->settings.getUserMail());
   ui->userdata_pass->setText(mwin->settings.getUserPass());
   ui->login_way_combo->setCurrentIndex(static_cast<int>(mwin->settings.getLoginWay()));
+  ui->browser_combo->setCurrentText(mwin->settings.getBrowser());
   ui->usersession->setText(mwin->settings.getUserSession());
 }
 
@@ -80,6 +81,7 @@ void AccountWindow::on_buttonBox_accepted()
   mwin->settings.setUserMail(ui->userdata_mail->text());
   mwin->settings.setUserPass(ui->userdata_pass->text());
   mwin->settings.setLoginWay(UserSessionWay(ui->login_way_combo->currentIndex()));
+  mwin->settings.setBrowser(ui->browser_combo->currentText());
   mwin->settings.setUserSession(ui->usersession->text());
 
   mwin->settings.saveSettings();
@@ -101,7 +103,8 @@ void AccountWindow::on_get_session_clicked()
       break;
     }
 
-    QMessageBox::information(this, "Nicookie", "セッション取得されました");
+    QMessageBox::information(this, "Nicookie",
+                             QStringLiteral("正常にセッションが取得されました"));
 
     getUserSessionFinished();
     break;
