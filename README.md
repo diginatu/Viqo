@@ -121,3 +121,10 @@ Qt 5.4 の環境でこのプロジェクトをコンパイルしてください�
 
 使い方・解説を書いてくれる方がいると嬉しいです。
 
+### 現在コントリビュートしやすいリスト
+
++ [obs-rtmp-nicolive](https://github.com/raccy/obs-rtmp-nicolive/blob/master/doc/PROTOCOL.md)とTCP通信するクラス
++ タブ幅・windowサイズ保存 (状態セーブで)
++ MacのDock対応 (何かよくわからんけどやってください) アイコンとか
++ Wiki の執筆
+
