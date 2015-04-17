@@ -4,7 +4,8 @@
 
 AccountWindow::AccountWindow(MainWindow* mwin, QWidget* parent) :
   QDialog(parent),
-  ui(new Ui::AccountWindow)
+  ui(new Ui::AccountWindow),
+  nicookie(this)
 {
   ui->setupUi(this);
   this->mwin = mwin;
@@ -14,6 +15,8 @@ AccountWindow::AccountWindow(MainWindow* mwin, QWidget* parent) :
   ui->usersession->setEchoMode(QLineEdit::Password);
 
   on_login_way_combo_currentIndexChanged(static_cast<int>(UserSessionWay::Browser));
+
+  ui->browser_combo->addItems(nicookie.getBrowserList());
 }
 
 AccountWindow::~AccountWindow()
@@ -46,6 +49,7 @@ void AccountWindow::on_login_way_combo_currentIndexChanged(int index)
   case UserSessionWay::Browser:
     ui->usersession->setEnabled(false);
     ui->get_session->setEnabled(true);
+    ui->browser_combo->setEnabled(true);
     ui->userSessionWayDiscription->setText(
           QStringLiteral("ブラウザからユーザーセッションを取得します<br>\
                          ブラウザを選択してください"));
@@ -53,6 +57,7 @@ void AccountWindow::on_login_way_combo_currentIndexChanged(int index)
   case UserSessionWay::Direct:
     ui->usersession->setEnabled(true);
     ui->get_session->setEnabled(false);
+    ui->browser_combo->setEnabled(false);
     ui->userSessionWayDiscription->setText(
           QStringLiteral("ユーザーセッションを直接入力します<br>\
                          選択肢に無いブラウザのセッションidを使う場合などに使用してください。"));
@@ -60,6 +65,7 @@ void AccountWindow::on_login_way_combo_currentIndexChanged(int index)
   case UserSessionWay::Login:
     ui->usersession->setEnabled(false);
     ui->get_session->setEnabled(true);
+    ui->browser_combo->setEnabled(false);
     ui->userSessionWayDiscription->setText(
           QStringLiteral("Viqoからログインしてユーザーセッションを取得します<br>\
                          ニコ生のログインセッションを一つ消費するので、\
@@ -85,6 +91,18 @@ void AccountWindow::on_get_session_clicked()
 {
   switch (static_cast<UserSessionWay>(ui->login_way_combo->currentIndex())) {
   case UserSessionWay::Browser:
+    mwin->settings.setUserSession(
+          nicookie.getUserSession(ui->browser_combo->currentText()));
+
+    if (nicookie.hasError()) {
+      QString error = nicookie.errorString();
+      mwin->insLog("Nicookie : " + error);
+      QMessageBox::information(this, "Nicookie", error);
+      break;
+    }
+
+    QMessageBox::information(this, "Nicookie", "セッション取得されました");
+
     getUserSessionFinished();
     break;
   case UserSessionWay::Login:

@@ -2,6 +2,7 @@
 #define ACCOUNTWINDOW_H
 
 #include <QDialog>
+#include "../src/NicoLiveManager/nicookie.h"
 
 namespace Ui {
 class AccountWindow;
@@ -29,6 +30,7 @@ private slots:
 private:
   Ui::AccountWindow *ui;
   MainWindow* mwin;
+  Nicookie nicookie;
 };
 
 #endif // ACCOUNTWINDOW_H

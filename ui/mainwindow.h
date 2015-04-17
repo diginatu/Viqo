@@ -14,7 +14,6 @@
 #include <QClipboard>
 
 #include "../src/usermanager.h"
-#include "../src/livedata.h"
 #include "../src/strabstractor.h"
 #include "../src/NicoLiveManager/nicolivemanager.h"
 #include "settingswindow.h"
