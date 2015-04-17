@@ -258,12 +258,6 @@ int MainWindow::lastCommentNum()
   return topitem->text(0).toInt();
 }
 
-void MainWindow::getSessionFromCookie(QString cookie_name)
-{
-  CookieRead cr(this);
-  settings.setUserSession(cr.getUserSession(cookie_name));
-}
-
 void MainWindow::on_receive_clicked()
 {
   if ( settings.getUserSession().isEmpty() ) {
@@ -488,7 +482,7 @@ void MainWindow::userSessionDisabled()
     if (msgBox.exec() == QMessageBox::Ok) {
       on_AccountSettings_triggered();
     }
-  } else if (usw == UserSessionWay::Firefox ||
+  } else if (usw == UserSessionWay::Browser ||
              usw == UserSessionWay::Login) {
     QMessageBox msgBox(this);
     msgBox.setText(QStringLiteral("ユーザセッションが無効です\n取得しなおしますか？"));
