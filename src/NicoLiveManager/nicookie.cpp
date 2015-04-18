@@ -376,13 +376,20 @@ QStringList Nicookie::firefoxGetProfileList(const QString &profile_ini)
   }
 
   QTemporaryFile profile_temp;
-  QString profile_temp_path = profile_temp.fileTemplate();
-  if (profile_file.copy(profile_temp_path)) {
+  if (!profile_temp.open()) {
     setError(Nicookie::FailedParseProfileError);
     return list;
   }
+  if (!profile_file.open(QIODevice::ReadOnly)) {
+    setError(Nicookie::FailedParseProfileError);
+    profile_temp.close();
+    return list;
+  }
+  profile_temp.write(profile_file.readAll());
+  profile_file.close();
+  profile_temp.close();
 
-  QSettings profile_settings(profile_temp_path, QSettings::IniFormat);
+  QSettings profile_settings(profile_temp.fileName(), QSettings::IniFormat);
   if (profile_settings.status() != QSettings::NoError) {
     setError(Nicookie::FailedParseProfileError);
     return list;
