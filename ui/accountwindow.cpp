@@ -106,6 +106,10 @@ void AccountWindow::on_get_session_clicked()
     QMessageBox::information(this, "Nicookie",
                              QStringLiteral("正常にセッションが取得されました"));
 
+    // For Chrome in Mac:
+    //   The main window is focused when the Keychain window closes.
+    this->raise();
+
     getUserSessionFinished();
     break;
   case UserSessionWay::Login:
