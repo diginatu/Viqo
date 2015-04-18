@@ -139,12 +139,28 @@ void MainWindow::updateElapsedTime()
   const QDateTime ed = nicolivemanager->nowWaku.getEd();
   const QDateTime nw = QDateTime::currentDateTimeUtc();
 
-  if (!nicolivemanager->nowWaku.didAlermCommand &&
-      ui->command_beforeEnd_chk->isChecked()) {
+  const uint lastTime(ed.toTime_t() - nw.toTime_t());
+
+  if (!nicolivemanager->nowWaku.didExtend &&
+      nicolivemanager->nowWaku.isOwnerBroad() &&
+      ui->autoExtend->isChecked() &&
+      lastTime < 24000000) {
+    nicolivemanager->nowWaku.didExtend = true;
+    QTimer::singleShot(300000,
+                       [=](){nicolivemanager->nowWaku.didExtend = false;});
+
+    AutoExtend* ae = new AutoExtend(this, nicolivemanager, this);
+    ae->get();
+  }
+
+  if ( !nicolivemanager->nowWaku.didAlermCommand &&
+       ui->command_beforeEnd_chk->isChecked()) {
     const QTime alerm(0,ui->command_beforeEndMinuts_spn->value());
-    if (QTime(0,0).addSecs(ed.toTime_t() - nw.toTime_t()) <= alerm) {
+    if ( QTime(0,0).addSecs(lastTime) <= alerm) {
 
       nicolivemanager->nowWaku.didAlermCommand = true;
+      QTimer::singleShot(300000,
+                         [=](){nicolivemanager->nowWaku.didAlermCommand = false;});
 
       QProcess pr;
       QString cmd = ui->command_beforeEnd->text();

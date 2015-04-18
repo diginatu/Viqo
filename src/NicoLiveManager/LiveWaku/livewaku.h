@@ -16,8 +16,6 @@ public:
   explicit LiveWaku(MainWindow* mwin, NicoLiveManager* nlman, QString broadID, QObject *parent = 0);
   explicit LiveWaku(MainWindow* mwin, NicoLiveManager* nlman, QString broadID, QString community, QObject *parent = 0);
 
-  void init();
-  bool didAlermCommand;
 
   void getPlayerStatusAPI();
 

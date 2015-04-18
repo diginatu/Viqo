@@ -4,16 +4,17 @@
 #include <QObject>
 #include <qnetworkaccessmanager.h>
 #include "nicolivemanager.h"
-#include "../../ui/mainwindow.h"
 
-class httpGetter : public QObject
+class MainWindow;
+
+class HttpGetter : public QObject
 {
   Q_OBJECT
 public:
-  explicit httpGetter(MainWindow* mwin, NicoLiveManager* nlman, QObject *parent = 0);
+  explicit HttpGetter(MainWindow* mwin, NicoLiveManager* nlman, QObject *parent = 0);
 protected:
   void get();
-  ~httpGetter();
+  ~HttpGetter();
   QNetworkAccessManager* mManager;
   MainWindow* mwin;
   NicoLiveManager* nlman;

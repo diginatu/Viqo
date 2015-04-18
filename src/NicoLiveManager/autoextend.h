@@ -1,18 +1,21 @@
 ﻿#ifndef AUTOEXTEND_H
 #define AUTOEXTEND_H
 
-#include "httpgetter.h"
-#include "../../ui/mainwindow.h"
+#include <QObject>
 #include "nicolivemanager.h"
+#include "httpgetter.h"
 
-class autoExtend : public httpGetter
+class MainWindow;
+
+class AutoExtend : public HttpGetter
 {
+  Q_OBJECT
 public:
-  autoExtend(MainWindow* mwin, NicoLiveManager* nlman, QObject* parent);
-  ~autoExtend();
+  AutoExtend(MainWindow* mwin, NicoLiveManager* nlman, QObject* parent);
+  ~AutoExtend();
+  void get();
 
 private:
-  void get();
   QNetworkAccessManager* mExtendManager;
 
 private slots:

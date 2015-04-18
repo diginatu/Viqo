@@ -76,6 +76,11 @@ void NowLiveWaku::playerStatusFinished(QNetworkReply* reply)
   reply->deleteLater();
 }
 
+void NowLiveWaku::init()
+{
+  didAlermCommand = false;
+}
+
 bool NowLiveWaku::isOwnerBroad() const
 {
   return ownerBroad;

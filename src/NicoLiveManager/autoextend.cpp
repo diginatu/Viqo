@@ -1,12 +1,14 @@
 ﻿#include "autoextend.h"
+#include "../../ui/mainwindow.h"
 
-autoExtend::autoExtend(MainWindow* mwin, NicoLiveManager* nlman, QObject* parent) :
-  httpGetter(mwin, nlman, parent)
+AutoExtend::AutoExtend(MainWindow* mwin, NicoLiveManager* nlman, QObject* parent) :
+  HttpGetter(mwin, nlman, parent),
+  mExtendManager(nullptr)
 {
 
 }
 
-void autoExtend::get()
+void AutoExtend::get()
 {
   if(mManager!=nullptr) delete mManager;
   mManager = new QNetworkAccessManager(this);
@@ -23,33 +25,32 @@ void autoExtend::get()
   mManager->get(rq);
 }
 
-autoExtend::~autoExtend()
+AutoExtend::~AutoExtend()
 {
 
 }
 
-void autoExtend::got(QNetworkReply *reply)
+void AutoExtend::got(QNetworkReply *reply)
 {
   StrAbstractor data(QString(reply->readAll()));
 
   StrAbstractor* aitem;
   while ((aitem = data.mid("<item>", "</item>")) != nullptr) {
-    QString price = aitem->midStr("<price>", "</price>");
-    QString num = aitem->midStr("<num>", "</num>");
-    QString code = aitem->midStr("<code>", "</code>");
-    QString item = aitem->midStr("<item>", "");
+    // QString price = aitem->midStr("<price>", "</price>");
+    QString num   = aitem->midStr("<num>", "</num>");
+    QString code  = aitem->midStr("<code>", "</code>");
+    QString item  = aitem->midStr("<item>", "");
 
     if (item == "freeextend") {
-
+      getExtend(code, item, num);
     }
   }
 
-  qDebug() << data.toString();
-
   reply->deleteLater();
+  this->deleteLater();
 }
 
-void autoExtend::getExtend(QString code, QString item, QString num)
+void AutoExtend::getExtend(QString code, QString item, QString num)
 {
   if(mExtendManager!=nullptr) delete mExtendManager;
   mExtendManager = new QNetworkAccessManager(this);
@@ -72,7 +73,7 @@ void autoExtend::getExtend(QString code, QString item, QString num)
   mExtendManager->get(rq);
 }
 
-void autoExtend::gotExtend(QNetworkReply* reply)
+void AutoExtend::gotExtend(QNetworkReply* reply)
 {
   StrAbstractor data(QString(reply->readAll()));
 
@@ -80,3 +81,4 @@ void autoExtend::gotExtend(QNetworkReply* reply)
 
   reply->deleteLater();
 }
+

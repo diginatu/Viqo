@@ -21,6 +21,7 @@
 #include "newwakusettingswindow.h"
 #include "accountwindow.h"
 #include "followcommunity.h"
+#include "../src/NicoLiveManager/autoextend.h"
 
 class MainWindow : public QMainWindow
 {

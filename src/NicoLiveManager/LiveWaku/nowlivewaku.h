@@ -1,4 +1,4 @@
-#ifndef NOWLIVEWAKU_H
+﻿#ifndef NOWLIVEWAKU_H
 #define NOWLIVEWAKU_H
 
 #include <QObject>
@@ -30,6 +30,10 @@ public:
   void setOwnerCommentToken(const QString& value);
 
   bool isOwnerBroad() const;
+
+  void init();
+  bool didAlermCommand;
+  bool didExtend;
 
 private slots:
   void playerStatusFinished(QNetworkReply* reply);

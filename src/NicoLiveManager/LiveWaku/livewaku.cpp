@@ -23,11 +23,6 @@ LiveWaku::LiveWaku(MainWindow* mwin, NicoLiveManager* nlman, QString broadID, QS
   this->community = community;
 }
 
-void LiveWaku::init()
-{
-  didAlermCommand = false;
-}
-
 QString LiveWaku::getTitle() const
 {
   return title;

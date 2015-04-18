@@ -1,11 +1,15 @@
 ﻿#include "httpgetter.h"
+#include "../../ui/mainwindow.h"
 
-httpGetter::httpGetter(MainWindow* mwin, NicoLiveManager* nlman, QObject *parent) : QObject(parent)
+HttpGetter::HttpGetter(MainWindow* mwin, NicoLiveManager* nlman, QObject *parent) :
+  QObject(parent),
+  mManager(nullptr)
 {
+  this->mwin = mwin;
   this->nlman = nlman;
 }
 
-void httpGetter::get()
+void HttpGetter::get()
 {
   if(mManager!=nullptr) delete mManager;
   mManager = new QNetworkAccessManager(this);
@@ -22,12 +26,12 @@ void httpGetter::get()
   mManager->get(rq);
 }
 
-httpGetter::~httpGetter()
+HttpGetter::~HttpGetter()
 {
   delete mManager;
 }
 
-void httpGetter::got(QNetworkReply* reply)
+void HttpGetter::got(QNetworkReply* reply)
 {
   StrAbstractor data(QString(reply->readAll()));
 
@@ -35,4 +39,3 @@ void httpGetter::got(QNetworkReply* reply)
 
   reply->deleteLater();
 }
-
