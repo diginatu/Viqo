@@ -61,7 +61,9 @@ SOURCES += src/main.cpp\
     ui/newwakusettingswindow.cpp \
     ui/settingswindow.cpp \
     src/NicoLiveManager/communityinfo.cpp \
-    src/NicoLiveManager/nicookie.cpp
+    src/NicoLiveManager/nicookie.cpp \
+    src/NicoLiveManager/httpgetter.cpp \
+    src/NicoLiveManager/autoextend.cpp
 
 HEADERS  += src/NicoLiveManager/nicolivemanager.h \
     src/nicohttp.h \
@@ -78,7 +80,9 @@ HEADERS  += src/NicoLiveManager/nicolivemanager.h \
     ui/mainwindow.h \
     ui/newwakusettingswindow.h \
     ui/settingswindow.h \
-    src/NicoLiveManager/nicookie.h
+    src/NicoLiveManager/nicookie.h \
+    src/NicoLiveManager/httpgetter.h \
+    src/NicoLiveManager/autoextend.h
 
 FORMS    += ui/mainwindow.ui \
     ui/settingswindow.ui \
