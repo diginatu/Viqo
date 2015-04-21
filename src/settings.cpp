@@ -34,6 +34,7 @@ void Settings::saveStatus(int num)
   other["auto_getting_new_waku"] = ui->autoNewWakuChk->isChecked();
   other["new_waku_open_browser"] = ui->autoNewWakuOpenBrowser->isChecked();
   other["new_waku_start"] = ui->autoNewWakuStart->isChecked();
+  other["auto_free_extend"] = ui->autoExtend->isChecked();
 
   QJsonObject comment;
   comment["autoGettingUserName"] = ui->autoGettingUserName->isChecked();
@@ -105,6 +106,7 @@ void Settings::loadStatus(int num)
   ui->autoNewWakuChk->setChecked(other["auto_getting_new_waku"].toBool());
   ui->autoNewWakuOpenBrowser->setChecked(other["new_waku_open_browser"].toBool(true));
   ui->autoNewWakuStart->setChecked(other["new_waku_start"].toBool());
+  ui->autoExtend->setChecked(other["auto_free_extend"].toBool());
 
   QJsonObject comment = jsd.object()["comment"].toObject();
   ui->autoGettingUserName->setChecked(comment["autoGettingUserName"].toBool(true));
