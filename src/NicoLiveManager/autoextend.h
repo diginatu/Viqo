@@ -17,10 +17,10 @@ public:
 
 private:
   QNetworkAccessManager* mExtendManager;
+  void getExtend(QString code, QString item, QString num);
 
 private slots:
   void got(QNetworkReply* reply);
-  void getExtend(QString code, QString item, QString num);
   void gotExtend(QNetworkReply* reply);
 };
 

@@ -43,11 +43,11 @@ void AutoExtend::got(QNetworkReply *reply)
 
     if (item == "freeextend") {
       getExtend(code, item, num);
+      break;
     }
   }
 
   reply->deleteLater();
-  this->deleteLater();
 }
 
 void AutoExtend::getExtend(QString code, QString item, QString num)
@@ -80,5 +80,7 @@ void AutoExtend::gotExtend(QNetworkReply* reply)
   qDebug() << data.toString();
 
   reply->deleteLater();
+
+  this->deleteLater();
 }
 
