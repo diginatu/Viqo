@@ -34,6 +34,7 @@ void AutoExtend::got(QNetworkReply *reply)
 {
   StrAbstractor data(QString(reply->readAll()));
 
+  bool haveFree = false;
   StrAbstractor* aitem;
   while ((aitem = data.mid("<item>", "</item>")) != nullptr) {
     // QString price = aitem->midStr("<price>", "</price>");
@@ -43,8 +44,14 @@ void AutoExtend::got(QNetworkReply *reply)
 
     if (item == "freeextend") {
       getExtend(code, item, num);
+      haveFree = true;
       break;
     }
+  }
+
+  if ( !haveFree ) {
+    mwin->insLog("no freeExtend");
+    this->deleteLater();
   }
 
   reply->deleteLater();
@@ -58,26 +65,45 @@ void AutoExtend::getExtend(QString code, QString item, QString num)
   connect(mExtendManager, SIGNAL(finished(QNetworkReply*)), this,
           SLOT(gotExtend(QNetworkReply*)));
 
-  // make request
-  QNetworkRequest rq;
+
+  QNetworkRequest rq(QUrl("http://watch.live.nicovideo.jp/api/usepoint/lv" +
+                          nlman->nowWaku.getBroadID()));
+  rq.setHeader(QNetworkRequest::ContentTypeHeader, "application/x-www-form-urlencoded");
   QVariant postData = nlman->makePostData(mwin->settings.getUserSession());
   rq.setHeader(QNetworkRequest::CookieHeader, postData);
-  rq.setUrl(QUrl(
-              QString("http://watch.live.nicovideo.jp/api/usepoint?v=lv%1&code=%2&item=%3&token=%4&num=%5")
-              .arg(nlman->nowWaku.getBroadID())
-              .arg(code).arg(item)
-              .arg(nlman->nowWaku.getBroadcastToken())
-              .arg(num)
-              ));
 
-  mExtendManager->get(rq);
+  QUrlQuery params;
+  params.addQueryItem("num", num);
+  // params.addQueryItem("remain", "%2D1");
+  params.addQueryItem("date", QString::number(QDateTime::currentDateTimeUtc().toTime_t()));
+  params.addQueryItem("item", item);
+  params.addQueryItem("code", QUrl::toPercentEncoding(code));
+  params.addQueryItem("token", QUrl::toPercentEncoding(nlman->nowWaku.getBroadcastToken()));
+
+  mExtendManager->post(rq, params.toString(QUrl::FullyEncoded).toUtf8());
 }
 
 void AutoExtend::gotExtend(QNetworkReply* reply)
 {
   StrAbstractor data(QString(reply->readAll()));
 
-  qDebug() << data.toString();
+  QString mode = data.midStr("<mode>", "</mode>");
+
+  if (mode == "extend")
+    mwin->insLog("auto extended");
+
+  StrAbstractor* error = data.mid("<error>", "</error>");
+  if (error != nullptr) {
+    mwin->insLog("autoExtend : error");
+    mwin->insLog("code");
+    mwin->insLog(error->midStr("<code>", "</code>"));
+    mwin->insLog("description");
+    mwin->insLog(error->midStr("<description>", "</description>"));
+
+    QMessageBox::information(mwin, "Viqo", QStringLiteral("自動延長失敗しました"));
+  }
+
+  nlman->nowWaku.getPlayerStatusAPI();
 
   reply->deleteLater();
 

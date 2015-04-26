@@ -52,6 +52,8 @@ void NowLiveWaku::playerStatusFinished(QNetworkReply* reply)
   setSt(commTcpi.midStr("<start_time>","</start_time>").toUInt());
   setEd(commTcpi.midStr("<end_time>","</end_time>").toUInt());
 
+  broadcastToken = commTcpi.midStr("<broadcast_token>","</broadcast_token>");
+
   user_id = commTcpi.midStr("<user_id>", "</user_id>");
   is_premium = commTcpi.midStr("<is_premium>", "</is_premium>").toUInt();
 

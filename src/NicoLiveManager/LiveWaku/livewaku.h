@@ -49,7 +49,7 @@ private slots:
 protected slots:
   void playerStatusFinished(QNetworkReply* reply);
 
-private:
+protected:
   QNetworkAccessManager* mManager;
 
   QString title;
@@ -63,7 +63,6 @@ private:
 
   int flag;
 
-protected:
   MainWindow* mwin;
   NicoLiveManager* nlman;
 

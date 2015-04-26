@@ -141,10 +141,10 @@ void MainWindow::updateElapsedTime()
 
   const uint lastTime(ed.toTime_t() - nw.toTime_t());
 
-  if (!nicolivemanager->nowWaku.didExtend &&
+  if (ui->autoExtend->isChecked() &&
+      !nicolivemanager->nowWaku.didExtend &&
       nicolivemanager->nowWaku.isOwnerBroad() &&
-      ui->autoExtend->isChecked() &&
-      lastTime < 24000000) {
+      lastTime < 240) {
     nicolivemanager->nowWaku.didExtend = true;
     QTimer::singleShot(300000,
                        [=](){nicolivemanager->nowWaku.didExtend = false;});

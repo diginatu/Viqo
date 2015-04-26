@@ -2,6 +2,8 @@
 #define AUTOEXTEND_H
 
 #include <QObject>
+#include <QDateTime>
+#include <QMessageBox>
 #include "nicolivemanager.h"
 #include "httpgetter.h"
 
