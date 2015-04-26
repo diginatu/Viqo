@@ -71,6 +71,7 @@ void AutoExtend::getExtend(QString code, QString item, QString num)
   rq.setHeader(QNetworkRequest::ContentTypeHeader, "application/x-www-form-urlencoded");
   QVariant postData = nlman->makePostData(mwin->settings.getUserSession());
   rq.setHeader(QNetworkRequest::CookieHeader, postData);
+  rq.setRawHeader("accept-language", "ja");
 
   QUrlQuery params;
   params.addQueryItem("num", num);
@@ -102,8 +103,6 @@ void AutoExtend::gotExtend(QNetworkReply* reply)
 
     QMessageBox::information(mwin, "Viqo", QStringLiteral("自動延長失敗しました"));
   }
-
-  nlman->nowWaku.getPlayerStatusAPI();
 
   reply->deleteLater();
 

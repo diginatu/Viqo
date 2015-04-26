@@ -34,6 +34,10 @@ public:
   void init();
   bool didAlermCommand;
   bool didExtend;
+  bool didUpdate;
+
+  bool getIsConnected() const;
+  void setIsConnected(bool value);
 
 private slots:
   void playerStatusFinished(QNetworkReply* reply);
@@ -52,6 +56,8 @@ private:
 
   QString ownerCommentToken;
   bool ownerBroad;
+
+  bool isConnected;
 
 };
 

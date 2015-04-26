@@ -3,13 +3,15 @@
 
 NowLiveWaku::NowLiveWaku(MainWindow* mwin, NicoLiveManager* nlman, QObject* parent) :
   LiveWaku(mwin, nlman, parent),
-  commtcp(nullptr)
+  commtcp(nullptr),
+  isConnected(false)
 {
 }
 
 NowLiveWaku::NowLiveWaku(MainWindow* mwin, NicoLiveManager* nlman, QString broadID, QString community, QObject* parent) :
   LiveWaku(mwin, nlman, broadID, community, parent),
-  commtcp(nullptr)
+  commtcp(nullptr),
+  isConnected(false)
 {
 }
 
@@ -20,6 +22,7 @@ void NowLiveWaku::broadDisconnect() {
     commtcp->deleteLater();
     commtcp = nullptr;
   }
+  isConnected = false;
 }
 
 void NowLiveWaku::getPostKeyAPI(const QString& thread, int block_num)
@@ -29,7 +32,7 @@ void NowLiveWaku::getPostKeyAPI(const QString& thread, int block_num)
 
 void NowLiveWaku::playerStatusFinished(QNetworkReply* reply)
 {
-  mwin->insLog(" LiveWaku::playerStatusFinished :");
+  mwin->insLog("LiveWaku::playerStatusFinished :");
   QString repdata = QString(reply->readAll());
   // qDebug() << repdata;
 
@@ -72,11 +75,23 @@ void NowLiveWaku::playerStatusFinished(QNetworkReply* reply)
     ownerBroad = false;
   }
 
-  commtcp = new CommTcp(addr, port, thread, mwin, this, this);
-  commtcp->doConnect();
+  if (!isConnected) {
+    commtcp = new CommTcp(addr, port, thread, mwin, this, this);
+    commtcp->doConnect();
+  }
 
   reply->deleteLater();
 }
+bool NowLiveWaku::getIsConnected() const
+{
+  return isConnected;
+}
+
+void NowLiveWaku::setIsConnected(bool value)
+{
+  isConnected = value;
+}
+
 
 void NowLiveWaku::init()
 {

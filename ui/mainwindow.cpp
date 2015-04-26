@@ -72,6 +72,8 @@ void MainWindow::onReceiveStarted()
 {
   qDebug() << "--comment receiving started--";
 
+  nicolivemanager->nowWaku.setIsConnected(true);
+
   ui->submit_button->setEnabled(true);
   ui->disconnect->setEnabled(true);
   ui->openBrowser->setEnabled(true);
@@ -93,6 +95,8 @@ void MainWindow::onReceiveStarted()
 void MainWindow::onReceiveEnded()
 {
   qDebug() << "--comment receiving ended--";
+
+  nicolivemanager->nowWaku.setIsConnected(false);
 
   ui->submit_button->setEnabled(false);
   ui->disconnect->setEnabled(false);
@@ -140,6 +144,15 @@ void MainWindow::updateElapsedTime()
   const QDateTime nw = QDateTime::currentDateTimeUtc();
 
   const uint lastTime(ed.toTime_t() - nw.toTime_t());
+
+  if (!nicolivemanager->nowWaku.didUpdate &&
+      lastTime < 30) {
+    nicolivemanager->nowWaku.didUpdate = true;
+    QTimer::singleShot(60000,
+                       [=](){nicolivemanager->nowWaku.didUpdate = false;});
+
+    nicolivemanager->nowWaku.getPlayerStatusAPI();
+  }
 
   if (ui->autoExtend->isChecked() &&
       !nicolivemanager->nowWaku.didExtend &&
