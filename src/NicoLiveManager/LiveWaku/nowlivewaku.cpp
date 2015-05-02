@@ -3,6 +3,9 @@
 
 NowLiveWaku::NowLiveWaku(MainWindow* mwin, NicoLiveManager* nlman, QObject* parent) :
   LiveWaku(mwin, nlman, parent),
+  didAlermCommand(false),
+  didExtend(false),
+  didUpdate(false),
   commtcp(nullptr),
   isConnected(false)
 {
@@ -10,6 +13,9 @@ NowLiveWaku::NowLiveWaku(MainWindow* mwin, NicoLiveManager* nlman, QObject* pare
 
 NowLiveWaku::NowLiveWaku(MainWindow* mwin, NicoLiveManager* nlman, QString broadID, QString community, QObject* parent) :
   LiveWaku(mwin, nlman, broadID, community, parent),
+  didAlermCommand(false),
+  didExtend(false),
+  didUpdate(false),
   commtcp(nullptr),
   isConnected(false)
 {
