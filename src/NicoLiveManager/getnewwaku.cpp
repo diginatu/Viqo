@@ -171,7 +171,10 @@ void NicoLiveManager::newWakuAbstractor(QNetworkReply* reply, int mode) {
   }
 
   if (mode == 0) nwin->formInit();
-  if (mode <= 1) nwin->listStateSave();
+  if (mode <= 1) {
+    nwin->listStateSave();
+    nwin->clearListForm(1);
+  }
   if (mode >= 2) newWakuData.clear();
 
   StrAbstractor* input;
@@ -186,6 +189,7 @@ void NicoLiveManager::newWakuAbstractor(QNetworkReply* reply, int mode) {
     QString value = HTMLdecode(input->midStr("value=\"", "\"", false));
     if (mode == 0) nwin->set(name, value);
     // not to add tags and song rights to data when init
+    if (mode == 1 && (name.startsWith("livetags"))) continue;
     if (mode == 2 && (name.startsWith("livetags") ||
                       name.startsWith("taglock") ||
                       name != "tags[]" ||

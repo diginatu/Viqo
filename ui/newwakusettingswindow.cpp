@@ -67,15 +67,13 @@ void NewWakuSettingsWindow::listStateSave()
 {
   selectedCommunity = ui->community->currentText();
   selectedCategory = ui->category->currentText();
-
-  clearListForm();
 }
 
-void NewWakuSettingsWindow::clearListForm()
+void NewWakuSettingsWindow::clearListForm(int mode)
 {
   ui->community->clear();
   ui->category->clear();
-  ui->tags_list->clear();
+  if (mode != 1) ui->tags_list->clear();
 }
 
 void NewWakuSettingsWindow::setIndex(QString name, QString value)

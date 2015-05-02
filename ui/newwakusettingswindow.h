@@ -25,6 +25,8 @@ public:
   void set(QString name, QString value, QString disp = QString());
   void listStateLoad();
 
+  void clearListForm(int mode = 0);
+
   void setSelectedCommunity(const QString& value);
   void setSelectedCategory(const QString& value);
 
@@ -45,7 +47,6 @@ private:
 
   QJsonObject makeJsonFromForm();
   void setPresetsFromJson(const QJsonObject& jsn);
-  void clearListForm();
 private slots:
   void on_befWakuReuse_clicked();
   void on_tag_add_clicked();
