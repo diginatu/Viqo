@@ -73,8 +73,9 @@ void NewWakuSettingsWindow::listStateSave()
 
 void NewWakuSettingsWindow::clearListForm()
 {
-  ui->community->clear();
-  ui->category->clear();
+  // no clear and set current -1
+  ui->community->setCurrentIndex(-1);
+  ui->category->setCurrentIndex(-1);
   ui->tags_list->clear();
 }
 
@@ -437,6 +438,22 @@ void NewWakuSettingsWindow::loadPresets()
   file.close();
 }
 
+void NewWakuSettingsWindow::resetWakuData()
+{
+  if (!this->isSetNecessary()) {
+    this->on_befWakuReuse_clicked();
+    this->clearWakuData = true;
+    }
+}
+
+void NewWakuSettingsWindow::clearWakuDataIfNeeded()
+{
+  if (this->clearWakuData) {
+    this->on_clear_clicked();
+    this->clearWakuData = false;
+  }
+}
+
 QString NewWakuSettingsWindow::getCommunity()
 {
   return ui->community->currentData().toString();
@@ -506,10 +523,26 @@ void NewWakuSettingsWindow::setPresetsFromJson(const QJsonObject& jsn)
     ui->description->setPlainText(necessary["description"].toString());
 
     const QJsonArray community = necessary["community"].toArray();
-    ui->community->addItem(community[0].toString(), community[1].toString());
+    int community_index = ui->community->findData(community[1].toString());
+    if (community_index >= 0) {
+      ui->community->setCurrentIndex(community_index);
+    } else {
+      ui->community->insertItem(0,
+                                community[0].toString(),
+                                community[1].toString());
+      ui->community->setCurrentIndex(0);
+    }
 
     const QJsonArray category = necessary["category"].toArray();
-    ui->category->addItem(category[0].toString(), category[1].toString());
+    int category_index = ui->category->findData(category[1].toString());
+    if (category_index >=0 ) {
+      ui->category->setCurrentIndex(category_index);
+    } else {
+      ui->category->insertItem(0,
+                               category[0].toString(),
+                               category[1].toString());
+      ui->category->setCurrentIndex(0);
+    }
   }
 
   {
