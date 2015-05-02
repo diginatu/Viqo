@@ -550,6 +550,7 @@ void MainWindow::on_autoNewWakuSettings_triggered()
   newWakuSettingsWindow->show();
   newWakuSettingsWindow->raise();
   newWakuSettingsWindow->activateWindow();
+  getNewWakuAPI(1);
 }
 
 void MainWindow::on_getNewWakuNow_triggered()
