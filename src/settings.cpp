@@ -4,7 +4,7 @@
 Settings::Settings(MainWindow* mwin, Ui::MainWindow* ui, QObject* parent) :
   QObject(parent)
 {
-  userSessionWay = UserSessionWay::Direct;
+  userSessionWay = UserSessionWay::Browser;
   ownerComment = true;
   dispNG = true;
 
@@ -34,6 +34,7 @@ void Settings::saveStatus(int num)
   other["auto_getting_new_waku"] = ui->autoNewWakuChk->isChecked();
   other["new_waku_open_browser"] = ui->autoNewWakuOpenBrowser->isChecked();
   other["new_waku_start"] = ui->autoNewWakuStart->isChecked();
+  other["auto_free_extend"] = ui->autoExtend->isChecked();
 
   QJsonObject comment;
   comment["autoGettingUserName"] = ui->autoGettingUserName->isChecked();
@@ -105,6 +106,7 @@ void Settings::loadStatus(int num)
   ui->autoNewWakuChk->setChecked(other["auto_getting_new_waku"].toBool());
   ui->autoNewWakuOpenBrowser->setChecked(other["new_waku_open_browser"].toBool(true));
   ui->autoNewWakuStart->setChecked(other["new_waku_start"].toBool());
+  ui->autoExtend->setChecked(other["auto_free_extend"].toBool());
 
   QJsonObject comment = jsd.object()["comment"].toObject();
   ui->autoGettingUserName->setChecked(comment["autoGettingUserName"].toBool(true));
@@ -137,8 +139,8 @@ void Settings::saveSettings()
 
   QJsonObject login_way;
   login_way["login_way"] = static_cast<int>(userSessionWay);
+  login_way["browser"] = browser;
   login_way["user_session"] = userSession;
-  login_way["cookie_file_name"] = cookieFile;
 
   QJsonObject user_data;
   user_data["mail"] = userMail;
@@ -190,8 +192,8 @@ void Settings::loadSettings()
 
   QJsonObject login_way = jsd.object()["login_way"].toObject();
   userSessionWay = UserSessionWay(login_way["login_way"].toInt());
+  browser = login_way["browser"].toString();
   userSession = login_way["user_session"].toString();
-  cookieFile = login_way["cookie_file_name"].toString();
 
   QJsonObject user_data = jsd.object()["user_data"].toObject();
   userMail = user_data["mail"].toString();
@@ -371,16 +373,6 @@ void Settings::setUserSession(QString value)
   userSession = value;
 }
 
-QString Settings::getCookieFile() const
-{
-  return cookieFile;
-}
-
-void Settings::setCookieFile(QString value)
-{
-  cookieFile = value;
-}
-
 bool Settings::getOwnerComment() const
 {
   return ownerComment;
@@ -399,3 +391,13 @@ void Settings::setDispNG(bool value)
 {
   dispNG = value;
 }
+
+QString Settings::getBrowser() const
+{
+  return browser;
+}
+void Settings::setBrowser(QString value)
+{
+  browser = value;
+}
+

@@ -23,11 +23,6 @@ LiveWaku::LiveWaku(MainWindow* mwin, NicoLiveManager* nlman, QString broadID, QS
   this->community = community;
 }
 
-void LiveWaku::init()
-{
-  didAlermCommand = false;
-}
-
 QString LiveWaku::getTitle() const
 {
   return title;
@@ -115,7 +110,7 @@ void LiveWaku::getPlayerStatusAPI()
 
 void LiveWaku::playerStatusFinished(QNetworkReply* reply)
 {
-  mwin->insLog(" LiveWaku::playerStatusFinished :");
+  mwin->insLog("LiveWaku::playerStatusFinished :");
   StrAbstractor commTcpi(QString(reply->readAll()));
 
   QString status = commTcpi.midStr("status=\"","\"");

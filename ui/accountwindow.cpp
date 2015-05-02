@@ -4,7 +4,8 @@
 
 AccountWindow::AccountWindow(MainWindow* mwin, QWidget* parent) :
   QDialog(parent),
-  ui(new Ui::AccountWindow)
+  ui(new Ui::AccountWindow),
+  nicookie(this)
 {
   ui->setupUi(this);
   this->mwin = mwin;
@@ -13,7 +14,9 @@ AccountWindow::AccountWindow(MainWindow* mwin, QWidget* parent) :
   ui->userdata_pass->setEchoMode(QLineEdit::Password);
   ui->usersession->setEchoMode(QLineEdit::Password);
 
-  on_login_way_combo_currentIndexChanged(static_cast<int>(UserSessionWay::Firefox));
+  on_login_way_combo_currentIndexChanged(static_cast<int>(UserSessionWay::Browser));
+
+  ui->browser_combo->addItems(nicookie.getBrowserList());
 }
 
 AccountWindow::~AccountWindow()
@@ -26,8 +29,8 @@ void AccountWindow::init()
   ui->userdata_mail->setText(mwin->settings.getUserMail());
   ui->userdata_pass->setText(mwin->settings.getUserPass());
   ui->login_way_combo->setCurrentIndex(static_cast<int>(mwin->settings.getLoginWay()));
+  ui->browser_combo->setCurrentText(mwin->settings.getBrowser());
   ui->usersession->setText(mwin->settings.getUserSession());
-  ui->cookiesetting_filename->setText(mwin->settings.getCookieFile());
 }
 
 void AccountWindow::getUserSessionFinished()
@@ -44,27 +47,26 @@ void AccountWindow::updateSessionAndSave()
 void AccountWindow::on_login_way_combo_currentIndexChanged(int index)
 {
   switch (static_cast<UserSessionWay>(index)) {
-  case UserSessionWay::Firefox:
-    ui->cookie_group->setEnabled(true);
+  case UserSessionWay::Browser:
     ui->usersession->setEnabled(false);
     ui->get_session->setEnabled(true);
+    ui->browser_combo->setEnabled(true);
     ui->userSessionWayDiscription->setText(
-          QStringLiteral("firefoxのクッキーからユーザーセッションを取得します<br>\
-                         firefoxのユーザプロファイルが保存されているディレクトリの中の\
-                         cookies.sqliteを指定して取得を押してください。"));
+          QStringLiteral("ブラウザからユーザーセッションを取得します<br>\
+                         ブラウザを選択してください"));
     break;
   case UserSessionWay::Direct:
-    ui->cookie_group->setEnabled(false);
     ui->usersession->setEnabled(true);
     ui->get_session->setEnabled(false);
+    ui->browser_combo->setEnabled(false);
     ui->userSessionWayDiscription->setText(
           QStringLiteral("ユーザーセッションを直接入力します<br>\
                          選択肢に無いブラウザのセッションidを使う場合などに使用してください。"));
     break;
   case UserSessionWay::Login:
-    ui->cookie_group->setEnabled(false);
     ui->usersession->setEnabled(false);
     ui->get_session->setEnabled(true);
+    ui->browser_combo->setEnabled(false);
     ui->userSessionWayDiscription->setText(
           QStringLiteral("Viqoからログインしてユーザーセッションを取得します<br>\
                          ニコ生のログインセッションを一つ消費するので、\
@@ -79,27 +81,35 @@ void AccountWindow::on_buttonBox_accepted()
   mwin->settings.setUserMail(ui->userdata_mail->text());
   mwin->settings.setUserPass(ui->userdata_pass->text());
   mwin->settings.setLoginWay(UserSessionWay(ui->login_way_combo->currentIndex()));
+  mwin->settings.setBrowser(ui->browser_combo->currentText());
   mwin->settings.setUserSession(ui->usersession->text());
-  mwin->settings.setCookieFile(ui->cookiesetting_filename->text());
 
   mwin->settings.saveSettings();
 
   mwin->nicolivemanager->alertReconnect();
 }
 
-
-void AccountWindow::on_cookiesetting_file_open_button_clicked()
-{
-  const QString filePath = QFileDialog::getOpenFileName(this, tr("Open Cookies File"), QDir::homePath(), tr("sqlite Files (*.sqlite)"));
-  if ( filePath == "" ) return;
-  ui->cookiesetting_filename->setText(filePath);
-}
-
 void AccountWindow::on_get_session_clicked()
 {
   switch (static_cast<UserSessionWay>(ui->login_way_combo->currentIndex())) {
-  case UserSessionWay::Firefox:
-    mwin->getSessionFromCookie(ui->cookiesetting_filename->text());
+  case UserSessionWay::Browser:
+    mwin->settings.setUserSession(
+          nicookie.getUserSession(ui->browser_combo->currentText()));
+
+    if (nicookie.hasError()) {
+      QString error = nicookie.errorString();
+      mwin->insLog("Nicookie : " + error);
+      QMessageBox::information(this, "Nicookie", error);
+      break;
+    }
+
+    QMessageBox::information(this, "Nicookie",
+                             QStringLiteral("正常にセッションが取得されました"));
+
+    // For Chrome in Mac:
+    //   The main window is focused when the Keychain window closes.
+    this->raise();
+
     getUserSessionFinished();
     break;
   case UserSessionWay::Login:

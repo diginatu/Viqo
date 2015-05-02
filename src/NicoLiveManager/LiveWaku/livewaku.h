@@ -16,8 +16,6 @@ public:
   explicit LiveWaku(MainWindow* mwin, NicoLiveManager* nlman, QString broadID, QObject *parent = 0);
   explicit LiveWaku(MainWindow* mwin, NicoLiveManager* nlman, QString broadID, QString community, QObject *parent = 0);
 
-  void init();
-  bool didAlermCommand;
 
   void getPlayerStatusAPI();
 
@@ -51,7 +49,7 @@ private slots:
 protected slots:
   void playerStatusFinished(QNetworkReply* reply);
 
-private:
+protected:
   QNetworkAccessManager* mManager;
 
   QString title;
@@ -65,7 +63,6 @@ private:
 
   int flag;
 
-protected:
   MainWindow* mwin;
   NicoLiveManager* nlman;
 

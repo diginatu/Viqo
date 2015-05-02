@@ -12,11 +12,19 @@ mac{
 ICON = img/icon.icns
 }
 
-@
+# libs location for linux
 unix:!mac{
 QMAKE_LFLAGS += -Wl,--rpath="/usr/lib/viqo"
 }
-@
+
+# libs used in nicookie
+win32: LIBS += -lwininet
+win32-msvc*{
+LIBS += -liepmapi
+}
+win32: LIBS += -lcrypt32
+mac: LIBS += -framework Security
+unix: LIBS += -lcrypto
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 QT += core gui
@@ -28,8 +36,6 @@ TEMPLATE = app
 
 
 SOURCES += src/main.cpp\
-    src/cookieread.cpp \
-    src/livedata.cpp \
     src/nicohttp.cpp \
     src/strabstractor.cpp \
     src/usergetter.cpp \
@@ -54,11 +60,12 @@ SOURCES += src/main.cpp\
     ui/mainwindow.cpp \
     ui/newwakusettingswindow.cpp \
     ui/settingswindow.cpp \
-    src/NicoLiveManager/communityinfo.cpp
+    src/NicoLiveManager/communityinfo.cpp \
+    src/NicoLiveManager/nicookie.cpp \
+    src/NicoLiveManager/httpgetter.cpp \
+    src/NicoLiveManager/autoextend.cpp
 
 HEADERS  += src/NicoLiveManager/nicolivemanager.h \
-    src/cookieread.h \
-    src/livedata.h \
     src/nicohttp.h \
     src/strabstractor.h \
     src/usergetter.h \
@@ -72,7 +79,10 @@ HEADERS  += src/NicoLiveManager/nicolivemanager.h \
     ui/followcommunity.h \
     ui/mainwindow.h \
     ui/newwakusettingswindow.h \
-    ui/settingswindow.h
+    ui/settingswindow.h \
+    src/NicoLiveManager/nicookie.h \
+    src/NicoLiveManager/httpgetter.h \
+    src/NicoLiveManager/autoextend.h
 
 FORMS    += ui/mainwindow.ui \
     ui/settingswindow.ui \

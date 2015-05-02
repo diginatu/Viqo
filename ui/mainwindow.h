@@ -13,9 +13,7 @@
 #include <QDesktopServices>
 #include <QClipboard>
 
-#include "../src/cookieread.h"
 #include "../src/usermanager.h"
-#include "../src/livedata.h"
 #include "../src/strabstractor.h"
 #include "../src/NicoLiveManager/nicolivemanager.h"
 #include "settingswindow.h"
@@ -23,6 +21,7 @@
 #include "newwakusettingswindow.h"
 #include "accountwindow.h"
 #include "followcommunity.h"
+#include "../src/NicoLiveManager/autoextend.h"
 
 class MainWindow : public QMainWindow
 {

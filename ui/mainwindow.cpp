@@ -72,6 +72,8 @@ void MainWindow::onReceiveStarted()
 {
   qDebug() << "--comment receiving started--";
 
+  nicolivemanager->nowWaku.setIsConnected(true);
+
   ui->submit_button->setEnabled(true);
   ui->disconnect->setEnabled(true);
   ui->openBrowser->setEnabled(true);
@@ -93,6 +95,8 @@ void MainWindow::onReceiveStarted()
 void MainWindow::onReceiveEnded()
 {
   qDebug() << "--comment receiving ended--";
+
+  nicolivemanager->nowWaku.setIsConnected(false);
 
   ui->submit_button->setEnabled(false);
   ui->disconnect->setEnabled(false);
@@ -139,12 +143,37 @@ void MainWindow::updateElapsedTime()
   const QDateTime ed = nicolivemanager->nowWaku.getEd();
   const QDateTime nw = QDateTime::currentDateTimeUtc();
 
-  if (!nicolivemanager->nowWaku.didAlermCommand &&
-      ui->command_beforeEnd_chk->isChecked()) {
+  const uint lastTime(ed.toTime_t() - nw.toTime_t());
+
+  if (!nicolivemanager->nowWaku.didUpdate &&
+      lastTime < 30) {
+    nicolivemanager->nowWaku.didUpdate = true;
+    QTimer::singleShot(60000,
+                       [=](){nicolivemanager->nowWaku.didUpdate = false;});
+
+    nicolivemanager->nowWaku.getPlayerStatusAPI();
+  }
+
+  if (ui->autoExtend->isChecked() &&
+      !nicolivemanager->nowWaku.didExtend &&
+      nicolivemanager->nowWaku.isOwnerBroad() &&
+      lastTime < 240) {
+    nicolivemanager->nowWaku.didExtend = true;
+    QTimer::singleShot(300000,
+                       [=](){nicolivemanager->nowWaku.didExtend = false;});
+
+    AutoExtend* ae = new AutoExtend(this, nicolivemanager, this);
+    ae->get();
+  }
+
+  if ( !nicolivemanager->nowWaku.didAlermCommand &&
+       ui->command_beforeEnd_chk->isChecked()) {
     const QTime alerm(0,ui->command_beforeEndMinuts_spn->value());
-    if (QTime(0,0).addSecs(ed.toTime_t() - nw.toTime_t()) <= alerm) {
+    if ( QTime(0,0).addSecs(lastTime) <= alerm) {
 
       nicolivemanager->nowWaku.didAlermCommand = true;
+      QTimer::singleShot(300000,
+                         [=](){nicolivemanager->nowWaku.didAlermCommand = false;});
 
       QProcess pr;
       QString cmd = ui->command_beforeEnd->text();
@@ -258,12 +287,6 @@ int MainWindow::lastCommentNum()
   return topitem->text(0).toInt();
 }
 
-void MainWindow::getSessionFromCookie(QString cookie_name)
-{
-  CookieRead cr(this);
-  settings.setUserSession(cr.getUserSession(cookie_name));
-}
-
 void MainWindow::on_receive_clicked()
 {
   if ( settings.getUserSession().isEmpty() ) {
@@ -342,7 +365,6 @@ void MainWindow::on_comment_view_currentItemChanged(QTreeWidgetItem *current)
   const QRegExp urlrg("(https?://[\\w/:%#\\$&\\?\\(\\)~\\.=\\+\\-]+)");
 
   if (!owner) {
-    comme = comme.toHtmlEscaped();
     QString tcomme;
     int bpos = 0;
     int pos = 0;
@@ -352,7 +374,7 @@ void MainWindow::on_comment_view_currentItemChanged(QTreeWidgetItem *current)
       pos += urlrg.matchedLength();
       bpos = pos;
     }
-    tcomme += comme.mid(bpos);
+    tcomme += comme.mid(bpos).toHtmlEscaped();
     comme = tcomme;
   }
   comme.replace(QChar(8629), "<br>");
@@ -489,7 +511,7 @@ void MainWindow::userSessionDisabled()
     if (msgBox.exec() == QMessageBox::Ok) {
       on_AccountSettings_triggered();
     }
-  } else if (usw == UserSessionWay::Firefox ||
+  } else if (usw == UserSessionWay::Browser ||
              usw == UserSessionWay::Login) {
     QMessageBox msgBox(this);
     msgBox.setText(QStringLiteral("ユーザセッションが無効です\n取得しなおしますか？"));
@@ -528,6 +550,7 @@ void MainWindow::on_autoNewWakuSettings_triggered()
   newWakuSettingsWindow->show();
   newWakuSettingsWindow->raise();
   newWakuSettingsWindow->activateWindow();
+  getNewWakuAPI(1);
 }
 
 void MainWindow::on_getNewWakuNow_triggered()

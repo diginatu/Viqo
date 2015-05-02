@@ -1,7 +1,8 @@
-#ifndef ACCOUNTWINDOW_H
+﻿#ifndef ACCOUNTWINDOW_H
 #define ACCOUNTWINDOW_H
 
 #include <QDialog>
+#include "../src/NicoLiveManager/nicookie.h"
 
 namespace Ui {
 class AccountWindow;
@@ -24,12 +25,12 @@ public:
 private slots:
   void on_login_way_combo_currentIndexChanged(int index);
   void on_buttonBox_accepted();
-  void on_cookiesetting_file_open_button_clicked();
   void on_get_session_clicked();
 
 private:
   Ui::AccountWindow *ui;
   MainWindow* mwin;
+  Nicookie nicookie;
 };
 
 #endif // ACCOUNTWINDOW_H
