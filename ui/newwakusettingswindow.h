@@ -21,14 +21,14 @@ public:
 
   void formInit();
   void listStateSave();
-  void setIndex(QString name, QString value);
+  void setIndex(QString name, QVariant value);
   void set(QString name, QString value, QString disp = QString());
   void listStateLoad();
 
   void clearListForm(int mode = 0);
 
-  void setSelectedCommunity(const QString& value);
-  void setSelectedCategory(const QString& value);
+  void setSelectedCommunity(const QVariant& value);
+  void setSelectedCategory(const QVariant& value);
 
   void applySettingsPostData();
   void songRightsApply();
@@ -43,7 +43,7 @@ public:
 private:
   Ui::NewWakuSettingsWindow *ui;
   MainWindow* mwin;
-  QString selectedCommunity, selectedCategory;
+  QVariant selectedCommunity, selectedCategory;
 
   QJsonObject makeJsonFromForm();
   void setPresetsFromJson(const QJsonObject& jsn);

@@ -214,7 +214,7 @@ void NicoLiveManager::newWakuAbstractor(QNetworkReply* reply, int mode) {
         if (name == "tags[]") name = "tags[]c";
         nwin->set(name, value, disp);
         if (mode == 0 && head->forward("selected") != -1)
-          nwin->setIndex(name, disp);
+          nwin->setIndex(name, value);
       }
       if (mode >= 2) {
         if (name != "tags[]" && name != "default_community") {

@@ -45,12 +45,12 @@ void NewWakuSettingsWindow::on_getTag_clicked()
   mwin->getNewWakuAPI(1);
 }
 
-void NewWakuSettingsWindow::setSelectedCategory(const QString& value)
+void NewWakuSettingsWindow::setSelectedCategory(const QVariant& value)
 {
   selectedCategory = value;
 }
 
-void NewWakuSettingsWindow::setSelectedCommunity(const QString& value)
+void NewWakuSettingsWindow::setSelectedCommunity(const QVariant& value)
 {
   selectedCommunity = value;
 }
@@ -65,8 +65,8 @@ void NewWakuSettingsWindow::formInit()
 
 void NewWakuSettingsWindow::listStateSave()
 {
-  selectedCommunity = ui->community->currentText();
-  selectedCategory = ui->category->currentText();
+  selectedCommunity = ui->community->currentData();
+  selectedCategory = ui->category->currentData();
 }
 
 void NewWakuSettingsWindow::clearListForm(int mode)
@@ -76,7 +76,7 @@ void NewWakuSettingsWindow::clearListForm(int mode)
   if (mode != 1) ui->tags_list->clear();
 }
 
-void NewWakuSettingsWindow::setIndex(QString name, QString value)
+void NewWakuSettingsWindow::setIndex(QString name, QVariant value)
 {
   if (name == "default_community") {
     selectedCommunity = value;
@@ -174,8 +174,8 @@ void NewWakuSettingsWindow::set(QString name, QString value, QString disp)
 
 void NewWakuSettingsWindow::listStateLoad()
 {
-  ui->community->setCurrentIndex(ui->community->findText(selectedCommunity));
-  ui->category->setCurrentIndex(ui->category->findText(selectedCategory));
+  ui->community->setCurrentIndex(ui->community->findData(selectedCommunity));
+  ui->category->setCurrentIndex(ui->category->findData(selectedCategory));
 }
 
 void NewWakuSettingsWindow::songRightsApply()
@@ -495,7 +495,7 @@ QJsonObject NewWakuSettingsWindow::makeJsonFromForm()
 
 void NewWakuSettingsWindow::setPresetsFromJson(const QJsonObject& jsn)
 {
-  clearListForm();
+  ui->tags_list->clear();
 
   {
     const QJsonObject necessary = jsn["necessary"].toObject();
@@ -504,10 +504,10 @@ void NewWakuSettingsWindow::setPresetsFromJson(const QJsonObject& jsn)
     ui->description->setPlainText(necessary["description"].toString());
 
     const QJsonArray community = necessary["community"].toArray();
-    ui->community->addItem(community[0].toString(), community[1].toString());
+    ui->community->setCurrentIndex(ui->community->findData(community[1].toVariant()));
 
     const QJsonArray category = necessary["category"].toArray();
-    ui->category->addItem(category[0].toString(), category[1].toString());
+    ui->category->setCurrentIndex(ui->category->findData(category[1].toVariant()));
   }
 
   {
