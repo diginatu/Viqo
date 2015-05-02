@@ -302,8 +302,8 @@
              <rect>
               <x>0</x>
               <y>0</y>
-              <width>396</width>
-              <height>151</height>
+              <width>399</width>
+              <height>183</height>
              </rect>
             </property>
             <layout class="QVBoxLayout" name="verticalLayout_2">
@@ -639,7 +639,7 @@
      <x>0</x>
      <y>0</y>
      <width>457</width>
-     <height>21</height>
+     <height>25</height>
     </rect>
    </property>
    <widget class="QMenu" name="file">
@@ -688,6 +688,7 @@
     <addaction name="autoNewWakuChk"/>
     <addaction name="autoNewWakuOpenBrowser"/>
     <addaction name="autoNewWakuStart"/>
+    <addaction name="autoExtend"/>
     <addaction name="separator"/>
     <addaction name="autoNewWakuSettings"/>
    </widget>
@@ -927,6 +928,14 @@
    </property>
    <property name="text">
     <string>コメント一覧を常にトップ</string>
+   </property>
+  </action>
+  <action name="autoExtend">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>自動無料延長</string>
    </property>
   </action>
  </widget>

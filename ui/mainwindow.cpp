@@ -72,6 +72,8 @@ void MainWindow::onReceiveStarted()
 {
   qDebug() << "--comment receiving started--";
 
+  nicolivemanager->nowWaku.setIsConnected(true);
+
   ui->submit_button->setEnabled(true);
   ui->disconnect->setEnabled(true);
   ui->openBrowser->setEnabled(true);
@@ -93,6 +95,8 @@ void MainWindow::onReceiveStarted()
 void MainWindow::onReceiveEnded()
 {
   qDebug() << "--comment receiving ended--";
+
+  nicolivemanager->nowWaku.setIsConnected(false);
 
   ui->submit_button->setEnabled(false);
   ui->disconnect->setEnabled(false);
@@ -139,12 +143,37 @@ void MainWindow::updateElapsedTime()
   const QDateTime ed = nicolivemanager->nowWaku.getEd();
   const QDateTime nw = QDateTime::currentDateTimeUtc();
 
-  if (!nicolivemanager->nowWaku.didAlermCommand &&
-      ui->command_beforeEnd_chk->isChecked()) {
+  const uint lastTime(ed.toTime_t() - nw.toTime_t());
+
+  if (!nicolivemanager->nowWaku.didUpdate &&
+      lastTime < 30) {
+    nicolivemanager->nowWaku.didUpdate = true;
+    QTimer::singleShot(60000,
+                       [=](){nicolivemanager->nowWaku.didUpdate = false;});
+
+    nicolivemanager->nowWaku.getPlayerStatusAPI();
+  }
+
+  if (ui->autoExtend->isChecked() &&
+      !nicolivemanager->nowWaku.didExtend &&
+      nicolivemanager->nowWaku.isOwnerBroad() &&
+      lastTime < 240) {
+    nicolivemanager->nowWaku.didExtend = true;
+    QTimer::singleShot(300000,
+                       [=](){nicolivemanager->nowWaku.didExtend = false;});
+
+    AutoExtend* ae = new AutoExtend(this, nicolivemanager, this);
+    ae->get();
+  }
+
+  if ( !nicolivemanager->nowWaku.didAlermCommand &&
+       ui->command_beforeEnd_chk->isChecked()) {
     const QTime alerm(0,ui->command_beforeEndMinuts_spn->value());
-    if (QTime(0,0).addSecs(ed.toTime_t() - nw.toTime_t()) <= alerm) {
+    if ( QTime(0,0).addSecs(lastTime) <= alerm) {
 
       nicolivemanager->nowWaku.didAlermCommand = true;
+      QTimer::singleShot(300000,
+                         [=](){nicolivemanager->nowWaku.didAlermCommand = false;});
 
       QProcess pr;
       QString cmd = ui->command_beforeEnd->text();
