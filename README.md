@@ -1,5 +1,4 @@
-Viqo
-====
+# [Viqo](https://github.com/diginatu/Viqo/wiki)
 
 Viqo is a cross-platform "Nico Nama" comment viewer.
 
@@ -13,6 +12,9 @@ Viqo はクロスプラットフォームなニコニコ生放送用 コメン�
 
 このコメビュは *自由* であることを目指しています。
 
+[Viqo Wiki](https://github.com/diginatu/Viqo/wiki)
+
+
 ダウンロード
 ------------
 
@@ -20,37 +22,11 @@ Viqo はクロスプラットフォームなニコニコ生放送用 コメン�
 
 Ubuntu 14.04, Debian 7.7, OSX Yosemite, Windows 7, 8.1 などで動作確認されています。
 
-使い方
-------
-
-[詳しくはWikiへ](https://github.com/diginatu/Viqo/wiki)
-
-サイトからURLのアイコンをドロップして受信できます。
 
 ライセンス
 ----------
 
 MIT ライセンス
-
-注意
-----
-
-#### Nov 25, 2014 のコミットからセーブファイルの保存場所が変更されました。
-それ以前からのコミットへバージョンアップする場合で以前のセーブファイルを使いたい場合はファイルを移動する必要があります。
-
- 以前のセーブファイルは実行したカレントディレクトリに作成されていました。
-
- 今後のバージョンでは QStandardPaths を使うため、
-
-  * settings.json
-  * user.sqlite
-
- の２ファイルを移動してください。
-
-[QStandardPaths](http://qt-project.org/doc/qt-5/qstandardpaths.html#LocateOption-enum)
-
-"The following table gives examples of paths on different operating systems." 以降のパス参考
-
 
 ### Viqoの目指す自由
  自由なソフトウェアというだけでなく、クロスプラットフォームで沢山の人が使えることや、多くの目的に素早く適応できるようにコマンドを入力できるようにするなどといった、使用面での自由度など、あらゆる自由を目標にしています。
@@ -69,10 +45,5 @@ Qt 5.4 の環境でこのプロジェクトをコンパイルしてください�
 
 使い方・解説を書いてくれる方がいると嬉しいです。
 
-### 現在コントリビュートしやすいリスト
-
-+ [obs-rtmp-nicolive](https://github.com/raccy/obs-rtmp-nicolive/blob/master/doc/PROTOCOL.md)とTCP通信するクラス
-+ タブ幅・windowサイズ保存 (状態セーブで)
-+ MacのDock対応 (何かよくわからんけどやってください) アイコンとか
-+ Wiki の執筆
+[コントリビュート Wiki](https://github.com/diginatu/Viqo/wiki/%E3%82%B3%E3%83%B3%E3%83%88%E3%83%AA%E3%83%93%E3%83%A5%E3%83%BC%E3%83%88)
 
