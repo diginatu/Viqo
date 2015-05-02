@@ -232,6 +232,7 @@ void NicoLiveManager::newWakuAbstractor(QNetworkReply* reply, int mode) {
   }
 
   if (mode <= 1) nwin->listStateLoad();
+  if (mode == 0) nwin->clearWakuDataIfNeeded();
 
 }
 

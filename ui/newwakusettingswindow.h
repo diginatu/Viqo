@@ -37,11 +37,15 @@ public:
   void savePresets();
   void loadPresets();
 
+  void resetWakuData();
+  void clearWakuDataIfNeeded();
+
   QString getCommunity();
 private:
   Ui::NewWakuSettingsWindow *ui;
   MainWindow* mwin;
   QString selectedCommunity, selectedCategory;
+  bool clearWakuData = false;
 
   QJsonObject makeJsonFromForm();
   void setPresetsFromJson(const QJsonObject& jsn);
