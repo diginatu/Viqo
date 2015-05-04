@@ -209,7 +209,7 @@ void NicoLiveManager::newWakuAbstractor(QNetworkReply* reply, int mode) {
       StrAbstractor* head = option->mid("", ">");
       QString value = HTMLdecode(head->midStr("value=\"", "\""));
       if (value == "") continue;
-      QString disp = option->midStr("", "");
+      QString disp = NicoLiveManager::HTMLdecode(option->midStr("", "").replace("<wbr />&#8203;", ""));
       if (mode <= 1) {
         if (name == "tags[]") name = "tags[]c";
         nwin->set(name, value, disp);
