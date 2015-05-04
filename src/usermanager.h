@@ -1,4 +1,4 @@
-#ifndef USERMANAGER_H
+﻿#ifndef USERMANAGER_H
 #define USERMANAGER_H
 
 #include <QObject>
@@ -6,9 +6,11 @@
 #include <QtSql/QtSql>
 #include <QMessageBox>
 
-#include "usergetter.h"
+#include "NicoLiveManager/usernamegetter.h"
 
-class UserManager : public NicoHttp
+class MainWindow;
+
+class UserManager : QObject
 {
 	Q_OBJECT
 public:
@@ -18,6 +20,7 @@ public:
 
 private:
 	QSqlDatabase db;
+  MainWindow* mwin;
 
 };
 

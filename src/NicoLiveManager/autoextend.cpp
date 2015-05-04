@@ -2,10 +2,10 @@
 #include "../../ui/mainwindow.h"
 
 AutoExtend::AutoExtend(MainWindow* mwin, NicoLiveManager* nlman, QObject* parent) :
-  HttpGetter(mwin, nlman, parent),
+  HttpGetter(mwin, parent),
   mExtendManager(nullptr)
 {
-
+  this->nlman = nlman;
 }
 
 void AutoExtend::get()
@@ -38,9 +38,9 @@ void AutoExtend::got(QNetworkReply *reply)
   StrAbstractor* aitem;
   while ((aitem = data.mid("<item>", "</item>")) != nullptr) {
     // QString price = aitem->midStr("<price>", "</price>");
-    QString num   = aitem->midStr("<num>", "</num>");
-    QString code  = aitem->midStr("<code>", "</code>");
-    QString item  = aitem->midStr("<item>", "");
+    QString num  = aitem->midStr("<num>", "</num>");
+    QString code = aitem->midStr("<code>", "</code>");
+    QString item = aitem->midStr("<item>", "");
 
     if (item == "freeextend") {
       getExtend(code, item, num);

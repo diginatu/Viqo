@@ -302,7 +302,7 @@
              <rect>
               <x>0</x>
               <y>0</y>
-              <width>399</width>
+              <width>263</width>
               <height>183</height>
              </rect>
             </property>
@@ -875,7 +875,7 @@
     <bool>false</bool>
    </property>
    <property name="text">
-    <string>コテハン取得</string>
+    <string>ユーザ名取得</string>
    </property>
   </action>
   <action name="autoGettingUserName">

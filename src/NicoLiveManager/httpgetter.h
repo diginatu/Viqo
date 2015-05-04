@@ -11,13 +11,12 @@ class HttpGetter : public QObject
 {
   Q_OBJECT
 public:
-  explicit HttpGetter(MainWindow* mwin, NicoLiveManager* nlman, QObject *parent = 0);
+  explicit HttpGetter(MainWindow* mwin, QObject *parent = 0);
 protected:
   void get();
   ~HttpGetter();
   QNetworkAccessManager* mManager;
   MainWindow* mwin;
-  NicoLiveManager* nlman;
 
 private:
 

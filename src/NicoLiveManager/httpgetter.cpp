@@ -1,12 +1,11 @@
 ﻿#include "httpgetter.h"
 #include "../../ui/mainwindow.h"
 
-HttpGetter::HttpGetter(MainWindow* mwin, NicoLiveManager* nlman, QObject *parent) :
+HttpGetter::HttpGetter(MainWindow* mwin, QObject *parent) :
   QObject(parent),
   mManager(nullptr)
 {
   this->mwin = mwin;
-  this->nlman = nlman;
 }
 
 void HttpGetter::get()
@@ -19,9 +18,9 @@ void HttpGetter::get()
 
   // make request
   QNetworkRequest rq;
-  QVariant postData = nlman->makePostData(mwin->settings.getUserSession());
+  QVariant postData = NicoLiveManager::makePostData(mwin->settings.getUserSession());
   rq.setHeader(QNetworkRequest::CookieHeader, postData);
-  rq.setUrl(QUrl("http://live.nicovideo.jp/api/getpublishstatus?v=lv" + nlman->nowWaku.getBroadID()));
+  rq.setUrl(QUrl("http://live.nicovideo.jp/api/getpublishstatus?v=lv"));
 
   mManager->get(rq);
 }
@@ -38,4 +37,5 @@ void HttpGetter::got(QNetworkReply* reply)
   qDebug() << data.toString();
 
   reply->deleteLater();
+  this->deleteLater();
 }
