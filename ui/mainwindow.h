@@ -22,6 +22,7 @@
 #include "accountwindow.h"
 #include "followcommunity.h"
 #include "../src/NicoLiveManager/autoextend.h"
+#include "getwakutimer.h"
 
 class MainWindow : public QMainWindow
 {
@@ -57,6 +58,9 @@ public:
 
   void deleteCommunityFromList(QString communityID);
 
+  bool startWakuTimerEnabled;
+  QDateTime startWakuTimerTime;
+
 public slots:
   // ui slots
   void on_receive_clicked();
@@ -65,6 +69,8 @@ public slots:
   void getWatchCount();
 
 private slots:
+  void timeUpdate();
+
   void on_comment_view_currentItemChanged(QTreeWidgetItem *current);
   void on_live_waku_list_activated(int index);
   void updateElapsedTime();
@@ -108,6 +114,8 @@ private slots:
 
   void on_autoGettingUserName_toggled(bool status);
 
+  void on_action_triggered();
+
 private:
   Ui::MainWindow* ui;
 
@@ -115,6 +123,7 @@ private:
   NewWakuSettingsWindow* newWakuSettingsWindow;
   AccountWindow* accountWindow;
   FollowCommunity* followCommunity;
+  GetWakuTimer* getWakuTimer;
 
   QTimer* watch_count_timer;
   QTimer* elapsed_time_timer;

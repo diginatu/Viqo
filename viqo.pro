@@ -62,7 +62,8 @@ SOURCES += src/main.cpp\
     src/NicoLiveManager/nicookie.cpp \
     src/NicoLiveManager/httpgetter.cpp \
     src/NicoLiveManager/autoextend.cpp \
-    src/NicoLiveManager/usernamegetter.cpp
+    src/NicoLiveManager/usernamegetter.cpp \
+    ui/getwakutimer.cpp
 
 HEADERS  += src/NicoLiveManager/nicolivemanager.h \
     src/strabstractor.h \
@@ -80,13 +81,15 @@ HEADERS  += src/NicoLiveManager/nicolivemanager.h \
     src/NicoLiveManager/nicookie.h \
     src/NicoLiveManager/httpgetter.h \
     src/NicoLiveManager/autoextend.h \
-    src/NicoLiveManager/usernamegetter.h
+    src/NicoLiveManager/usernamegetter.h \
+    ui/getwakutimer.h
 
 FORMS    += ui/mainwindow.ui \
     ui/settingswindow.ui \
     ui/newwakusettingswindow.ui \
     ui/accountwindow.ui \
-    ui/followcommunity.ui
+    ui/followcommunity.ui \
+    ui/getwakutimer.ui
 
 RESOURCES += \
     resources.qrc

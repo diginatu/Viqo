@@ -8,12 +8,16 @@ MainWindow::MainWindow(QWidget *parent) :
   newWakuSettingsWindow(new NewWakuSettingsWindow(this, this)),
   accountWindow(new AccountWindow(this, this)),
   followCommunity(new FollowCommunity(this, this)),
+  getWakuTimer(new GetWakuTimer(this, this)),
   userSessionDisabledDialogAppeared(false),
   isCursorTop(true),
   settings(this, ui, this)
 {
   ui->setupUi(this);
   setAcceptDrops(true);
+
+  startWakuTimerEnabled = false;
+  startWakuTimerTime = QDateTime::currentDateTime();
 
   this->setWindowIcon(QIcon(":/img/icon.svg"));
 
@@ -56,6 +60,10 @@ MainWindow::MainWindow(QWidget *parent) :
     nicolivemanager->loginAlertAPI(mail, pass);
   }
 
+  QTimer *timer = new QTimer(this);
+  connect(timer, SIGNAL(timeout()), this, SLOT(timeUpdate()));
+  timer->start(60 * 1000);
+
   nicolivemanager->getRawMyLiveHTML();
   QTimer::singleShot(30000, nicolivemanager, SLOT(getRawMyLiveHTML()));
 
@@ -70,8 +78,6 @@ MainWindow::~MainWindow()
 
 void MainWindow::onReceiveStarted()
 {
-  qDebug() << "--comment receiving started--";
-
   nicolivemanager->nowWaku.setIsConnected(true);
 
   ui->submit_button->setEnabled(true);
@@ -94,8 +100,6 @@ void MainWindow::onReceiveStarted()
 
 void MainWindow::onReceiveEnded()
 {
-  qDebug() << "--comment receiving ended--";
-
   nicolivemanager->nowWaku.setIsConnected(false);
 
   ui->submit_button->setEnabled(false);
@@ -130,6 +134,19 @@ void MainWindow::dropEvent(QDropEvent *event)
 void MainWindow::getWatchCount()
 {
   nicolivemanager->getHeartBeatAPI();
+}
+
+void MainWindow::timeUpdate()
+{
+  QDateTime nowT = QDateTime::currentDateTime();
+  if (startWakuTimerEnabled &&
+      startWakuTimerTime <= nowT &&
+      nowT < startWakuTimerTime.addSecs(60 * 60))
+  {
+    startWakuTimerEnabled = false;
+    on_getNewWakuNow_triggered();
+    getWakuTimer->init();
+  }
 }
 
 void MainWindow::setWatchCount(QString num)
@@ -641,4 +658,12 @@ void MainWindow::on_autoGettingUserName_toggled(bool status)
 {
   ui->autoGetUserNameOverWrite->setEnabled(status);
   ui->autoGetUserWay->setEnabled(status);
+}
+
+void MainWindow::on_action_triggered()
+{
+  getWakuTimer->init();
+  getWakuTimer->show();
+  getWakuTimer->raise();
+  getWakuTimer->activateWindow();
 }
