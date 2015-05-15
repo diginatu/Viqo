@@ -16,12 +16,13 @@
 #include "../src/usermanager.h"
 #include "../src/strabstractor.h"
 #include "../src/NicoLiveManager/nicolivemanager.h"
+#include "../src/NicoLiveManager/autoextend.h"
+#include "../src/NicoLiveManager/heartbeat.h"
 #include "settingswindow.h"
 #include "../src/settings.h"
 #include "newwakusettingswindow.h"
 #include "accountwindow.h"
 #include "followcommunity.h"
-#include "../src/NicoLiveManager/autoextend.h"
 #include "getwakutimer.h"
 
 class MainWindow : public QMainWindow
@@ -39,7 +40,7 @@ public:
   int lastCommentNum();
   void insLog(QString log = "");
 
-  void setWatchCount(QString num);
+  void updateWatchCount();
   void setHousouID(QString text);
   void refleshLiveWaku();
 

@@ -31,7 +31,6 @@ public:
 
   void insertLiveWakuList(LiveWaku* livewaku);
 
-  void getHeartBeatAPI();
   void loginAlertAPI(const QString& mail, const QString& pass);
   void getPostKeyAPI(const QString& thread, int block_no);
   void getPublishStatusAPI();
@@ -61,6 +60,9 @@ public:
   static QString HTMLdecode(QString st);
 
   void updateMyCommunities();
+  QString getWatchCount() const;
+  void setWatchCount(const QString& value);
+
 signals:
 
 public slots:
@@ -91,7 +93,6 @@ private:
   QNetworkAccessManager* mPostKeyManager;
   QNetworkAccessManager* mLoginAlertManager;
   QNetworkAccessManager* mAdminAlertManager;
-  QNetworkAccessManager* mHeartBeat;
   QNetworkAccessManager* mLoginManager;
   QNetworkAccessManager* mOwnerCommentManager;
   QNetworkAccessManager* mOwnerCommentSManager;
@@ -101,7 +102,6 @@ private:
   QNetworkAccessManager* mConfigure;
   QNetworkAccessManager* mCommunityInfo;
 private slots:
-  void heartBeatFinished(QNetworkReply* reply);
   void loginAlertFinished(QNetworkReply* reply);
   void adminAlertFinished(QNetworkReply* reply);
   void rawMyLivefinished(QNetworkReply* reply);

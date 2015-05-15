@@ -8,7 +8,7 @@ HttpGetter::HttpGetter(MainWindow* mwin, QObject *parent) :
   this->mwin = mwin;
 }
 
-void HttpGetter::get()
+void HttpGetter::requestGet(const QNetworkRequest& rq)
 {
   if(mManager!=nullptr) delete mManager;
   mManager = new QNetworkAccessManager(this);
@@ -16,13 +16,18 @@ void HttpGetter::get()
   connect(mManager, SIGNAL(finished(QNetworkReply*)), this,
           SLOT(got(QNetworkReply*)));
 
-  // make request
-  QNetworkRequest rq;
-  QVariant postData = NicoLiveManager::makePostData(mwin->settings.getUserSession());
-  rq.setHeader(QNetworkRequest::CookieHeader, postData);
-  rq.setUrl(QUrl("http://live.nicovideo.jp/api/getpublishstatus?v=lv"));
-
   mManager->get(rq);
+}
+
+void HttpGetter::requestPost(const QNetworkRequest& rq, QIODevice* data)
+{
+  if(mManager!=nullptr) delete mManager;
+  mManager = new QNetworkAccessManager(this);
+
+  connect(mManager, SIGNAL(finished(QNetworkReply*)), this,
+          SLOT(got(QNetworkReply*)));
+
+  mManager->post(rq, data);
 }
 
 HttpGetter::~HttpGetter()

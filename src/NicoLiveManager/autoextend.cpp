@@ -8,26 +8,20 @@ AutoExtend::AutoExtend(MainWindow* mwin, NicoLiveManager* nlman, QObject* parent
   this->nlman = nlman;
 }
 
+AutoExtend::~AutoExtend()
+{
+
+}
+
 void AutoExtend::get()
 {
-  if(mManager!=nullptr) delete mManager;
-  mManager = new QNetworkAccessManager(this);
-
-  connect(mManager, SIGNAL(finished(QNetworkReply*)), this,
-          SLOT(got(QNetworkReply*)));
-
   // make request
   QNetworkRequest rq;
   QVariant postData = nlman->makePostData(mwin->settings.getUserSession());
   rq.setHeader(QNetworkRequest::CookieHeader, postData);
   rq.setUrl(QUrl("http://watch.live.nicovideo.jp/api/getsalelist?v=lv" + nlman->nowWaku.getBroadID()));
 
-  mManager->get(rq);
-}
-
-AutoExtend::~AutoExtend()
-{
-
+  requestGet(rq);
 }
 
 void AutoExtend::got(QNetworkReply *reply)

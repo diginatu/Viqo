@@ -39,7 +39,6 @@ SOURCES += src/main.cpp\
     src/strabstractor.cpp \
     src/usermanager.cpp \
     src/NicoLiveManager/nicolivemanager.cpp \
-    src/NicoLiveManager/heartbeatapi.cpp \
     src/NicoLiveManager/Alert/alert.cpp \
     src/NicoLiveManager/Alert/wakutcp.cpp \
     src/NicoLiveManager/rawmylivewaku.cpp \
@@ -63,7 +62,8 @@ SOURCES += src/main.cpp\
     src/NicoLiveManager/httpgetter.cpp \
     src/NicoLiveManager/autoextend.cpp \
     src/NicoLiveManager/usernamegetter.cpp \
-    ui/getwakutimer.cpp
+    ui/getwakutimer.cpp \
+    src/NicoLiveManager/heartbeat.cpp
 
 HEADERS  += src/NicoLiveManager/nicolivemanager.h \
     src/strabstractor.h \
@@ -82,7 +82,8 @@ HEADERS  += src/NicoLiveManager/nicolivemanager.h \
     src/NicoLiveManager/httpgetter.h \
     src/NicoLiveManager/autoextend.h \
     src/NicoLiveManager/usernamegetter.h \
-    ui/getwakutimer.h
+    ui/getwakutimer.h \
+    src/NicoLiveManager/heartbeat.h
 
 FORMS    += ui/mainwindow.ui \
     ui/settingswindow.ui \

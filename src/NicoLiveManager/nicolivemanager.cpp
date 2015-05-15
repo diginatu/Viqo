@@ -78,7 +78,8 @@ void NicoLiveManager::broadStart()
 
 void NicoLiveManager::broadDisconnect(bool disableFollow)
 {
-  mwin->setWatchCount("0");
+  watchCount = "0";
+  mwin->updateWatchCount();
   nowWaku.broadDisconnect();
   if (disableFollow)
     nowWaku.setCommunity("");
@@ -123,3 +124,13 @@ QString NicoLiveManager::HTMLdecode(QString st)
   st.replace("&gt;", ">");
   return st;
 }
+QString NicoLiveManager::getWatchCount() const
+{
+    return watchCount;
+}
+
+void NicoLiveManager::setWatchCount(const QString& value)
+{
+    watchCount = value;
+}
+

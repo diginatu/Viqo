@@ -12,9 +12,11 @@ class HttpGetter : public QObject
   Q_OBJECT
 public:
   explicit HttpGetter(MainWindow* mwin, QObject *parent = 0);
-protected:
-  void get();
   ~HttpGetter();
+protected:
+  void requestGet(const QNetworkRequest& rq);
+  void requestPost(const QNetworkRequest& rq, QIODevice* data);
+  void get();
   QNetworkAccessManager* mManager;
   MainWindow* mwin;
 

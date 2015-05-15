@@ -133,7 +133,8 @@ void MainWindow::dropEvent(QDropEvent *event)
 
 void MainWindow::getWatchCount()
 {
-  nicolivemanager->getHeartBeatAPI();
+  HeartBeat* hb = new HeartBeat(this, nicolivemanager, this);
+  hb->get();
 }
 
 void MainWindow::timeUpdate()
@@ -149,9 +150,10 @@ void MainWindow::timeUpdate()
   }
 }
 
-void MainWindow::setWatchCount(QString num)
+void MainWindow::updateWatchCount()
 {
-  ui->num_audience->setText(QStringLiteral("来場者数: ") + num);
+  ui->num_audience->setText(QStringLiteral("来場者数: ")
+                            + nicolivemanager->getWatchCount());
 }
 
 void MainWindow::updateElapsedTime()
