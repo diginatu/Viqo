@@ -9,6 +9,7 @@ MainWindow::MainWindow(QWidget *parent) :
   accountWindow(new AccountWindow(this, this)),
   followCommunity(new FollowCommunity(this, this)),
   getWakuTimer(new GetWakuTimer(this, this)),
+  matchAndAddBroadcast(new MatchAndAddBroadcast(this, this)),
   userSessionDisabledDialogAppeared(false),
   isCursorTop(true),
   settings(this, ui, this)
@@ -668,4 +669,12 @@ void MainWindow::on_action_triggered()
   getWakuTimer->show();
   getWakuTimer->raise();
   getWakuTimer->activateWindow();
+}
+
+void MainWindow::on_MatchAndAddBroadcast_triggered()
+{
+  matchAndAddBroadcast->init();
+  matchAndAddBroadcast->show();
+  matchAndAddBroadcast->raise();
+  matchAndAddBroadcast->activateWindow();
 }

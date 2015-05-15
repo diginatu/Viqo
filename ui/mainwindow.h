@@ -18,12 +18,13 @@
 #include "../src/NicoLiveManager/nicolivemanager.h"
 #include "../src/NicoLiveManager/autoextend.h"
 #include "../src/NicoLiveManager/heartbeat.h"
-#include "settingswindow.h"
 #include "../src/settings.h"
+#include "settingswindow.h"
 #include "newwakusettingswindow.h"
 #include "accountwindow.h"
 #include "followcommunity.h"
 #include "getwakutimer.h"
+#include "matchandaddbroadcast.h"
 
 class MainWindow : public QMainWindow
 {
@@ -117,6 +118,8 @@ private slots:
 
   void on_action_triggered();
 
+  void on_MatchAndAddBroadcast_triggered();
+
 private:
   Ui::MainWindow* ui;
 
@@ -125,6 +128,7 @@ private:
   AccountWindow* accountWindow;
   FollowCommunity* followCommunity;
   GetWakuTimer* getWakuTimer;
+  MatchAndAddBroadcast* matchAndAddBroadcast;
 
   QTimer* watch_count_timer;
   QTimer* elapsed_time_timer;

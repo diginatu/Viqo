@@ -676,6 +676,7 @@
     <addaction name="clear"/>
     <addaction name="separator"/>
     <addaction name="FollowCommunity"/>
+    <addaction name="MatchAndAddBroadcast"/>
     <addaction name="setting"/>
     <addaction name="AccountSettings"/>
    </widget>
@@ -942,6 +943,11 @@
   <action name="action">
    <property name="text">
     <string>枠取りタイマー...</string>
+   </property>
+  </action>
+  <action name="MatchAndAddBroadcast">
+   <property name="text">
+    <string>放送開始サーチ設定...</string>
    </property>
   </action>
  </widget>
