@@ -57,6 +57,33 @@ void MatchAndAddBroadcast::on_MatchAndAddBroadcast_accepted()
           );
   }
 
-  qDebug() << mwin->settings.matchDateList;
   mwin->settings.saveMatchDataList();
+}
+
+void MatchAndAddBroadcast::on_itemUpButton_clicked()
+{
+  QTreeWidgetItem* citem = ui->treeWidget->currentItem();
+
+  int row = ui->treeWidget->currentIndex().row();
+  if (citem && row > 0)
+  {
+    int index = ui->treeWidget->indexOfTopLevelItem(citem);
+    QTreeWidgetItem* child = ui->treeWidget->takeTopLevelItem(index);
+    ui->treeWidget->insertTopLevelItem(index-1, child);
+    ui->treeWidget->setCurrentItem(citem);
+  }
+}
+
+void MatchAndAddBroadcast::on_itemDownButton_clicked()
+{
+  QTreeWidgetItem* citem = ui->treeWidget->currentItem();
+
+  int row = ui->treeWidget->currentIndex().row();
+  if (citem && row < ui->treeWidget->topLevelItemCount()-1)
+  {
+    int index = ui->treeWidget->indexOfTopLevelItem(citem);
+    QTreeWidgetItem* child = ui->treeWidget->takeTopLevelItem(index);
+    ui->treeWidget->insertTopLevelItem(index+1, child);
+    ui->treeWidget->setCurrentItem(citem);
+  }
 }

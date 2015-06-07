@@ -25,6 +25,9 @@ private slots:
 
   void on_MatchAndAddBroadcast_accepted();
 
+  void on_itemUpButton_clicked();
+  void on_itemDownButton_clicked();
+
 private:
   Ui::MatchAndAddBroadcast *ui;
   MainWindow* mwin;
