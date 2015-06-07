@@ -77,8 +77,12 @@ public:
   void setDispNG(bool value);
 
   QList< QPair<QString,QString> > followCommunities;
+  // match data : [name, match contents, whether keyword is regex, keywords]
+  QList<QStringList> matchDateList;
 
 
+  void loadMatchDateList();
+  void saveMatchDataList();
 signals:
 
 public slots:

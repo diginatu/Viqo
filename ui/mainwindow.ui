@@ -302,7 +302,7 @@
              <rect>
               <x>0</x>
               <y>0</y>
-              <width>399</width>
+              <width>403</width>
               <height>183</height>
              </rect>
             </property>
@@ -684,6 +684,7 @@
     <property name="title">
      <string>放送</string>
     </property>
+    <addaction name="autoNewWakuSettings"/>
     <addaction name="getNewWakuNow"/>
     <addaction name="separator"/>
     <addaction name="autoNewWakuChk"/>
@@ -691,7 +692,7 @@
     <addaction name="autoNewWakuStart"/>
     <addaction name="autoExtend"/>
     <addaction name="separator"/>
-    <addaction name="autoNewWakuSettings"/>
+    <addaction name="separator"/>
     <addaction name="action"/>
    </widget>
    <widget class="QMenu" name="help">

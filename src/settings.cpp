@@ -17,6 +17,7 @@ void Settings::loadAll()
   loadSettings();
   loadStatus();
   loadFollowCommunities();
+  loadMatchDateList();
 }
 
 void Settings::saveStatus(int num)
@@ -263,6 +264,68 @@ void Settings::loadFollowCommunities()
   followCommunities.clear();
   foreach (QJsonValue community, follow_communities) {
     followCommunities << qMakePair(community.toArray()[0].toString(), community.toArray()[1].toString());
+  }
+
+  file.close();
+}
+
+void Settings::saveMatchDataList()
+{
+  QStringList dir = QStandardPaths::standardLocations(QStandardPaths::DataLocation);
+  if (dir.empty()) {
+    mwin->insLog("save directory is not available");
+    QMessageBox::information(mwin, "Viqo", QStringLiteral("保存領域がないので保存できません"));
+    return;
+  }
+
+  QJsonArray matchDataListj;
+
+  foreach (QStringList data, matchDateList) {
+    matchDataListj.append(QJsonArray() << data[0] << data[1] << data[2] << data[3]);
+  }
+
+  QJsonObject root;
+  root["match_data_list"] = matchDataListj;
+
+  QJsonDocument jsd;
+  jsd.setObject(root);
+
+  QFile file(dir[0] + "/match_data_list.json");
+  if (!file.open(QIODevice::WriteOnly)) {
+    file.close();
+    mwin->insLog("opening list file(match_data_list.json) failed");
+    QMessageBox::information(mwin, "Viqo", QStringLiteral("設定ファイルに書き込みができません"));
+    return;
+  }
+
+  QTextStream out(&file);
+  out << jsd.toJson(QJsonDocument::Compact);
+  file.close();
+}
+
+void Settings::loadMatchDateList()
+{
+  QStringList dir = QStandardPaths::standardLocations(QStandardPaths::DataLocation);
+  if (dir.empty()) {
+    mwin->insLog("save directory is not available");
+    return;
+  }
+  QFile file(dir[0] + "/match_data_list.json");
+  if (!file.open(QIODevice::ReadOnly | QIODevice::Text)) {
+    file.close();
+    mwin->insLog("opening list file(match_data_list.json) failed");
+    return;
+  }
+
+  QJsonDocument jsd = QJsonDocument::fromJson(file.readAll());
+
+  QJsonArray matchDataListj = jsd.object()["match_data_list"].toArray();
+  matchDateList.clear();
+  foreach (QJsonValue community, matchDataListj) {
+    QJsonArray data = community.toArray();
+    matchDateList << (QStringList() << data[0].toString()
+                  << data[1].toString() << data[2].toString()
+                  << data[3].toString());
   }
 
   file.close();

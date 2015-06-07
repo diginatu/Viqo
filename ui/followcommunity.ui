@@ -50,11 +50,11 @@
    </item>
    <item row="0" column="0" rowspan="3">
     <widget class="QTreeWidget" name="communityList">
-     <property name="editTriggers">
-      <set>QAbstractItemView::NoEditTriggers</set>
-     </property>
      <property name="indentation">
       <number>0</number>
+     </property>
+     <property name="itemsExpandable">
+      <bool>false</bool>
      </property>
      <column>
       <property name="text">
