@@ -1,6 +1,7 @@
 ﻿#include "wakutcp.h"
 #include "../../../ui/mainwindow.h"
 #include "../nicolivemanager.h"
+#include "../getstreaminfo.h"
 
 WakuTcp::WakuTcp(QString domain, int port, QString thread, MainWindow* mwin, NicoLiveManager* nicolivemanager)
 {
@@ -107,42 +108,27 @@ void WakuTcp::readOneRawWaku(const QString& rawwaku)
     }
   }
 
-  auto matchRegAndKey = [](bool isReg, const QString& keyword, const QString& matchSt, bool isEq){
-    if (isReg) {
-      if (QRegExp(matchSt).indexIn(keyword) != -1)
-        return true;
-    } else {
-      if (isEq) {
-        if (keyword == matchSt) return true;
-      } else {
-        if (matchSt.indexOf(keyword)!=-1) return true;
+  if (mwin->settings.getMatchDataEnabled()) {
+    foreach (QStringList match, mwin->settings.matchDataList) {
+      if (match[1].indexOf('B')!=-1 && match[2] == broadID) {
+        insertNewWaku();
+        break;
+      }
+      if (match[1].indexOf('C')!=-1 && match[2] == CommunityID) {
+        insertNewWaku();
+        break;
+      }
+      if (match[1].indexOf('U')!=-1 && match[2] == nushiID) {
+        insertNewWaku();
+        break;
       }
     }
-    return false;
-  };
 
-  qDebug() << awaku.toString();
-  foreach (QStringList match, mwin->settings.matchDateList) {
-    if (match[1].indexOf('B')!=-1) {
-      if (matchRegAndKey(match[2]=="true", match[3], broadID, true)) {
-        insertNewWaku();
-        break;
-      }
-    }
-    if (match[1].indexOf('C')!=-1) {
-      if (matchRegAndKey(match[2]=="true", match[3], CommunityID, true)) {
-        insertNewWaku();
-        break;
-      }
-    }
-    if (match[1].indexOf('U')!=-1) {
-      if (matchRegAndKey(match[2]=="true", match[3], nushiID, true)) {
-        insertNewWaku();
-        break;
-      }
+    if (mwin->settings.getMatchDataNeedDetailInfo()) {
+      GetStreamInfo* getter = new GetStreamInfo(mwin, nicolivemanager, broadID, this);
+      getter->get();
     }
   }
-
 }
 
 void WakuTcp::close()

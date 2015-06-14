@@ -280,11 +280,12 @@ void Settings::saveMatchDataList()
 
   QJsonArray matchDataListj;
 
-  foreach (QStringList data, matchDateList) {
-    matchDataListj.append(QJsonArray() << data[0] << data[1] << data[2] << data[3]);
+  foreach (QStringList data, matchDataList) {
+    matchDataListj.append(QJsonArray() << data[0] << data[1] << data[2]);
   }
 
   QJsonObject root;
+  root["enable"] = matchDataEnabled;
   root["match_data_list"] = matchDataListj;
 
   QJsonDocument jsd;
@@ -302,6 +303,16 @@ void Settings::saveMatchDataList()
   out << jsd.toJson(QJsonDocument::Compact);
   file.close();
 }
+bool Settings::getMatchDataEnabled() const
+{
+  return matchDataEnabled;
+}
+
+void Settings::setMatchDataEnabled(bool value)
+{
+  matchDataEnabled = value;
+}
+
 
 void Settings::loadMatchDateList()
 {
@@ -319,14 +330,24 @@ void Settings::loadMatchDateList()
 
   QJsonDocument jsd = QJsonDocument::fromJson(file.readAll());
 
+  matchDataEnabled = jsd.object()["enable"].toBool();
+
+  bool includeBroadInfo = false;
+  QRegExp infoNeededRg("[TD]");
+
   QJsonArray matchDataListj = jsd.object()["match_data_list"].toArray();
-  matchDateList.clear();
+  matchDataList.clear();
   foreach (QJsonValue community, matchDataListj) {
     QJsonArray data = community.toArray();
-    matchDateList << (QStringList() << data[0].toString()
-                  << data[1].toString() << data[2].toString()
-                  << data[3].toString());
+
+    if (!includeBroadInfo && infoNeededRg.indexIn(data[1].toString())!=-1) {
+      includeBroadInfo = true;
+    }
+    matchDataList << (QStringList() << data[0].toString()
+                  << data[1].toString() << data[2].toString());
   }
+
+  matchDataNeedDetailInfo = includeBroadInfo;
 
   file.close();
 }
@@ -454,6 +475,16 @@ void Settings::setDispNG(bool value)
 {
   dispNG = value;
 }
+
+bool Settings::getMatchDataNeedDetailInfo() const
+{
+  return matchDataNeedDetailInfo;
+}
+void Settings::setMatchDataNeedDetailInfo(bool value)
+{
+  matchDataNeedDetailInfo = value;
+}
+
 
 QString Settings::getBrowser() const
 {

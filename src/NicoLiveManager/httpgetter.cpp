@@ -37,10 +37,6 @@ HttpGetter::~HttpGetter()
 
 void HttpGetter::got(QNetworkReply* reply)
 {
-  StrAbstractor data(QString(reply->readAll()));
-
-  qDebug() << data.toString();
-
   reply->deleteLater();
   this->deleteLater();
 }

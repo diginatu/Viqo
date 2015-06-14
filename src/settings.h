@@ -76,13 +76,20 @@ public:
   bool getDispNG() const;
   void setDispNG(bool value);
 
+  bool getMatchDataNeedDetailInfo() const;
+  void setMatchDataNeedDetailInfo(bool value);
+
   QList< QPair<QString,QString> > followCommunities;
-  // match data : [name, match contents, whether keyword is regex, keywords]
-  QList<QStringList> matchDateList;
+  // match data : [name, match contents, keyword]
+  QList<QStringList> matchDataList;
 
 
   void loadMatchDateList();
   void saveMatchDataList();
+
+  bool getMatchDataEnabled() const;
+  void setMatchDataEnabled(bool value);
+
 signals:
 
 public slots:
@@ -99,6 +106,8 @@ private:
 
   bool ownerComment;
   bool dispNG;
+  bool matchDataEnabled;
+  bool matchDataNeedDetailInfo;
 
   MainWindow* mwin;
   Ui::MainWindow *ui;

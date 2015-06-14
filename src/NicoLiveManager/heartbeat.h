@@ -9,7 +9,7 @@ class HeartBeat : public HttpGetter
 {
   Q_OBJECT
 public:
-  HeartBeat(MainWindow* mwin, NicoLiveManager* nlman, QObject* parent);
+  HeartBeat(MainWindow* mwin, NicoLiveManager* nlman, QObject* parent = 0);
   ~HeartBeat();
   void get();
 private:

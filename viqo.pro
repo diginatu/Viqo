@@ -64,7 +64,8 @@ SOURCES += src/main.cpp\
     src/NicoLiveManager/usernamegetter.cpp \
     ui/getwakutimer.cpp \
     src/NicoLiveManager/heartbeat.cpp \
-    ui/matchandaddbroadcast.cpp
+    ui/matchandaddbroadcast.cpp \
+    src/NicoLiveManager/getstreaminfo.cpp
 
 HEADERS  += src/NicoLiveManager/nicolivemanager.h \
     src/strabstractor.h \
@@ -85,7 +86,8 @@ HEADERS  += src/NicoLiveManager/nicolivemanager.h \
     src/NicoLiveManager/usernamegetter.h \
     ui/getwakutimer.h \
     src/NicoLiveManager/heartbeat.h \
-    ui/matchandaddbroadcast.h
+    ui/matchandaddbroadcast.h \
+    src/NicoLiveManager/getstreaminfo.h
 
 FORMS    += ui/mainwindow.ui \
     ui/settingswindow.ui \
