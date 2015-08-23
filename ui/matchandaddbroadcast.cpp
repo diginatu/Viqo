@@ -28,6 +28,23 @@ void MatchAndAddBroadcast::init()
   }
 }
 
+void MatchAndAddBroadcast::gotCommunityInfo(QString commid, QString title)
+{
+  if (title.isEmpty()) {
+    QMessageBox::information(this, "Viqo", QStringLiteral("コミュニティが見つかりませんでした"));
+    return;
+  }
+
+  this->ui->treeWidget->clear();
+  ui->treeWidget->clear();
+
+  QTreeWidgetItem* item = new QTreeWidgetItem(ui->treeWidget);
+  item->setText(0, title);
+  item->setText(1, QStringLiteral("C"));
+  item->setText(2, commid);
+  item->setFlags(item->flags() | Qt::ItemIsEditable | Qt::ItemNeverHasChildren);
+}
+
 void MatchAndAddBroadcast::on_addButton_clicked()
 {
   QTreeWidgetItem* item = new QTreeWidgetItem(ui->treeWidget);
@@ -35,6 +52,23 @@ void MatchAndAddBroadcast::on_addButton_clicked()
   item->setText(1, QStringLiteral("BCU"));
   item->setText(2, QStringLiteral("keyword"));
   item->setFlags(item->flags() | Qt::ItemIsEditable | Qt::ItemNeverHasChildren);
+}
+
+void MatchAndAddBroadcast::on_communityAddButton_clicked()
+{
+  QString commid =
+      QInputDialog::getText(this, QStringLiteral("コミュニティ追加"),
+                            QStringLiteral("コミュニティIDを入力してください"),
+                            QLineEdit::Normal, "co");
+
+  if (commid.isNull()) return;
+
+  mwin->nicolivemanager->communityInfoAPI(commid);
+}
+
+void MatchAndAddBroadcast::on_userAddButton_clicked()
+{
+
 }
 
 void MatchAndAddBroadcast::on_deleteButton_clicked()

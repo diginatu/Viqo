@@ -15,6 +15,7 @@
 #include "../../ui/newwakusettingswindow.h"
 #include "../../ui/accountwindow.h"
 #include "../../ui/followcommunity.h"
+#include "../../ui/matchandaddbroadcast.h"
 
 namespace Ui {
 class MainWindow;
@@ -24,7 +25,7 @@ class NicoLiveManager : public QObject
 {
   Q_OBJECT
 public:
-  explicit NicoLiveManager(MainWindow* mwin, AccountWindow* awin, NewWakuSettingsWindow* nwin, FollowCommunity* fwin, QObject *parent = 0);
+  explicit NicoLiveManager(MainWindow* mwin, AccountWindow* awin, NewWakuSettingsWindow* nwin, MatchAndAddBroadcast* bwin, QObject *parent = 0);
   ~NicoLiveManager();
 
   static QVariant makePostData(QString session_id);
@@ -75,7 +76,7 @@ private:
   MainWindow* mwin;
   AccountWindow* awin;
   NewWakuSettingsWindow* nwin;
-  FollowCommunity* fwin;
+  MatchAndAddBroadcast* bwin;
   WakuTcp* wakutcp;
 
   QString watchCount;

@@ -1,4 +1,4 @@
-#include "nicolivemanager.h"
+﻿#include "nicolivemanager.h"
 #include "../../ui/mainwindow.h"
 
 void NicoLiveManager::communityInfoAPI(QString commID)
@@ -26,6 +26,6 @@ void NicoLiveManager::communityInfoFinished(QNetworkReply* reply){
 
   reply->deleteLater();
 
-  fwin->gotCommunityInfo(commid, title);
+  bwin->gotCommunityInfo(commid, title);
 }
 

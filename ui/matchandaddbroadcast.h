@@ -19,8 +19,11 @@ public:
 
   void init();
 
+  void gotCommunityInfo(QString commid, QString title);
 private slots:
   void on_addButton_clicked();
+  void on_communityAddButton_clicked();
+  void on_userAddButton_clicked();
   void on_deleteButton_clicked();
 
   void on_MatchAndAddBroadcast_accepted();
