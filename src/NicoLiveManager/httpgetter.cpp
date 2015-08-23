@@ -32,7 +32,7 @@ void HttpGetter::requestPost(const QNetworkRequest& rq, QIODevice* data)
 
 HttpGetter::~HttpGetter()
 {
-  delete mManager;
+  if(mManager!=nullptr) delete mManager;
 }
 
 void HttpGetter::got(QNetworkReply* reply)

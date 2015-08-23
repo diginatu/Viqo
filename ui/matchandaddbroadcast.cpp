@@ -35,9 +35,6 @@ void MatchAndAddBroadcast::gotCommunityInfo(QString commid, QString title)
     return;
   }
 
-  this->ui->treeWidget->clear();
-  ui->treeWidget->clear();
-
   QTreeWidgetItem* item = new QTreeWidgetItem(ui->treeWidget);
   item->setText(0, title);
   item->setText(1, QStringLiteral("C"));
@@ -68,7 +65,22 @@ void MatchAndAddBroadcast::on_communityAddButton_clicked()
 
 void MatchAndAddBroadcast::on_userAddButton_clicked()
 {
+  QString userid =
+      QInputDialog::getText(this, QStringLiteral("ユーザ追加"),
+                            QStringLiteral("ユーザIDを入力してください"),
+                            QLineEdit::Normal, "");
 
+  if (userid.isNull()) return;
+
+  UserNameGetter* ug = new UserNameGetter(mwin, this, userid);
+  connect(ug, &UserNameGetter::got, this, [=](QString name){
+    QTreeWidgetItem* item = new QTreeWidgetItem(ui->treeWidget);
+    item->setText(0, name);
+    item->setText(1, QStringLiteral("U"));
+    item->setText(2, userid);
+    item->setFlags(item->flags() | Qt::ItemIsEditable | Qt::ItemNeverHasChildren);
+  });
+  ug->get();
 }
 
 void MatchAndAddBroadcast::on_deleteButton_clicked()

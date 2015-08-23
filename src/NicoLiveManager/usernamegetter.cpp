@@ -1,19 +1,14 @@
 ﻿#include "usernamegetter.h"
 #include "../../ui/mainwindow.h"
 
-UserNameGetter::UserNameGetter(MainWindow* mwin, QObject *parent,
-                               QTreeWidgetItem* item, QString userID,
-                               QSqlDatabase& db) :
+UserNameGetter::UserNameGetter(MainWindow* mwin, QObject *parent, QString userID) :
   HttpGetter(mwin, parent)
 {
-  this->db = &db;
-  this->item = item;
   this->userID = userID;
 }
 
 UserNameGetter::~UserNameGetter()
 {
-
 }
 
 void UserNameGetter::get()
@@ -22,7 +17,7 @@ void UserNameGetter::get()
   mManager = new QNetworkAccessManager(this);
 
   connect(mManager, SIGNAL(finished(QNetworkReply*)), this,
-          SLOT(got(QNetworkReply*)));
+          SLOT(gotReply(QNetworkReply*)));
 
   // make request
   QNetworkRequest rq;
@@ -31,13 +26,13 @@ void UserNameGetter::get()
   mManager->get(rq);
 }
 
-void UserNameGetter::got(QNetworkReply* reply)
+void UserNameGetter::gotReply(QNetworkReply* reply)
 {
   StrAbstractor userinfo(QString(reply->readAll()));
 
   QString username = userinfo.midStr("<nickname>", "</nickname>");
 
-  mwin->userManager->setUserName(item, username);
+  emit got(username);
 
   reply->deleteLater();
   this->deleteLater();

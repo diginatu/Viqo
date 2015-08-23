@@ -12,18 +12,18 @@ class UserNameGetter : public HttpGetter
 {
   Q_OBJECT
 public:
-  UserNameGetter(MainWindow* mwin, QObject* parent,
-                 QTreeWidgetItem* item, QString userID, QSqlDatabase& db);
+  UserNameGetter(MainWindow* mwin, QObject* parent, QString userID);
   ~UserNameGetter();
 
   void get();
 
 private:
-  QTreeWidgetItem* item;
-  QSqlDatabase* db;
   QString userID;
 private slots:
-  void got(QNetworkReply* reply);
+  void gotReply(QNetworkReply* reply);
+
+signals:
+  void got(QString username);
 
 };
 
