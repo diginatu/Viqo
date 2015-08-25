@@ -10,7 +10,6 @@
 #include "ui_mainwindow.h"
 
 class MainWindow;
-class FollowCommunity;
 
 enum class UserSessionWay { Browser, Direct, Login };
 
@@ -30,9 +29,6 @@ public:
 
   void saveSettings();
   void loadSettings();
-
-  void saveFollowCommunities();
-  void loadFollowCommunities();
 
   void loadMatchDateList();
   void saveMatchDataList();
@@ -82,8 +78,6 @@ public:
 
   bool getMatchDataNeedDetailInfo() const;
   void setMatchDataNeedDetailInfo(bool value);
-
-  QList< QPair<QString,QString> > followCommunities;
 
   // match data [[name, match contents, keyword]][]
   //

@@ -14,7 +14,6 @@
 #include "../../ui/settingswindow.h"
 #include "../../ui/newwakusettingswindow.h"
 #include "../../ui/accountwindow.h"
-#include "../../ui/followcommunity.h"
 #include "../../ui/matchandaddbroadcast.h"
 
 namespace Ui {

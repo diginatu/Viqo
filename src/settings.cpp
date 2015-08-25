@@ -71,7 +71,6 @@ void Settings::loadAll()
 {
   loadSettings();
   loadStatus();
-  loadFollowCommunities();
   loadMatchDateList();
 }
 
@@ -260,67 +259,6 @@ void Settings::loadSettings()
     ownerComment = comment["owner_comment"].toBool();
   if (comment.contains("dispNG"))
     dispNG = comment["dispNG"].toBool();
-
-  file.close();
-}
-
-void Settings::saveFollowCommunities()
-{
-  QStringList dir = QStandardPaths::standardLocations(QStandardPaths::DataLocation);
-  if (dir.empty()) {
-    mwin->insLog("save directory is not available");
-    QMessageBox::information(mwin, "Viqo", QStringLiteral("保存領域がないので保存できません"));
-    return;
-  }
-
-  QJsonArray follow_communities;
-
-  typedef QPair<QString,QString> StringPair;
-  foreach (StringPair community, followCommunities) {
-    follow_communities.append(QJsonArray() << community.first << community.second);
-  }
-
-  QJsonObject root;
-  root["follow_communities"] = follow_communities;
-
-  QJsonDocument jsd;
-  jsd.setObject(root);
-
-  QFile file(dir[0] + "/follow_communities.json");
-  if (!file.open(QIODevice::WriteOnly)) {
-    file.close();
-    mwin->insLog("opening status file failed");
-    QMessageBox::information(mwin, "Viqo", QStringLiteral("設定ファイルに書き込みがせきません"));
-    return;
-  }
-
-  QTextStream out(&file);
-  out << jsd.toJson(QJsonDocument::Compact);
-  file.close();
-}
-
-void Settings::loadFollowCommunities()
-{
-  QStringList dir = QStandardPaths::standardLocations(QStandardPaths::DataLocation);
-  if (dir.empty()) {
-    mwin->insLog("save directory is not available");
-    QMessageBox::information(mwin, "Viqo", QStringLiteral("保存領域がないので保存できません"));
-    return;
-  }
-  QFile file(dir[0] + "/follow_communities.json");
-  if (!file.open(QIODevice::ReadOnly | QIODevice::Text)) {
-    file.close();
-    mwin->insLog("opening Follow Communities setting file failed");
-    return;
-  }
-
-  QJsonDocument jsd = QJsonDocument::fromJson(file.readAll());
-
-  QJsonArray follow_communities = jsd.object()["follow_communities"].toArray();
-  followCommunities.clear();
-  foreach (QJsonValue community, follow_communities) {
-    followCommunities << qMakePair(community.toArray()[0].toString(), community.toArray()[1].toString());
-  }
 
   file.close();
 }

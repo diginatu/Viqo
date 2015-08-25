@@ -53,7 +53,6 @@ SOURCES += src/main.cpp\
     src/NicoLiveManager/getnewwaku.cpp \
     src/NicoLiveManager/configurestream.cpp \
     ui/accountwindow.cpp \
-    ui/followcommunity.cpp \
     ui/mainwindow.cpp \
     ui/newwakusettingswindow.cpp \
     ui/settingswindow.cpp \
@@ -76,7 +75,6 @@ HEADERS  += src/NicoLiveManager/nicolivemanager.h \
     src/NicoLiveManager/LiveWaku/commtcp.h \
     src/settings.h \
     ui/accountwindow.h \
-    ui/followcommunity.h \
     ui/mainwindow.h \
     ui/newwakusettingswindow.h \
     ui/settingswindow.h \
@@ -93,7 +91,6 @@ FORMS    += ui/mainwindow.ui \
     ui/settingswindow.ui \
     ui/newwakusettingswindow.ui \
     ui/accountwindow.ui \
-    ui/followcommunity.ui \
     ui/getwakutimer.ui \
     ui/matchandaddbroadcast.ui
 

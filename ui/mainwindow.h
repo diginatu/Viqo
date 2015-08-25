@@ -22,7 +22,6 @@
 #include "settingswindow.h"
 #include "newwakusettingswindow.h"
 #include "accountwindow.h"
-#include "followcommunity.h"
 #include "getwakutimer.h"
 #include "matchandaddbroadcast.h"
 
@@ -106,18 +105,12 @@ private slots:
   void on_clear_triggered();
   void on_setting_triggered();
   void on_AccountSettings_triggered();
-  void on_FollowCommunity_triggered();
 
   void on_comment_view_currentItemChanged(QTreeWidgetItem *current, QTreeWidgetItem *previous);
-
   void on_CommentViewEditKotehan_triggered();
-
   void on_CommentViewGetKotehan_triggered();
-
   void on_autoGettingUserName_toggled(bool status);
-
   void on_action_triggered();
-
   void on_MatchAndAddBroadcast_triggered();
 
 private:
@@ -126,7 +119,6 @@ private:
   SettingsWindow* settingsWindow;
   NewWakuSettingsWindow* newWakuSettingsWindow;
   AccountWindow* accountWindow;
-  FollowCommunity* followCommunity;
   GetWakuTimer* getWakuTimer;
   MatchAndAddBroadcast* matchAndAddBroadcast;
 

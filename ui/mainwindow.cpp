@@ -7,7 +7,6 @@ MainWindow::MainWindow(QWidget *parent) :
   settingsWindow(new SettingsWindow(this, this)),
   newWakuSettingsWindow(new NewWakuSettingsWindow(this, this)),
   accountWindow(new AccountWindow(this, this)),
-  followCommunity(new FollowCommunity(this, this)),
   getWakuTimer(new GetWakuTimer(this, this)),
   matchAndAddBroadcast(new MatchAndAddBroadcast(this, this)),
   userSessionDisabledDialogAppeared(false),
@@ -599,32 +598,6 @@ void MainWindow::on_AboutViqo_triggered()
 void MainWindow::on_AboutQt_triggered()
 {
   QMessageBox::aboutQt(this);
-}
-
-void MainWindow::on_FollowCommunity_triggered()
-{
-  followCommunity->init();
-  followCommunity->show();
-  followCommunity->raise();
-  followCommunity->activateWindow();
-
-
-  QStringList dir = QStandardPaths::standardLocations(QStandardPaths::DataLocation);
-  if (dir.empty()) {
-    insLog("save directory is not available");
-    return;
-  }
-  QFile file(dir[0] + "/follow_communities.json");
-  if (!file.exists()) {
-    QMessageBox::information(followCommunity, QStringLiteral("Viqo - フォローコミュニティ"),
-                             QStringLiteral("<b>フォローコミュニティ</b><br>\
-                             ここにコミュニティを登録することで、\
-                             お気に入りに登録しているコミュニティ同様、\
-                             放送開始時に検知します。<br>\
-                             ただし、フォローコミュニティでは登録前および\
-                             Viqo起動前にすでに開始されていた\
-                             放送の検知はできません。"));
-  }
 }
 
 void MainWindow::on_comment_view_currentItemChanged(QTreeWidgetItem *current, QTreeWidgetItem *previous)
