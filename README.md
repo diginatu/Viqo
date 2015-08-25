@@ -5,11 +5,13 @@ Viqo is a cross-platform "Nico Nama" comment viewer.
 Viqo 是跨平台"nico生放"留言查看程序。
 
 Viqo はクロスプラットフォームなニコニコ生放送用 コメントビューア（ニコ生 コメビュ）です。
-Ubuntu 14.04, Debian 7.7, OSX Yosemite, Windows 7, 8.1 などで動作確認されています。
+Ubuntu 14.04, Debian 7.7, OSX Yosemite, Windows 7, 8.1, 10 などで動作確認されています。
 
 * クロスプラットフォーム GUI アプリケーション
 * Qt5 / C++11
 * オープンソース (MIT license)
+
+QtはLGPLのライセンス下です。詳しくは [Qt Home](http://www.qt.io/)へ。
 
 このコメビュは *自由* であることを目指しています。
 
@@ -19,7 +21,7 @@ Ubuntu 14.04, Debian 7.7, OSX Yosemite, Windows 7, 8.1 などで動作確認さ�
 ダウンロード
 ------------
 
-### [Releases Page](https://github.com/diginatu/Viqo/releases)
+[**Releases Page**](https://github.com/diginatu/Viqo/releases) から
 
 ライセンス
 ----------
@@ -41,7 +43,7 @@ Qt 5.4 の環境でこのプロジェクトをコンパイルしてください�
 
 小さなバグ修正から機能追加など、プルリクエストは歓迎です。
 
-使い方・解説を書いてくれる方がいると嬉しいです。
+Wikiを執筆するだけでも貢献になります。
 
-[Wiki コントリビュート](https://github.com/diginatu/Viqo/wiki/%E3%82%B3%E3%83%B3%E3%83%88%E3%83%AA%E3%83%93%E3%83%A5%E3%83%BC%E3%83%88)
+[Wiki : コントリビュート](https://github.com/diginatu/Viqo/wiki/%E3%82%B3%E3%83%B3%E3%83%88%E3%83%AA%E3%83%93%E3%83%A5%E3%83%BC%E3%83%88)
 
