@@ -14,7 +14,7 @@
 #include "../../ui/settingswindow.h"
 #include "../../ui/newwakusettingswindow.h"
 #include "../../ui/accountwindow.h"
-#include "../../ui/followcommunity.h"
+#include "../../ui/matchandaddbroadcast.h"
 
 namespace Ui {
 class MainWindow;
@@ -24,14 +24,13 @@ class NicoLiveManager : public QObject
 {
   Q_OBJECT
 public:
-  explicit NicoLiveManager(MainWindow* mwin, AccountWindow* awin, NewWakuSettingsWindow* nwin, FollowCommunity* fwin, QObject *parent = 0);
+  explicit NicoLiveManager(MainWindow* mwin, AccountWindow* awin, NewWakuSettingsWindow* nwin, MatchAndAddBroadcast* bwin, QObject *parent = 0);
   ~NicoLiveManager();
 
   static QVariant makePostData(QString session_id);
 
   void insertLiveWakuList(LiveWaku* livewaku);
 
-  void getHeartBeatAPI();
   void loginAlertAPI(const QString& mail, const QString& pass);
   void getPostKeyAPI(const QString& thread, int block_no);
   void getPublishStatusAPI();
@@ -61,6 +60,9 @@ public:
   static QString HTMLdecode(QString st);
 
   void updateMyCommunities();
+  QString getWatchCount() const;
+  void setWatchCount(const QString& value);
+
 signals:
 
 public slots:
@@ -73,7 +75,7 @@ private:
   MainWindow* mwin;
   AccountWindow* awin;
   NewWakuSettingsWindow* nwin;
-  FollowCommunity* fwin;
+  MatchAndAddBroadcast* bwin;
   WakuTcp* wakutcp;
 
   QString watchCount;
@@ -91,7 +93,6 @@ private:
   QNetworkAccessManager* mPostKeyManager;
   QNetworkAccessManager* mLoginAlertManager;
   QNetworkAccessManager* mAdminAlertManager;
-  QNetworkAccessManager* mHeartBeat;
   QNetworkAccessManager* mLoginManager;
   QNetworkAccessManager* mOwnerCommentManager;
   QNetworkAccessManager* mOwnerCommentSManager;
@@ -101,7 +102,6 @@ private:
   QNetworkAccessManager* mConfigure;
   QNetworkAccessManager* mCommunityInfo;
 private slots:
-  void heartBeatFinished(QNetworkReply* reply);
   void loginAlertFinished(QNetworkReply* reply);
   void adminAlertFinished(QNetworkReply* reply);
   void rawMyLivefinished(QNetworkReply* reply);

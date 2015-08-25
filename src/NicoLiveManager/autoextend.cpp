@@ -2,32 +2,26 @@
 #include "../../ui/mainwindow.h"
 
 AutoExtend::AutoExtend(MainWindow* mwin, NicoLiveManager* nlman, QObject* parent) :
-  HttpGetter(mwin, nlman, parent),
+  HttpGetter(mwin, parent),
   mExtendManager(nullptr)
+{
+  this->nlman = nlman;
+}
+
+AutoExtend::~AutoExtend()
 {
 
 }
 
 void AutoExtend::get()
 {
-  if(mManager!=nullptr) delete mManager;
-  mManager = new QNetworkAccessManager(this);
-
-  connect(mManager, SIGNAL(finished(QNetworkReply*)), this,
-          SLOT(got(QNetworkReply*)));
-
   // make request
   QNetworkRequest rq;
   QVariant postData = nlman->makePostData(mwin->settings.getUserSession());
   rq.setHeader(QNetworkRequest::CookieHeader, postData);
   rq.setUrl(QUrl("http://watch.live.nicovideo.jp/api/getsalelist?v=lv" + nlman->nowWaku.getBroadID()));
 
-  mManager->get(rq);
-}
-
-AutoExtend::~AutoExtend()
-{
-
+  requestGet(rq);
 }
 
 void AutoExtend::got(QNetworkReply *reply)
@@ -38,9 +32,9 @@ void AutoExtend::got(QNetworkReply *reply)
   StrAbstractor* aitem;
   while ((aitem = data.mid("<item>", "</item>")) != nullptr) {
     // QString price = aitem->midStr("<price>", "</price>");
-    QString num   = aitem->midStr("<num>", "</num>");
-    QString code  = aitem->midStr("<code>", "</code>");
-    QString item  = aitem->midStr("<item>", "");
+    QString num  = aitem->midStr("<num>", "</num>");
+    QString code = aitem->midStr("<code>", "</code>");
+    QString item = aitem->midStr("<item>", "");
 
     if (item == "freeextend") {
       getExtend(code, item, num);

@@ -166,7 +166,6 @@ void CommTcp::readOneRawComment(const QString rawcomm)
 
     mwin->deleteCommunityFromList(nlwaku->getCommunity());
 
-    mwin->setWatchCount("0");
     nlwaku->broadDisconnect();
   }
 }

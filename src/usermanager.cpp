@@ -2,8 +2,10 @@
 #include "../ui/mainwindow.h"
 
 UserManager::UserManager(MainWindow* mwin, QObject *parent) :
-  NicoHttp(mwin, parent)
+  QObject(parent)
 {
+  this->mwin = mwin;
+
   mwin->insLog("UserManager::UserManager");
   db = QSqlDatabase::addDatabase("QSQLITE");
 
@@ -52,8 +54,11 @@ void UserManager::getUserName(QTreeWidgetItem* item, QString userID, bool useHTT
       if (query.next()) {
         item->setText(2, query.value(0).toString());
       } else if (useHTTP) {
-        UserGetter* ug = new UserGetter(mwin,this);
-        ug->getUserName(item, userID, db);
+        UserNameGetter* ug = new UserNameGetter(mwin, this, userID);
+        connect(ug, &UserNameGetter::got, this, [=](QString n){
+          mwin->userManager->setUserName(item,n);
+        });
+        ug->get();
       }
     } else {
       mwin->insLog("UserManager::getUserName user db get error\n");
@@ -61,8 +66,11 @@ void UserManager::getUserName(QTreeWidgetItem* item, QString userID, bool useHTT
                                QStringLiteral("ユーザのデータベーステーブル取得に失敗しました"));
     }
   } else if (useHTTP) {
-    UserGetter* ug = new UserGetter(mwin,this);
-    ug->getUserName(item, userID, db);
+    UserNameGetter* ug = new UserNameGetter(mwin, this, userID);
+    connect(ug, &UserNameGetter::got, this, [=](QString n){
+      mwin->userManager->setUserName(item,n);
+    });
+    ug->get();
   }
 }
 

@@ -1,14 +1,13 @@
 ﻿#include "nicolivemanager.h"
 #include "../../ui/mainwindow.h"
 
-NicoLiveManager::NicoLiveManager(MainWindow* mwin, AccountWindow* awin, NewWakuSettingsWindow* nwin, FollowCommunity* fwin, QObject *parent) :
+NicoLiveManager::NicoLiveManager(MainWindow* mwin, AccountWindow* awin, NewWakuSettingsWindow* nwin, MatchAndAddBroadcast* bwin, QObject *parent) :
   QObject(parent),
   nowWaku(mwin, this, this),
   wakutcp(nullptr),
   mPostKeyManager(nullptr),
   mLoginAlertManager(nullptr),
   mAdminAlertManager(nullptr),
-  mHeartBeat(nullptr),
   mLoginManager(nullptr),
   mOwnerCommentManager(nullptr),
   mOwnerCommentSManager(nullptr),
@@ -21,7 +20,7 @@ NicoLiveManager::NicoLiveManager(MainWindow* mwin, AccountWindow* awin, NewWakuS
   this->mwin = mwin;
   this->awin = awin;
   this->nwin = nwin;
-  this->fwin = fwin;
+  this->bwin = bwin;
 
   // set timer to delete the ended elements in waku list.
   delWakuTimer = new QTimer(this);
@@ -78,7 +77,8 @@ void NicoLiveManager::broadStart()
 
 void NicoLiveManager::broadDisconnect(bool disableFollow)
 {
-  mwin->setWatchCount("0");
+  watchCount = "0";
+  mwin->updateWatchCount();
   nowWaku.broadDisconnect();
   if (disableFollow)
     nowWaku.setCommunity("");
@@ -123,3 +123,13 @@ QString NicoLiveManager::HTMLdecode(QString st)
   st.replace("&gt;", ">");
   return st;
 }
+QString NicoLiveManager::getWatchCount() const
+{
+    return watchCount;
+}
+
+void NicoLiveManager::setWatchCount(const QString& value)
+{
+    watchCount = value;
+}
+

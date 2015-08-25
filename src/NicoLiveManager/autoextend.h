@@ -20,6 +20,7 @@ public:
 private:
   QNetworkAccessManager* mExtendManager;
   void getExtend(QString code, QString item, QString num);
+  NicoLiveManager* nlman;
 
 private slots:
   void got(QNetworkReply* reply);

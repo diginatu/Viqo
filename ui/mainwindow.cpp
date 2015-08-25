@@ -7,13 +7,17 @@ MainWindow::MainWindow(QWidget *parent) :
   settingsWindow(new SettingsWindow(this, this)),
   newWakuSettingsWindow(new NewWakuSettingsWindow(this, this)),
   accountWindow(new AccountWindow(this, this)),
-  followCommunity(new FollowCommunity(this, this)),
+  getWakuTimer(new GetWakuTimer(this, this)),
+  matchAndAddBroadcast(new MatchAndAddBroadcast(this, this)),
   userSessionDisabledDialogAppeared(false),
   isCursorTop(true),
   settings(this, ui, this)
 {
   ui->setupUi(this);
   setAcceptDrops(true);
+
+  startWakuTimerEnabled = false;
+  startWakuTimerTime = QDateTime::currentDateTime();
 
   this->setWindowIcon(QIcon(":/img/icon.svg"));
 
@@ -45,16 +49,21 @@ MainWindow::MainWindow(QWidget *parent) :
     }
   }
 
+  settings.updateData();
   settings.loadAll();
 
   userManager = new UserManager(this);
-  nicolivemanager = new NicoLiveManager(this, accountWindow, newWakuSettingsWindow, followCommunity, this);
+  nicolivemanager = new NicoLiveManager(this, accountWindow, newWakuSettingsWindow, matchAndAddBroadcast, this);
 
   const QString mail = settings.getUserMail();
   const QString pass = settings.getUserPass();
   if ( mail != "" && pass != "") {
     nicolivemanager->loginAlertAPI(mail, pass);
   }
+
+  QTimer *timer = new QTimer(this);
+  connect(timer, SIGNAL(timeout()), this, SLOT(timeUpdate()));
+  timer->start(60 * 1000);
 
   nicolivemanager->getRawMyLiveHTML();
   QTimer::singleShot(30000, nicolivemanager, SLOT(getRawMyLiveHTML()));
@@ -70,8 +79,6 @@ MainWindow::~MainWindow()
 
 void MainWindow::onReceiveStarted()
 {
-  qDebug() << "--comment receiving started--";
-
   nicolivemanager->nowWaku.setIsConnected(true);
 
   ui->submit_button->setEnabled(true);
@@ -94,8 +101,6 @@ void MainWindow::onReceiveStarted()
 
 void MainWindow::onReceiveEnded()
 {
-  qDebug() << "--comment receiving ended--";
-
   nicolivemanager->nowWaku.setIsConnected(false);
 
   ui->submit_button->setEnabled(false);
@@ -129,12 +134,27 @@ void MainWindow::dropEvent(QDropEvent *event)
 
 void MainWindow::getWatchCount()
 {
-  nicolivemanager->getHeartBeatAPI();
+  HeartBeat* hb = new HeartBeat(this, nicolivemanager, this);
+  hb->get();
 }
 
-void MainWindow::setWatchCount(QString num)
+void MainWindow::timeUpdate()
 {
-  ui->num_audience->setText(QStringLiteral("来場者数: ") + num);
+  QDateTime nowT = QDateTime::currentDateTime();
+  if (startWakuTimerEnabled &&
+      startWakuTimerTime <= nowT &&
+      nowT < startWakuTimerTime.addSecs(60 * 60))
+  {
+    startWakuTimerEnabled = false;
+    on_getNewWakuNow_triggered();
+    getWakuTimer->init();
+  }
+}
+
+void MainWindow::updateWatchCount()
+{
+  ui->num_audience->setText(QStringLiteral("来場者数: ")
+                            + nicolivemanager->getWatchCount());
 }
 
 void MainWindow::updateElapsedTime()
@@ -580,31 +600,6 @@ void MainWindow::on_AboutQt_triggered()
   QMessageBox::aboutQt(this);
 }
 
-void MainWindow::on_FollowCommunity_triggered()
-{
-  followCommunity->init();
-  followCommunity->show();
-  followCommunity->raise();
-  followCommunity->activateWindow();
-
-
-  QStringList dir = QStandardPaths::standardLocations(QStandardPaths::DataLocation);
-  if (dir.empty()) {
-    insLog("save directory is not available");
-    return;
-  }
-  QFile file(dir[0] + "/follow_communities.json");
-  if (!file.exists()) {
-    QMessageBox::information(followCommunity, QStringLiteral("Viqo - フォローコミュニティ"),
-                             QStringLiteral("<b>フォローコミュニティ</b><br>\
-                             ここにコミュニティを登録することで、\
-                             お気に入りに登録しているコミュニティ同様、\
-                             放送開始時に通知されます。<br>\
-                             ただし、コメビュ起動時にすでに放送開始されているフォローコミュニティは\
-                             検知することができません。"));
-  }
-}
-
 void MainWindow::on_comment_view_currentItemChanged(QTreeWidgetItem *current, QTreeWidgetItem *previous)
 {
   if (!current ^ !previous) {
@@ -641,4 +636,20 @@ void MainWindow::on_autoGettingUserName_toggled(bool status)
 {
   ui->autoGetUserNameOverWrite->setEnabled(status);
   ui->autoGetUserWay->setEnabled(status);
+}
+
+void MainWindow::on_action_triggered()
+{
+  getWakuTimer->init();
+  getWakuTimer->show();
+  getWakuTimer->raise();
+  getWakuTimer->activateWindow();
+}
+
+void MainWindow::on_MatchAndAddBroadcast_triggered()
+{
+  matchAndAddBroadcast->init();
+  matchAndAddBroadcast->show();
+  matchAndAddBroadcast->raise();
+  matchAndAddBroadcast->activateWindow();
 }
