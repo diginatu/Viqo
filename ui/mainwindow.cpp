@@ -50,6 +50,7 @@ MainWindow::MainWindow(QWidget *parent) :
     }
   }
 
+  settings.updateData();
   settings.loadAll();
 
   userManager = new UserManager(this);

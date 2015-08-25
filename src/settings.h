@@ -21,17 +21,21 @@ class Settings : public QObject
 public:
   explicit Settings(MainWindow* mwin, Ui::MainWindow* ui, QObject* parent = 0);
 
+  void updateData();
+
   void loadAll();
 
   void saveStatus(int num = 1);
   void loadStatus(int num = 1);
-  void oldLoad();
 
   void saveSettings();
   void loadSettings();
 
   void saveFollowCommunities();
   void loadFollowCommunities();
+
+  void loadMatchDateList();
+  void saveMatchDataList();
 
   // main window settings
   bool getIs184();
@@ -80,21 +84,20 @@ public:
   void setMatchDataNeedDetailInfo(bool value);
 
   QList< QPair<QString,QString> > followCommunities;
-  // match data : [name, match contents, keyword]
+
+  // match data [[name, match contents, keyword]][]
+  //
+  // match contents
+  // B : broad ID
+  // C : Community ID
+  // U : nushi ID
+  //
+  // T : title
+  // D : description
   QList<QStringList> matchDataList;
-
-
-  void loadMatchDateList();
-  void saveMatchDataList();
 
   bool getMatchDataEnabled() const;
   void setMatchDataEnabled(bool value);
-
-signals:
-
-public slots:
-
-private slots:
 
 private:
   UserSessionWay userSessionWay;

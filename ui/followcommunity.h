@@ -1,4 +1,4 @@
-#ifndef FOLLOWCOMMUNITY_H
+﻿#ifndef FOLLOWCOMMUNITY_H
 #define FOLLOWCOMMUNITY_H
 
 #include <QDialog>

@@ -948,7 +948,7 @@
   </action>
   <action name="MatchAndAddBroadcast">
    <property name="text">
-    <string>放送開始サーチ設定...</string>
+    <string>放送開始サーチ...</string>
    </property>
   </action>
  </widget>

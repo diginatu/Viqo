@@ -12,6 +12,61 @@ Settings::Settings(MainWindow* mwin, Ui::MainWindow* ui, QObject* parent) :
   this->ui = ui;
 }
 
+void Settings::updateData()
+{
+  // convert followCommunity save data into matchAndBroadcast
+  QStringList dir = QStandardPaths::standardLocations(QStandardPaths::DataLocation);
+  if (dir.empty()) {
+    mwin->insLog("save directory is not available");
+    QMessageBox::information(mwin, "Viqo", QStringLiteral("保存領域がないので保存できません"));
+    return;
+  }
+  QFile fileo(dir[0] + "/follow_communities.json");
+  if (!fileo.exists()) {
+    fileo.close();
+    return;
+  }
+  if (!fileo.open(QIODevice::ReadOnly | QIODevice::Text)) {
+    fileo.close();
+    mwin->insLog("opening Follow Communities setting file failed");
+    return;
+  }
+
+  QJsonDocument jsdo = QJsonDocument::fromJson(fileo.readAll());
+
+  QJsonArray follow_communities = jsdo.object()["follow_communities"].toArray();
+  QJsonArray matchDataListj;
+
+  foreach (QJsonValue community, follow_communities) {
+    auto communityArr = community.toArray();
+    matchDataListj.append(QJsonArray() << communityArr[1].toString()
+                                       << "C"
+                                       << communityArr[0].toString());
+  }
+
+  QJsonObject root;
+  root["enable"] = true;
+  root["match_data_list"] = matchDataListj;
+
+  QJsonDocument jsd;
+  jsd.setObject(root);
+
+  QFile file(dir[0] + "/match_data_list.json");
+  if (!file.open(QIODevice::WriteOnly)) {
+    file.close();
+    fileo.close();
+    mwin->insLog("opening list file(match_data_list.json) failed");
+    QMessageBox::information(mwin, "Viqo", QStringLiteral("設定ファイルに書き込みができません"));
+    return;
+  }
+
+  QTextStream out(&file);
+  out << jsd.toJson(QJsonDocument::Compact);
+  file.close();
+
+  fileo.remove();
+}
+
 void Settings::loadAll()
 {
   loadSettings();
@@ -249,6 +304,7 @@ void Settings::loadFollowCommunities()
   QStringList dir = QStandardPaths::standardLocations(QStandardPaths::DataLocation);
   if (dir.empty()) {
     mwin->insLog("save directory is not available");
+    QMessageBox::information(mwin, "Viqo", QStringLiteral("保存領域がないので保存できません"));
     return;
   }
   QFile file(dir[0] + "/follow_communities.json");
@@ -303,6 +359,7 @@ void Settings::saveMatchDataList()
   out << jsd.toJson(QJsonDocument::Compact);
   file.close();
 }
+
 bool Settings::getMatchDataEnabled() const
 {
   return matchDataEnabled;
@@ -312,7 +369,6 @@ void Settings::setMatchDataEnabled(bool value)
 {
   matchDataEnabled = value;
 }
-
 
 void Settings::loadMatchDateList()
 {
