@@ -10,7 +10,7 @@ int main(int argc, char *argv[])
   QApplication a(argc, argv);
 
   QCoreApplication::setApplicationName("Viqo");
-  QCoreApplication::setApplicationVersion("2.1");
+  QCoreApplication::setApplicationVersion("2.2");
 
   QCommandLineParser parser;
   parser.setApplicationDescription(
