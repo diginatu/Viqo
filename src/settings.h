@@ -10,7 +10,6 @@
 #include "ui_mainwindow.h"
 
 class MainWindow;
-class FollowCommunity;
 
 enum class UserSessionWay { Browser, Direct, Login };
 
@@ -21,17 +20,18 @@ class Settings : public QObject
 public:
   explicit Settings(MainWindow* mwin, Ui::MainWindow* ui, QObject* parent = 0);
 
+  void updateData();
+
   void loadAll();
 
   void saveStatus(int num = 1);
   void loadStatus(int num = 1);
-  void oldLoad();
 
   void saveSettings();
   void loadSettings();
 
-  void saveFollowCommunities();
-  void loadFollowCommunities();
+  void loadMatchDateList();
+  void saveMatchDataList();
 
   // main window settings
   bool getIs184();
@@ -76,14 +76,22 @@ public:
   bool getDispNG() const;
   void setDispNG(bool value);
 
-  QList< QPair<QString,QString> > followCommunities;
+  bool getMatchDataNeedDetailInfo() const;
+  void setMatchDataNeedDetailInfo(bool value);
 
+  // match data [[name, match contents, keyword]][]
+  //
+  // match contents
+  // B : broad ID
+  // C : Community ID
+  // U : nushi ID
+  //
+  // T : title
+  // D : description
+  QList<QStringList> matchDataList;
 
-signals:
-
-public slots:
-
-private slots:
+  bool getMatchDataEnabled() const;
+  void setMatchDataEnabled(bool value);
 
 private:
   UserSessionWay userSessionWay;
@@ -95,6 +103,8 @@ private:
 
   bool ownerComment;
   bool dispNG;
+  bool matchDataEnabled;
+  bool matchDataNeedDetailInfo;
 
   MainWindow* mwin;
   Ui::MainWindow *ui;

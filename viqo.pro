@@ -53,7 +53,6 @@ SOURCES += src/main.cpp\
     src/NicoLiveManager/getnewwaku.cpp \
     src/NicoLiveManager/configurestream.cpp \
     ui/accountwindow.cpp \
-    ui/followcommunity.cpp \
     ui/mainwindow.cpp \
     ui/newwakusettingswindow.cpp \
     ui/settingswindow.cpp \
@@ -63,7 +62,9 @@ SOURCES += src/main.cpp\
     src/NicoLiveManager/autoextend.cpp \
     src/NicoLiveManager/usernamegetter.cpp \
     ui/getwakutimer.cpp \
-    src/NicoLiveManager/heartbeat.cpp
+    src/NicoLiveManager/heartbeat.cpp \
+    ui/matchandaddbroadcast.cpp \
+    src/NicoLiveManager/getstreaminfo.cpp
 
 HEADERS  += src/NicoLiveManager/nicolivemanager.h \
     src/strabstractor.h \
@@ -74,7 +75,6 @@ HEADERS  += src/NicoLiveManager/nicolivemanager.h \
     src/NicoLiveManager/LiveWaku/commtcp.h \
     src/settings.h \
     ui/accountwindow.h \
-    ui/followcommunity.h \
     ui/mainwindow.h \
     ui/newwakusettingswindow.h \
     ui/settingswindow.h \
@@ -83,14 +83,16 @@ HEADERS  += src/NicoLiveManager/nicolivemanager.h \
     src/NicoLiveManager/autoextend.h \
     src/NicoLiveManager/usernamegetter.h \
     ui/getwakutimer.h \
-    src/NicoLiveManager/heartbeat.h
+    src/NicoLiveManager/heartbeat.h \
+    ui/matchandaddbroadcast.h \
+    src/NicoLiveManager/getstreaminfo.h
 
 FORMS    += ui/mainwindow.ui \
     ui/settingswindow.ui \
     ui/newwakusettingswindow.ui \
     ui/accountwindow.ui \
-    ui/followcommunity.ui \
-    ui/getwakutimer.ui
+    ui/getwakutimer.ui \
+    ui/matchandaddbroadcast.ui
 
 RESOURCES += \
     resources.qrc

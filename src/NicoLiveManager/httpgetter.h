@@ -2,7 +2,7 @@
 #define HTTPGETTER_H
 
 #include <QObject>
-#include <qnetworkaccessmanager.h>
+#include <QNetworkAccessManager>
 #include "nicolivemanager.h"
 
 class MainWindow;

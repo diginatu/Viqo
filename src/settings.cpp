@@ -12,11 +12,66 @@ Settings::Settings(MainWindow* mwin, Ui::MainWindow* ui, QObject* parent) :
   this->ui = ui;
 }
 
+void Settings::updateData()
+{
+  // convert followCommunity save data into matchAndBroadcast
+  QStringList dir = QStandardPaths::standardLocations(QStandardPaths::DataLocation);
+  if (dir.empty()) {
+    mwin->insLog("save directory is not available");
+    QMessageBox::information(mwin, "Viqo", QStringLiteral("保存領域がないので保存できません"));
+    return;
+  }
+  QFile fileo(dir[0] + "/follow_communities.json");
+  if (!fileo.exists()) {
+    fileo.close();
+    return;
+  }
+  if (!fileo.open(QIODevice::ReadOnly | QIODevice::Text)) {
+    fileo.close();
+    mwin->insLog("opening Follow Communities setting file failed");
+    return;
+  }
+
+  QJsonDocument jsdo = QJsonDocument::fromJson(fileo.readAll());
+
+  QJsonArray follow_communities = jsdo.object()["follow_communities"].toArray();
+  QJsonArray matchDataListj;
+
+  foreach (QJsonValue community, follow_communities) {
+    auto communityArr = community.toArray();
+    matchDataListj.append(QJsonArray() << communityArr[1].toString()
+                                       << "C"
+                                       << communityArr[0].toString());
+  }
+
+  QJsonObject root;
+  root["enable"] = true;
+  root["match_data_list"] = matchDataListj;
+
+  QJsonDocument jsd;
+  jsd.setObject(root);
+
+  QFile file(dir[0] + "/match_data_list.json");
+  if (!file.open(QIODevice::WriteOnly)) {
+    file.close();
+    fileo.close();
+    mwin->insLog("opening list file(match_data_list.json) failed");
+    QMessageBox::information(mwin, "Viqo", QStringLiteral("設定ファイルに書き込みができません"));
+    return;
+  }
+
+  QTextStream out(&file);
+  out << jsd.toJson(QJsonDocument::Compact);
+  file.close();
+
+  fileo.remove();
+}
+
 void Settings::loadAll()
 {
   loadSettings();
   loadStatus();
-  loadFollowCommunities();
+  loadMatchDateList();
 }
 
 void Settings::saveStatus(int num)
@@ -208,7 +263,7 @@ void Settings::loadSettings()
   file.close();
 }
 
-void Settings::saveFollowCommunities()
+void Settings::saveMatchDataList()
 {
   QStringList dir = QStandardPaths::standardLocations(QStandardPaths::DataLocation);
   if (dir.empty()) {
@@ -217,24 +272,24 @@ void Settings::saveFollowCommunities()
     return;
   }
 
-  QJsonArray follow_communities;
+  QJsonArray matchDataListj;
 
-  typedef QPair<QString,QString> StringPair;
-  foreach (StringPair community, followCommunities) {
-    follow_communities.append(QJsonArray() << community.first << community.second);
+  foreach (QStringList data, matchDataList) {
+    matchDataListj.append(QJsonArray() << data[0] << data[1] << data[2]);
   }
 
   QJsonObject root;
-  root["follow_communities"] = follow_communities;
+  root["enable"] = matchDataEnabled;
+  root["match_data_list"] = matchDataListj;
 
   QJsonDocument jsd;
   jsd.setObject(root);
 
-  QFile file(dir[0] + "/follow_communities.json");
+  QFile file(dir[0] + "/match_data_list.json");
   if (!file.open(QIODevice::WriteOnly)) {
     file.close();
-    mwin->insLog("opening status file failed");
-    QMessageBox::information(mwin, "Viqo", QStringLiteral("設定ファイルに書き込みがせきません"));
+    mwin->insLog("opening list file(match_data_list.json) failed");
+    QMessageBox::information(mwin, "Viqo", QStringLiteral("設定ファイルに書き込みができません"));
     return;
   }
 
@@ -243,27 +298,50 @@ void Settings::saveFollowCommunities()
   file.close();
 }
 
-void Settings::loadFollowCommunities()
+bool Settings::getMatchDataEnabled() const
+{
+  return matchDataEnabled;
+}
+
+void Settings::setMatchDataEnabled(bool value)
+{
+  matchDataEnabled = value;
+}
+
+void Settings::loadMatchDateList()
 {
   QStringList dir = QStandardPaths::standardLocations(QStandardPaths::DataLocation);
   if (dir.empty()) {
     mwin->insLog("save directory is not available");
     return;
   }
-  QFile file(dir[0] + "/follow_communities.json");
+  QFile file(dir[0] + "/match_data_list.json");
   if (!file.open(QIODevice::ReadOnly | QIODevice::Text)) {
     file.close();
-    mwin->insLog("opening Follow Communities setting file failed");
+    mwin->insLog("opening list file(match_data_list.json) failed");
     return;
   }
 
   QJsonDocument jsd = QJsonDocument::fromJson(file.readAll());
 
-  QJsonArray follow_communities = jsd.object()["follow_communities"].toArray();
-  followCommunities.clear();
-  foreach (QJsonValue community, follow_communities) {
-    followCommunities << qMakePair(community.toArray()[0].toString(), community.toArray()[1].toString());
+  matchDataEnabled = jsd.object()["enable"].toBool();
+
+  bool includeBroadInfo = false;
+  QRegExp infoNeededRg("[TD]");
+
+  QJsonArray matchDataListj = jsd.object()["match_data_list"].toArray();
+  matchDataList.clear();
+  foreach (QJsonValue community, matchDataListj) {
+    QJsonArray data = community.toArray();
+
+    if (!includeBroadInfo && infoNeededRg.indexIn(data[1].toString())!=-1) {
+      includeBroadInfo = true;
+    }
+    matchDataList << (QStringList() << data[0].toString()
+                  << data[1].toString() << data[2].toString());
   }
+
+  matchDataNeedDetailInfo = includeBroadInfo;
 
   file.close();
 }
@@ -391,6 +469,16 @@ void Settings::setDispNG(bool value)
 {
   dispNG = value;
 }
+
+bool Settings::getMatchDataNeedDetailInfo() const
+{
+  return matchDataNeedDetailInfo;
+}
+void Settings::setMatchDataNeedDetailInfo(bool value)
+{
+  matchDataNeedDetailInfo = value;
+}
+
 
 QString Settings::getBrowser() const
 {

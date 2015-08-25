@@ -1,4 +1,4 @@
-#ifndef WAKUTCP_H
+﻿#ifndef WAKUTCP_H
 #define WAKUTCP_H
 
 #include <QObject>
@@ -7,6 +7,7 @@
 #include <QDateTime>
 #include <QProcess>
 #include <QTimer>
+
 
 class MainWindow;
 class NicoLiveManager;

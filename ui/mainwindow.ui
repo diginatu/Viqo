@@ -302,7 +302,7 @@
              <rect>
               <x>0</x>
               <y>0</y>
-              <width>399</width>
+              <width>403</width>
               <height>183</height>
              </rect>
             </property>
@@ -675,7 +675,7 @@
     </property>
     <addaction name="clear"/>
     <addaction name="separator"/>
-    <addaction name="FollowCommunity"/>
+    <addaction name="MatchAndAddBroadcast"/>
     <addaction name="setting"/>
     <addaction name="AccountSettings"/>
    </widget>
@@ -683,6 +683,7 @@
     <property name="title">
      <string>放送</string>
     </property>
+    <addaction name="autoNewWakuSettings"/>
     <addaction name="getNewWakuNow"/>
     <addaction name="separator"/>
     <addaction name="autoNewWakuChk"/>
@@ -690,7 +691,7 @@
     <addaction name="autoNewWakuStart"/>
     <addaction name="autoExtend"/>
     <addaction name="separator"/>
-    <addaction name="autoNewWakuSettings"/>
+    <addaction name="separator"/>
     <addaction name="action"/>
    </widget>
    <widget class="QMenu" name="help">
@@ -858,11 +859,6 @@
     <string>アカウント設定...</string>
    </property>
   </action>
-  <action name="FollowCommunity">
-   <property name="text">
-    <string>フォローコミュニティ...</string>
-   </property>
-  </action>
   <action name="CommentViewEditKotehan">
    <property name="enabled">
     <bool>false</bool>
@@ -942,6 +938,11 @@
   <action name="action">
    <property name="text">
     <string>枠取りタイマー...</string>
+   </property>
+  </action>
+  <action name="MatchAndAddBroadcast">
+   <property name="text">
+    <string>放送開始サーチ...</string>
    </property>
   </action>
  </widget>

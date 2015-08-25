@@ -129,10 +129,4 @@ void NicoLiveManager::updateMyCommunities()
 {
   mycommunities.clear();
   mycommunities.append(officialMyCommunities);
-
-  // add Follow Communities
-  typedef QPair<QString, QString> StringPair;
-  foreach (StringPair community, mwin->settings.followCommunities) {
-    mycommunities << community.first;
-  }
 }

@@ -54,7 +54,10 @@ void UserManager::getUserName(QTreeWidgetItem* item, QString userID, bool useHTT
       if (query.next()) {
         item->setText(2, query.value(0).toString());
       } else if (useHTTP) {
-        UserNameGetter* ug = new UserNameGetter(mwin, this, item, userID, db);
+        UserNameGetter* ug = new UserNameGetter(mwin, this, userID);
+        connect(ug, &UserNameGetter::got, this, [=](QString n){
+          mwin->userManager->setUserName(item,n);
+        });
         ug->get();
       }
     } else {
@@ -63,7 +66,10 @@ void UserManager::getUserName(QTreeWidgetItem* item, QString userID, bool useHTT
                                QStringLiteral("ユーザのデータベーステーブル取得に失敗しました"));
     }
   } else if (useHTTP) {
-    UserNameGetter* ug = new UserNameGetter(mwin, this, item, userID, db);
+    UserNameGetter* ug = new UserNameGetter(mwin, this, userID);
+    connect(ug, &UserNameGetter::got, this, [=](QString n){
+      mwin->userManager->setUserName(item,n);
+    });
     ug->get();
   }
 }
