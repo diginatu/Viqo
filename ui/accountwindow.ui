@@ -6,14 +6,29 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>440</width>
-    <height>457</height>
+    <width>416</width>
+    <height>395</height>
    </rect>
   </property>
   <property name="windowTitle">
    <string>アカウント設定</string>
   </property>
   <layout class="QVBoxLayout" name="verticalLayout">
+   <property name="spacing">
+    <number>3</number>
+   </property>
+   <property name="leftMargin">
+    <number>4</number>
+   </property>
+   <property name="topMargin">
+    <number>4</number>
+   </property>
+   <property name="rightMargin">
+    <number>4</number>
+   </property>
+   <property name="bottomMargin">
+    <number>4</number>
+   </property>
    <item>
     <widget class="QGroupBox" name="userdata">
      <property name="title">
@@ -22,6 +37,21 @@
      <layout class="QFormLayout" name="formLayout_3">
       <property name="fieldGrowthPolicy">
        <enum>QFormLayout::AllNonFixedFieldsGrow</enum>
+      </property>
+      <property name="horizontalSpacing">
+       <number>3</number>
+      </property>
+      <property name="verticalSpacing">
+       <number>3</number>
+      </property>
+      <property name="leftMargin">
+       <number>0</number>
+      </property>
+      <property name="rightMargin">
+       <number>0</number>
+      </property>
+      <property name="bottomMargin">
+       <number>0</number>
       </property>
       <item row="2" column="0">
        <widget class="QLabel" name="label">
@@ -72,6 +102,18 @@
       <string>ログイン方法</string>
      </property>
      <layout class="QVBoxLayout" name="verticalLayout_2">
+      <property name="spacing">
+       <number>3</number>
+      </property>
+      <property name="leftMargin">
+       <number>0</number>
+      </property>
+      <property name="rightMargin">
+       <number>0</number>
+      </property>
+      <property name="bottomMargin">
+       <number>0</number>
+      </property>
       <item>
        <widget class="QLabel" name="label_4">
         <property name="text">
@@ -120,10 +162,6 @@
           <widget class="QComboBox" name="browser_combo"/>
          </item>
         </layout>
-        <zorder>login_way_combo</zorder>
-        <zorder>browser_combo</zorder>
-        <zorder>browser_combo</zorder>
-        <zorder>browser_combo</zorder>
        </widget>
       </item>
       <item>
@@ -180,7 +218,6 @@
      <zorder>userSessionWayDiscription</zorder>
      <zorder>usersession_groupe</zorder>
      <zorder>widget</zorder>
-     <zorder>usersession_label</zorder>
     </widget>
    </item>
    <item>

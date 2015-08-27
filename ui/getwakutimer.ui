@@ -6,14 +6,29 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>269</width>
-    <height>106</height>
+    <width>241</width>
+    <height>99</height>
    </rect>
   </property>
   <property name="windowTitle">
    <string>タイマー設定</string>
   </property>
   <layout class="QGridLayout" name="gridLayout">
+   <property name="leftMargin">
+    <number>4</number>
+   </property>
+   <property name="topMargin">
+    <number>4</number>
+   </property>
+   <property name="rightMargin">
+    <number>4</number>
+   </property>
+   <property name="bottomMargin">
+    <number>4</number>
+   </property>
+   <property name="spacing">
+    <number>3</number>
+   </property>
    <item row="1" column="0">
     <widget class="QDateTimeEdit" name="dateTimeEdit">
      <property name="enabled">
@@ -23,7 +38,7 @@
       <set>Qt::AlignCenter</set>
      </property>
      <property name="currentSection">
-      <enum>QDateTimeEdit::HourSection</enum>
+      <enum>QDateTimeEdit::YearSection</enum>
      </property>
      <property name="displayFormat">
       <string>yy/M/d H:mm</string>
