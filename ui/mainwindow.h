@@ -57,7 +57,7 @@ public:
   void getNewWakuAPI(int type, QString livenum = "");
   void userSessionDisabled();
 
-  void deleteCommunityFromList(QString communityID);
+  void deleteBroadcastFromList(QString broadID);
 
   bool startWakuTimerEnabled;
   QDateTime startWakuTimerTime;

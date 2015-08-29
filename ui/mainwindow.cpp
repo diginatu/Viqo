@@ -547,12 +547,12 @@ void MainWindow::userSessionDisabled()
   return;
 }
 
-void MainWindow::deleteCommunityFromList(QString communityID)
+void MainWindow::deleteBroadcastFromList(QString broadID)
 {
   LiveWaku* listElement(nullptr);
 
   foreach (LiveWaku* awaku, nicolivemanager->liveWakuList) {
-    if (awaku->getCommunity() == communityID) {
+    if (awaku->getBroadID() == broadID) {
       listElement = awaku;
       break;
     }
