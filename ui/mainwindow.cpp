@@ -436,6 +436,8 @@ void MainWindow::on_clear_triggered()
 void MainWindow::on_submit_button_clicked()
 {
   const QString& text = ui->submit_text->text();
+  if (text.isEmpty()) return;
+
   nicolivemanager->nowWaku.sendComment(text);
   QString bl = "";
   ui->submit_text->setText(bl);
