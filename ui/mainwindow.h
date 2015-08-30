@@ -107,11 +107,15 @@ private slots:
   void on_setting_triggered();
 
   void on_comment_view_currentItemChanged(QTreeWidgetItem *current, QTreeWidgetItem *previous);
+
   void on_CommentViewEditKotehan_triggered();
   void on_CommentViewGetKotehan_triggered();
+  void on_CommentViewRemoveKotehan_triggered();
+
   void on_autoGettingUserName_toggled(bool status);
   void on_action_triggered();
   void on_MatchAndAddBroadcast_triggered();
+
 
 private:
   Ui::MainWindow* ui;

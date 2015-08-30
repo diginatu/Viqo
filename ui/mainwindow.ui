@@ -1011,6 +1011,17 @@
     <string>放送開始サーチ...</string>
    </property>
   </action>
+  <action name="CommentViewRemoveKotehan">
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
+   <property name="text">
+    <string>コテハン削除</string>
+   </property>
+   <property name="toolTip">
+    <string>コテハン削除</string>
+   </property>
+  </action>
  </widget>
  <layoutdefault spacing="6" margin="11"/>
  <resources/>

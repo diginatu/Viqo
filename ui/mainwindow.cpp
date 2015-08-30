@@ -32,6 +32,7 @@ MainWindow::MainWindow(QWidget *parent) :
 
   ui->comment_view->insertAction(0,ui->CommentViewEditKotehan);
   ui->comment_view->insertAction(0,ui->CommentViewGetKotehan);
+  ui->comment_view->insertAction(0,ui->CommentViewRemoveKotehan);
   ui->one_comment_view->insertAction(0,ui->oneCommentActionCopy);
   ui->one_comment_view->insertAction(0,ui->oneCommentActionSearchByGoogle);
 
@@ -613,9 +614,11 @@ void MainWindow::on_comment_view_currentItemChanged(QTreeWidgetItem *current, QT
     if (current == 0) {
       ui->CommentViewEditKotehan->setEnabled(false);
       ui->CommentViewGetKotehan->setEnabled(false);
+      ui->CommentViewRemoveKotehan->setEnabled(false);
     } else {
       ui->CommentViewEditKotehan->setEnabled(true);
       ui->CommentViewGetKotehan->setEnabled(true);
+      ui->CommentViewRemoveKotehan->setEnabled(true);
     }
   }
 }
@@ -637,6 +640,12 @@ void MainWindow::on_CommentViewGetKotehan_triggered()
 {
   QTreeWidgetItem* const citem = ui->comment_view->currentItem();
   userManager->getUserName(citem, citem->text(5), true, false);
+}
+
+void MainWindow::on_CommentViewRemoveKotehan_triggered()
+{
+  QTreeWidgetItem* const citem = ui->comment_view->currentItem();
+  userManager->removeUser(citem);
 }
 
 void MainWindow::on_autoGettingUserName_toggled(bool status)
