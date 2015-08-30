@@ -257,6 +257,7 @@ void Settings::loadSettings()
   }
 
   QJsonDocument jsd = QJsonDocument::fromJson(file.readAll());
+  file.close();
 
   QJsonObject login_way = jsd.object()["login_way"].toObject();
   userSessionWay = UserSessionWay(login_way["login_way"].toInt());
@@ -272,8 +273,6 @@ void Settings::loadSettings()
     ownerComment = comment["owner_comment"].toBool();
   if (comment.contains("dispNG"))
     dispNG = comment["dispNG"].toBool();
-
-  file.close();
 }
 
 void Settings::saveMatchDataList()

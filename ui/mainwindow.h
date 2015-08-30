@@ -68,6 +68,7 @@ public slots:
   void on_disconnect_clicked();
 
   void getWatchCount();
+  void on_AccountSettings_triggered();
 
 private slots:
   void timeUpdate();
@@ -104,7 +105,6 @@ private slots:
 
   void on_clear_triggered();
   void on_setting_triggered();
-  void on_AccountSettings_triggered();
 
   void on_comment_view_currentItemChanged(QTreeWidgetItem *current, QTreeWidgetItem *previous);
   void on_CommentViewEditKotehan_triggered();

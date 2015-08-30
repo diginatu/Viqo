@@ -273,6 +273,9 @@
            <property name="contextMenuPolicy">
             <enum>Qt::ActionsContextMenu</enum>
            </property>
+           <property name="alternatingRowColors">
+            <bool>true</bool>
+           </property>
            <property name="indentation">
             <number>0</number>
            </property>
@@ -353,7 +356,7 @@
              <rect>
               <x>0</x>
               <y>0</y>
-              <width>263</width>
+              <width>411</width>
               <height>183</height>
              </rect>
             </property>
