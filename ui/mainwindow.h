@@ -57,7 +57,7 @@ public:
   void getNewWakuAPI(int type, QString livenum = "");
   void userSessionDisabled();
 
-  void deleteCommunityFromList(QString communityID);
+  void deleteBroadcastFromList(QString broadID);
 
   bool startWakuTimerEnabled;
   QDateTime startWakuTimerTime;
@@ -68,6 +68,7 @@ public slots:
   void on_disconnect_clicked();
 
   void getWatchCount();
+  void on_AccountSettings_triggered();
 
 private slots:
   void timeUpdate();
@@ -104,14 +105,17 @@ private slots:
 
   void on_clear_triggered();
   void on_setting_triggered();
-  void on_AccountSettings_triggered();
 
   void on_comment_view_currentItemChanged(QTreeWidgetItem *current, QTreeWidgetItem *previous);
+
   void on_CommentViewEditKotehan_triggered();
   void on_CommentViewGetKotehan_triggered();
+  void on_CommentViewRemoveKotehan_triggered();
+
   void on_autoGettingUserName_toggled(bool status);
   void on_action_triggered();
   void on_MatchAndAddBroadcast_triggered();
+
 
 private:
   Ui::MainWindow* ui;

@@ -89,3 +89,16 @@ void UserManager::setUserName(QTreeWidgetItem* item, QString username)
                              QStringLiteral("ユーザのデータベーステーブル書き込みに失敗しました"));
   }
 }
+
+void UserManager::removeUser(QTreeWidgetItem* item)
+{
+  QSqlQuery query(db);
+  query.prepare("delete from user where id = :id");
+  query.bindValue(":id", item->text(5));
+
+  if (!query.exec()) {
+    mwin->insLog("user db set error");
+    QMessageBox::information(mwin, "Viqo",
+                             QStringLiteral("ユーザのデータベーステーブル書き込みに失敗しました"));
+  }
+}

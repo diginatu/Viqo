@@ -6,14 +6,29 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>462</width>
-    <height>520</height>
+    <width>437</width>
+    <height>471</height>
    </rect>
   </property>
   <property name="windowTitle">
    <string>次枠設定</string>
   </property>
   <layout class="QGridLayout" name="gridLayout">
+   <property name="leftMargin">
+    <number>4</number>
+   </property>
+   <property name="topMargin">
+    <number>4</number>
+   </property>
+   <property name="rightMargin">
+    <number>4</number>
+   </property>
+   <property name="bottomMargin">
+    <number>4</number>
+   </property>
+   <property name="spacing">
+    <number>3</number>
+   </property>
    <item row="0" column="4">
     <widget class="QPushButton" name="presets_delete">
      <property name="sizePolicy">
@@ -30,6 +45,9 @@
    <item row="1" column="0" colspan="5">
     <widget class="QWidget" name="widget" native="true">
      <layout class="QHBoxLayout" name="horizontalLayout">
+      <property name="spacing">
+       <number>3</number>
+      </property>
       <property name="leftMargin">
        <number>0</number>
       </property>
@@ -95,27 +113,84 @@
      </property>
     </widget>
    </item>
+   <item row="0" column="3">
+    <widget class="QPushButton" name="presets_regist">
+     <property name="sizePolicy">
+      <sizepolicy hsizetype="Maximum" vsizetype="Fixed">
+       <horstretch>0</horstretch>
+       <verstretch>0</verstretch>
+      </sizepolicy>
+     </property>
+     <property name="text">
+      <string>登録</string>
+     </property>
+    </widget>
+   </item>
+   <item row="0" column="1" colspan="2">
+    <widget class="QComboBox" name="presetes"/>
+   </item>
+   <item row="4" column="4">
+    <widget class="QPushButton" name="okButton">
+     <property name="sizePolicy">
+      <sizepolicy hsizetype="Maximum" vsizetype="Fixed">
+       <horstretch>0</horstretch>
+       <verstretch>0</verstretch>
+      </sizepolicy>
+     </property>
+     <property name="text">
+      <string>OK</string>
+     </property>
+    </widget>
+   </item>
+   <item row="4" column="0" colspan="4">
+    <spacer name="horizontalSpacer_3">
+     <property name="orientation">
+      <enum>Qt::Horizontal</enum>
+     </property>
+     <property name="sizeHint" stdset="0">
+      <size>
+       <width>350</width>
+       <height>24</height>
+      </size>
+     </property>
+    </spacer>
+   </item>
    <item row="2" column="0" colspan="5">
     <widget class="QToolBox" name="toolBox">
      <property name="enabled">
       <bool>true</bool>
-     </property>
-     <property name="currentIndex">
-      <number>0</number>
      </property>
      <widget class="QWidget" name="page">
       <property name="geometry">
        <rect>
         <x>0</x>
         <y>0</y>
-        <width>444</width>
-        <height>341</height>
+        <width>429</width>
+        <height>313</height>
        </rect>
       </property>
       <attribute name="label">
        <string>必須項目</string>
       </attribute>
       <layout class="QFormLayout" name="formLayout">
+       <property name="horizontalSpacing">
+        <number>3</number>
+       </property>
+       <property name="verticalSpacing">
+        <number>3</number>
+       </property>
+       <property name="leftMargin">
+        <number>4</number>
+       </property>
+       <property name="topMargin">
+        <number>4</number>
+       </property>
+       <property name="rightMargin">
+        <number>4</number>
+       </property>
+       <property name="bottomMargin">
+        <number>4</number>
+       </property>
        <item row="0" column="0">
         <widget class="QLabel" name="label_4">
          <property name="sizePolicy">
@@ -204,14 +279,29 @@
        <rect>
         <x>0</x>
         <y>0</y>
-        <width>444</width>
-        <height>341</height>
+        <width>429</width>
+        <height>313</height>
        </rect>
       </property>
       <attribute name="label">
        <string>その他</string>
       </attribute>
       <layout class="QGridLayout" name="gridLayout_4">
+       <property name="leftMargin">
+        <number>4</number>
+       </property>
+       <property name="topMargin">
+        <number>4</number>
+       </property>
+       <property name="rightMargin">
+        <number>4</number>
+       </property>
+       <property name="bottomMargin">
+        <number>4</number>
+       </property>
+       <property name="horizontalSpacing">
+        <number>3</number>
+       </property>
        <item row="0" column="0" colspan="3">
         <widget class="QWidget" name="tag_widget" native="true">
          <layout class="QGridLayout" name="gridLayout_2">
@@ -459,48 +549,6 @@
       </layout>
      </widget>
     </widget>
-   </item>
-   <item row="0" column="3">
-    <widget class="QPushButton" name="presets_regist">
-     <property name="sizePolicy">
-      <sizepolicy hsizetype="Maximum" vsizetype="Fixed">
-       <horstretch>0</horstretch>
-       <verstretch>0</verstretch>
-      </sizepolicy>
-     </property>
-     <property name="text">
-      <string>登録</string>
-     </property>
-    </widget>
-   </item>
-   <item row="0" column="1" colspan="2">
-    <widget class="QComboBox" name="presetes"/>
-   </item>
-   <item row="4" column="4">
-    <widget class="QPushButton" name="okButton">
-     <property name="sizePolicy">
-      <sizepolicy hsizetype="Maximum" vsizetype="Fixed">
-       <horstretch>0</horstretch>
-       <verstretch>0</verstretch>
-      </sizepolicy>
-     </property>
-     <property name="text">
-      <string>OK</string>
-     </property>
-    </widget>
-   </item>
-   <item row="4" column="0" colspan="4">
-    <spacer name="horizontalSpacer_3">
-     <property name="orientation">
-      <enum>Qt::Horizontal</enum>
-     </property>
-     <property name="sizeHint" stdset="0">
-      <size>
-       <width>350</width>
-       <height>24</height>
-      </size>
-     </property>
-    </spacer>
    </item>
   </layout>
  </widget>

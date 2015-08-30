@@ -7,13 +7,28 @@
     <x>0</x>
     <y>0</y>
     <width>482</width>
-    <height>278</height>
+    <height>263</height>
    </rect>
   </property>
   <property name="windowTitle">
    <string>放送開始サーチ</string>
   </property>
   <layout class="QGridLayout" name="gridLayout">
+   <property name="leftMargin">
+    <number>4</number>
+   </property>
+   <property name="topMargin">
+    <number>4</number>
+   </property>
+   <property name="rightMargin">
+    <number>4</number>
+   </property>
+   <property name="bottomMargin">
+    <number>4</number>
+   </property>
+   <property name="spacing">
+    <number>3</number>
+   </property>
    <item row="3" column="1" colspan="3">
     <widget class="QPushButton" name="userAddButton">
      <property name="text">

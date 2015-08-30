@@ -150,7 +150,9 @@ void NicoLiveManager::newWakuFinished(QNetworkReply* reply){
       getNewWakuAPI(4);
     } else {
       mwin->insLog("getting waku failed");
-      QMessageBox::information(mwin, "Viqo", QStringLiteral("枠取りに失敗しました"));
+      QMessageBox::information(mwin, "Viqo",
+                               QStringLiteral("枠取りに失敗しました<br><br>") +
+                               bodya.midStr("<div id=\"Error_Box\">", "</div>"));
       auto headers = reply->rawHeaderPairs();
       qDebug() << headers;
       qDebug() << body;

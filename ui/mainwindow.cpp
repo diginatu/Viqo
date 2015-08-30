@@ -32,6 +32,7 @@ MainWindow::MainWindow(QWidget *parent) :
 
   ui->comment_view->insertAction(0,ui->CommentViewEditKotehan);
   ui->comment_view->insertAction(0,ui->CommentViewGetKotehan);
+  ui->comment_view->insertAction(0,ui->CommentViewRemoveKotehan);
   ui->one_comment_view->insertAction(0,ui->oneCommentActionCopy);
   ui->one_comment_view->insertAction(0,ui->oneCommentActionSearchByGoogle);
 
@@ -310,8 +311,13 @@ int MainWindow::lastCommentNum()
 void MainWindow::on_receive_clicked()
 {
   if ( settings.getUserSession().isEmpty() ) {
-    insLog("MainWindow::on_receive_clicked sessionID is not set yet");
-    QMessageBox::information(this, "Viqo", QStringLiteral("セッションIDが設定されていません"));
+    QMessageBox msgBox(this);
+    msgBox.setText(QStringLiteral("セッションIDが設定されていません\n設定画面を開きますか？"));
+    msgBox.setStandardButtons(QMessageBox::Cancel | QMessageBox::Ok);
+    msgBox.setDefaultButton(QMessageBox::Ok);
+    if (msgBox.exec() == QMessageBox::Ok) {
+      on_AccountSettings_triggered();
+    }
     return;
   }
 
@@ -436,6 +442,8 @@ void MainWindow::on_clear_triggered()
 void MainWindow::on_submit_button_clicked()
 {
   const QString& text = ui->submit_text->text();
+  if (text.isEmpty()) return;
+
   nicolivemanager->nowWaku.sendComment(text);
   QString bl = "";
   ui->submit_text->setText(bl);
@@ -525,7 +533,7 @@ void MainWindow::userSessionDisabled()
   const UserSessionWay usw = settings.getLoginWay();
   if (usw == UserSessionWay::Direct) {
     QMessageBox msgBox(this);
-    msgBox.setText(QStringLiteral("ユーザセッションが無効です\n設定画面を開きますか？"));
+    msgBox.setText(QStringLiteral("ユーザセッションが無効になってる可能性があります\n設定画面を開きますか？"));
     msgBox.setStandardButtons(QMessageBox::Cancel | QMessageBox::Ok);
     msgBox.setDefaultButton(QMessageBox::Ok);
     if (msgBox.exec() == QMessageBox::Ok) {
@@ -534,7 +542,7 @@ void MainWindow::userSessionDisabled()
   } else if (usw == UserSessionWay::Browser ||
              usw == UserSessionWay::Login) {
     QMessageBox msgBox(this);
-    msgBox.setText(QStringLiteral("ユーザセッションが無効です\n取得しなおしますか？"));
+    msgBox.setText(QStringLiteral("ユーザセッションが無効になってる可能性があります\n取得しなおしますか？"));
     msgBox.setStandardButtons(QMessageBox::Cancel | QMessageBox::Ok);
     msgBox.setDefaultButton(QMessageBox::Ok);
     if (msgBox.exec() == QMessageBox::Ok) {
@@ -547,12 +555,12 @@ void MainWindow::userSessionDisabled()
   return;
 }
 
-void MainWindow::deleteCommunityFromList(QString communityID)
+void MainWindow::deleteBroadcastFromList(QString broadID)
 {
   LiveWaku* listElement(nullptr);
 
   foreach (LiveWaku* awaku, nicolivemanager->liveWakuList) {
-    if (awaku->getCommunity() == communityID) {
+    if (awaku->getBroadID() == broadID) {
       listElement = awaku;
       break;
     }
@@ -606,9 +614,11 @@ void MainWindow::on_comment_view_currentItemChanged(QTreeWidgetItem *current, QT
     if (current == 0) {
       ui->CommentViewEditKotehan->setEnabled(false);
       ui->CommentViewGetKotehan->setEnabled(false);
+      ui->CommentViewRemoveKotehan->setEnabled(false);
     } else {
       ui->CommentViewEditKotehan->setEnabled(true);
       ui->CommentViewGetKotehan->setEnabled(true);
+      ui->CommentViewRemoveKotehan->setEnabled(true);
     }
   }
 }
@@ -630,6 +640,12 @@ void MainWindow::on_CommentViewGetKotehan_triggered()
 {
   QTreeWidgetItem* const citem = ui->comment_view->currentItem();
   userManager->getUserName(citem, citem->text(5), true, false);
+}
+
+void MainWindow::on_CommentViewRemoveKotehan_triggered()
+{
+  QTreeWidgetItem* const citem = ui->comment_view->currentItem();
+  userManager->removeUser(citem);
 }
 
 void MainWindow::on_autoGettingUserName_toggled(bool status)

@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>457</width>
-    <height>487</height>
+    <width>425</width>
+    <height>482</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -21,17 +21,35 @@
   </property>
   <widget class="QWidget" name="centralWidget">
    <layout class="QVBoxLayout" name="verticalLayout_3">
+    <property name="spacing">
+     <number>3</number>
+    </property>
+    <property name="leftMargin">
+     <number>0</number>
+    </property>
+    <property name="topMargin">
+     <number>3</number>
+    </property>
+    <property name="rightMargin">
+     <number>0</number>
+    </property>
+    <property name="bottomMargin">
+     <number>0</number>
+    </property>
     <item>
      <widget class="QWidget" name="widget_2" native="true">
       <layout class="QHBoxLayout" name="horizontalLayout_2">
+       <property name="spacing">
+        <number>3</number>
+       </property>
        <property name="leftMargin">
-        <number>0</number>
+        <number>4</number>
        </property>
        <property name="topMargin">
         <number>0</number>
        </property>
        <property name="rightMargin">
-        <number>0</number>
+        <number>4</number>
        </property>
        <property name="bottomMargin">
         <number>0</number>
@@ -113,14 +131,17 @@
     <item>
      <widget class="QWidget" name="widget_3" native="true">
       <layout class="QHBoxLayout" name="horizontalLayout_3">
+       <property name="spacing">
+        <number>3</number>
+       </property>
        <property name="leftMargin">
-        <number>0</number>
+        <number>4</number>
        </property>
        <property name="topMargin">
         <number>0</number>
        </property>
        <property name="rightMargin">
-        <number>0</number>
+        <number>4</number>
        </property>
        <property name="bottomMargin">
         <number>0</number>
@@ -151,14 +172,17 @@
     <item>
      <widget class="QWidget" name="widget_4" native="true">
       <layout class="QHBoxLayout" name="horizontalLayout_4">
+       <property name="spacing">
+        <number>3</number>
+       </property>
        <property name="leftMargin">
-        <number>0</number>
+        <number>4</number>
        </property>
        <property name="topMargin">
         <number>0</number>
        </property>
        <property name="rightMargin">
-        <number>0</number>
+        <number>4</number>
        </property>
        <property name="bottomMargin">
         <number>0</number>
@@ -191,6 +215,9 @@
       <property name="orientation">
        <enum>Qt::Vertical</enum>
       </property>
+      <property name="handleWidth">
+       <number>5</number>
+      </property>
       <widget class="QTextBrowser" name="one_comment_view">
        <property name="sizePolicy">
         <sizepolicy hsizetype="Minimum" vsizetype="Expanding">
@@ -215,12 +242,27 @@
        <property name="currentIndex">
         <number>0</number>
        </property>
+       <property name="documentMode">
+        <bool>true</bool>
+       </property>
        <widget class="QWidget" name="comment_tab">
         <attribute name="title">
          <string>コメント</string>
         </attribute>
         <layout class="QGridLayout" name="gridLayout">
-         <item row="0" column="0" colspan="3">
+         <property name="leftMargin">
+          <number>0</number>
+         </property>
+         <property name="topMargin">
+          <number>0</number>
+         </property>
+         <property name="rightMargin">
+          <number>0</number>
+         </property>
+         <property name="bottomMargin">
+          <number>0</number>
+         </property>
+         <item row="0" column="0">
           <widget class="QTreeWidget" name="comment_view">
            <property name="sizePolicy">
             <sizepolicy hsizetype="Minimum" vsizetype="Expanding">
@@ -231,8 +273,8 @@
            <property name="contextMenuPolicy">
             <enum>Qt::ActionsContextMenu</enum>
            </property>
-           <property name="styleSheet">
-            <string notr="true"/>
+           <property name="alternatingRowColors">
+            <bool>true</bool>
            </property>
            <property name="indentation">
             <number>0</number>
@@ -287,11 +329,23 @@
          </item>
         </layout>
        </widget>
-       <widget class="QWidget" name="tab">
+       <widget class="QWidget" name="command_tab">
         <attribute name="title">
          <string>コマンド</string>
         </attribute>
         <layout class="QVBoxLayout" name="verticalLayout">
+         <property name="leftMargin">
+          <number>0</number>
+         </property>
+         <property name="topMargin">
+          <number>0</number>
+         </property>
+         <property name="rightMargin">
+          <number>0</number>
+         </property>
+         <property name="bottomMargin">
+          <number>0</number>
+         </property>
          <item>
           <widget class="QScrollArea" name="command_scrollArea">
            <property name="widgetResizable">
@@ -302,7 +356,7 @@
              <rect>
               <x>0</x>
               <y>0</y>
-              <width>403</width>
+              <width>411</width>
               <height>183</height>
              </rect>
             </property>
@@ -566,6 +620,18 @@
          <string>ログ</string>
         </attribute>
         <layout class="QGridLayout" name="gridLayout_2">
+         <property name="leftMargin">
+          <number>0</number>
+         </property>
+         <property name="topMargin">
+          <number>0</number>
+         </property>
+         <property name="rightMargin">
+          <number>0</number>
+         </property>
+         <property name="bottomMargin">
+          <number>0</number>
+         </property>
          <item row="0" column="0">
           <widget class="QTextBrowser" name="logtext"/>
          </item>
@@ -578,13 +644,13 @@
      <widget class="QWidget" name="widget" native="true">
       <layout class="QHBoxLayout" name="horizontalLayout">
        <property name="leftMargin">
-        <number>0</number>
+        <number>6</number>
        </property>
        <property name="topMargin">
         <number>0</number>
        </property>
        <property name="rightMargin">
-        <number>0</number>
+        <number>6</number>
        </property>
        <property name="bottomMargin">
         <number>0</number>
@@ -638,7 +704,7 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>457</width>
+     <width>425</width>
      <height>25</height>
     </rect>
    </property>
@@ -673,7 +739,6 @@
     <property name="title">
      <string>編集</string>
     </property>
-    <addaction name="clear"/>
     <addaction name="separator"/>
     <addaction name="MatchAndAddBroadcast"/>
     <addaction name="setting"/>
@@ -698,8 +763,8 @@
     <property name="title">
      <string>ヘルプ</string>
     </property>
-    <addaction name="AboutViqo"/>
     <addaction name="AboutQt"/>
+    <addaction name="AboutViqo"/>
    </widget>
    <widget class="QMenu" name="menu">
     <property name="title">
@@ -720,6 +785,7 @@
      <addaction name="autoGetUserWay"/>
      <addaction name="autoGetUserNameOverWrite"/>
     </widget>
+    <addaction name="clear"/>
     <addaction name="comment"/>
     <addaction name="keepTop"/>
    </widget>
@@ -943,6 +1009,17 @@
   <action name="MatchAndAddBroadcast">
    <property name="text">
     <string>放送開始サーチ...</string>
+   </property>
+  </action>
+  <action name="CommentViewRemoveKotehan">
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
+   <property name="text">
+    <string>コテハン削除</string>
+   </property>
+   <property name="toolTip">
+    <string>コテハン削除</string>
    </property>
   </action>
  </widget>

@@ -91,6 +91,12 @@ void Settings::saveStatus(int num)
   other["new_waku_start"] = ui->autoNewWakuStart->isChecked();
   other["auto_free_extend"] = ui->autoExtend->isChecked();
 
+  QJsonObject window;
+  window["posx"] = mwin->x();
+  window["posy"] = mwin->y();
+  window["width"] = mwin->width();
+  window["height"] = mwin->height();
+
   QJsonObject comment;
   comment["autoGettingUserName"] = ui->autoGettingUserName->isChecked();
   comment["autoGetUserNameUseAt"] = ui->autoGetUserNameUseAt->isChecked();
@@ -110,6 +116,7 @@ void Settings::saveStatus(int num)
 
   QJsonObject root;
   root["other"] = other;
+  root["window"] = window;
   root["comment"] = comment;
   root["command"] = command;
 
@@ -162,6 +169,12 @@ void Settings::loadStatus(int num)
   ui->autoNewWakuOpenBrowser->setChecked(other["new_waku_open_browser"].toBool(true));
   ui->autoNewWakuStart->setChecked(other["new_waku_start"].toBool());
   ui->autoExtend->setChecked(other["auto_free_extend"].toBool());
+
+  QJsonObject window = jsd.object()["window"].toObject();
+  if (!window.isEmpty()) {
+    mwin->setGeometry(window["posx"].toInt(), window["posy"].toInt(),
+        window["width"].toInt(), window["height"].toInt());
+  }
 
   QJsonObject comment = jsd.object()["comment"].toObject();
   ui->autoGettingUserName->setChecked(comment["autoGettingUserName"].toBool(true));
@@ -244,6 +257,7 @@ void Settings::loadSettings()
   }
 
   QJsonDocument jsd = QJsonDocument::fromJson(file.readAll());
+  file.close();
 
   QJsonObject login_way = jsd.object()["login_way"].toObject();
   userSessionWay = UserSessionWay(login_way["login_way"].toInt());
@@ -259,8 +273,6 @@ void Settings::loadSettings()
     ownerComment = comment["owner_comment"].toBool();
   if (comment.contains("dispNG"))
     dispNG = comment["dispNG"].toBool();
-
-  file.close();
 }
 
 void Settings::saveMatchDataList()
