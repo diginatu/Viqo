@@ -118,7 +118,7 @@ void LiveWaku::playerStatusFinished(QNetworkReply* reply)
     QString code = commTcpi.midStr("<code>","</code>");
     mwin->insLog(code);
 
-    if (code == "closed" || code == "deletedbyuser") {
+    if (code == "closed" || code == "deletedbyuser" || code == "require_community_member") {
       QList<LiveWaku*>& wlist = nlman->liveWakuList;
 
       const int this_index = wlist.indexOf(this);
@@ -129,6 +129,7 @@ void LiveWaku::playerStatusFinished(QNetworkReply* reply)
         this->deleteLater();
       }
     }
+
     mwin->insLog();
     return;
   }
