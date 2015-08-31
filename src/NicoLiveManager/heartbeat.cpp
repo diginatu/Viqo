@@ -22,7 +22,7 @@ void HeartBeat::get()
   requestGet(rq);
 }
 
-void HeartBeat::got(QNetworkReply* reply)
+void HeartBeat::gotReply(QNetworkReply* reply)
 {
   reply->deleteLater();
   this->deleteLater();
@@ -37,9 +37,7 @@ void HeartBeat::got(QNetworkReply* reply)
   }
 
   QString watchCount(heartbeat_data.midStr("<watchCount>","</watchCount>"));
+  if (watchCount.isEmpty()) return;
 
-  if (watchCount != "") {
-    nlman->setWatchCount(watchCount);
-    mwin->updateWatchCount();
-  }
+  emit got(watchCount);
 }

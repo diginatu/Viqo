@@ -9,17 +9,17 @@ class GetStreamInfo : public HttpGetter
 {
   Q_OBJECT
 public:
-  GetStreamInfo(MainWindow* mwin, NicoLiveManager* nlman, const QString& broadID, QObject *parent = 0);
+  GetStreamInfo(MainWindow* mwin, const QString& broadID, QObject *parent = 0);
   ~GetStreamInfo();
 
   void get();
 
 private:
   QString broadID;
-  NicoLiveManager* nlman;
 private slots:
-  void got(QNetworkReply* reply);
+  void gotReply(QNetworkReply* reply);
 signals:
+  void got(QString broadID, QString title, QString description, QString communityID);
 
 public slots:
 };

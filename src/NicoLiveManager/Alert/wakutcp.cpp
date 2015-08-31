@@ -125,7 +125,28 @@ void WakuTcp::readOneRawWaku(const QString& rawwaku)
     }
 
     if (mwin->settings.getMatchDataNeedDetailInfo()) {
-      GetStreamInfo* getter = new GetStreamInfo(mwin, nicolivemanager, broadID, this);
+      GetStreamInfo* getter = new GetStreamInfo(mwin, broadID, this);
+      connect(getter, &GetStreamInfo::got, this,
+              [=](QString broadID, QString title,
+              QString description, QString communityID)
+      {
+        auto insertNewWaku = [&](){
+          nicolivemanager->insertLiveWakuList(new LiveWaku(mwin, nicolivemanager, broadID, communityID));
+          mwin->refleshLiveWaku();
+        };
+
+        foreach (QStringList match, mwin->settings.matchDataList) {
+          if (match[1].indexOf('T')!=-1 && title.indexOf(match[2])!=-1) {
+            insertNewWaku();
+            break;
+          }
+          if (match[1].indexOf('D')!=-1 && description.indexOf(match[2])!=-1) {
+            insertNewWaku();
+            break;
+          }
+        }
+      });
+
       getter->get();
     }
   }

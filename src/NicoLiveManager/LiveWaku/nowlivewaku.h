@@ -39,6 +39,8 @@ public:
   bool getIsConnected() const;
   void setIsConnected(bool value);
 
+  void getPlayerStatusAPI();
+
 private slots:
   void playerStatusFinished(QNetworkReply* reply);
 

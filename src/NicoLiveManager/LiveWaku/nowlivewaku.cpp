@@ -36,6 +36,22 @@ void NowLiveWaku::getPostKeyAPI(const QString& thread, int block_num)
   nlman->getPostKeyAPI(thread, block_num);
 }
 
+void NowLiveWaku::getPlayerStatusAPI()
+{
+  if(mManager!=nullptr)  delete mManager;
+  mManager = new QNetworkAccessManager(this);
+
+  connect(mManager, SIGNAL(finished(QNetworkReply*)), this,
+          SLOT(playerStatusFinished(QNetworkReply*)));
+
+  // make request
+  QNetworkRequest rq;
+  QVariant postData = NicoLiveManager::makePostData(mwin->settings.getUserSession());
+  rq.setHeader(QNetworkRequest::CookieHeader, postData);
+  rq.setUrl(QUrl("http://live.nicovideo.jp/api/getplayerstatus?v=lv" + broadID));
+  mManager->get(rq);
+}
+
 void NowLiveWaku::playerStatusFinished(QNetworkReply* reply)
 {
   mwin->insLog("LiveWaku::playerStatusFinished :");

@@ -34,10 +34,11 @@ void UserNameGetter::gotReply(QNetworkReply* reply)
 
   if (status == "fail") {
     QMessageBox::information(mwin, "Viqo", QStringLiteral("ユーザが見つかりませんでした"));
-  } else {
-    QString username = userinfo.midStr("<nickname>", "</nickname>");
-    emit got(username);
+    return;
   }
+
+  QString username = userinfo.midStr("<nickname>", "</nickname>");
+  emit got(username);
 
   reply->deleteLater();
   this->deleteLater();

@@ -13,23 +13,25 @@ class HttpGetter : public QObject
 public:
   explicit HttpGetter(MainWindow* mwin, QObject *parent = 0);
   ~HttpGetter();
+
+  void get();
 protected:
   void requestGet(const QNetworkRequest& rq);
   void requestPost(const QNetworkRequest& rq, QIODevice* data);
-  void get();
   QNetworkAccessManager* mManager;
   MainWindow* mwin;
 
 private:
 
 signals:
+  void got(QNetworkReply* reply);
 
 public slots:
 
 private slots:
 
 protected slots:
-  void got(QNetworkReply* reply);
+  virtual void gotReply(QNetworkReply* reply);
 };
 
 #endif // HTTPGETTER_H
