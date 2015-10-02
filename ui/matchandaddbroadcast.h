@@ -2,6 +2,7 @@
 #define MATCHANDADDBROADCAST_H
 
 #include <QDialog>
+#include "../src/NicoLiveManager/getcommunityinfo.h"
 
 class MainWindow;
 
@@ -19,7 +20,6 @@ public:
 
   void init();
 
-  void gotCommunityInfo(QString commid, QString title);
 private slots:
   void on_addButton_clicked();
   void on_communityAddButton_clicked();
@@ -30,6 +30,8 @@ private slots:
 
   void on_itemUpButton_clicked();
   void on_itemDownButton_clicked();
+
+  void gotCommunityInfo(QString commid, QString title);
 
 private:
   Ui::MatchAndAddBroadcast *ui;

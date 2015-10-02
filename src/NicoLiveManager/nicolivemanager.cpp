@@ -14,8 +14,7 @@ NicoLiveManager::NicoLiveManager(MainWindow* mwin, AccountWindow* awin, NewWakuS
   mRawMyLiveManager(nullptr),
   mTags(nullptr),
   mNewWaku(nullptr),
-  mConfigure(nullptr),
-  mCommunityInfo(nullptr)
+  mConfigure(nullptr)
 {
   this->mwin = mwin;
   this->awin = awin;

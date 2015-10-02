@@ -56,7 +56,6 @@ SOURCES += src/main.cpp\
     ui/mainwindow.cpp \
     ui/newwakusettingswindow.cpp \
     ui/settingswindow.cpp \
-    src/NicoLiveManager/communityinfo.cpp \
     src/NicoLiveManager/nicookie.cpp \
     src/NicoLiveManager/httpgetter.cpp \
     src/NicoLiveManager/autoextend.cpp \
@@ -64,7 +63,8 @@ SOURCES += src/main.cpp\
     ui/getwakutimer.cpp \
     src/NicoLiveManager/heartbeat.cpp \
     ui/matchandaddbroadcast.cpp \
-    src/NicoLiveManager/getstreaminfo.cpp
+    src/NicoLiveManager/getstreaminfo.cpp \
+    src/NicoLiveManager/getcommunityinfo.cpp
 
 HEADERS  += src/NicoLiveManager/nicolivemanager.h \
     src/strabstractor.h \
@@ -85,7 +85,8 @@ HEADERS  += src/NicoLiveManager/nicolivemanager.h \
     ui/getwakutimer.h \
     src/NicoLiveManager/heartbeat.h \
     ui/matchandaddbroadcast.h \
-    src/NicoLiveManager/getstreaminfo.h
+    src/NicoLiveManager/getstreaminfo.h \
+    src/NicoLiveManager/getcommunityinfo.h
 
 FORMS    += ui/mainwindow.ui \
     ui/settingswindow.ui \

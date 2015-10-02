@@ -28,20 +28,6 @@ void MatchAndAddBroadcast::init()
   }
 }
 
-void MatchAndAddBroadcast::gotCommunityInfo(QString commid, QString title)
-{
-  if (title.isEmpty()) {
-    QMessageBox::information(this, "Viqo", QStringLiteral("コミュニティが見つかりませんでした"));
-    return;
-  }
-
-  QTreeWidgetItem* item = new QTreeWidgetItem(ui->treeWidget);
-  item->setText(0, title);
-  item->setText(1, QStringLiteral("C"));
-  item->setText(2, commid);
-  item->setFlags(item->flags() | Qt::ItemIsEditable | Qt::ItemNeverHasChildren);
-}
-
 void MatchAndAddBroadcast::on_addButton_clicked()
 {
   QTreeWidgetItem* item = new QTreeWidgetItem(ui->treeWidget);
@@ -60,7 +46,23 @@ void MatchAndAddBroadcast::on_communityAddButton_clicked()
 
   if (commid.isNull()) return;
 
-  mwin->nicolivemanager->communityInfoAPI(commid);
+  GetCommunityInfo* getter = new GetCommunityInfo(mwin, commid, this);
+  connect(getter, &GetCommunityInfo::got, this, &MatchAndAddBroadcast::gotCommunityInfo);
+  getter->get();
+}
+
+void MatchAndAddBroadcast::gotCommunityInfo(QString commid, QString title)
+{
+  if (title.isEmpty()) {
+    QMessageBox::information(this, "Viqo", QStringLiteral("コミュニティが見つかりませんでした"));
+    return;
+  }
+
+  QTreeWidgetItem* item = new QTreeWidgetItem(ui->treeWidget);
+  item->setText(0, title);
+  item->setText(1, QStringLiteral("C"));
+  item->setText(2, commid);
+  item->setFlags(item->flags() | Qt::ItemIsEditable | Qt::ItemNeverHasChildren);
 }
 
 void MatchAndAddBroadcast::on_userAddButton_clicked()

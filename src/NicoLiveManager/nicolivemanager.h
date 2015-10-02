@@ -38,7 +38,6 @@ public:
   void getTagsAPI();
   void getNewWakuAPI(const int type, QString liveNum = "");
   void configureStreamAPI(QString key, QString value, LiveWaku* nowWaku = nullptr);
-  void communityInfoAPI(QString commID);
 
   void alertReconnect();
 
@@ -100,7 +99,6 @@ private:
   QNetworkAccessManager* mTags;
   QNetworkAccessManager* mNewWaku;
   QNetworkAccessManager* mConfigure;
-  QNetworkAccessManager* mCommunityInfo;
 private slots:
   void loginAlertFinished(QNetworkReply* reply);
   void adminAlertFinished(QNetworkReply* reply);
@@ -119,7 +117,6 @@ private slots:
 
   void deleteWakuList();
   void configureStreamFinished(QNetworkReply* reply);
-  void communityInfoFinished(QNetworkReply* reply);
 };
 
 

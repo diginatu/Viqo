@@ -3,7 +3,6 @@
 
 #include <QObject>
 #include <QNetworkAccessManager>
-#include "nicolivemanager.h"
 
 class MainWindow;
 
