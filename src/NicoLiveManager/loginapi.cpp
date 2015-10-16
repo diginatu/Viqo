@@ -36,7 +36,7 @@ void NicoLiveManager::loginFinished(QNetworkReply* reply){
       foreach (auto cookie, cookies) {
         if (cookie.name() == "user_session" &&
             cookie.value() != "deleted" &&
-            cookie.value() != "") {
+            !cookie.value().isEmpty()) {
           mwin->settings.setUserSession(cookie.value());
           mwin->insLog("login succeeded");
           QMessageBox::information(awin, "Viqo", QStringLiteral("ログインに成功しました"));

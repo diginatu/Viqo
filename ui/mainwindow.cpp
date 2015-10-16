@@ -58,7 +58,7 @@ MainWindow::MainWindow(QWidget *parent) :
 
   const QString mail = settings.getUserMail();
   const QString pass = settings.getUserPass();
-  if ( mail != "" && pass != "") {
+  if ( !mail.isEmpty() && !pass.isEmpty()) {
     nicolivemanager->loginAlertAPI(mail, pass);
   }
 

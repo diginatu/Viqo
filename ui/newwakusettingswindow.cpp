@@ -350,10 +350,10 @@ void NewWakuSettingsWindow::applySettingsPostData()
 
 bool NewWakuSettingsWindow::isSetNecessary()
 {
-  return ui->title->text() != "" &&
-      ui->description->toPlainText() != "" &&
-      ui->community->currentText() != "" &&
-      ui->category->currentText() != "";
+  return !ui->title->text().isEmpty() &&
+      !ui->description->toPlainText().isEmpty() &&
+      !ui->community->currentText().isEmpty() &&
+      !ui->category->currentText().isEmpty();
 }
 
 bool NewWakuSettingsWindow::isTwitterTagValid()

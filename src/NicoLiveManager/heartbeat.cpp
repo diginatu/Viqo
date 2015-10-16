@@ -38,7 +38,7 @@ void HeartBeat::got(QNetworkReply* reply)
 
   QString watchCount(heartbeat_data.midStr("<watchCount>","</watchCount>"));
 
-  if (watchCount != "") {
+  if (!watchCount.isEmpty()) {
     nlman->setWatchCount(watchCount);
     mwin->updateWatchCount();
   }

@@ -54,7 +54,7 @@ void NicoLiveManager::rawMyLivefinished(QNetworkReply* reply)
 
   QString ID;
   QString community;
-  while((community = liveID.midStr("http://com.nicovideo.jp/community/co", "\">")) != "") {
+  while(!(community = liveID.midStr("http://com.nicovideo.jp/community/co", "\">")).isEmpty() ) {
     ID = liveID.midStr("http://live.nicovideo.jp/watch/lv", "?ref=");
 
     // if ID contains no number charactor, it is not ID
