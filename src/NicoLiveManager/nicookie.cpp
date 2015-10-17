@@ -31,17 +31,17 @@
 #endif
 
 // for Chrome
-#ifdef Q_OS_WIN
+#if defined(Q_OS_WIN)
 #include <wincrypt.h>
-#else // Q_OS_WIN
-#ifdef Q_OS_OSX
+#elif defined(Q_OS_OSX)
 #include <Security/Security.h>
-#pragma clang diagnostic ignored "-Wdeprecated-declarations"
-#endif // Q_OS_OSX
+#include <CommonCrypto/CommonCryptor.h>
+#include <CommonCrypto/CommonKeyDerivation.h>
+#else
 #include <openssl/aes.h>
 #include <openssl/evp.h>
 #include <openssl/bio.h>
-#endif // Q_OS_WIN
+#endif
 
 #include "nicookie.h"
 
@@ -487,7 +487,7 @@ bool Nicookie::chromeFindValue(const QString &cookies_path)
 QString Nicookie::chromeDecrypt(const QByteArray &encrypt_data)
 {
   QString data;
-#ifdef Q_OS_WIN
+#if defined(Q_OS_WIN)
   DATA_BLOB encrypt_data_blob;
   encrypt_data_blob.pbData = (BYTE*)(encrypt_data.data());
   encrypt_data_blob.cbData = static_cast<DWORD>(encrypt_data.size());
@@ -502,9 +502,7 @@ QString Nicookie::chromeDecrypt(const QByteArray &encrypt_data)
   data = (QByteArray((char *)(plain_data_blob.pbData),
                      plain_data_blob.cbData));
   LocalFree(plain_data_blob.pbData);
-#else // O_QS_WIN
-
-#ifdef Q_OS_OSX
+#elif defined(Q_OS_OSX)
   // https://developer.apple.com/library/mac/documentation/Security/Reference/keychainservices/index.html#//apple_ref/c/func/SecKeychainFindGenericPassword
   UInt32 password_size = 0;
   void *password = NULL;
@@ -519,20 +517,66 @@ QString Nicookie::chromeDecrypt(const QByteArray &encrypt_data)
     SecKeychainItemFreeContent(NULL, password);
     return data;
   }
-#else // Q_OS_OSX
+
+  const size_t enc_key_size = 16;
+  unsigned char enc_key[enc_key_size];
+  int iterations = 1003;
+  const char *salt = "saltysalt";
+  int pbkdf2_r = CCKeyDerivationPBKDF(kCCPBKDF2,
+                                      (const char *)password,
+                                      password_size,
+                                      (const uint8_t *)salt,
+                                      strlen(salt),
+                                      kCCPRFHmacAlgSHA1,
+                                      iterations,
+                                      (uint8_t *)enc_key,
+                                      enc_key_size);
+  if (pbkdf2_r != kCCSuccess) {
+    setError(Nicookie::FailedDecrytError);
+    SecKeychainItemFreeContent(NULL, password);
+    return data;
+  }
+
+  const size_t iv_size = 16;
+  unsigned char iv[iv_size];
+  for (size_t i = 0; i < iv_size; i++) iv[i] = ' ';
+
+  // alwayes enc size >= dec size
+  size_t plain_value_size = encrypt_data.size();
+  char *plain_value = (char *)malloc(plain_value_size);
+  if (plain_value == NULL) {
+    setError(Nicookie::FailedDecrytError);
+    SecKeychainItemFreeContent(NULL, password);
+    return data;
+  }
+  size_t palin_value_moved = 0;
+
+  CCCryptorStatus cryptStatus = CCCrypt(kCCDecrypt,
+                                        kCCAlgorithmAES128,
+                                        kCCOptionPKCS7Padding | kCCOptionECBMode,
+                                        enc_key, enc_key_size,
+                                        iv,
+                                        encrypt_data.data() + 3,
+                                        encrypt_data.size() - 3,
+                                        plain_value, plain_value_size - 1,
+                                        &palin_value_moved);
+  if (cryptStatus != kCCSuccess) {
+    setError(Nicookie::FailedDecrytError);
+    SecKeychainItemFreeContent(NULL, password);
+    free(plain_value);
+    return data;
+  }
+  plain_value[palin_value_moved] = '\0';
+  data = plain_value;
+
+  free(plain_value);
+  SecKeychainItemFreeContent(NULL, password);
+#else
   int password_size = 7;
   void *password = (void *)"peanuts";
-#endif // Q_OS_OSX
-
   const int enc_key_size = 16;
   unsigned char enc_key[enc_key_size];
-
-#ifdef Q_OS_OSX
-  int iterations = 1003;
-#else // Q_OS_OSX
   int iterations = 1;
-#endif // Q_OS_OSX
-
   const char *salt = "saltysalt";
   int pbkdf2_r = PKCS5_PBKDF2_HMAC_SHA1((char *)password, password_size,
                                         (unsigned char *)salt, strlen(salt),
@@ -540,9 +584,6 @@ QString Nicookie::chromeDecrypt(const QByteArray &encrypt_data)
                                         enc_key_size, enc_key);
   if (!pbkdf2_r) {
     setError(Nicookie::FailedDecrytError);
-#ifdef Q_OS_OSX
-    SecKeychainItemFreeContent(NULL, password);
-#endif // Q_OS_OSX
     return data;
   }
 
@@ -555,9 +596,6 @@ QString Nicookie::chromeDecrypt(const QByteArray &encrypt_data)
   char *plain_value = (char *)malloc(plain_value_size);
   if (plain_value == NULL) {
     setError(Nicookie::FailedDecrytError);
-#ifdef Q_OS_OSX
-    SecKeychainItemFreeContent(NULL, password);
-#endif // Q_OS_OSX
     return data;
   }
 
@@ -570,9 +608,6 @@ QString Nicookie::chromeDecrypt(const QByteArray &encrypt_data)
     setError(Nicookie::FailedDecrytError);
     EVP_CIPHER_CTX_cleanup(&ctx);
     free(plain_value);
-#ifdef Q_OS_OSX
-    SecKeychainItemFreeContent(NULL, password);
-#endif // Q_OS_OSX
     return data;
   }
 
@@ -585,9 +620,6 @@ QString Nicookie::chromeDecrypt(const QByteArray &encrypt_data)
     setError(Nicookie::FailedDecrytError);
     EVP_CIPHER_CTX_cleanup(&ctx);
     free(plain_value);
-#ifdef Q_OS_OSX
-    SecKeychainItemFreeContent(NULL, password);
-#endif // Q_OS_OSX
     return data;
   }
 
@@ -600,9 +632,6 @@ QString Nicookie::chromeDecrypt(const QByteArray &encrypt_data)
     setError(Nicookie::FailedDecrytError);
     EVP_CIPHER_CTX_cleanup(&ctx);
     free(plain_value);
-#ifdef Q_OS_OSX
-    SecKeychainItemFreeContent(NULL, password);
-#endif // Q_OS_OSX
     return data;
   }
 
@@ -612,10 +641,7 @@ QString Nicookie::chromeDecrypt(const QByteArray &encrypt_data)
   data = plain_value;
 
   free(plain_value);
-#ifdef Q_OS_OSX
-  SecKeychainItemFreeContent(NULL, password);
-#endif // Q_OS_OSX
-#endif // O_QS_WIN
+#endif
   return data;
 }
 
