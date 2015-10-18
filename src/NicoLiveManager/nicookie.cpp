@@ -553,7 +553,7 @@ QString Nicookie::chromeDecrypt(const QByteArray &encrypt_data)
 
   CCCryptorStatus cryptStatus = CCCrypt(kCCDecrypt,
                                         kCCAlgorithmAES128,
-                                        kCCOptionPKCS7Padding | kCCOptionECBMode,
+                                        0,
                                         enc_key, enc_key_size,
                                         iv,
                                         encrypt_data.data() + 3,
@@ -567,6 +567,13 @@ QString Nicookie::chromeDecrypt(const QByteArray &encrypt_data)
     return data;
   }
   plain_value[palin_value_moved] = '\0';
+  // TODO: なぜか末尾に'\x0B'がついてくるので含めなくする。
+  for (size_t i = 0; i < palin_value_moved; ++i) {
+    if (plain_value[i] == '\x0B') {
+      plain_value[i] = '\0';
+      break;
+    }
+  }
   data = plain_value;
 
   free(plain_value);
