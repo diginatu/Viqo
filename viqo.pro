@@ -24,7 +24,7 @@ LIBS += -liepmapi
 }
 win32: LIBS += -lcrypt32
 mac: LIBS += -framework Security
-unix: LIBS += -lcrypto
+unix:!mac: LIBS += -lcrypto
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 QT += core gui
