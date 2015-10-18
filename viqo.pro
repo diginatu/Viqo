@@ -26,6 +26,10 @@ win32: LIBS += -lcrypt32
 mac: LIBS += -framework Security
 unix: LIBS += -lcrypto
 
+DEPENDPATH += . ../QtNicoLib
+INCLUDEPATH += ../QtNicoLib
+LIBS += -L../build-QtNicoLiveLib-Desktop_Qt_5_5_0_GCC_64bit-Release -lQtNicoLib
+
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 QT += core gui
 QT += network
