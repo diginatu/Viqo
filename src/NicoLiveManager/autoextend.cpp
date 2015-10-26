@@ -1,10 +1,12 @@
 ﻿#include "autoextend.h"
 #include "../../ui/mainwindow.h"
+#include "nicolivemanager.h"
 
 AutoExtend::AutoExtend(MainWindow* mwin, NicoLiveManager* nlman, QObject* parent) :
-  HttpGetter(mwin, parent),
+  HttpGetter(parent),
   mExtendManager(nullptr)
 {
+  this->mwin = mwin;
   this->nlman = nlman;
 }
 
@@ -26,10 +28,10 @@ void AutoExtend::get()
 
 void AutoExtend::gotReply(QNetworkReply *reply)
 {
-  StrAbstractor data(QString(reply->readAll()));
+  nicolive::StrAbstractor data(QString(reply->readAll()));
 
   bool haveFree = false;
-  StrAbstractor* aitem;
+  nicolive::StrAbstractor* aitem;
   while ((aitem = data.mid("<item>", "</item>")) != nullptr) {
     // QString price = aitem->midStr("<price>", "</price>");
     QString num  = aitem->midStr("<num>", "</num>");
@@ -80,14 +82,14 @@ void AutoExtend::getExtend(QString code, QString item, QString num)
 
 void AutoExtend::gotExtend(QNetworkReply* reply)
 {
-  StrAbstractor data(QString(reply->readAll()));
+  nicolive::StrAbstractor data(QString(reply->readAll()));
 
   QString mode = data.midStr("<mode>", "</mode>");
 
   if (mode == "extend")
     mwin->insLog("auto extended");
 
-  StrAbstractor* error = data.mid("<error>", "</error>");
+  nicolive::StrAbstractor* error = data.mid("<error>", "</error>");
   if (error != nullptr) {
     mwin->insLog("autoExtend : error");
     mwin->insLog("code");

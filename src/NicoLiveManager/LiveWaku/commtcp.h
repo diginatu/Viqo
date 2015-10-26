@@ -1,4 +1,4 @@
-#ifndef COMMTCP_H
+﻿#ifndef COMMTCP_H
 #define COMMTCP_H
 
 #include <QObject>
@@ -7,6 +7,7 @@
 #include <QDateTime>
 #include <QProcess>
 #include <QTimer>
+#include <nl/strabstractor.h>
 
 
 class MainWindow;

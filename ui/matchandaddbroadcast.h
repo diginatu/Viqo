@@ -2,7 +2,6 @@
 #define MATCHANDADDBROADCAST_H
 
 #include <QDialog>
-#include "../src/NicoLiveManager/getcommunityinfo.h"
 
 class MainWindow;
 

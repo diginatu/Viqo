@@ -27,7 +27,7 @@ void NicoLiveManager::configureStreamAPI(QString key, QString value, LiveWaku* w
 }
 
 void NicoLiveManager::configureStreamFinished(QNetworkReply* reply){
-  StrAbstractor rep(QString(reply->readAll()));
+  nicolive::StrAbstractor rep(QString(reply->readAll()));
   reply->deleteLater();
 
   QString status = rep.midStr("status=\"", "\"", false);

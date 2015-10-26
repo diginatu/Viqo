@@ -111,7 +111,7 @@ void LiveWaku::getPlayerStatusAPI()
 void LiveWaku::playerStatusFinished(QNetworkReply* reply)
 {
   mwin->insLog("LiveWaku::playerStatusFinished :");
-  StrAbstractor commTcpi(QString(reply->readAll()));
+  nicolive::StrAbstractor commTcpi(QString(reply->readAll()));
 
   QString status = commTcpi.midStr("status=\"","\"");
   if (status == "fail") {

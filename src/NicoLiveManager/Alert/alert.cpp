@@ -24,7 +24,7 @@ void NicoLiveManager::loginAlertFinished(QNetworkReply* reply)
   mwin->insLog("NicoLiveManager::loginAlertFinished");
   QString repdata = QString(reply->readAll());
 
-  StrAbstractor commTcpi(repdata);
+  nicolive::StrAbstractor commTcpi(repdata);
 
   QString status = commTcpi.midStr("status=\"","\"");
   if (status == "fail") {
@@ -67,7 +67,7 @@ void NicoLiveManager::adminAlertFinished(QNetworkReply* reply)
   mwin->insLog("NicoLiveManager::adminAlertFinished");
   QString repdata = QString(reply->readAll());
 
-  StrAbstractor wakuTcpi(repdata);
+  nicolive::StrAbstractor wakuTcpi(repdata);
 
   QString status = wakuTcpi.midStr("status=\"","\"");
   if (status == "fail") {
@@ -79,7 +79,7 @@ void NicoLiveManager::adminAlertFinished(QNetworkReply* reply)
     return;
   }
 
-  StrAbstractor* communityi = wakuTcpi.mid("<communities>","</communities>");
+  nicolive::StrAbstractor* communityi = wakuTcpi.mid("<communities>","</communities>");
   QString mycommunity;
   officialMyCommunities.clear();
   while (!(mycommunity = communityi->midStr("<community_id>","</community_id>")).isNull()) {

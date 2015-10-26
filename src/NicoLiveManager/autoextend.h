@@ -4,12 +4,12 @@
 #include <QObject>
 #include <QDateTime>
 #include <QMessageBox>
-#include "nicolivemanager.h"
-#include "httpgetter.h"
+#include <nl/httpgetter.h>
 
 class MainWindow;
+class NicoLiveManager;
 
-class AutoExtend : public HttpGetter
+class AutoExtend : public nicolive::HttpGetter
 {
   Q_OBJECT
 public:
@@ -21,6 +21,7 @@ private:
   QNetworkAccessManager* mExtendManager;
   void getExtend(QString code, QString item, QString num);
   NicoLiveManager* nlman;
+  MainWindow* mwin;
 
 private slots:
   void gotReply(QNetworkReply* reply);

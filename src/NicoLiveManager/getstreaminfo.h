@@ -2,10 +2,10 @@
 #define GETSTREAMINFO_H
 
 #include <QObject>
-#include "httpgetter.h"
+#include <nl/httpgetter.h>
 #include "nicolivemanager.h"
 
-class GetStreamInfo : public HttpGetter
+class GetStreamInfo : public nicolive::HttpGetter
 {
   Q_OBJECT
 public:
@@ -16,6 +16,7 @@ public:
 
 private:
   QString broadID;
+  MainWindow* mwin;
 private slots:
   void gotReply(QNetworkReply* reply);
 signals:

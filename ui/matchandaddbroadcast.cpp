@@ -1,6 +1,7 @@
 ﻿#include "matchandaddbroadcast.h"
 #include "ui_matchandaddbroadcast.h"
 #include "mainwindow.h"
+#include "../src/NicoLiveManager/getcommunityinfo.h"
 
 MatchAndAddBroadcast::MatchAndAddBroadcast(MainWindow* mwin, QWidget *parent) :
   QDialog(parent),
@@ -74,8 +75,11 @@ void MatchAndAddBroadcast::on_userAddButton_clicked()
 
   if (userid.isNull()) return;
 
-  UserNameGetter* ug = new UserNameGetter(mwin, this, userid);
-  connect(ug, &UserNameGetter::got, this, [=](QString name){
+  nicolive::FetchUserName* ug = new nicolive::FetchUserName(this, userid);
+  connect(ug, &nicolive::FetchUserName::error, this, [=](){
+    QMessageBox::information(mwin, "Viqo", QStringLiteral("ユーザ取得エラー"));
+  });
+  connect(ug, &nicolive::FetchUserName::got, this, [=](QString name){
     QTreeWidgetItem* item = new QTreeWidgetItem(ui->treeWidget);
     item->setText(0, name);
     item->setText(1, QStringLiteral("U"));

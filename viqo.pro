@@ -26,9 +26,9 @@ win32: LIBS += -lcrypt32
 mac: LIBS += -framework Security
 unix: LIBS += -lcrypto
 
-DEPENDPATH += . ../QtNicoLib
-INCLUDEPATH += ../QtNicoLib
-LIBS += -L../build-QtNicoLiveLib-Desktop_Qt_5_5_0_GCC_64bit-Release -lQtNicoLib
+DEPENDPATH += . ../QtNicoLiveLib
+INCLUDEPATH += ../QtNicoLiveLib
+LIBS += -L../build-QtNicoLiveLib-Desktop_Qt_5_4_2_GCC_64bit-Release -lQtNicoLiveLib
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 QT += core gui
@@ -40,7 +40,6 @@ TEMPLATE = app
 
 
 SOURCES += src/main.cpp\
-    src/strabstractor.cpp \
     src/usermanager.cpp \
     src/NicoLiveManager/nicolivemanager.cpp \
     src/NicoLiveManager/Alert/alert.cpp \
@@ -61,9 +60,7 @@ SOURCES += src/main.cpp\
     ui/newwakusettingswindow.cpp \
     ui/settingswindow.cpp \
     src/NicoLiveManager/nicookie.cpp \
-    src/NicoLiveManager/httpgetter.cpp \
     src/NicoLiveManager/autoextend.cpp \
-    src/NicoLiveManager/usernamegetter.cpp \
     ui/getwakutimer.cpp \
     src/NicoLiveManager/heartbeat.cpp \
     ui/matchandaddbroadcast.cpp \
@@ -71,7 +68,6 @@ SOURCES += src/main.cpp\
     src/NicoLiveManager/getcommunityinfo.cpp
 
 HEADERS  += src/NicoLiveManager/nicolivemanager.h \
-    src/strabstractor.h \
     src/usermanager.h \
     src/NicoLiveManager/Alert/wakutcp.h \
     src/NicoLiveManager/LiveWaku/livewaku.h \
@@ -83,9 +79,7 @@ HEADERS  += src/NicoLiveManager/nicolivemanager.h \
     ui/newwakusettingswindow.h \
     ui/settingswindow.h \
     src/NicoLiveManager/nicookie.h \
-    src/NicoLiveManager/httpgetter.h \
     src/NicoLiveManager/autoextend.h \
-    src/NicoLiveManager/usernamegetter.h \
     ui/getwakutimer.h \
     src/NicoLiveManager/heartbeat.h \
     ui/matchandaddbroadcast.h \

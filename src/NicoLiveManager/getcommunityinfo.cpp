@@ -2,8 +2,9 @@
 #include "../../ui/mainwindow.h"
 
 GetCommunityInfo::GetCommunityInfo(MainWindow* mwin, QString commID, QObject* parent) :
-  HttpGetter(mwin, parent)
+  HttpGetter(parent)
 {
+  this->mwin = mwin;
   this->commID = commID;
 }
 
@@ -23,7 +24,7 @@ void GetCommunityInfo::gotReply(QNetworkReply* reply)
   reply->deleteLater();
   this->deleteLater();
 
-  StrAbstractor communityData(QString(reply->readAll()));
+  nicolive::StrAbstractor communityData(QString(reply->readAll()));
 
   const QString title = communityData.midStr("<h1 id=\"community_name\">", "</h1>");
 

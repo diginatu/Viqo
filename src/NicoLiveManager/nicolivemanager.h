@@ -7,7 +7,7 @@
 #include <QNetworkRequest>
 #include <QTimer>
 
-#include "../strabstractor.h"
+#include <nl/strabstractor.h>
 #include "Alert/wakutcp.h"
 #include "LiveWaku/livewaku.h"
 #include "LiveWaku/nowlivewaku.h"

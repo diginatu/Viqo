@@ -134,7 +134,7 @@ void NicoLiveManager::newWakuFinished(QNetworkReply* reply){
     }
   } else {
     QString body = QString(reply->readAll());
-    StrAbstractor bodya(body);
+    nicolive::StrAbstractor bodya(body);
 
     if (bodya.forward("<div id=\"wait\">") != -1) {
       QString waitingUsers = bodya.midStr("<span id=\"waiting_users\">", "</span>");
@@ -165,9 +165,9 @@ void NicoLiveManager::newWakuFinished(QNetworkReply* reply){
 }
 
 void NicoLiveManager::newWakuAbstractor(QNetworkReply* reply, int mode) {
-  StrAbstractor allTagHtml(QString(reply->readAll()));
+  nicolive::StrAbstractor allTagHtml(QString(reply->readAll()));
 
-  StrAbstractor* mainForm = allTagHtml.mid("<form action=\"editstream\"", "</form>");
+  nicolive::StrAbstractor* mainForm = allTagHtml.mid("<form action=\"editstream\"", "</form>");
   if (mainForm == nullptr) {
     mwin->insLog("NicoLiveManager::newWakuAbstractor reading page error");
     return;
@@ -180,7 +180,7 @@ void NicoLiveManager::newWakuAbstractor(QNetworkReply* reply, int mode) {
   }
   if (mode >= 2) newWakuData.clear();
 
-  StrAbstractor* input;
+  nicolive::StrAbstractor* input;
   while ((input = mainForm->mid("<input", ">")) != nullptr) {
     QString type = input->midStr("type=\"", "\"", false);
     if (type == "button") continue;
@@ -207,9 +207,9 @@ void NicoLiveManager::newWakuAbstractor(QNetworkReply* reply, int mode) {
   while ((input = mainForm->mid("<select", "</select>")) != nullptr) {
     QString name = input->mid("", ">")->midStr("name=\"", "\"", false);
     if (name == "") continue;
-    StrAbstractor* option;
+    nicolive::StrAbstractor* option;
     while ((option = input->mid("<option", "</option>")) != nullptr) {
-      StrAbstractor* head = option->mid("", ">");
+      nicolive::StrAbstractor* head = option->mid("", ">");
       QString value = HTMLdecode(head->midStr("value=\"", "\""));
       if (value == "") continue;
       QString disp = NicoLiveManager::HTMLdecode(option->midStr("", "").replace("<wbr />&#8203;", ""));

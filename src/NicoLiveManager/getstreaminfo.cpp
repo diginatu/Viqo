@@ -2,8 +2,9 @@
 #include "../../ui/mainwindow.h"
 
 GetStreamInfo::GetStreamInfo(MainWindow* mwin, const QString& broadID, QObject* parent) :
-  HttpGetter(mwin, parent)
+  HttpGetter(parent)
 {
+  this->mwin = mwin;
   this->broadID = broadID;
 }
 
@@ -28,7 +29,7 @@ void GetStreamInfo::gotReply(QNetworkReply* reply)
   reply->deleteLater();
   this->deleteLater();
 
-  StrAbstractor receivedData(QString(reply->readAll()));
+  nicolive::StrAbstractor receivedData(QString(reply->readAll()));
 
   const QString status = receivedData.midStr("status=\"", "\"");
   if ( status == "fail" ) {

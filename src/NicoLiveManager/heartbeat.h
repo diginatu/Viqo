@@ -2,10 +2,12 @@
 #define HEARTBEAT_H
 
 #include <QObject>
-#include "httpgetter.h"
-#include "nicolivemanager.h"
+#include "nl/httpgetter.h"
 
-class HeartBeat : public HttpGetter
+class NicoLiveManager;
+class MainWindow;
+
+class HeartBeat : public nicolive::HttpGetter
 {
   Q_OBJECT
 public:
@@ -14,6 +16,7 @@ public:
   void get();
 private:
   NicoLiveManager* nlman;
+  MainWindow* mwin;
 private slots:
   void gotReply(QNetworkReply* reply);
 signals:

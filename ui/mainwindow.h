@@ -12,9 +12,9 @@
 #include <QDragEnterEvent>
 #include <QDesktopServices>
 #include <QClipboard>
+#include <nl/strabstractor.h>
 
 #include "../src/usermanager.h"
-#include "../src/strabstractor.h"
 #include "../src/NicoLiveManager/nicolivemanager.h"
 #include "../src/NicoLiveManager/autoextend.h"
 #include "../src/NicoLiveManager/heartbeat.h"

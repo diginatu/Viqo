@@ -22,15 +22,15 @@ void NicoLiveManager::getTagsAPI()
 void NicoLiveManager::tagsFinished(QNetworkReply* reply){
   QString repdata = QString(reply->readAll());
 
-  StrAbstractor allTagHtml(repdata);
+  nicolive::StrAbstractor allTagHtml(repdata);
   const QString tagsString = allTagHtml.midStr("<table>", "</table>");
 
-  StrAbstractor tagArea(tagsString);
+  nicolive::StrAbstractor tagArea(tagsString);
   for (;;) {
     const QString tagString = tagArea.midStr("<nobr>", "</nobr>");
     if (tagString == "") break;
 
-    StrAbstractor tagabs(tagString);
+    nicolive::StrAbstractor tagabs(tagString);
     const QString tag = tagabs.midStr(">", "</a>");
     qDebug() << tag;
   }

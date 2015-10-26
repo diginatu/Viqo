@@ -2,7 +2,7 @@
 #define NOWLIVEWAKU_H
 
 #include <QObject>
-#include "../../strabstractor.h"
+#include <nl/strabstractor.h>
 #include "livewaku.h"
 #include "commtcp.h"
 

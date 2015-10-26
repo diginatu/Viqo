@@ -90,7 +90,7 @@ void CommTcp::readyRead()
 
 void CommTcp::readOneRawComment(const QString rawcomm)
 {
-  StrAbstractor rawcommabs(rawcomm);
+  nicolive::StrAbstractor rawcommabs(rawcomm);
 
   if (rawcomm.startsWith("<thread")) {
     open_time = QDateTime::currentDateTime();
@@ -116,7 +116,7 @@ void CommTcp::readOneRawComment(const QString rawcomm)
   }
 
   const QString comminfostr = rawcommabs.midStr("<chat", ">");
-  StrAbstractor comminfo(comminfostr);
+  nicolive::StrAbstractor comminfo(comminfostr);
   rawcommabs.setRelativePosition(-2);
 
   QString comm = rawcommabs.midStr(">", "</chat>");

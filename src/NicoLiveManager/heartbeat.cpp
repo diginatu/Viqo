@@ -1,9 +1,11 @@
 ﻿#include "heartbeat.h"
 #include "../../ui/mainwindow.h"
+#include "nicolivemanager.h"
 
 HeartBeat::HeartBeat(MainWindow* mwin, NicoLiveManager* nlman, QObject* parent) :
-  HttpGetter(mwin, parent)
+  HttpGetter(parent)
 {
+  this->mwin = mwin;
   this->nlman = nlman;
 }
 
@@ -27,7 +29,7 @@ void HeartBeat::gotReply(QNetworkReply* reply)
   reply->deleteLater();
   this->deleteLater();
 
-  StrAbstractor heartbeat_data(QString(reply->readAll()));
+  nicolive::StrAbstractor heartbeat_data(QString(reply->readAll()));
 
   const QString status = heartbeat_data.midStr("status=\"", "\"");
   if ( status == "fail" ) {

@@ -38,7 +38,7 @@ void NicoLiveManager::rawMyLivefinished(QNetworkReply* reply)
 {
   mwin->insLog("NicoLiveManager::rawMyLivefinished");
 
-  StrAbstractor liveID(QString(reply->readAll()));
+  nicolive::StrAbstractor liveID(QString(reply->readAll()));
 
   if (liveID.toString().isEmpty()) {
     mwin->insLog("HTML was empty. you may be not logged in.");

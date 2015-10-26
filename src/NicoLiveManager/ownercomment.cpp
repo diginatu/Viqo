@@ -20,7 +20,7 @@ void NicoLiveManager::getPublishStatusAPI()
 
 void NicoLiveManager::publishStatusFinished(QNetworkReply* reply){
   QString repdata = QString(reply->readAll());
-  StrAbstractor heartbeat_data(repdata);
+  nicolive::StrAbstractor heartbeat_data(repdata);
 
   const QString status = heartbeat_data.midStr("status=\"", "\"");
   if ( status == "fail" ) {
@@ -59,7 +59,7 @@ void NicoLiveManager::submitOwnerCommentAPI(const QString& text, const QString& 
 void NicoLiveManager::submitOwnerCommentFinished(QNetworkReply* reply){
   mwin->submittedComment();
   QString repdata = QString(reply->readAll());
-  StrAbstractor heartbeat_data(repdata);
+  nicolive::StrAbstractor heartbeat_data(repdata);
 
   const QString status = heartbeat_data.midStr("status=\"", "\"");
   if ( status == "fail" ) {

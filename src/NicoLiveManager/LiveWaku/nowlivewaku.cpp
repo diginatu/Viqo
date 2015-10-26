@@ -58,7 +58,7 @@ void NowLiveWaku::playerStatusFinished(QNetworkReply* reply)
   QString repdata = QString(reply->readAll());
   // qDebug() << repdata;
 
-  StrAbstractor commTcpi(repdata);
+  nicolive::StrAbstractor commTcpi(repdata);
 
   QString status = commTcpi.midStr("status=\"","\"");
   if (status == "fail") {

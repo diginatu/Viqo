@@ -5,8 +5,7 @@
 #include <QTreeWidgetItem>
 #include <QtSql/QtSql>
 #include <QMessageBox>
-
-#include "NicoLiveManager/usernamegetter.h"
+#include <nl/fetchusername.h>
 
 class MainWindow;
 

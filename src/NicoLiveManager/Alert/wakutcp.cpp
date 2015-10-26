@@ -83,7 +83,7 @@ void WakuTcp::readOneRawWaku(const QString& rawwaku)
     return;
   }
 
-  StrAbstractor awaku(rawwaku);
+  nicolive::StrAbstractor awaku(rawwaku);
   QString wakuS = awaku.midStr(">", "</chat>");
 
   QStringList wakur = wakuS.split(",");
