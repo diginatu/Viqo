@@ -50,7 +50,6 @@ SOURCES += src/main.cpp\
     src/NicoLiveManager/LiveWaku/commtcp.cpp \
     src/settings.cpp \
     src/NicoLiveManager/loginapi.cpp \
-    src/NicoLiveManager/postkeyapi.cpp \
     src/NicoLiveManager/ownercomment.cpp \
     src/NicoLiveManager/tagapi.cpp \
     src/NicoLiveManager/getnewwaku.cpp \

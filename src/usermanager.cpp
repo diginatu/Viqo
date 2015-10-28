@@ -54,7 +54,7 @@ void UserManager::getUserName(QTreeWidgetItem* item, QString userID, bool useHTT
       if (query.next()) {
         item->setText(2, query.value(0).toString());
       } else if (useHTTP) {
-        nicolive::FetchUserName* ug = new nicolive::FetchUserName(this, userID);
+        auto ug = new nicolive::FetchUserName(userID, this);
         connect(ug, &nicolive::FetchUserName::error, this, [=](){
           QMessageBox::information(mwin, "Viqo", QStringLiteral("ユーザ取得エラー"));
         });
@@ -71,7 +71,7 @@ void UserManager::getUserName(QTreeWidgetItem* item, QString userID, bool useHTT
                                QStringLiteral("ユーザのデータベーステーブル取得に失敗しました"));
     }
   } else if (useHTTP) {
-    nicolive::FetchUserName* ug = new nicolive::FetchUserName(this, userID);
+    nicolive::FetchUserName* ug = new nicolive::FetchUserName(userID, this);
     connect(ug, &nicolive::FetchUserName::error, this, [=](){
       QMessageBox::information(mwin, "Viqo", QStringLiteral("ユーザ取得エラー"));
     });

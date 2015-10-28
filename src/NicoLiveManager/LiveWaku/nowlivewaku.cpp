@@ -31,9 +31,14 @@ void NowLiveWaku::broadDisconnect() {
   isConnected = false;
 }
 
-void NowLiveWaku::getPostKeyAPI(const QString& thread, int block_num)
+void NowLiveWaku::getPostKeyAPI(const QString& thread, int blockNum)
 {
-  nlman->getPostKeyAPI(thread, block_num);
+  auto ag = new nicolive::GetCommPostKey(thread, blockNum,
+                                     mwin->settings.getUserSession(), this);
+  connect(ag, &nicolive::GetCommPostKey::got, this, [&](QString postKey){
+    setPostKey(postKey);
+  });
+  ag->get();
 }
 
 void NowLiveWaku::getPlayerStatusAPI()

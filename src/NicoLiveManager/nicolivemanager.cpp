@@ -5,7 +5,6 @@ NicoLiveManager::NicoLiveManager(MainWindow* mwin, AccountWindow* awin, NewWakuS
   QObject(parent),
   nowWaku(mwin, this, this),
   wakutcp(nullptr),
-  mPostKeyManager(nullptr),
   mLoginAlertManager(nullptr),
   mAdminAlertManager(nullptr),
   mLoginManager(nullptr),

@@ -32,7 +32,6 @@ public:
   void insertLiveWakuList(LiveWaku* livewaku);
 
   void loginAlertAPI(const QString& mail, const QString& pass);
-  void getPostKeyAPI(const QString& thread, int block_no);
   void getPublishStatusAPI();
   void submitOwnerCommentAPI(const QString& text, const QString& name);
   void getTagsAPI();
@@ -89,7 +88,6 @@ private:
 
   LiveWaku* gotNewWaku;
 
-  QNetworkAccessManager* mPostKeyManager;
   QNetworkAccessManager* mLoginAlertManager;
   QNetworkAccessManager* mAdminAlertManager;
   QNetworkAccessManager* mLoginManager;
@@ -104,7 +102,6 @@ private slots:
   void adminAlertFinished(QNetworkReply* reply);
   void rawMyLivefinished(QNetworkReply* reply);
   void loginFinished(QNetworkReply* reply);
-  void postKeyFinished(QNetworkReply* reply);
   void tagsFinished(QNetworkReply* reply);
   void newWakuNewReuseFinished(QNetworkReply* reply);
   void newWakuNewUpdateFinished(QNetworkReply* reply);

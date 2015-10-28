@@ -3,6 +3,7 @@
 
 #include <QObject>
 #include <nl/strabstractor.h>
+#include <nl/getcommpostkey.h>
 #include "livewaku.h"
 #include "commtcp.h"
 
@@ -15,7 +16,7 @@ public:
 
 	void broadDisconnect();
 
-  void getPostKeyAPI(const QString& thread, int block_num);
+  void getPostKeyAPI(const QString& thread, int blockNum);
 
   QString getPostKey() const;
   void setPostKey(const QString& value);

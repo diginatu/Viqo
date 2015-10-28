@@ -72,7 +72,12 @@ void CommTcp::sendNull()
 
 void CommTcp::getPostKey()
 {
-  nlwaku->getPostKeyAPI(thread, lastBlockNum);
+  auto ag = new nicolive::GetCommPostKey(thread, lastBlockNum,
+                                     mwin->settings.getUserSession(), this);
+  connect(ag, &nicolive::GetCommPostKey::got, this, [&](QString postKey){
+    nlwaku->setPostKey(postKey);
+  });
+  ag->get();
 }
 
 void CommTcp::readyRead()
@@ -100,7 +105,13 @@ void CommTcp::readOneRawComment(const QString rawcomm)
     ticket = rawcommabs.midStr("ticket=\"", "\"", false);
     server_time = rawcommabs.midStr("server_time=\"", "\"", false).toUInt();
 
-    nlwaku->getPostKeyAPI(thread, lastBlockNum);
+    auto ag = new nicolive::GetCommPostKey(thread, lastBlockNum,
+                                           mwin->settings.getUserSession(), this);
+    connect(ag, &nicolive::GetCommPostKey::got, this, [&](QString postKey){
+      nlwaku->setPostKey(postKey);
+    });
+    ag->get();
+
     // set timer to get post_key
     postkey_timer.start(10000);
 
@@ -125,7 +136,13 @@ void CommTcp::readOneRawComment(const QString rawcomm)
   const int block = num/10;
   if (block > lastBlockNum) {
     lastBlockNum = block;
-    nlwaku->getPostKeyAPI(thread, block);
+
+    auto ag = new nicolive::GetCommPostKey(thread, block,
+                                           mwin->settings.getUserSession(), this);
+    connect(ag, &nicolive::GetCommPostKey::got, this, [&](QString postKey){
+      nlwaku->setPostKey(postKey);
+    });
+    ag->get();
   }
 
   long long udate = comminfo.midStr("date=\"", "\"", false).toLongLong();

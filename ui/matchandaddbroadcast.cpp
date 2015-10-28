@@ -75,7 +75,7 @@ void MatchAndAddBroadcast::on_userAddButton_clicked()
 
   if (userid.isNull()) return;
 
-  nicolive::FetchUserName* ug = new nicolive::FetchUserName(this, userid);
+  nicolive::FetchUserName* ug = new nicolive::FetchUserName(userid, this);
   connect(ug, &nicolive::FetchUserName::error, this, [=](){
     QMessageBox::information(mwin, "Viqo", QStringLiteral("ユーザ取得エラー"));
   });
