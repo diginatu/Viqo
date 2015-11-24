@@ -55,8 +55,9 @@ void UserManager::getUserName(QTreeWidgetItem* item, QString userID, bool useHTT
         item->setText(2, query.value(0).toString());
       } else if (useHTTP) {
         auto ug = new nicolive::FetchUserName(userID, this);
-        connect(ug, &nicolive::FetchUserName::error, this, [=](){
-          QMessageBox::information(mwin, "Viqo", QStringLiteral("ユーザ取得エラー"));
+        connect(ug, &nicolive::FetchUserName::error, this, [=](QString code, QString description){
+          QMessageBox::information(mwin, "Viqo", QStringLiteral("ユーザ取得エラー code : ") +
+                                   code + " " + description);
         });
 
         connect(ug, &nicolive::FetchUserName::got, this, [=](QString n){
@@ -72,8 +73,9 @@ void UserManager::getUserName(QTreeWidgetItem* item, QString userID, bool useHTT
     }
   } else if (useHTTP) {
     nicolive::FetchUserName* ug = new nicolive::FetchUserName(userID, this);
-    connect(ug, &nicolive::FetchUserName::error, this, [=](){
-      QMessageBox::information(mwin, "Viqo", QStringLiteral("ユーザ取得エラー"));
+    connect(ug, &nicolive::FetchUserName::error, this, [=](QString code, QString description){
+      QMessageBox::information(mwin, "Viqo", QStringLiteral("ユーザ取得エラー code : ") +
+                               code + " " + description);
     });
     connect(ug, &nicolive::FetchUserName::got, this, [=](QString n){
       mwin->userManager->setUserName(item,n);

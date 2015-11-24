@@ -12,6 +12,8 @@ int main(int argc, char *argv[])
   QCoreApplication::setApplicationName("Viqo");
   QCoreApplication::setApplicationVersion("2.3");
 
+  qSetMessagePattern("%{file}:%{line} %{function} - %{message}");
+
   QCommandLineParser parser;
   parser.setApplicationDescription(
         QStringLiteral("Qt で作成されたマルチプラットフォームコメントビューワです"));

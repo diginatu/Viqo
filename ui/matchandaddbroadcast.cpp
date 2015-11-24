@@ -76,8 +76,9 @@ void MatchAndAddBroadcast::on_userAddButton_clicked()
   if (userid.isNull()) return;
 
   nicolive::FetchUserName* ug = new nicolive::FetchUserName(userid, this);
-  connect(ug, &nicolive::FetchUserName::error, this, [=](){
-    QMessageBox::information(mwin, "Viqo", QStringLiteral("ユーザ取得エラー"));
+  connect(ug, &nicolive::FetchUserName::error, this, [=](QString code, QString description){
+    QMessageBox::information(mwin, "Viqo", QStringLiteral("ユーザ取得エラー code : ") +
+                             code + " " + description);
   });
   connect(ug, &nicolive::FetchUserName::got, this, [=](QString name){
     QTreeWidgetItem* item = new QTreeWidgetItem(ui->treeWidget);
