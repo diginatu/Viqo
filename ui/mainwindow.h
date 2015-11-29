@@ -13,10 +13,10 @@
 #include <QDesktopServices>
 #include <QClipboard>
 #include <nl/strabstractor.h>
+#include <nl/extend.h>
 
 #include "../src/usermanager.h"
 #include "../src/NicoLiveManager/nicolivemanager.h"
-#include "../src/NicoLiveManager/autoextend.h"
 #include "../src/NicoLiveManager/heartbeat.h"
 #include "../src/settings.h"
 #include "settingswindow.h"
@@ -36,7 +36,8 @@ public:
   void onReceiveStarted();
   void onReceiveEnded();
 
-  void insComment(int num, bool prem, QString user, QString comm, QString date, bool is_184, bool broadcaster, bool after_open);
+  void insComment(int num, bool prem, QString user, QString comm, QString date,
+                  bool is_184, bool broadcaster, bool after_open);
   int lastCommentNum();
   void insLog(QString log = "");
 
@@ -106,7 +107,8 @@ private slots:
   void on_clear_triggered();
   void on_setting_triggered();
 
-  void on_comment_view_currentItemChanged(QTreeWidgetItem *current, QTreeWidgetItem *previous);
+  void on_comment_view_currentItemChanged(QTreeWidgetItem *current,
+                                          QTreeWidgetItem *previous);
 
   void on_CommentViewEditKotehan_triggered();
   void on_CommentViewGetKotehan_triggered();
@@ -118,6 +120,8 @@ private slots:
 
 
 private:
+  void extendIfFree();
+
   Ui::MainWindow* ui;
 
   SettingsWindow* settingsWindow;

@@ -187,8 +187,7 @@ void MainWindow::updateElapsedTime()
     QTimer::singleShot(300000,
                        [=](){nicolivemanager->nowWaku.didExtend = false;});
 
-    AutoExtend* ae = new AutoExtend(this, nicolivemanager, this);
-    ae->get();
+    extendIfFree();
   }
 
   if ( !nicolivemanager->nowWaku.didAlermCommand &&
@@ -481,6 +480,8 @@ void MainWindow::on_oneCommentActionCopy_triggered()
 
 void MainWindow::on_command_test_button_clicked()
 {
+  extendIfFree();
+  return;
   QProcess pr;
   QString cmd = ui->command_test->text();
 
@@ -672,4 +673,48 @@ void MainWindow::on_MatchAndAddBroadcast_triggered()
   matchAndAddBroadcast->show();
   matchAndAddBroadcast->raise();
   matchAndAddBroadcast->activateWindow();
+}
+
+void MainWindow::extendIfFree()
+{
+  auto extendInfo = new nicolive::ExtendInfo(this);
+  connect(extendInfo, &nicolive::ExtendInfo::error,
+          this, [this](QString code, QString description){
+    qDebug() << "freeExtend(extend info) failed\ncode: " << code << "\n" << description;
+    QMessageBox::information(this, "Viqo",
+                             QStringLiteral("自動無料延長に失敗しました"));
+  });
+  connect(extendInfo, &nicolive::ExtendInfo::got,
+          this, [=](QVector<nicolive::ExtendInfo::ExtendItem> info)
+  {
+    bool haveFree = false;
+    for (auto& extendItem : info) {
+      if (extendItem.item == "freeextend") {
+        auto extendRq = new nicolive::Extend(this);
+        connect(extendRq, &nicolive::Extend::got, this, [](){
+          qDebug() << "freeExtend suceeded";
+        });
+        connect(extendRq, &nicolive::Extend::error, this,
+                [=](QString code, QString description)
+        {
+          qDebug() << "freeExtend(extend) failed\ncode: " << code << "\n" << description;
+          QMessageBox::information(this, "Viqo",
+                                   QStringLiteral("自動無料延長に失敗しました"));
+        });
+        extendRq->get(extendItem, nicolivemanager->nowWaku.getBroadID(),
+                      nicolivemanager->nowWaku.getBroadcastToken());
+
+        haveFree = true;
+        break;
+      }
+    }
+    if ( !haveFree ) {
+      qDebug() << "no freeExtend";
+      QMessageBox::information(this, "Viqo",
+                               QStringLiteral("無料の延長はありません"));
+    }
+  });
+
+  extendInfo->get("lv" + nicolivemanager->nowWaku.getBroadID(),
+                  settings.getUserSession());
 }

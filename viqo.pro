@@ -59,7 +59,6 @@ SOURCES += src/main.cpp\
     ui/newwakusettingswindow.cpp \
     ui/settingswindow.cpp \
     src/NicoLiveManager/nicookie.cpp \
-    src/NicoLiveManager/autoextend.cpp \
     ui/getwakutimer.cpp \
     src/NicoLiveManager/heartbeat.cpp \
     ui/matchandaddbroadcast.cpp \
@@ -78,7 +77,6 @@ HEADERS  += src/NicoLiveManager/nicolivemanager.h \
     ui/newwakusettingswindow.h \
     ui/settingswindow.h \
     src/NicoLiveManager/nicookie.h \
-    src/NicoLiveManager/autoextend.h \
     ui/getwakutimer.h \
     src/NicoLiveManager/heartbeat.h \
     ui/matchandaddbroadcast.h \
