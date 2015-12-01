@@ -480,8 +480,6 @@ void MainWindow::on_oneCommentActionCopy_triggered()
 
 void MainWindow::on_command_test_button_clicked()
 {
-  extendIfFree();
-  return;
   QProcess pr;
   QString cmd = ui->command_test->text();
 

@@ -51,7 +51,6 @@ SOURCES += src/main.cpp\
     src/settings.cpp \
     src/NicoLiveManager/loginapi.cpp \
     src/NicoLiveManager/ownercomment.cpp \
-    src/NicoLiveManager/tagapi.cpp \
     src/NicoLiveManager/getnewwaku.cpp \
     src/NicoLiveManager/configurestream.cpp \
     ui/accountwindow.cpp \
