@@ -20,7 +20,7 @@ void MatchAndAddBroadcast::init()
 {
   ui->enableChk->setChecked(mwin->settings.getMatchDataEnabled());
   ui->treeWidget->clear();
-  foreach (QStringList data, mwin->settings.matchDataList) {
+  for (QStringList& data : mwin->settings.matchDataList) {
     QTreeWidgetItem* item = new QTreeWidgetItem(ui->treeWidget);
     item->setText(0, data[0]);
     item->setText(1, data[1]);

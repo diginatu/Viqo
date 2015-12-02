@@ -34,7 +34,6 @@ public:
   void loginAlertAPI(const QString& mail, const QString& pass);
   void getPublishStatusAPI();
   void submitOwnerCommentAPI(const QString& text, const QString& name);
-  void getTagsAPI();
   void getNewWakuAPI(const int type, QString liveNum = "");
   void configureStreamAPI(QString key, QString value, LiveWaku* nowWaku = nullptr);
 
@@ -94,7 +93,6 @@ private:
   QNetworkAccessManager* mOwnerCommentManager;
   QNetworkAccessManager* mOwnerCommentSManager;
   QNetworkAccessManager* mRawMyLiveManager;
-  QNetworkAccessManager* mTags;
   QNetworkAccessManager* mNewWaku;
   QNetworkAccessManager* mConfigure;
 private slots:
@@ -102,7 +100,6 @@ private slots:
   void adminAlertFinished(QNetworkReply* reply);
   void rawMyLivefinished(QNetworkReply* reply);
   void loginFinished(QNetworkReply* reply);
-  void tagsFinished(QNetworkReply* reply);
   void newWakuNewReuseFinished(QNetworkReply* reply);
   void newWakuNewUpdateFinished(QNetworkReply* reply);
   void newWakuNewInitFinished(QNetworkReply* reply);

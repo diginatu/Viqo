@@ -107,7 +107,7 @@ void NicoLiveManager::newWakuFinished(QNetworkReply* reply){
   QString location = "";
 
   auto headers = reply->rawHeaderPairs();
-  foreach (auto header, headers) {
+  for (auto header : headers) {
     if (header.first == "Location") {
       location = header.second;
       break;

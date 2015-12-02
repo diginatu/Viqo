@@ -562,7 +562,7 @@ void MainWindow::deleteBroadcastFromList(QString broadID)
 {
   LiveWaku* listElement(nullptr);
 
-  foreach (LiveWaku* awaku, nicolivemanager->liveWakuList) {
+  for (LiveWaku* awaku : nicolivemanager->liveWakuList) {
     if (awaku->getBroadID() == broadID) {
       listElement = awaku;
       break;

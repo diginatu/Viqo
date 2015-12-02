@@ -30,10 +30,10 @@ void NicoLiveManager::loginFinished(QNetworkReply* reply){
   auto headers = reply->rawHeaderPairs();
 
   bool success = false;
-  foreach (auto header, headers) {
+  for (auto& header : headers) {
     if (header.first == "Set-Cookie") {
       auto cookies = QNetworkCookie::parseCookies(header.second);
-      foreach (auto cookie, cookies) {
+      for (auto& cookie : cookies) {
         if (cookie.name() == "user_session" &&
             cookie.value() != "deleted" &&
             cookie.value() != "") {

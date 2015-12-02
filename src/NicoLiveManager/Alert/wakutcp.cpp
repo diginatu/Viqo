@@ -102,14 +102,12 @@ void WakuTcp::readOneRawWaku(const QString& rawwaku)
     mwin->refleshLiveWaku();
   };
 
-  foreach (QString commu, nicolivemanager->mycommunities) {
-    if (commu == wakur.at(1)) {
-      insertNewWaku();
-    }
+  for (QString commu : nicolivemanager->mycommunities) {
+    if (commu == wakur.at(1)) insertNewWaku();
   }
 
   if (mwin->settings.getMatchDataEnabled()) {
-    foreach (QStringList match, mwin->settings.matchDataList) {
+    for (QStringList match : mwin->settings.matchDataList) {
       if (match[1].indexOf('B')!=-1 && match[2] == broadID) {
         insertNewWaku();
         break;
@@ -135,7 +133,7 @@ void WakuTcp::readOneRawWaku(const QString& rawwaku)
           mwin->refleshLiveWaku();
         };
 
-        foreach (QStringList match, mwin->settings.matchDataList) {
+        for (QStringList match : mwin->settings.matchDataList) {
           if (match[1].indexOf('T')!=-1 && title.indexOf(match[2])!=-1) {
             insertNewWaku();
             break;

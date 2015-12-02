@@ -11,7 +11,6 @@ NicoLiveManager::NicoLiveManager(MainWindow* mwin, AccountWindow* awin, NewWakuS
   mOwnerCommentManager(nullptr),
   mOwnerCommentSManager(nullptr),
   mRawMyLiveManager(nullptr),
-  mTags(nullptr),
   mNewWaku(nullptr),
   mConfigure(nullptr)
 {
@@ -56,7 +55,7 @@ QVariant NicoLiveManager::makePostData(QString session_id)
 void NicoLiveManager::insertLiveWakuList(LiveWaku* livewaku)
 {
   const QString livewakuBID = livewaku->getBroadID();
-  foreach (LiveWaku* alistwaku, liveWakuList) {
+  for (LiveWaku* alistwaku : liveWakuList) {
     if (livewakuBID == alistwaku->getBroadID()) {
       delete livewaku;
       return;

@@ -37,7 +37,7 @@ void Settings::updateData()
   QJsonArray follow_communities = jsdo.object()["follow_communities"].toArray();
   QJsonArray matchDataListj;
 
-  foreach (QJsonValue community, follow_communities) {
+  for (auto community : follow_communities) {
     auto communityArr = community.toArray();
     matchDataListj.append(QJsonArray() << communityArr[1].toString()
                                        << "C"
@@ -286,7 +286,7 @@ void Settings::saveMatchDataList()
 
   QJsonArray matchDataListj;
 
-  foreach (QStringList data, matchDataList) {
+  for (QStringList& data : matchDataList) {
     matchDataListj.append(QJsonArray() << data[0] << data[1] << data[2]);
   }
 
@@ -343,7 +343,7 @@ void Settings::loadMatchDateList()
 
   QJsonArray matchDataListj = jsd.object()["match_data_list"].toArray();
   matchDataList.clear();
-  foreach (QJsonValue community, matchDataListj) {
+  for (auto community : matchDataListj) {
     QJsonArray data = community.toArray();
 
     if (!includeBroadInfo && infoNeededRg.indexIn(data[1].toString())!=-1) {
