@@ -40,7 +40,6 @@ public:
   void alertReconnect();
 
   void allGotWakuInfo(QString communityID, QString broadID);
-  void login(QString mail, QString pass);
 
   QStringList officialMyCommunities;
   QStringList mycommunities;
@@ -89,7 +88,6 @@ private:
 
   QNetworkAccessManager* mLoginAlertManager;
   QNetworkAccessManager* mAdminAlertManager;
-  QNetworkAccessManager* mLoginManager;
   QNetworkAccessManager* mOwnerCommentManager;
   QNetworkAccessManager* mOwnerCommentSManager;
   QNetworkAccessManager* mRawMyLiveManager;
@@ -99,7 +97,6 @@ private slots:
   void loginAlertFinished(QNetworkReply* reply);
   void adminAlertFinished(QNetworkReply* reply);
   void rawMyLivefinished(QNetworkReply* reply);
-  void loginFinished(QNetworkReply* reply);
   void newWakuNewReuseFinished(QNetworkReply* reply);
   void newWakuNewUpdateFinished(QNetworkReply* reply);
   void newWakuNewInitFinished(QNetworkReply* reply);

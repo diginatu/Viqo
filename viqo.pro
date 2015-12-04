@@ -49,7 +49,6 @@ SOURCES += src/main.cpp\
     src/NicoLiveManager/LiveWaku/nowlivewaku.cpp \
     src/NicoLiveManager/LiveWaku/commtcp.cpp \
     src/settings.cpp \
-    src/NicoLiveManager/loginapi.cpp \
     src/NicoLiveManager/ownercomment.cpp \
     src/NicoLiveManager/getnewwaku.cpp \
     src/NicoLiveManager/configurestream.cpp \

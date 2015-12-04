@@ -2,6 +2,7 @@
 #define ACCOUNTWINDOW_H
 
 #include <QDialog>
+#include <nl/usersessionlogin.h>
 #include "../src/NicoLiveManager/nicookie.h"
 
 namespace Ui {
@@ -19,7 +20,6 @@ public:
   ~AccountWindow();
 
   void init();
-  void getUserSessionFinished();
   void updateSessionAndSave();
 
 private slots:
