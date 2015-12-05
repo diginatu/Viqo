@@ -7,7 +7,6 @@ NicoLiveManager::NicoLiveManager(MainWindow* mwin, AccountWindow* awin, NewWakuS
   wakutcp(nullptr),
   mLoginAlertManager(nullptr),
   mAdminAlertManager(nullptr),
-  mLoginManager(nullptr),
   mOwnerCommentManager(nullptr),
   mOwnerCommentSManager(nullptr),
   mRawMyLiveManager(nullptr),

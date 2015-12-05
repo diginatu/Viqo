@@ -683,7 +683,7 @@ void MainWindow::extendIfFree()
                              QStringLiteral("自動無料延長に失敗しました"));
   });
   connect(extendInfo, &nicolive::ExtendInfo::got,
-          this, [=](QVector<nicolive::ExtendInfo::ExtendItem> info)
+          this, [=](QVector<nicolive::ExtendItem> info)
   {
     bool haveFree = false;
     for (auto& extendItem : info) {
