@@ -87,9 +87,8 @@ void AccountWindow::on_buttonBox_accepted()
 void AccountWindow::on_get_session_clicked()
 {
   switch (static_cast<UserSessionWay>(ui->login_way_combo->currentIndex())) {
-  case UserSessionWay::Browser:
-    mwin->settings.setUserSession(
-          nicookie.getUserSession(ui->browser_combo->currentText()));
+  case UserSessionWay::Browser:{
+    QString usersession = nicookie.getUserSession(ui->browser_combo->currentText());
     ui->usersession->setText(mwin->settings.getUserSession());
 
     if (nicookie.hasError()) {
@@ -99,6 +98,8 @@ void AccountWindow::on_get_session_clicked()
       break;
     }
 
+    mwin->settings.setUserSession(usersession);
+
     QMessageBox::information(this, "Nicookie",
                              QStringLiteral("正常にセッションが取得されました"));
 
@@ -106,11 +107,11 @@ void AccountWindow::on_get_session_clicked()
     //   The main window is focused when the Keychain window closes.
     this->raise();
 
-    break;
-  case UserSessionWay::Direct:
+  }break;
+  case UserSessionWay::Direct:{
     Q_ASSERT(false);
-    break;
-  case UserSessionWay::Login:
+  }break;
+  case UserSessionWay::Login:{
     auto loginAg = new nicolive::UserSessionLogin();
     connect(loginAg, &nicolive::UserSessionLogin::got, this, [=](QString userSession){
       mwin->settings.setUserSession(userSession);
@@ -123,6 +124,6 @@ void AccountWindow::on_get_session_clicked()
       QMessageBox::information(this, "Viqo", QStringLiteral("ログインに失敗しました\nメールアドレスとパスワードを確認してください"));
     });
     loginAg->get(ui->userdata_mail->text(), ui->userdata_pass->text());
-    break;
+  }break;
   }
 }

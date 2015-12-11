@@ -3,7 +3,7 @@
 
 #include <QDialog>
 #include <nl/usersessionlogin.h>
-#include "../src/NicoLiveManager/nicookie.h"
+#include <nl/nicookie.h>
 
 namespace Ui {
 class AccountWindow;
@@ -30,7 +30,7 @@ private slots:
 private:
   Ui::AccountWindow *ui;
   MainWindow* mwin;
-  Nicookie nicookie;
+  nicolive::Nicookie nicookie;
 };
 
 #endif // ACCOUNTWINDOW_H

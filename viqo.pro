@@ -17,18 +17,10 @@ unix:!mac{
 QMAKE_LFLAGS += -Wl,--rpath="/usr/lib/viqo"
 }
 
-# libs used in nicookie
-win32: LIBS += -lwininet
-win32-msvc*{
-LIBS += -liepmapi
-}
-win32: LIBS += -lcrypt32
-mac: LIBS += -framework Security
-unix: LIBS += -lcrypto
 
 DEPENDPATH += . ../QtNicoLiveLib
 INCLUDEPATH += ../QtNicoLiveLib
-LIBS += -L../build-QtNicoLiveLib-Desktop_Qt_5_4_2_GCC_64bit-Release -lQtNicoLiveLib
+LIBS += -L../build-QtNicoLiveLib-Desktop_Qt_5_5_0_GCC_64bit-Release -lQtNicoLiveLib
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 QT += core gui
@@ -56,7 +48,6 @@ SOURCES += src/main.cpp\
     ui/mainwindow.cpp \
     ui/newwakusettingswindow.cpp \
     ui/settingswindow.cpp \
-    src/NicoLiveManager/nicookie.cpp \
     ui/getwakutimer.cpp \
     src/NicoLiveManager/heartbeat.cpp \
     ui/matchandaddbroadcast.cpp \
@@ -74,7 +65,6 @@ HEADERS  += src/NicoLiveManager/nicolivemanager.h \
     ui/mainwindow.h \
     ui/newwakusettingswindow.h \
     ui/settingswindow.h \
-    src/NicoLiveManager/nicookie.h \
     ui/getwakutimer.h \
     src/NicoLiveManager/heartbeat.h \
     ui/matchandaddbroadcast.h \
