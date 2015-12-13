@@ -6,11 +6,10 @@
 #include <QNetworkAccessManager>
 #include <QNetworkRequest>
 #include <QTimer>
-
 #include <nl/strabstractor.h>
-#include "Alert/wakutcp.h"
 #include "LiveWaku/livewaku.h"
 #include "LiveWaku/nowlivewaku.h"
+#include "alertmanager.h"
 #include "../../ui/settingswindow.h"
 #include "../../ui/newwakusettingswindow.h"
 #include "../../ui/accountwindow.h"
@@ -31,20 +30,15 @@ public:
 
   void insertLiveWakuList(LiveWaku* livewaku);
 
-  void loginAlertAPI(const QString& mail, const QString& pass);
   void getPublishStatusAPI();
   void submitOwnerCommentAPI(const QString& text, const QString& name);
   void getNewWakuAPI(const int type, QString liveNum = "");
   void configureStreamAPI(QString key, QString value, LiveWaku* nowWaku = nullptr);
 
-  void alertReconnect();
-
   void allGotWakuInfo(QString communityID, QString broadID);
 
-  QStringList officialMyCommunities;
-  QStringList mycommunities;
-
   NowLiveWaku nowWaku;
+  AlertManager alertmanager;
 
   QList<LiveWaku*> liveWakuList;
 
@@ -58,21 +52,18 @@ public:
   void updateMyCommunities();
   QString getWatchCount() const;
   void setWatchCount(const QString& value);
-
 signals:
 
 public slots:
   void getRawMyLiveHTML();
 
 private:
-  void adminAlertAPI(const QString& ticket);
   void newWakuAbstractor(QNetworkReply* reply, int mode);
 
   MainWindow* mwin;
   AccountWindow* awin;
   NewWakuSettingsWindow* nwin;
   MatchAndAddBroadcast* bwin;
-  WakuTcp* wakutcp;
 
   QString watchCount;
 
@@ -86,16 +77,12 @@ private:
 
   LiveWaku* gotNewWaku;
 
-  QNetworkAccessManager* mLoginAlertManager;
-  QNetworkAccessManager* mAdminAlertManager;
   QNetworkAccessManager* mOwnerCommentManager;
   QNetworkAccessManager* mOwnerCommentSManager;
   QNetworkAccessManager* mRawMyLiveManager;
   QNetworkAccessManager* mNewWaku;
   QNetworkAccessManager* mConfigure;
 private slots:
-  void loginAlertFinished(QNetworkReply* reply);
-  void adminAlertFinished(QNetworkReply* reply);
   void rawMyLivefinished(QNetworkReply* reply);
   void newWakuNewReuseFinished(QNetworkReply* reply);
   void newWakuNewUpdateFinished(QNetworkReply* reply);

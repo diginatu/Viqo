@@ -338,22 +338,13 @@ void Settings::loadMatchDateList()
 
   matchDataEnabled = jsd.object()["enable"].toBool();
 
-  bool includeBroadInfo = false;
-  QRegExp infoNeededRg("[TD]");
-
   QJsonArray matchDataListj = jsd.object()["match_data_list"].toArray();
   matchDataList.clear();
   for (auto community : matchDataListj) {
     QJsonArray data = community.toArray();
-
-    if (!includeBroadInfo && infoNeededRg.indexIn(data[1].toString())!=-1) {
-      includeBroadInfo = true;
-    }
     matchDataList << (QStringList() << data[0].toString()
                   << data[1].toString() << data[2].toString());
   }
-
-  matchDataNeedDetailInfo = includeBroadInfo;
 
   file.close();
 }
@@ -481,16 +472,6 @@ void Settings::setDispNG(bool value)
 {
   dispNG = value;
 }
-
-bool Settings::getMatchDataNeedDetailInfo() const
-{
-  return matchDataNeedDetailInfo;
-}
-void Settings::setMatchDataNeedDetailInfo(bool value)
-{
-  matchDataNeedDetailInfo = value;
-}
-
 
 QString Settings::getBrowser() const
 {

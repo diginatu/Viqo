@@ -20,7 +20,7 @@ QMAKE_LFLAGS += -Wl,--rpath="/usr/lib/viqo"
 
 DEPENDPATH += . ../QtNicoLiveLib
 INCLUDEPATH += ../QtNicoLiveLib
-LIBS += -L../build-QtNicoLiveLib-Desktop_Qt_5_5_0_GCC_64bit-Release -lQtNicoLiveLib
+LIBS += -L../build-QtNicoLiveLib-Desktop_Qt_5_5_1_Clang_64bit-Debug -lQtNicoLiveLib
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 QT += core gui
@@ -34,8 +34,6 @@ TEMPLATE = app
 SOURCES += src/main.cpp\
     src/usermanager.cpp \
     src/NicoLiveManager/nicolivemanager.cpp \
-    src/NicoLiveManager/Alert/alert.cpp \
-    src/NicoLiveManager/Alert/wakutcp.cpp \
     src/NicoLiveManager/rawmylivewaku.cpp \
     src/NicoLiveManager/LiveWaku/livewaku.cpp \
     src/NicoLiveManager/LiveWaku/nowlivewaku.cpp \
@@ -52,11 +50,11 @@ SOURCES += src/main.cpp\
     src/NicoLiveManager/heartbeat.cpp \
     ui/matchandaddbroadcast.cpp \
     src/NicoLiveManager/getstreaminfo.cpp \
-    src/NicoLiveManager/getcommunityinfo.cpp
+    src/NicoLiveManager/getcommunityinfo.cpp \
+    src/NicoLiveManager/alertmanager.cpp
 
 HEADERS  += src/NicoLiveManager/nicolivemanager.h \
     src/usermanager.h \
-    src/NicoLiveManager/Alert/wakutcp.h \
     src/NicoLiveManager/LiveWaku/livewaku.h \
     src/NicoLiveManager/LiveWaku/nowlivewaku.h \
     src/NicoLiveManager/LiveWaku/commtcp.h \
@@ -69,7 +67,8 @@ HEADERS  += src/NicoLiveManager/nicolivemanager.h \
     src/NicoLiveManager/heartbeat.h \
     ui/matchandaddbroadcast.h \
     src/NicoLiveManager/getstreaminfo.h \
-    src/NicoLiveManager/getcommunityinfo.h
+    src/NicoLiveManager/getcommunityinfo.h \
+    src/NicoLiveManager/alertmanager.h
 
 FORMS    += ui/mainwindow.ui \
     ui/settingswindow.ui \

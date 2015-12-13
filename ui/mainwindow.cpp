@@ -58,16 +58,13 @@ MainWindow::MainWindow(QWidget *parent) :
 
   const QString mail = settings.getUserMail();
   const QString pass = settings.getUserPass();
-  if ( mail != "" && pass != "") {
-    nicolivemanager->loginAlertAPI(mail, pass);
-  }
+  nicolivemanager->alertmanager.login(mail, pass, true);
+  nicolivemanager->getRawMyLiveHTML();
+  QTimer::singleShot(30000, nicolivemanager, SLOT(getRawMyLiveHTML()));
 
   QTimer *timer = new QTimer(this);
   connect(timer, SIGNAL(timeout()), this, SLOT(timeUpdate()));
   timer->start(60 * 1000);
-
-  nicolivemanager->getRawMyLiveHTML();
-  QTimer::singleShot(30000, nicolivemanager, SLOT(getRawMyLiveHTML()));
 
   newWakuSettingsWindow->loadPresets();
 }

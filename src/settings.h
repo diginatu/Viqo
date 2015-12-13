@@ -76,18 +76,12 @@ public:
   bool getDispNG() const;
   void setDispNG(bool value);
 
-  bool getMatchDataNeedDetailInfo() const;
-  void setMatchDataNeedDetailInfo(bool value);
-
   // match data [[name, match contents, keyword]][]
   //
   // match contents
   // B : broad ID
   // C : Community ID
   // U : nushi ID
-  //
-  // T : title
-  // D : description
   QList<QStringList> matchDataList;
 
   bool getMatchDataEnabled() const;
@@ -104,7 +98,6 @@ private:
   bool ownerComment;
   bool dispNG;
   bool matchDataEnabled;
-  bool matchDataNeedDetailInfo;
 
   MainWindow* mwin;
   Ui::MainWindow *ui;

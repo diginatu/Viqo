@@ -81,7 +81,10 @@ void AccountWindow::on_buttonBox_accepted()
 
   mwin->settings.saveSettings();
 
-  mwin->nicolivemanager->alertReconnect();
+  mwin->nicolivemanager->alertmanager.login(
+        mwin->settings.getUserMail(), mwin->settings.getUserPass(), true);
+  mwin->nicolivemanager->getRawMyLiveHTML();
+  QTimer::singleShot(30000, mwin->nicolivemanager, SLOT(getRawMyLiveHTML()));
 }
 
 void AccountWindow::on_get_session_clicked()

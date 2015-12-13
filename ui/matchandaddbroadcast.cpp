@@ -102,20 +102,12 @@ void MatchAndAddBroadcast::on_MatchAndAddBroadcast_accepted()
   const QTreeWidget* matchli = ui->treeWidget;
   mwin->settings.matchDataList.clear();
 
-  bool includeBroadInfo = false;
-  QRegExp infoNeededRg("[TD]");
-
   for( int i = 0; i < matchli->topLevelItemCount(); ++i ) {
     QTreeWidgetItem *keyword = matchli->topLevelItem(i);
-    if (!includeBroadInfo && infoNeededRg.indexIn(keyword->text(1))!=-1) {
-      includeBroadInfo = true;
-    }
     mwin->settings.matchDataList.append(
           QStringList() << keyword->text(0) << keyword->text(1) << keyword->text(2)
           );
   }
-
-  mwin->settings.setMatchDataNeedDetailInfo(includeBroadInfo);
 
   mwin->settings.saveMatchDataList();
 }

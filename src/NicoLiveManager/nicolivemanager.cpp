@@ -4,9 +4,7 @@
 NicoLiveManager::NicoLiveManager(MainWindow* mwin, AccountWindow* awin, NewWakuSettingsWindow* nwin, MatchAndAddBroadcast* bwin, QObject *parent) :
   QObject(parent),
   nowWaku(mwin, this, this),
-  wakutcp(nullptr),
-  mLoginAlertManager(nullptr),
-  mAdminAlertManager(nullptr),
+  alertmanager(mwin, this, this),
   mOwnerCommentManager(nullptr),
   mOwnerCommentSManager(nullptr),
   mRawMyLiveManager(nullptr),
@@ -128,4 +126,3 @@ void NicoLiveManager::setWatchCount(const QString& value)
 {
     watchCount = value;
 }
-
