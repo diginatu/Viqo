@@ -4,6 +4,7 @@
 #include <QDialog>
 #include <nl/usersessionlogin.h>
 #include <nl/nicookie.h>
+#include <nl/fetchfavoritednowwaku.h>
 
 namespace Ui {
 class AccountWindow;

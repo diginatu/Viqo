@@ -680,33 +680,22 @@ void MainWindow::extendIfFree()
                              QStringLiteral("自動無料延長に失敗しました"));
   });
   connect(extendInfo, &nicolive::ExtendInfo::got,
-          this, [=](QVector<nicolive::ExtendItem> info)
+          this, [=](nicolive::ExtendItem extendItem)
   {
-    bool haveFree = false;
-    for (auto& extendItem : info) {
-      if (extendItem.item == "freeextend") {
-        auto extendRq = new nicolive::Extend(this);
-        connect(extendRq, &nicolive::Extend::got, this, [](){
-          qDebug() << "freeExtend suceeded";
-        });
-        connect(extendRq, &nicolive::Extend::error, this,
-                [=](QString code, QString description)
-        {
-          qDebug() << "freeExtend(extend) failed\ncode: " << code << "\n" << description;
-          QMessageBox::information(this, "Viqo",
-                                   QStringLiteral("自動無料延長に失敗しました"));
-        });
-        extendRq->get(extendItem, nicolivemanager->nowWaku.getBroadID(),
-                      nicolivemanager->nowWaku.getBroadcastToken());
-
-        haveFree = true;
-        break;
-      }
-    }
-    if ( !haveFree ) {
-      qDebug() << "no freeExtend";
-      QMessageBox::information(this, "Viqo",
-                               QStringLiteral("無料の延長はありません"));
+    if (extendItem.item == "freeextend") {
+      auto extendRq = new nicolive::Extend(this);
+      connect(extendRq, &nicolive::Extend::got, this, [](){
+        qDebug() << "freeExtend suceeded";
+      });
+      connect(extendRq, &nicolive::Extend::error, this,
+              [=](QString code, QString description)
+      {
+        qDebug() << "freeExtend(extend) failed\ncode: " << code << "\n" << description;
+        QMessageBox::information(this, "Viqo",
+                                 QStringLiteral("自動無料延長に失敗しました"));
+      });
+      extendRq->get(extendItem, nicolivemanager->nowWaku.getBroadcastToken(),
+                    settings.getUserSession());
     }
   });
 

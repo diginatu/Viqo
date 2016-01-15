@@ -7,8 +7,7 @@
 #include <QNetworkRequest>
 #include <QTimer>
 #include <nl/strabstractor.h>
-#include "LiveWaku/livewaku.h"
-#include "LiveWaku/nowlivewaku.h"
+#include <nl/livewaku.h>
 #include "alertmanager.h"
 #include "../../ui/settingswindow.h"
 #include "../../ui/newwakusettingswindow.h"
@@ -79,11 +78,9 @@ private:
 
   QNetworkAccessManager* mOwnerCommentManager;
   QNetworkAccessManager* mOwnerCommentSManager;
-  QNetworkAccessManager* mRawMyLiveManager;
   QNetworkAccessManager* mNewWaku;
   QNetworkAccessManager* mConfigure;
 private slots:
-  void rawMyLivefinished(QNetworkReply* reply);
   void newWakuNewReuseFinished(QNetworkReply* reply);
   void newWakuNewUpdateFinished(QNetworkReply* reply);
   void newWakuNewInitFinished(QNetworkReply* reply);

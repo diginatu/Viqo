@@ -1,4 +1,4 @@
-#include "nicolivemanager.h"
+﻿#include "nicolivemanager.h"
 #include "../../ui/mainwindow.h"
 
 void NicoLiveManager::getPublishStatusAPI()
@@ -24,12 +24,12 @@ void NicoLiveManager::publishStatusFinished(QNetworkReply* reply){
 
   const QString status = heartbeat_data.midStr("status=\"", "\"");
   if ( status == "fail" ) {
-    const QString code = heartbeat_data.midStr("<code>","</code>");
+    const QString& code = heartbeat_data.midStr("<code>","</code>");
     mwin->insLog("NicoLiveManager::getTokenFinished fail " + code + "\n");
     return;
   }
 
-  const QString token = heartbeat_data.midStr("<token>","</token>");
+  const QString& token = heartbeat_data.midStr("<token>","</token>");
   nowWaku.setOwnerCommentToken(token);
 
   reply->deleteLater();

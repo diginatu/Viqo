@@ -101,7 +101,7 @@ void NicoLiveManager::allGotWakuInfo(QString communityID, QString broadID)
         QProcess pr;
         QString cmd = mwin->settings.getCommandNextWaku();
 
-        cmd.replace("%wakuURL%","http://live.nicovideo.jp/watch/lv" + broadID);
+        cmd.replace("%wakuURL%","http://live.nicovideo.jp/watch/" + broadID);
 
         pr.start(cmd);
         pr.waitForFinished(5000);
@@ -125,4 +125,29 @@ QString NicoLiveManager::getWatchCount() const
 void NicoLiveManager::setWatchCount(const QString& value)
 {
     watchCount = value;
+}
+
+void NicoLiveManager::getRawMyLiveHTML()
+{
+  if (mwin->settings.getUserSession() == "") {
+    qDebug() << "user_session is not set yet";
+    QMessageBox msgBox(mwin);
+    msgBox.setText(QStringLiteral("セッションIDが設定されていません\n設定画面を開きますか？"));
+    msgBox.setStandardButtons(QMessageBox::Cancel | QMessageBox::Ok);
+    msgBox.setDefaultButton(QMessageBox::Ok);
+    if (msgBox.exec() == QMessageBox::Ok) {
+      mwin->on_AccountSettings_triggered();
+    }
+    return;
+  }
+
+  auto gt = new nicolive::FetchFavoritedNowWaku(this);
+  connect(gt, &nicolive::FetchFavoritedNowWaku::error, this, [=](QString err){
+    qDebug() << "FetchFavoritedNowWaku error : " << err;
+  });
+  connect(gt, &nicolive::FetchFavoritedNowWaku::got, this, [=](LiveWaku* mywaku){
+    allGotWakuInfo(mywaku->getCommunity(), mywaku->getBroadID());
+    insertLiveWakuList(mywaku);
+  });
+  gt->get(mwin->settings.getUserSession());
 }

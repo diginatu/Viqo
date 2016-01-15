@@ -34,10 +34,6 @@ TEMPLATE = app
 SOURCES += src/main.cpp\
     src/usermanager.cpp \
     src/NicoLiveManager/nicolivemanager.cpp \
-    src/NicoLiveManager/rawmylivewaku.cpp \
-    src/NicoLiveManager/LiveWaku/livewaku.cpp \
-    src/NicoLiveManager/LiveWaku/nowlivewaku.cpp \
-    src/NicoLiveManager/LiveWaku/commtcp.cpp \
     src/settings.cpp \
     src/NicoLiveManager/ownercomment.cpp \
     src/NicoLiveManager/getnewwaku.cpp \
@@ -55,9 +51,6 @@ SOURCES += src/main.cpp\
 
 HEADERS  += src/NicoLiveManager/nicolivemanager.h \
     src/usermanager.h \
-    src/NicoLiveManager/LiveWaku/livewaku.h \
-    src/NicoLiveManager/LiveWaku/nowlivewaku.h \
-    src/NicoLiveManager/LiveWaku/commtcp.h \
     src/settings.h \
     ui/accountwindow.h \
     ui/mainwindow.h \
