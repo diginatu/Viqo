@@ -22,9 +22,9 @@ ICON = img/icon.icns
 }
 
 SOURCES += src/main.cpp\
-        src/mainwindow.cpp
+        src/ui/mainwindow.cpp
 
-HEADERS  += src/mainwindow.h
+HEADERS  += src/ui/mainwindow.h
 
 FORMS    += ui/mainwindow.ui
 

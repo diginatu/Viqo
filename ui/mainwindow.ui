@@ -6,38 +6,594 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>400</width>
-    <height>300</height>
+    <width>419</width>
+    <height>479</height>
    </rect>
   </property>
+  <property name="sizePolicy">
+   <sizepolicy hsizetype="MinimumExpanding" vsizetype="Preferred">
+    <horstretch>0</horstretch>
+    <verstretch>0</verstretch>
+   </sizepolicy>
+  </property>
   <property name="windowTitle">
-   <string>MainWindow</string>
+   <string>Viqo</string>
   </property>
-  <property name="windowOpacity">
-   <double>0.500000000000000</double>
-  </property>
-  <widget class="QWidget" name="centralWidget"/>
+  <widget class="QWidget" name="centralWidget">
+   <layout class="QVBoxLayout" name="verticalLayout_3">
+    <property name="spacing">
+     <number>3</number>
+    </property>
+    <property name="leftMargin">
+     <number>0</number>
+    </property>
+    <property name="topMargin">
+     <number>3</number>
+    </property>
+    <property name="rightMargin">
+     <number>0</number>
+    </property>
+    <property name="bottomMargin">
+     <number>0</number>
+    </property>
+    <item>
+     <widget class="QWidget" name="broadWidget" native="true">
+      <layout class="QHBoxLayout" name="horizontalLayout_2">
+       <property name="spacing">
+        <number>3</number>
+       </property>
+       <property name="leftMargin">
+        <number>4</number>
+       </property>
+       <property name="topMargin">
+        <number>0</number>
+       </property>
+       <property name="rightMargin">
+        <number>4</number>
+       </property>
+       <property name="bottomMargin">
+        <number>0</number>
+       </property>
+       <item>
+        <widget class="QComboBox" name="liveWakuListCombo">
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QLineEdit" name="broadIdEdit">
+         <property name="maximumSize">
+          <size>
+           <width>120</width>
+           <height>16777215</height>
+          </size>
+         </property>
+         <property name="text">
+          <string/>
+         </property>
+         <property name="placeholderText">
+          <string>放送ID</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QPushButton" name="connectionButton">
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Maximum" vsizetype="Fixed">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
+         <property name="text">
+          <string>受信</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QToolButton" name="openBrowserButton">
+         <property name="enabled">
+          <bool>false</bool>
+         </property>
+         <property name="toolTip">
+          <string>ブラウザで開く</string>
+         </property>
+         <property name="text">
+          <string>O</string>
+         </property>
+        </widget>
+       </item>
+      </layout>
+     </widget>
+    </item>
+    <item>
+     <widget class="QWidget" name="broadWidget2" native="true">
+      <layout class="QHBoxLayout" name="horizontalLayout_3">
+       <property name="spacing">
+        <number>3</number>
+       </property>
+       <property name="leftMargin">
+        <number>4</number>
+       </property>
+       <property name="topMargin">
+        <number>0</number>
+       </property>
+       <property name="rightMargin">
+        <number>4</number>
+       </property>
+       <property name="bottomMargin">
+        <number>0</number>
+       </property>
+       <item>
+        <widget class="QLineEdit" name="submitEdit"/>
+       </item>
+       <item>
+        <widget class="QPushButton" name="submitButton">
+         <property name="enabled">
+          <bool>false</bool>
+         </property>
+         <property name="text">
+          <string>送信</string>
+         </property>
+        </widget>
+       </item>
+      </layout>
+     </widget>
+    </item>
+    <item>
+     <widget class="QWidget" name="broadWidget3" native="true">
+      <layout class="QHBoxLayout" name="horizontalLayout_4">
+       <property name="spacing">
+        <number>3</number>
+       </property>
+       <property name="leftMargin">
+        <number>4</number>
+       </property>
+       <property name="topMargin">
+        <number>0</number>
+       </property>
+       <property name="rightMargin">
+        <number>4</number>
+       </property>
+       <property name="bottomMargin">
+        <number>0</number>
+       </property>
+      </layout>
+     </widget>
+    </item>
+    <item>
+     <widget class="QSplitter" name="splitter">
+      <property name="orientation">
+       <enum>Qt::Vertical</enum>
+      </property>
+      <property name="handleWidth">
+       <number>5</number>
+      </property>
+      <widget class="QTextBrowser" name="largeCommentView">
+       <property name="sizePolicy">
+        <sizepolicy hsizetype="Minimum" vsizetype="Expanding">
+         <horstretch>0</horstretch>
+         <verstretch>0</verstretch>
+        </sizepolicy>
+       </property>
+       <property name="contextMenuPolicy">
+        <enum>Qt::ActionsContextMenu</enum>
+       </property>
+       <property name="openExternalLinks">
+        <bool>true</bool>
+       </property>
+      </widget>
+      <widget class="QTreeWidget" name="commentListTree">
+       <property name="sizePolicy">
+        <sizepolicy hsizetype="Minimum" vsizetype="Expanding">
+         <horstretch>0</horstretch>
+         <verstretch>0</verstretch>
+        </sizepolicy>
+       </property>
+       <property name="contextMenuPolicy">
+        <enum>Qt::ActionsContextMenu</enum>
+       </property>
+       <property name="alternatingRowColors">
+        <bool>true</bool>
+       </property>
+       <property name="indentation">
+        <number>0</number>
+       </property>
+       <property name="columnCount">
+        <number>8</number>
+       </property>
+       <attribute name="headerMinimumSectionSize">
+        <number>20</number>
+       </attribute>
+       <column>
+        <property name="text">
+         <string>No.</string>
+        </property>
+       </column>
+       <column>
+        <property name="text">
+         <string>ユーザ名</string>
+        </property>
+       </column>
+       <column>
+        <property name="text">
+         <string>コメント</string>
+        </property>
+       </column>
+       <column>
+        <property name="text">
+         <string>時間</string>
+        </property>
+       </column>
+       <column>
+        <property name="text">
+         <string>プレミアム</string>
+        </property>
+       </column>
+       <column>
+        <property name="text">
+         <string>ユーザID</string>
+        </property>
+       </column>
+       <column>
+        <property name="text">
+         <string>184</string>
+        </property>
+       </column>
+       <column>
+        <property name="text">
+         <string>放送主</string>
+        </property>
+       </column>
+      </widget>
+     </widget>
+    </item>
+    <item>
+     <widget class="QWidget" name="footerInfoWidget" native="true">
+      <layout class="QHBoxLayout" name="horizontalLayout">
+       <property name="leftMargin">
+        <number>6</number>
+       </property>
+       <property name="topMargin">
+        <number>0</number>
+       </property>
+       <property name="rightMargin">
+        <number>6</number>
+       </property>
+       <property name="bottomMargin">
+        <number>0</number>
+       </property>
+       <item>
+        <widget class="QLabel" name="numAudience">
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
+         <property name="text">
+          <string>来場者数: 0</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <spacer name="horizontalSpacer">
+         <property name="orientation">
+          <enum>Qt::Horizontal</enum>
+         </property>
+         <property name="sizeHint" stdset="0">
+          <size>
+           <width>40</width>
+           <height>20</height>
+          </size>
+         </property>
+        </spacer>
+       </item>
+       <item>
+        <widget class="QLabel" name="elapsedTime">
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
+         <property name="text">
+          <string>00:00:00</string>
+         </property>
+        </widget>
+       </item>
+      </layout>
+     </widget>
+    </item>
+   </layout>
+  </widget>
   <widget class="QMenuBar" name="menuBar">
    <property name="geometry">
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>400</width>
+     <width>419</width>
      <height>25</height>
     </rect>
    </property>
-  </widget>
-  <widget class="QToolBar" name="mainToolBar">
-   <attribute name="toolBarArea">
-    <enum>TopToolBarArea</enum>
-   </attribute>
-   <attribute name="toolBarBreak">
-    <bool>false</bool>
-   </attribute>
+   <widget class="QMenu" name="file">
+    <property name="title">
+     <string>ファイル</string>
+    </property>
+    <widget class="QMenu" name="stateSave">
+     <property name="title">
+      <string>状態セーブ</string>
+     </property>
+     <addaction name="save1"/>
+     <addaction name="save2"/>
+     <addaction name="save3"/>
+     <addaction name="save4"/>
+    </widget>
+    <widget class="QMenu" name="stateLoad">
+     <property name="title">
+      <string>状態ロード</string>
+     </property>
+     <addaction name="load1"/>
+     <addaction name="load2"/>
+     <addaction name="load3"/>
+     <addaction name="load4"/>
+    </widget>
+    <addaction name="stateSave"/>
+    <addaction name="stateLoad"/>
+    <addaction name="separator"/>
+    <addaction name="quit"/>
+   </widget>
+   <widget class="QMenu" name="edit">
+    <property name="title">
+     <string>編集</string>
+    </property>
+    <addaction name="autoLoadNextWaku"/>
+    <addaction name="separator"/>
+    <addaction name="searchBroadcastSettings"/>
+    <addaction name="settings"/>
+    <addaction name="accountSettings"/>
+   </widget>
+   <widget class="QMenu" name="broadcasting">
+    <property name="title">
+     <string>放送</string>
+    </property>
+    <addaction name="newWakuSettings"/>
+    <addaction name="getNewWakuNow"/>
+    <addaction name="separator"/>
+    <addaction name="timerWaku"/>
+   </widget>
+   <widget class="QMenu" name="help">
+    <property name="title">
+     <string>ヘルプ</string>
+    </property>
+    <addaction name="aboutViqo"/>
+    <addaction name="aboutQt"/>
+   </widget>
+   <widget class="QMenu" name="menu">
+    <property name="title">
+     <string>コメント</string>
+    </property>
+    <addaction name="clearComments"/>
+    <addaction name="keepTopChk"/>
+    <addaction name="action184"/>
+   </widget>
+   <addaction name="file"/>
+   <addaction name="edit"/>
+   <addaction name="menu"/>
+   <addaction name="broadcasting"/>
+   <addaction name="help"/>
   </widget>
   <widget class="QStatusBar" name="statusBar"/>
+  <action name="settings">
+   <property name="text">
+    <string>設定...</string>
+   </property>
+  </action>
+  <action name="clearComments">
+   <property name="text">
+    <string>コメント一覧を消去</string>
+   </property>
+  </action>
+  <action name="oneCommentActionSearchByGoogle">
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
+   <property name="text">
+    <string>googleで検索</string>
+   </property>
+  </action>
+  <action name="oneCommentActionCopy">
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
+   <property name="text">
+    <string>コピー</string>
+   </property>
+   <property name="toolTip">
+    <string>コピー</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+C</string>
+   </property>
+  </action>
+  <action name="save1">
+   <property name="text">
+    <string>1 : デフォルト</string>
+   </property>
+  </action>
+  <action name="save2">
+   <property name="text">
+    <string>2 :</string>
+   </property>
+  </action>
+  <action name="save3">
+   <property name="text">
+    <string>3 :</string>
+   </property>
+  </action>
+  <action name="load1">
+   <property name="text">
+    <string>1 : デフォルト</string>
+   </property>
+  </action>
+  <action name="load2">
+   <property name="text">
+    <string>2 :</string>
+   </property>
+  </action>
+  <action name="load3">
+   <property name="text">
+    <string>3 :</string>
+   </property>
+  </action>
+  <action name="save4">
+   <property name="text">
+    <string>4 :</string>
+   </property>
+  </action>
+  <action name="load4">
+   <property name="text">
+    <string>4 :</string>
+   </property>
+  </action>
+  <action name="newWakuSettings">
+   <property name="text">
+    <string>次枠設定...</string>
+   </property>
+  </action>
+  <action name="getNewWakuNow">
+   <property name="text">
+    <string>今すぐ取得</string>
+   </property>
+  </action>
+  <action name="aboutViqo">
+   <property name="text">
+    <string>Viqoについて...</string>
+   </property>
+  </action>
+  <action name="quit">
+   <property name="text">
+    <string>終了</string>
+   </property>
+  </action>
+  <action name="aboutQt">
+   <property name="text">
+    <string>Qtについて...</string>
+   </property>
+  </action>
+  <action name="accountSettings">
+   <property name="text">
+    <string>アカウント設定...</string>
+   </property>
+  </action>
+  <action name="CommentViewEditKotehan">
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
+   <property name="text">
+    <string>コテハン編集</string>
+   </property>
+  </action>
+  <action name="CommentViewGetKotehan">
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
+   <property name="text">
+    <string>ユーザ名取得</string>
+   </property>
+  </action>
+  <action name="keepTopChk">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="checked">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>コメント一覧を常にトップ</string>
+   </property>
+  </action>
+  <action name="timerWaku">
+   <property name="text">
+    <string>枠取りタイマー...</string>
+   </property>
+  </action>
+  <action name="searchBroadcastSettings">
+   <property name="text">
+    <string>放送開始サーチ...</string>
+   </property>
+  </action>
+  <action name="CommentViewRemoveKotehan">
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
+   <property name="text">
+    <string>コテハン削除</string>
+   </property>
+   <property name="toolTip">
+    <string>コテハン削除</string>
+   </property>
+  </action>
+  <action name="autoLoadNextWaku">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="checked">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>次枠追従</string>
+   </property>
+  </action>
+  <action name="action184">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>184コメントで投稿する</string>
+   </property>
+  </action>
  </widget>
  <layoutdefault spacing="6" margin="11"/>
  <resources/>
- <connections/>
+ <connections>
+  <connection>
+   <sender>largeCommentView</sender>
+   <signal>copyAvailable(bool)</signal>
+   <receiver>oneCommentActionSearchByGoogle</receiver>
+   <slot>setEnabled(bool)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>220</x>
+     <y>195</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>largeCommentView</sender>
+   <signal>copyAvailable(bool)</signal>
+   <receiver>oneCommentActionCopy</receiver>
+   <slot>setEnabled(bool)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>220</x>
+     <y>195</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+   </hints>
+  </connection>
+ </connections>
+ <slots>
+  <slot>menu_triggered(QAction*)</slot>
+ </slots>
 </ui>
