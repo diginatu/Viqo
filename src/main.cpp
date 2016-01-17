@@ -2,6 +2,48 @@
 #include <QApplication>
 #include <QCommandLineParser>
 #include <QFile>
+#include <QTextStream>
+#include <QDateTime>
+
+void viqoMessageHandler(QtMsgType type, const QMessageLogContext &context, const QString &msg)
+{
+    QString txt = QString("%1:%2 %3 - %4")
+        .arg(context.file)
+        .arg(context.line)
+        .arg(context.function)
+        .arg(msg);
+
+    switch (type) {
+    case QtDebugMsg:
+        txt = QString("Debug: %1").arg(txt);
+        break;
+    case QtInfoMsg:
+        txt = QString("Info: %1").arg(txt);
+        break;
+    case QtWarningMsg:
+        txt = QString("Warning: %1").arg(txt);
+        break;
+    case QtCriticalMsg:
+        txt = QString("Critical: %1").arg(txt);
+        break;
+    case QtFatalMsg:
+        txt = QString("Fatal: %1").arg(txt);
+        abort();
+    }
+
+    txt = QString("[%1] %2")
+        .arg(QDateTime::currentDateTime().toString("hh:mm:ss"))
+        .arg(txt);
+
+    // QFile outFile("log");
+    // if (!outFile.open(QIODevice::WriteOnly | QIODevice::Append))
+    //     return;
+    // QTextStream ts(&outFile);
+
+    QTextStream ts(stdout);
+
+    ts << txt << endl;
+}
 
 int main(int argc, char *argv[])
 {
@@ -10,7 +52,7 @@ int main(int argc, char *argv[])
     QCoreApplication::setApplicationName("Viqo");
     QCoreApplication::setApplicationVersion("3 (dev)");
 
-    qSetMessagePattern("%{file}:%{line} %{function} - %{message}");
+    qInstallMessageHandler(viqoMessageHandler);
 
     QCommandLineParser parser;
     parser.setApplicationDescription(
