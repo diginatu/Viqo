@@ -22,9 +22,11 @@ ICON = img/icon.icns
 }
 
 SOURCES += src/main.cpp\
-        src/ui/mainwindow.cpp
+        src/ui/mainwindow.cpp \
+    src/globalsettings.cpp
 
-HEADERS  += src/ui/mainwindow.h
+HEADERS  += src/ui/mainwindow.h \
+    src/globalsettings.h
 
 FORMS    += ui/mainwindow.ui
 
