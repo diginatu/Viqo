@@ -20,9 +20,9 @@ void viqoMessageHandler(QtMsgType type, const QMessageLogContext &context, const
     case QtDebugMsg:
         txt = QString("Debug: %1").arg(txt);
         break;
-    case QtInfoMsg:
-        txt = QString("Info: %1").arg(txt);
-        break;
+//    case QtInfoMsg:
+//        txt = QString("Info: %1").arg(txt);
+//        break;
     case QtWarningMsg:
         txt = QString("Warning: %1").arg(txt);
         break;
@@ -31,6 +31,8 @@ void viqoMessageHandler(QtMsgType type, const QMessageLogContext &context, const
         break;
     case QtFatalMsg:
         txt = QString("Fatal: %1").arg(txt);
+        break;
+    default:;
     }
 
     txt = QString("[%1] %2")
