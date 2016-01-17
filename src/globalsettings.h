@@ -6,6 +6,7 @@
 class GlobalSettings
 {
 public:
+  static bool debugToStd;
   static QString settingsDir;
 
 private:

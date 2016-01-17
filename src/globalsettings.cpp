@@ -1,3 +1,4 @@
 ﻿#include "globalsettings.h"
 
-QString GlobalSettings::settingsDir;
+bool GlobalSettings::debugToStd;
+QString GlobalSettings::settingsDir = false;

@@ -31,21 +31,28 @@ void viqoMessageHandler(QtMsgType type, const QMessageLogContext &context, const
         break;
     case QtFatalMsg:
         txt = QString("Fatal: %1").arg(txt);
-        abort();
     }
 
     txt = QString("[%1] %2")
         .arg(QDateTime::currentDateTime().toString("hh:mm:ss"))
         .arg(txt);
 
-    // QFile outFile("log");
-    // if (!outFile.open(QIODevice::WriteOnly | QIODevice::Append))
-    //     return;
-    // QTextStream ts(&outFile);
+    if (! GlobalSettings::debugToStd) {
+        QFile outFile(GlobalSettings::settingsDir + "/log");
+        if (outFile.open(QIODevice::WriteOnly | QIODevice::Append)) {
+            QTextStream ts(&outFile);
+            ts << txt << endl;
+        } else {
+          GlobalSettings::debugToStd = true;
+        }
+    }
 
-    QTextStream ts(stdout);
+    if (GlobalSettings::debugToStd) {
+        QTextStream ts(stdout);
+        ts << txt << endl;
+    }
 
-    ts << txt << endl;
+    if (type == QtMsgType::QtFatalMsg) abort();
 }
 
 int main(int argc, char *argv[])
@@ -55,11 +62,10 @@ int main(int argc, char *argv[])
     QCoreApplication::setApplicationName("Viqo");
     QCoreApplication::setApplicationVersion("3 (dev)");
 
-    qInstallMessageHandler(viqoMessageHandler);
-
     QCommandLineParser parser;
     parser.setApplicationDescription(
-                QStringLiteral("Qt5 で作成されたマルチプラットフォームニコ生コメントビューワ"));
+                QStringLiteral(
+                    "Qt5 で作成されたマルチプラットフォームニコ生コメントビューワ"));
     parser.addHelpOption();
     parser.addVersionOption();
 
@@ -68,16 +74,19 @@ int main(int argc, char *argv[])
                                  "directory");
     QStringList dirs =
         QStandardPaths::standardLocations(QStandardPaths::DataLocation);
-    qDebug() << dirs;
-    if (dirs.empty()) qWarning() << "no standard Location to save";
-    else saveDirOp.setDefaultValue(dirs[0]);
+    if (! dirs.empty()) saveDirOp.setDefaultValue(dirs[0]);
     parser.addOption(saveDirOp);
+
+    QCommandLineOption setDebugToStdoutOp("stddbg", "Use stdout to write debug infomation.");
+    parser.addOption(setDebugToStdoutOp);
 
     // Process the actual command line arguments given by the user
     parser.process(a);
 
     GlobalSettings::settingsDir = parser.value(saveDirOp);
-    qDebug() << GlobalSettings::settingsDir;
+    GlobalSettings::debugToStd = parser.isSet(setDebugToStdoutOp);
+
+    qInstallMessageHandler(viqoMessageHandler);
 
     MainWindow w;
     w.show();
