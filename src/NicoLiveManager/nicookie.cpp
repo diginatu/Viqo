@@ -719,6 +719,7 @@ bool Nicookie::querySqlite3(const QString &sqlite3_file,
   return result;
 }
 
+#ifdef Q_OS_OSX
 quint32 Nicookie::readUint32BE(QIODevice &device)
 {
   QDataStream stream(device.read(4));
@@ -736,6 +737,7 @@ quint32 Nicookie::readUint32LE(QIODevice &device)
   stream >> i;
   return i;
 }
+#endif // Q_OS_OSX
 
 bool Nicookie::checkSameStr(QIODevice &device, const QString &str)
 {

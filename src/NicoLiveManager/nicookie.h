@@ -95,8 +95,11 @@ private:
                     const QString &query,
                     const QMap<QString, QVariant> &placeholders,
                     QMap<QString, QVariant> &values);
+
+#ifdef Q_OS_OSX
   quint32 readUint32BE(QIODevice &device);
   quint32 readUint32LE(QIODevice &device);
+#endif // Q_OS_OSX
   bool checkSameStr(QIODevice &device, const QString &str);
   QString readStr(QIODevice &device);
 signals:
