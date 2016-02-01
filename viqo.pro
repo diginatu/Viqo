@@ -23,11 +23,17 @@ ICON = img/icon.icns
 
 SOURCES += src/main.cpp\
         src/ui/mainwindow.cpp \
-    src/globalsettings.cpp
+    src/globalsettings.cpp \
+    src/ui/preferenceswindow.cpp \
+    src/ui/accountsettingswindow.cpp
 
 HEADERS  += src/ui/mainwindow.h \
-    src/globalsettings.h
+    src/globalsettings.h \
+    src/ui/preferenceswindow.h \
+    src/ui/accountsettingswindow.h
 
-FORMS    += ui/mainwindow.ui
+FORMS    += ui/mainwindow.ui \
+    ui/preferenceswindow.ui \
+    ui/accountsettingswindow.ui
 
 RESOURCES += resources.qrc

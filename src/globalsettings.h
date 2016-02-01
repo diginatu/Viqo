@@ -6,11 +6,20 @@
 class GlobalSettings
 {
 public:
-  static bool debugToStd;
-  static QString settingsDir;
+    // global settings
+    static bool debugToStd;
+    static QString settingsDir;
+
+    // niconico
+    static QString nicoUserMail;
+    static QString nicoUserPass;
+    static QString userSession;
+
+    // account settings
+    static QString gettingUsersessionWay;
 
 private:
-  GlobalSettings() = delete;
+    GlobalSettings() = delete;
 };
 
 #endif // GLOBALSETTINGS_H

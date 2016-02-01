@@ -353,7 +353,7 @@
     <addaction name="autoLoadNextWaku"/>
     <addaction name="separator"/>
     <addaction name="searchBroadcastSettings"/>
-    <addaction name="settings"/>
+    <addaction name="preferences"/>
     <addaction name="accountSettings"/>
    </widget>
    <widget class="QMenu" name="broadcasting">
@@ -387,7 +387,7 @@
    <addaction name="help"/>
   </widget>
   <widget class="QStatusBar" name="statusBar"/>
-  <action name="settings">
+  <action name="preferences">
    <property name="text">
     <string>設定...</string>
    </property>
