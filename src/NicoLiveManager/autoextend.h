@@ -23,7 +23,7 @@ private:
   NicoLiveManager* nlman;
 
 private slots:
-  void got(QNetworkReply* reply);
+  void gotReply(QNetworkReply* reply);
   void gotExtend(QNetworkReply* reply);
 };
 

@@ -24,7 +24,7 @@ void AutoExtend::get()
   requestGet(rq);
 }
 
-void AutoExtend::got(QNetworkReply *reply)
+void AutoExtend::gotReply(QNetworkReply *reply)
 {
   StrAbstractor data(QString(reply->readAll()));
 

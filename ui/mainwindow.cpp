@@ -136,6 +136,10 @@ void MainWindow::dropEvent(QDropEvent *event)
 void MainWindow::getWatchCount()
 {
   HeartBeat* hb = new HeartBeat(this, nicolivemanager, this);
+  connect(hb, &HeartBeat::got, this, [=](QString watchCount) {
+    nicolivemanager->setWatchCount(watchCount);
+    updateWatchCount();
+  });
   hb->get();
 }
 

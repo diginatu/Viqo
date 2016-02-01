@@ -15,7 +15,10 @@ public:
 private:
   NicoLiveManager* nlman;
 private slots:
-  void got(QNetworkReply* reply);
+  void gotReply(QNetworkReply* reply);
+signals:
+  void got(QString watchCount);
+
 };
 
 #endif // HEARTBEAT_H
