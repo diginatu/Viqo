@@ -117,6 +117,8 @@ private slots:
   void on_MatchAndAddBroadcast_triggered();
 
 
+  void on_KeepOnTop_triggered(bool checked);
+
 private:
   Ui::MainWindow* ui;
 
