@@ -356,7 +356,7 @@
              <rect>
               <x>0</x>
               <y>0</y>
-              <width>411</width>
+              <width>263</width>
               <height>183</height>
              </rect>
             </property>
@@ -730,6 +730,7 @@
      <addaction name="load_3"/>
      <addaction name="load_4"/>
     </widget>
+    <addaction name="KeepOnTop"/>
     <addaction name="stateSave"/>
     <addaction name="stateLoad"/>
     <addaction name="separator"/>
@@ -1023,6 +1024,14 @@
    </property>
    <property name="toolTip">
     <string>コテハン削除</string>
+   </property>
+  </action>
+  <action name="KeepOnTop">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>最前面に表示</string>
    </property>
   </action>
  </widget>

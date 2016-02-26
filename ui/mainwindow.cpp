@@ -673,3 +673,14 @@ void MainWindow::on_MatchAndAddBroadcast_triggered()
   matchAndAddBroadcast->raise();
   matchAndAddBroadcast->activateWindow();
 }
+
+void MainWindow::on_KeepOnTop_triggered(bool checked)
+{
+    if (checked) {
+        this->setWindowFlags(this->windowFlags() | Qt::WindowStaysOnTopHint);
+    } else {
+        this->setWindowFlags(this->windowFlags() & ~Qt::WindowStaysOnTopHint);
+    }
+
+    this->show();
+}

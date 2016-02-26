@@ -92,8 +92,8 @@ void Settings::saveStatus(int num)
   other["auto_free_extend"] = ui->autoExtend->isChecked();
 
   QJsonObject window;
-  window["posx"] = mwin->x();
-  window["posy"] = mwin->y();
+  window["posx"] = mwin->pos().x();
+  window["posy"] = mwin->pos().y();
   window["width"] = mwin->width();
   window["height"] = mwin->height();
 
