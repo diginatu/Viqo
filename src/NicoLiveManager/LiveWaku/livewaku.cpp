@@ -160,6 +160,8 @@ void LiveWaku::playerStatusFinished(QNetworkReply* reply)
     pr.start(cmd);
     pr.waitForFinished(5000);
   } else if (flag == 1) {
-    nlman->configureStreamAPI("hq", "1", this);
+    QTimer::singleShot(2000, this, [=](){
+      nlman->configureStreamAPI("hq", "1", this);
+    });
   }
 }
