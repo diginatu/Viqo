@@ -22,7 +22,7 @@ Ubuntu 14.04, Debian 7.7, OSX Yosemite, Windows 7, 8.1, 10 などで動作確認
 
 * クロスプラットフォーム GUI アプリケーション
 * Qt5 / C++11
-* オープンソース (MIT license 変更予定)
+* オープンソース (MIT license)
 
 QtはLGPLのライセンス下です。詳しくは [Qt Home](http://www.qt.io/)へ。
 
