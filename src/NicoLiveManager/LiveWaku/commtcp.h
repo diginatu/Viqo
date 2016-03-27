@@ -36,7 +36,7 @@ private:
   QTcpSocket* socket;
   QString domain, thread, ticket, user_id;
   uint port, server_time;
-  QDateTime open_time;
+  QDateTime connect_time;
   QByteArray lastRawComm;
   QTimer nullData_timer, postkey_timer;
 

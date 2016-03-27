@@ -93,7 +93,7 @@ void CommTcp::readOneRawComment(const QString rawcomm)
   StrAbstractor rawcommabs(rawcomm);
 
   if (rawcomm.startsWith("<thread")) {
-    open_time = QDateTime::currentDateTime();
+    connect_time = QDateTime::currentDateTime();
     mwin->onReceiveStarted();
 
     lastBlockNum = rawcommabs.midStr("last_res=\"", "\"", false).toInt() / 10;
@@ -158,7 +158,7 @@ void CommTcp::readOneRawComment(const QString rawcomm)
 
   mwin->insComment( num, premium,
     broadcaster?QStringLiteral("broadcaster"):user, comm, date, is_184,
-    broadcaster, commenttime > open_time);
+    broadcaster, commenttime > connect_time);
 
   if (comm == "/disconnect" && broadcaster) {
     if (mwin->settings.isAutoNewWaku() && nlwaku->isOwnerBroad())
@@ -179,7 +179,7 @@ void CommTcp::close()
 
 void CommTcp::sendComment(const QString& text)
 {
-  const auto start_time = nlwaku->getSt().toTime_t();
+  const auto open_time = nlwaku->getOp().toTime_t();
   const auto now_time = QDateTime::currentDateTime();
 
   QString postkey = nlwaku->getPostKey();
@@ -190,8 +190,8 @@ void CommTcp::sendComment(const QString& text)
 
   QByteArray send;
 
-  const auto vpos = 100 * (server_time - start_time +
-                     now_time.toTime_t() - open_time.toTime_t());
+  const auto vpos = 100 * (server_time - open_time +
+                     now_time.toTime_t() - connect_time.toTime_t());
 
   send.append(QString("<chat thread=\"%1\" ticket=\"%2\" vpos=\"%3\" "
           "postkey=\"%4\"%5 user_id=\"%6\"%7>%8</chat>")

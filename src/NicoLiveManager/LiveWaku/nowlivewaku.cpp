@@ -74,6 +74,7 @@ void NowLiveWaku::playerStatusFinished(QNetworkReply* reply)
   owner_id = commTcpi.midStr("<owner_id>", "</owner_id>");
   setOwnerName(commTcpi.midStr("<owner_name>", "</owner_name>"));
 
+  setOp(commTcpi.midStr("<open_time>","</open_time>").toUInt());
   setSt(commTcpi.midStr("<start_time>","</start_time>").toUInt());
   setEd(commTcpi.midStr("<end_time>","</end_time>").toUInt());
 

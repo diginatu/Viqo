@@ -62,6 +62,16 @@ void LiveWaku::setOwnerName(const QString &value)
     ownerName = NicoLiveManager::HTMLdecode(value);
 }
 
+QDateTime LiveWaku::getOp() const
+{
+    return op;
+}
+
+void LiveWaku::setOp(uint unixt)
+{
+  op.setTime_t(unixt);
+}
+
 QDateTime LiveWaku::getSt() const
 {
   return st;
@@ -140,6 +150,7 @@ void LiveWaku::playerStatusFinished(QNetworkReply* reply)
   setTitle(commTcpi.midStr("<title>", "</title>"));
   setCommunity(commTcpi.midStr("<default_community>", "</default_community>"));
   setOwnerName(commTcpi.midStr("<owner_name>", "</owner_name>"));
+  setOp(commTcpi.midStr("<open_time>","</open_time>").toUInt());
   setSt(commTcpi.midStr("<start_time>","</start_time>").toUInt());
   setEd(commTcpi.midStr("<end_time>","</end_time>").toUInt());
   broadcastToken = commTcpi.midStr("<broadcast_token>","</broadcast_token>");

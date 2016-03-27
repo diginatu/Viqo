@@ -31,6 +31,9 @@ public:
   QString getOwnerName() const;
   void setOwnerName(const QString &value);
 
+  QDateTime getOp() const;
+  void setOp(uint unixt);
+
   QDateTime getSt() const;
   void setSt(uint unixt);
 
@@ -40,6 +43,7 @@ public:
   void setFlag(int flag);
 
   QString getBroadcastToken() const;
+
 
 signals:
 
@@ -58,6 +62,7 @@ protected:
   QString ownerName;
   QString broadcastToken;
 
+  QDateTime op;
   QDateTime st;
   QDateTime ed;
 
