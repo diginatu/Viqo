@@ -87,13 +87,10 @@ void WakuTcp::readOneRawWaku(const QString& rawwaku)
   QString wakuS = awaku.midStr(">", "</chat>");
 
   QStringList wakur = wakuS.split(",");
+  if (wakur.length() != 3) return;
   const QString broadID = wakur.at(0);
   const QString CommunityID = wakur.at(1);
   const QString& nushiID = wakur.at(2);
-
-  if(wakur.size() != 3) {
-    return;
-  }
 
   nicolivemanager->allGotWakuInfo(CommunityID, broadID);
 
