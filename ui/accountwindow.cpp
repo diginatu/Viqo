@@ -52,7 +52,7 @@ void AccountWindow::on_login_way_combo_currentIndexChanged(int index)
     ui->get_session->setEnabled(true);
     ui->browser_combo->setEnabled(true);
     ui->userSessionWayDiscription->setText(
-          QStringLiteral("ブラウザからユーザーセッションを取得します<br>\
+          QStringLiteral(u"ブラウザからユーザーセッションを取得します<br>\
                          ブラウザを選択してください"));
     break;
   case UserSessionWay::Direct:
@@ -60,7 +60,7 @@ void AccountWindow::on_login_way_combo_currentIndexChanged(int index)
     ui->get_session->setEnabled(false);
     ui->browser_combo->setEnabled(false);
     ui->userSessionWayDiscription->setText(
-          QStringLiteral("ユーザーセッションを直接入力します<br>\
+          QStringLiteral(u"ユーザーセッションを直接入力します<br>\
                          選択肢に無いブラウザのセッションidを使う場合などに使用してください。"));
     break;
   case UserSessionWay::Login:
@@ -68,7 +68,7 @@ void AccountWindow::on_login_way_combo_currentIndexChanged(int index)
     ui->get_session->setEnabled(true);
     ui->browser_combo->setEnabled(false);
     ui->userSessionWayDiscription->setText(
-          QStringLiteral("Viqoからログインしてユーザーセッションを取得します<br>\
+          QStringLiteral(u"Viqoからログインしてユーザーセッションを取得します<br>\
                          ニコ生のログインセッションを一つ消費するので、\
                          他のブラウザなどがログアウトされる可能性があります。<br>\
                          <b>上のメールとパスワードを入力したあと、必ず取得ボタンを押してください。</b>"));
@@ -104,7 +104,7 @@ void AccountWindow::on_get_session_clicked()
     }
 
     QMessageBox::information(this, "Nicookie",
-                             QStringLiteral("正常にセッションが取得されました"));
+                             QStringLiteral(u"正常にセッションが取得されました"));
 
     // For Chrome in Mac:
     //   The main window is focused when the Keychain window closes.

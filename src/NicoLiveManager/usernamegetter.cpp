@@ -33,7 +33,7 @@ void UserNameGetter::gotReply(QNetworkReply* reply)
   QString status = userinfo.midStr("status=\"", "\">");
 
   if (status == "fail") {
-    QMessageBox::information(mwin, "Viqo", QStringLiteral("ユーザが見つかりませんでした"));
+    QMessageBox::information(mwin, "Viqo", QStringLiteral(u"ユーザが見つかりませんでした"));
     return;
   }
 

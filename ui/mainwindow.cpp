@@ -39,13 +39,13 @@ MainWindow::MainWindow(QWidget *parent) :
   QStringList dirs = QStandardPaths::standardLocations(QStandardPaths::DataLocation);
   if (dirs.empty()) {
     insLog("save directory is not found");
-    QMessageBox::information(this, "Viqo", QStringLiteral("アプリケーション保存領域がありません"));
+    QMessageBox::information(this, "Viqo", QStringLiteral(u"アプリケーション保存領域がありません"));
   } else {
     QDir dir(dirs[0]);
     if (!dir.exists()) {
       if (!dir.mkpath(dirs[0])) {
         insLog("making save path failed");
-        QMessageBox::information(this, "Viqo", QStringLiteral("保存ディレクトリの作成に失敗しました"));
+        QMessageBox::information(this, "Viqo", QStringLiteral(u"保存ディレクトリの作成に失敗しました"));
       }
     }
   }
@@ -158,7 +158,7 @@ void MainWindow::timeUpdate()
 
 void MainWindow::updateWatchCount()
 {
-  ui->num_audience->setText(QStringLiteral("来場者数: ")
+  ui->num_audience->setText(QStringLiteral(u"来場者数: ")
                             + nicolivemanager->getWatchCount());
 }
 
@@ -229,7 +229,7 @@ void MainWindow::refleshLiveWaku()
       now_no = i;
     ui->live_waku_list->addItem(
                 nicolivemanager->liveWakuList.at(i)->getTitle() + " - " +
-                nicolivemanager->liveWakuList.at(i)->getOwnerName() + QStringLiteral("さん")
+                nicolivemanager->liveWakuList.at(i)->getOwnerName() + QStringLiteral(u"さん")
                 );
   }
 
@@ -250,7 +250,7 @@ void MainWindow::insComment(int num, bool prem, QString user,
 
   ls += QString::number(num);
   ls += prem?"@":"";
-  ls += broadcaster?QStringLiteral("放送主"):user;
+  ls += broadcaster?QStringLiteral(u"放送主"):user;
   ls += comm.replace('\n', QChar(8629));
   ls += date;
   ls += user;
@@ -267,7 +267,7 @@ void MainWindow::insComment(int num, bool prem, QString user,
         (settings.isAutoGetUserNameOverWrite() || item->text(2) == user)) {
       if (settings.isAutoGetUserNameUseAt()) {
         // at-mark Kotehan
-        const QRegExp kotehanrg("[@＠]\\s*(\\S+)");
+        const QRegExp kotehanrg(QStringLiteral(u"[@＠]\\s*(\\S+)"));
         if (kotehanrg.indexIn(comm) != -1) {
           userManager->setUserName(item, kotehanrg.cap(1));
         } else if (settings.isAutoGetUserNameUsePage() &&
@@ -316,7 +316,7 @@ void MainWindow::on_receive_clicked()
 {
   if ( settings.getUserSession().isEmpty() ) {
     QMessageBox msgBox(this);
-    msgBox.setText(QStringLiteral("セッションIDが設定されていません\n設定画面を開きますか？"));
+    msgBox.setText(QStringLiteral(u"セッションIDが設定されていません\n設定画面を開きますか？"));
     msgBox.setStandardButtons(QMessageBox::Cancel | QMessageBox::Ok);
     msgBox.setDefaultButton(QMessageBox::Ok);
     if (msgBox.exec() == QMessageBox::Ok) {
@@ -537,7 +537,7 @@ void MainWindow::userSessionDisabled()
   const UserSessionWay usw = settings.getLoginWay();
   if (usw == UserSessionWay::Direct) {
     QMessageBox msgBox(this);
-    msgBox.setText(QStringLiteral("ユーザセッションが無効になってる可能性があります\n設定画面を開きますか？"));
+    msgBox.setText(QStringLiteral(u"ユーザセッションが無効になってる可能性があります\n設定画面を開きますか？"));
     msgBox.setStandardButtons(QMessageBox::Cancel | QMessageBox::Ok);
     msgBox.setDefaultButton(QMessageBox::Ok);
     if (msgBox.exec() == QMessageBox::Ok) {
@@ -546,7 +546,7 @@ void MainWindow::userSessionDisabled()
   } else if (usw == UserSessionWay::Browser ||
              usw == UserSessionWay::Login) {
     QMessageBox msgBox(this);
-    msgBox.setText(QStringLiteral("ユーザセッションが無効になってる可能性があります\n取得しなおしますか？"));
+    msgBox.setText(QStringLiteral(u"ユーザセッションが無効になってる可能性があります\n取得しなおしますか？"));
     msgBox.setStandardButtons(QMessageBox::Cancel | QMessageBox::Ok);
     msgBox.setDefaultButton(QMessageBox::Ok);
     if (msgBox.exec() == QMessageBox::Ok) {
@@ -599,10 +599,10 @@ void MainWindow::on_quit_triggered()
 
 void MainWindow::on_AboutViqo_triggered()
 {
-  QMessageBox::about(this, QStringLiteral("About Viqo"),
+  QMessageBox::about(this, QStringLiteral(u"About Viqo"),
          QCoreApplication::applicationName() + " version " +
          QCoreApplication::applicationVersion() +
-         QStringLiteral("<br>\
+         QStringLiteral(u"<br>\
             Qt で作成されたマルチプラットフォームコメントビューワです<br>\
             <a href=\"https://github.com/diginatu/Viqo\">GitHub Viqo repository</a>"));
 }
@@ -631,8 +631,8 @@ void MainWindow::on_CommentViewEditKotehan_triggered()
 {
   QTreeWidgetItem* const citem = ui->comment_view->currentItem();
 
-  QString name = QInputDialog::getText(this, QStringLiteral("コテハン編集"),
-                             QStringLiteral("コテハン:"), QLineEdit::Normal,
+  QString name = QInputDialog::getText(this, QStringLiteral(u"コテハン編集"),
+                             QStringLiteral(u"コテハン:"), QLineEdit::Normal,
                              citem->text(2));
 
   if (name.isEmpty()) return;

@@ -21,7 +21,7 @@ UserManager::UserManager(MainWindow* mwin, QObject *parent) :
   } else {
     mwin->insLog("db open error occured");
     QMessageBox::information(mwin, "Viqo",
-                             QStringLiteral("ユーザのデータベースオープンに失敗しました"));
+                             QStringLiteral(u"ユーザのデータベースオープンに失敗しました"));
   }
 
   QSqlQuery query(db);
@@ -32,7 +32,7 @@ UserManager::UserManager(MainWindow* mwin, QObject *parent) :
   if (!query.exec()) {
     mwin->insLog("UserManager::UserManager create table error");
     QMessageBox::information(mwin, "Viqo",
-                             QStringLiteral("ユーザのデータベーステーブル作成に失敗しました"));
+                             QStringLiteral(u"ユーザのデータベーステーブル作成に失敗しました"));
   }
 
   mwin->insLog();
@@ -63,7 +63,7 @@ void UserManager::getUserName(QTreeWidgetItem* item, QString userID, bool useHTT
     } else {
       mwin->insLog("UserManager::getUserName user db get error\n");
       QMessageBox::information(mwin, "Viqo",
-                               QStringLiteral("ユーザのデータベーステーブル取得に失敗しました"));
+                               QStringLiteral(u"ユーザのデータベーステーブル取得に失敗しました"));
     }
   } else if (useHTTP) {
     UserNameGetter* ug = new UserNameGetter(mwin, this, userID);
@@ -86,7 +86,7 @@ void UserManager::setUserName(QTreeWidgetItem* item, QString username)
   if (!query.exec()) {
     mwin->insLog("user db set error");
     QMessageBox::information(mwin, "Viqo",
-                             QStringLiteral("ユーザのデータベーステーブル書き込みに失敗しました"));
+                             QStringLiteral(u"ユーザのデータベーステーブル書き込みに失敗しました"));
   }
 }
 
@@ -99,6 +99,6 @@ void UserManager::removeUser(QTreeWidgetItem* item)
   if (!query.exec()) {
     mwin->insLog("user db set error");
     QMessageBox::information(mwin, "Viqo",
-                             QStringLiteral("ユーザのデータベーステーブル書き込みに失敗しました"));
+                             QStringLiteral(u"ユーザのデータベーステーブル書き込みに失敗しました"));
   }
 }

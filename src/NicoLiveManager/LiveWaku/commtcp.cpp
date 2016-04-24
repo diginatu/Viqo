@@ -29,7 +29,7 @@ void CommTcp::doConnect()
   if(!socket->waitForConnected(5000)) {
     mwin->insLog("CommTcp::doConnect Error: " + socket->errorString());
     QMessageBox msgBox(mwin);
-    msgBox.setText(QStringLiteral("コメント受信が切断されました。再接続しますか？"));
+    msgBox.setText(QStringLiteral(u"コメント受信が切断されました。再接続しますか？"));
     msgBox.setStandardButtons(QMessageBox::No | QMessageBox::Yes);
     msgBox.setDefaultButton(QMessageBox::Yes);
     if (msgBox.exec() == QMessageBox::Yes)
@@ -151,13 +151,13 @@ void CommTcp::readOneRawComment(const QString rawcomm)
   int nextnum = mwin->lastCommentNum() + 1;
   if (mwin->settings.getDispNG() && nextnum != num && nextnum != 1) {
     for (int i = nextnum; i < num; ++i) {
-      mwin->insComment( i, false, "NG", QStringLiteral("NGコメント"), date,
+      mwin->insComment( i, false, "NG", QStringLiteral(u"NGコメント"), date,
                         "NGcomment", false, false);
     }
   }
 
   mwin->insComment( num, premium,
-    broadcaster?QStringLiteral("broadcaster"):user, comm, date, is_184,
+    broadcaster?QStringLiteral(u"broadcaster"):user, comm, date, is_184,
     broadcaster, commenttime > connect_time);
 
   if (comm == "/disconnect" && broadcaster) {

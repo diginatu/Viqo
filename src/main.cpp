@@ -14,7 +14,7 @@ int main(int argc, char *argv[])
 
   QCommandLineParser parser;
   parser.setApplicationDescription(
-        QStringLiteral("Qt で作成されたマルチプラットフォームコメントビューワです"));
+        QStringLiteral(u"Qt で作成されたマルチプラットフォームコメントビューワです"));
   parser.addHelpOption();
   parser.addVersionOption();
 

@@ -6,12 +6,12 @@ void NicoLiveManager::getNewWakuAPI(const int type, QString liveNum)
   if (type == 2) {
     if (!nwin->isSetNecessary()) {
       mwin->insLog("NicoLiveManager::getNewWakuAPI type" + QString::number(type) + " no necessary item(s)");
-      QMessageBox::information(mwin, "Viqo", QStringLiteral("設定されていない必須項目があります"));
+      QMessageBox::information(mwin, "Viqo", QStringLiteral(u"設定されていない必須項目があります"));
       return;
     }
     if (!nwin->isTwitterTagValid()) {
       mwin->insLog("NicoLiveManager::getNewWakuAPI type" + QString::number(type) + " twitter tag must start with \"#\"");
-      QMessageBox::information(mwin, "Viqo", QStringLiteral("ツイッタータグは # で始めてください"));
+      QMessageBox::information(mwin, "Viqo", QStringLiteral(u"ツイッタータグは # で始めてください"));
       return;
     }
   }
@@ -139,7 +139,7 @@ void NicoLiveManager::newWakuFinished(QNetworkReply* reply){
     if (bodya.forward("<div id=\"wait\">") != -1) {
       QString waitingUsers = bodya.midStr("<span id=\"waiting_users\">", "</span>");
       mwin->insLog("wating " + waitingUsers + "users");
-      QMessageBox::information(mwin, "Viqo", QStringLiteral("順番待ちが発生しているので並びます （") + waitingUsers + QStringLiteral("人）"));
+      QMessageBox::information(mwin, "Viqo", QStringLiteral(u"順番待ちが発生しているので並びます （") + waitingUsers + QStringLiteral(u"人）"));
 
       newWakuAbstractor(reply, 3);
       reply->deleteLater();
@@ -151,7 +151,7 @@ void NicoLiveManager::newWakuFinished(QNetworkReply* reply){
     } else {
       mwin->insLog("getting waku failed");
       QMessageBox::information(mwin, "Viqo",
-                               QStringLiteral("枠取りに失敗しました<br><br>") +
+                               QStringLiteral(u"枠取りに失敗しました<br><br>") +
                                bodya.midStr("<div id=\"Error_Box\">", "</div>") +
                                bodya.midStr("<li id=\"error_message\">", "</li>"));
       auto headers = reply->rawHeaderPairs();

@@ -32,7 +32,7 @@ void NicoLiveManager::loginAlertFinished(QNetworkReply* reply)
     const QString description = commTcpi.midStr("<description>","</description>");
     mwin->insLog(code + "\n" + description + "\n");
     QMessageBox::information(mwin, "Viqo",
-                             QStringLiteral("放送開始通知のログイン(LoginAlert)に失敗しました\n\
+                             QStringLiteral(u"放送開始通知のログイン(LoginAlert)に失敗しました\n\
                              メールアドレスとパスワードを確認してください\n\
                              code : ") + code + "\n" + description);
     return;
@@ -74,7 +74,7 @@ void NicoLiveManager::adminAlertFinished(QNetworkReply* reply)
     QString code = wakuTcpi.midStr("<code>","</code>");
     mwin->insLog(code);
     QMessageBox::information(mwin, "Viqo",
-                             QStringLiteral("放送開始通知の情報取得(AdminAlert)に失敗しました\ncode : ")
+                             QStringLiteral(u"放送開始通知の情報取得(AdminAlert)に失敗しました\ncode : ")
                              + code);
     return;
   }
@@ -116,7 +116,7 @@ void NicoLiveManager::alertReconnect()
   if ( mail.isEmpty() || pass.isEmpty() ) {
     mwin->insLog("mail or pass are not specified");
     QMessageBox::information(mwin, "Viqo",
-                             QStringLiteral("メールまたはパスワードが設定されていません"));
+                             QStringLiteral(u"メールまたはパスワードが設定されていません"));
     return;
   }
   loginAlertAPI(mail, pass);

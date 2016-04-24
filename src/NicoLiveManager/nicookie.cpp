@@ -120,43 +120,43 @@ const QString Nicookie::errorString() const
 {
   switch(this->errorNum) {
   case Nicookie::NoError:
-    return QStringLiteral("エラーはありません。");
+    return QStringLiteral(u"エラーはありません。");
     break;
   case Nicookie::NotImplementError:
-    return QStringLiteral("まだ、実装していません。");
+    return QStringLiteral(u"まだ、実装していません。");
     break;
   case Nicookie::UnknownBrowserError:
-    return QStringLiteral("不明なブラウザです。");
+    return QStringLiteral(u"不明なブラウザです。");
     break;
   case Nicookie::NotSupportBrowserError:
-    return QStringLiteral("未対応のブラウザです。");
+    return QStringLiteral(u"未対応のブラウザです。");
     break;
   case Nicookie::NotFoundDataError:
-    return QStringLiteral("データが見つかりませんでした。");
+    return QStringLiteral(u"データが見つかりませんでした。");
     break;
   case Nicookie::NotFoundCookiesFileError:
-    return QStringLiteral("クッキーファイルが見つかりませんでした。");
+    return QStringLiteral(u"クッキーファイルが見つかりませんでした。");
     break;
   case Nicookie::InvalidDataFormtaError:
-    return QStringLiteral("データフォーマットが不正です。");
+    return QStringLiteral(u"データフォーマットが不正です。");
     break;
   case Nicookie::FailedDecrytError:
-    return QStringLiteral("復号に失敗しました。");
+    return QStringLiteral(u"復号に失敗しました。");
     break;
   case Nicookie::FailedOpenCookiesFileError:
-    return QStringLiteral("クッキーファイルを開けませんでした。");
+    return QStringLiteral(u"クッキーファイルを開けませんでした。");
     break;
   case Nicookie::FailedReadDataError:
-    return QStringLiteral("データを読み込めませんでした。");
+    return QStringLiteral(u"データを読み込めませんでした。");
     break;
   case Nicookie::SQLiteError:
-    return QStringLiteral("SQLite3の処理でエラーが発生しました。");
+    return QStringLiteral(u"SQLite3の処理でエラーが発生しました。");
     break;
   case Nicookie::FailedParseProfileError:
-    return QStringLiteral("プロファイルの解析でエラーが発生しました。");
+    return QStringLiteral(u"プロファイルの解析でエラーが発生しました。");
     break;
   default:
-    return QStringLiteral("不明なエラーです。");
+    return QStringLiteral(u"不明なエラーです。");
   }
 }
 

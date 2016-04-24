@@ -95,7 +95,7 @@ void AutoExtend::gotExtend(QNetworkReply* reply)
     mwin->insLog("description");
     mwin->insLog(error->midStr("<description>", "</description>"));
 
-    QMessageBox::information(mwin, "Viqo", QStringLiteral("自動延長失敗しました"));
+    QMessageBox::information(mwin, "Viqo", QStringLiteral(u"自動延長失敗しました"));
   }
 
   reply->deleteLater();

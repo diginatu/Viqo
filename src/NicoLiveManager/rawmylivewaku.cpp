@@ -9,7 +9,7 @@ void NicoLiveManager::getRawMyLiveHTML()
   if (mwin->settings.getUserSession() == "") {
     mwin->insLog("user_session is not set yet");
     QMessageBox msgBox(mwin);
-    msgBox.setText(QStringLiteral("セッションIDが設定されていません\n設定画面を開きますか？"));
+    msgBox.setText(QStringLiteral(u"セッションIDが設定されていません\n設定画面を開きますか？"));
     msgBox.setStandardButtons(QMessageBox::Cancel | QMessageBox::Ok);
     msgBox.setDefaultButton(QMessageBox::Ok);
     if (msgBox.exec() == QMessageBox::Ok) {
