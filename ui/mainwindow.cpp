@@ -267,7 +267,7 @@ void MainWindow::insComment(int num, bool prem, QString user,
         (settings.isAutoGetUserNameOverWrite() || item->text(2) == user)) {
       if (settings.isAutoGetUserNameUseAt()) {
         // at-mark Kotehan
-        const QRegExp kotehanrg(QStringLiteral(u"[@＠]\\s*(\\S+)"));
+        const QRegExp kotehanrg(QStringLiteral(u"[@＠]\\s*(.+)$"));
         if (kotehanrg.indexIn(comm) != -1) {
           userManager->setUserName(item, kotehanrg.cap(1));
         } else if (settings.isAutoGetUserNameUsePage() &&
