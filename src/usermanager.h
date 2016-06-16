@@ -15,7 +15,7 @@ class UserManager : QObject
 	Q_OBJECT
 public:
 	UserManager(MainWindow* mwin, QObject* parent = 0);
-  void getUserName(QTreeWidgetItem* item, QString userID, bool useHTTP = true, bool useDB = true);
+  bool getUserName(QTreeWidgetItem* item, QString userID, bool useHTTP = true, bool useDB = true);
   void setUserName(QTreeWidgetItem* item, QString username);
   void removeUser(QTreeWidgetItem* item);
 

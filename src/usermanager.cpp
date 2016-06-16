@@ -38,12 +38,14 @@ UserManager::UserManager(MainWindow* mwin, QObject *parent) :
   mwin->insLog();
 }
 
-void UserManager::getUserName(QTreeWidgetItem* item, QString userID, bool useHTTP, bool useDB)
+// return true if ID is found in username DB or fetching from user web page.
+// The state of fetching does not affect return value.
+bool UserManager::getUserName(QTreeWidgetItem* item, QString userID, bool useHTTP, bool useDB)
 {
   // return if empty
-  if (userID.isEmpty()) return;
-  // return if 184 comment.
-  if (item->text(6) == "@") return;
+  if (userID.isEmpty()) return false;
+  // return if 184 or broadcaster comment.
+  if (item->text(6) == "@" || item->text(7) == "@") return false;
 
   if (useDB) {
     QSqlQuery query(db);
@@ -59,11 +61,14 @@ void UserManager::getUserName(QTreeWidgetItem* item, QString userID, bool useHTT
           mwin->userManager->setUserName(item,n);
         });
         ug->get();
+      } else {
+          return false;
       }
     } else {
       mwin->insLog("UserManager::getUserName user db get error\n");
       QMessageBox::information(mwin, "Viqo",
                                QStringLiteral(u"ユーザのデータベーステーブル取得に失敗しました"));
+      return false;
     }
   } else if (useHTTP) {
     UserNameGetter* ug = new UserNameGetter(mwin, this, userID);
@@ -72,6 +77,8 @@ void UserManager::getUserName(QTreeWidgetItem* item, QString userID, bool useHTT
     });
     ug->get();
   }
+
+  return true;
 }
 
 void UserManager::setUserName(QTreeWidgetItem* item, QString username)

@@ -2,676 +2,677 @@
 #include "ui_mainwindow.h"
 
 MainWindow::MainWindow(QWidget *parent) :
-  QMainWindow(parent),
-  ui(new Ui::MainWindow),
-  settingsWindow(new SettingsWindow(this, this)),
-  newWakuSettingsWindow(new NewWakuSettingsWindow(this, this)),
-  accountWindow(new AccountWindow(this, this)),
-  getWakuTimer(new GetWakuTimer(this, this)),
-  matchAndAddBroadcast(new MatchAndAddBroadcast(this, this)),
-  userSessionDisabledDialogAppeared(false),
-  isCursorTop(true),
-  settings(this, ui, this)
+    QMainWindow(parent),
+    ui(new Ui::MainWindow),
+    settingsWindow(new SettingsWindow(this, this)),
+    newWakuSettingsWindow(new NewWakuSettingsWindow(this, this)),
+    accountWindow(new AccountWindow(this, this)),
+    getWakuTimer(new GetWakuTimer(this, this)),
+    matchAndAddBroadcast(new MatchAndAddBroadcast(this, this)),
+    userSessionDisabledDialogAppeared(false),
+    isCursorTop(true),
+    settings(this, ui, this)
 {
-  ui->setupUi(this);
-  setAcceptDrops(true);
+    ui->setupUi(this);
+    setAcceptDrops(true);
 
-  startWakuTimerEnabled = false;
-  startWakuTimerTime = QDateTime::currentDateTime();
+    startWakuTimerEnabled = false;
+    startWakuTimerTime = QDateTime::currentDateTime();
 
-  this->setWindowIcon(QIcon(":/img/icon.svg"));
+    this->setWindowIcon(QIcon(":/img/icon.svg"));
 
-  QTextCodec::setCodecForLocale(QTextCodec::codecForName("UTF-8"));
+    QTextCodec::setCodecForLocale(QTextCodec::codecForName("UTF-8"));
 
-  // set the column width for the comment view list
-  ui->comment_view->header()->resizeSection(0, 40);
-  ui->comment_view->header()->resizeSection(1, 30);
-  ui->comment_view->header()->resizeSection(3, 200);
-  ui->comment_view->header()->resizeSection(6, 30);
-  ui->comment_view->header()->resizeSection(7, 30);
+    // set the column width for the comment view list
+    ui->comment_view->header()->resizeSection(0, 40);
+    ui->comment_view->header()->resizeSection(1, 30);
+    ui->comment_view->header()->resizeSection(3, 200);
+    ui->comment_view->header()->resizeSection(6, 30);
+    ui->comment_view->header()->resizeSection(7, 30);
 
-  ui->comment_view->insertAction(0,ui->CommentViewEditKotehan);
-  ui->comment_view->insertAction(0,ui->CommentViewGetKotehan);
-  ui->comment_view->insertAction(0,ui->CommentViewRemoveKotehan);
-  ui->one_comment_view->insertAction(0,ui->oneCommentActionCopy);
-  ui->one_comment_view->insertAction(0,ui->oneCommentActionSearchByGoogle);
+    ui->comment_view->insertAction(0,ui->CommentViewEditKotehan);
+    ui->comment_view->insertAction(0,ui->CommentViewGetKotehan);
+    ui->comment_view->insertAction(0,ui->CommentViewRemoveKotehan);
+    ui->one_comment_view->insertAction(0,ui->oneCommentActionCopy);
+    ui->one_comment_view->insertAction(0,ui->oneCommentActionSearchByGoogle);
 
-  QStringList dirs = QStandardPaths::standardLocations(QStandardPaths::DataLocation);
-  if (dirs.empty()) {
-    insLog("save directory is not found");
-    QMessageBox::information(this, "Viqo", QStringLiteral(u"アプリケーション保存領域がありません"));
-  } else {
-    QDir dir(dirs[0]);
-    if (!dir.exists()) {
-      if (!dir.mkpath(dirs[0])) {
-        insLog("making save path failed");
-        QMessageBox::information(this, "Viqo", QStringLiteral(u"保存ディレクトリの作成に失敗しました"));
-      }
+    QStringList dirs = QStandardPaths::standardLocations(QStandardPaths::DataLocation);
+    if (dirs.empty()) {
+        insLog("save directory is not found");
+        QMessageBox::information(this, "Viqo", QStringLiteral(u"アプリケーション保存領域がありません"));
+    } else {
+        QDir dir(dirs[0]);
+        if (!dir.exists()) {
+            if (!dir.mkpath(dirs[0])) {
+                insLog("making save path failed");
+                QMessageBox::information(this, "Viqo", QStringLiteral(u"保存ディレクトリの作成に失敗しました"));
+            }
+        }
     }
-  }
 
-  settings.updateData();
-  settings.loadAll();
+    settings.updateData();
+    settings.loadAll();
 
-  userManager = new UserManager(this);
-  nicolivemanager = new NicoLiveManager(this, accountWindow, newWakuSettingsWindow, matchAndAddBroadcast, this);
+    userManager = new UserManager(this);
+    nicolivemanager = new NicoLiveManager(this, accountWindow, newWakuSettingsWindow, matchAndAddBroadcast, this);
 
-  const QString mail = settings.getUserMail();
-  const QString pass = settings.getUserPass();
-  if ( !mail.isEmpty() && !pass.isEmpty()) {
-    nicolivemanager->loginAlertAPI(mail, pass);
-  }
+    const QString mail = settings.getUserMail();
+    const QString pass = settings.getUserPass();
+    if ( !mail.isEmpty() && !pass.isEmpty()) {
+        nicolivemanager->loginAlertAPI(mail, pass);
+    }
 
-  QTimer *timer = new QTimer(this);
-  connect(timer, SIGNAL(timeout()), this, SLOT(timeUpdate()));
-  timer->start(60 * 1000);
+    QTimer *timer = new QTimer(this);
+    connect(timer, SIGNAL(timeout()), this, SLOT(timeUpdate()));
+    timer->start(60 * 1000);
 
-  nicolivemanager->getRawMyLiveHTML();
-  QTimer::singleShot(30000, nicolivemanager, SLOT(getRawMyLiveHTML()));
+    nicolivemanager->getRawMyLiveHTML();
+    QTimer::singleShot(30000, nicolivemanager, SLOT(getRawMyLiveHTML()));
 
-  newWakuSettingsWindow->loadPresets();
+    newWakuSettingsWindow->loadPresets();
 }
 
 MainWindow::~MainWindow()
 {
-  nicolivemanager->broadDisconnect();
-  delete ui;
+    nicolivemanager->broadDisconnect();
+    delete ui;
 }
 
 void MainWindow::onReceiveStarted()
 {
-  nicolivemanager->nowWaku.setIsConnected(true);
+    nicolivemanager->nowWaku.setIsConnected(true);
 
-  ui->submit_button->setEnabled(true);
-  ui->disconnect->setEnabled(true);
-  ui->openBrowser->setEnabled(true);
+    ui->submit_button->setEnabled(true);
+    ui->disconnect->setEnabled(true);
+    ui->openBrowser->setEnabled(true);
 
-  QWidget::setWindowTitle(nicolivemanager->nowWaku.getTitle() + " - Viqo");
+    QWidget::setWindowTitle(nicolivemanager->nowWaku.getTitle() + " - Viqo");
 
-  // set audiences num timer
-  elapsed_time_timer = new QTimer(this);
-  connect(elapsed_time_timer,SIGNAL(timeout()),this,SLOT(updateElapsedTime()));
-  elapsed_time_timer->start(1000);
+    // set audiences num timer
+    elapsed_time_timer = new QTimer(this);
+    connect(elapsed_time_timer,SIGNAL(timeout()),this,SLOT(updateElapsedTime()));
+    elapsed_time_timer->start(1000);
 
-  // set audiences num timer
-  getWatchCount();
-  watch_count_timer = new QTimer(this);
-  connect(watch_count_timer,SIGNAL(timeout()),this,SLOT(getWatchCount()));
-  watch_count_timer->start(60000);
+    // set audiences num timer
+    getWatchCount();
+    watch_count_timer = new QTimer(this);
+    connect(watch_count_timer,SIGNAL(timeout()),this,SLOT(getWatchCount()));
+    watch_count_timer->start(60000);
 }
 
 void MainWindow::onReceiveEnded()
 {
-  nicolivemanager->nowWaku.setIsConnected(false);
+    nicolivemanager->nowWaku.setIsConnected(false);
 
-  ui->submit_button->setEnabled(false);
-  ui->disconnect->setEnabled(false);
-  ui->openBrowser->setEnabled(false);
+    ui->submit_button->setEnabled(false);
+    ui->disconnect->setEnabled(false);
+    ui->openBrowser->setEnabled(false);
 
-  QWidget::setWindowTitle("Viqo");
+    QWidget::setWindowTitle("Viqo");
 
-  // delete audiences num timer
-  elapsed_time_timer->stop();
-  elapsed_time_timer->deleteLater();
-  ui->elapsed_time->setText("00:00:00");
+    // delete audiences num timer
+    elapsed_time_timer->stop();
+    elapsed_time_timer->deleteLater();
+    ui->elapsed_time->setText("00:00:00");
 
-  // delete audiences num timer
-  watch_count_timer->stop();
-  watch_count_timer->deleteLater();
+    // delete audiences num timer
+    watch_count_timer->stop();
+    watch_count_timer->deleteLater();
 }
 
 void MainWindow::dragEnterEvent(QDragEnterEvent *event)
 {
-  if (event->mimeData()->hasText())
-    event->acceptProposedAction();
+    if (event->mimeData()->hasText())
+        event->acceptProposedAction();
 }
 
 void MainWindow::dropEvent(QDropEvent *event)
 {
-  event->acceptProposedAction();
-  ui->broadID->setText(event->mimeData()->text());
-  on_receive_clicked();
+    event->acceptProposedAction();
+    ui->broadID->setText(event->mimeData()->text());
+    on_receive_clicked();
 }
 
 void MainWindow::getWatchCount()
 {
-  HeartBeat* hb = new HeartBeat(this, nicolivemanager, this);
-  connect(hb, &HeartBeat::got, this, [=](QString watchCount) {
-    nicolivemanager->setWatchCount(watchCount);
-    updateWatchCount();
-  });
-  hb->get();
+    HeartBeat* hb = new HeartBeat(this, nicolivemanager, this);
+    connect(hb, &HeartBeat::got, this, [=](QString watchCount) {
+        nicolivemanager->setWatchCount(watchCount);
+        updateWatchCount();
+    });
+    hb->get();
 }
 
 void MainWindow::timeUpdate()
 {
-  QDateTime nowT = QDateTime::currentDateTime();
-  if (startWakuTimerEnabled &&
-      startWakuTimerTime <= nowT &&
-      nowT < startWakuTimerTime.addSecs(60 * 60))
-  {
-    startWakuTimerEnabled = false;
-    on_getNewWakuNow_triggered();
-    getWakuTimer->init();
-  }
+    QDateTime nowT = QDateTime::currentDateTime();
+    if (startWakuTimerEnabled &&
+            startWakuTimerTime <= nowT &&
+            nowT < startWakuTimerTime.addSecs(60 * 60))
+    {
+        startWakuTimerEnabled = false;
+        on_getNewWakuNow_triggered();
+        getWakuTimer->init();
+    }
 }
 
 void MainWindow::updateWatchCount()
 {
-  ui->num_audience->setText(QStringLiteral(u"来場者数: ")
-                            + nicolivemanager->getWatchCount());
+    ui->num_audience->setText(QStringLiteral(u"来場者数: ")
+                              + nicolivemanager->getWatchCount());
 }
 
 void MainWindow::updateElapsedTime()
 {
-  const QDateTime st = nicolivemanager->nowWaku.getSt();
-  const QDateTime ed = nicolivemanager->nowWaku.getEd();
-  const QDateTime nw = QDateTime::currentDateTimeUtc();
+    const QDateTime st = nicolivemanager->nowWaku.getSt();
+    const QDateTime ed = nicolivemanager->nowWaku.getEd();
+    const QDateTime nw = QDateTime::currentDateTimeUtc();
 
-  const uint lastTime(ed.toTime_t() - nw.toTime_t());
+    const uint lastTime(ed.toTime_t() - nw.toTime_t());
 
-  if (!nicolivemanager->nowWaku.didUpdate &&
-      lastTime < 30) {
-    nicolivemanager->nowWaku.didUpdate = true;
-    QTimer::singleShot(60000,
-                       [=](){nicolivemanager->nowWaku.didUpdate = false;});
+    if (!nicolivemanager->nowWaku.didUpdate &&
+            lastTime < 30) {
+        nicolivemanager->nowWaku.didUpdate = true;
+        QTimer::singleShot(60000,
+                           [=](){nicolivemanager->nowWaku.didUpdate = false;});
 
-    nicolivemanager->nowWaku.getPlayerStatusAPI();
-  }
-
-  if (ui->autoExtend->isChecked() &&
-      !nicolivemanager->nowWaku.didExtend &&
-      nicolivemanager->nowWaku.isOwnerBroad() &&
-      lastTime < 240) {
-    nicolivemanager->nowWaku.didExtend = true;
-    QTimer::singleShot(300000,
-                       [=](){nicolivemanager->nowWaku.didExtend = false;});
-
-    AutoExtend* ae = new AutoExtend(this, nicolivemanager, this);
-    ae->get();
-  }
-
-  if ( !nicolivemanager->nowWaku.didAlermCommand &&
-       ui->command_beforeEnd_chk->isChecked()) {
-    const QTime alerm(0,ui->command_beforeEndMinuts_spn->value());
-    if ( QTime(0,0).addSecs(lastTime) <= alerm) {
-
-      nicolivemanager->nowWaku.didAlermCommand = true;
-      QTimer::singleShot(300000,
-                         [=](){nicolivemanager->nowWaku.didAlermCommand = false;});
-
-      QProcess pr;
-      QString cmd = ui->command_beforeEnd->text();
-
-      const QString lastTime = QString::number(ui->command_beforeEndMinuts_spn->value());
-      cmd.replace("%lastTime%",'"' + lastTime + '"');
-
-      pr.start(cmd);
-      pr.waitForFinished(5000);
+        nicolivemanager->nowWaku.getPlayerStatusAPI();
     }
-  }
 
-  const QTime el_time(QTime(0,0).addSecs(nw.toTime_t() - st.toTime_t()));
-  ui->elapsed_time->setText(el_time.toString("hh:mm:ss"));
+    if (ui->autoExtend->isChecked() &&
+            !nicolivemanager->nowWaku.didExtend &&
+            nicolivemanager->nowWaku.isOwnerBroad() &&
+            lastTime < 240) {
+        nicolivemanager->nowWaku.didExtend = true;
+        QTimer::singleShot(300000,
+                           [=](){nicolivemanager->nowWaku.didExtend = false;});
+
+        AutoExtend* ae = new AutoExtend(this, nicolivemanager, this);
+        ae->get();
+    }
+
+    if ( !nicolivemanager->nowWaku.didAlermCommand &&
+         ui->command_beforeEnd_chk->isChecked()) {
+        const QTime alerm(0,ui->command_beforeEndMinuts_spn->value());
+        if ( QTime(0,0).addSecs(lastTime) <= alerm) {
+
+            nicolivemanager->nowWaku.didAlermCommand = true;
+            QTimer::singleShot(300000,
+                               [=](){nicolivemanager->nowWaku.didAlermCommand = false;});
+
+            QProcess pr;
+            QString cmd = ui->command_beforeEnd->text();
+
+            const QString lastTime = QString::number(ui->command_beforeEndMinuts_spn->value());
+            cmd.replace("%lastTime%",'"' + lastTime + '"');
+
+            pr.start(cmd);
+            pr.waitForFinished(5000);
+        }
+    }
+
+    const QTime el_time(QTime(0,0).addSecs(nw.toTime_t() - st.toTime_t()));
+    ui->elapsed_time->setText(el_time.toString("hh:mm:ss"));
 }
 
 void MainWindow::setHousouID(QString text)
 {
-  ui->broadID->setText(text);
+    ui->broadID->setText(text);
 }
 
 void MainWindow::refleshLiveWaku()
 {
-  ui->live_waku_list->clear();
-  int now_no = -1;
-  for(int i = 0; i < nicolivemanager->liveWakuList.size(); ++i) {
-    if (nicolivemanager->liveWakuList.at(i)->getBroadID() == nicolivemanager->nowWaku.getBroadID())
-      now_no = i;
-    ui->live_waku_list->addItem(
-                nicolivemanager->liveWakuList.at(i)->getTitle() + " - " +
-                nicolivemanager->liveWakuList.at(i)->getOwnerName() + QStringLiteral(u"さん")
-                );
-  }
+    ui->live_waku_list->clear();
+    int now_no = -1;
+    for(int i = 0; i < nicolivemanager->liveWakuList.size(); ++i) {
+        if (nicolivemanager->liveWakuList.at(i)->getBroadID() == nicolivemanager->nowWaku.getBroadID())
+            now_no = i;
+        ui->live_waku_list->addItem(
+                    nicolivemanager->liveWakuList.at(i)->getTitle() + " - " +
+                    nicolivemanager->liveWakuList.at(i)->getOwnerName() + QStringLiteral(u"さん")
+                    );
+    }
 
-  if (now_no != -1)
-    ui->live_waku_list->setCurrentIndex(now_no);
+    if (now_no != -1)
+        ui->live_waku_list->setCurrentIndex(now_no);
 }
 
 void MainWindow::insLog(QString log)
 {
-  ui->logtext->append(log);
+    ui->logtext->append(log);
 }
 
 void MainWindow::insComment(int num, bool prem, QString user,
-     QString comm, QString date, bool is_184,
-     bool broadcaster, bool after_open)
+                            QString comm, QString date, bool is_184,
+                            bool broadcaster, bool after_open)
 {
-  QStringList ls;
+    QStringList ls;
 
-  ls += QString::number(num);
-  ls += prem?"@":"";
-  ls += broadcaster?QStringLiteral(u"放送主"):user;
-  ls += comm.replace('\n', QChar(8629));
-  ls += date;
-  ls += user;
-  ls += is_184?"@":"";
-  ls += broadcaster?"@":"";
+    ls += QString::number(num);
+    ls += prem?"@":"";
+    ls += broadcaster?QStringLiteral(u"放送主"):user;
+    ls += comm.replace('\n', QChar(8629));
+    ls += date;
+    ls += user;
+    ls += is_184?"@":"";
+    ls += broadcaster?"@":"";
 
-  QTreeWidgetItem* item = new QTreeWidgetItem(ls);
-  ui->comment_view->insertTopLevelItem(0, item);
+    QTreeWidgetItem* item = new QTreeWidgetItem(ls);
+    ui->comment_view->insertTopLevelItem(0, item);
 
-  // get user name
-  if (!broadcaster && !is_184) {
-    userManager->getUserName(item, user, false);
-    if (after_open && settings.isAutoGettingUserName() &&
-        (settings.isAutoGetUserNameOverWrite() || item->text(2) == user)) {
-      if (settings.isAutoGetUserNameUseAt()) {
-        // at-mark Kotehan
-        const QRegExp kotehanrg(QStringLiteral(u"[@＠]\\s*(.+)$"));
-        if (kotehanrg.indexIn(comm) != -1) {
-          userManager->setUserName(item, kotehanrg.cap(1));
-        } else if (settings.isAutoGetUserNameUsePage() &&
-                   item->text(2) == user) {
-          // use pgae to get the name
-          userManager->getUserName(item, user, true);
+    // get user name
+    if (!broadcaster && !is_184) {
+        bool indb = userManager->getUserName(item, user, false);
+        if (after_open && settings.isAutoGettingUserName()) {
+            bool setname = false;
+            if (!indb || settings.isAutoGetUserNameOverWrite()) {
+                if (settings.isAutoGetUserNameUseAt()) {
+                    // at-mark
+                    const QRegExp kotehanrg(QStringLiteral(u"[@＠]\\s*(.+)$"));
+                    if (kotehanrg.indexIn(comm) != -1) {
+                        userManager->setUserName(item, kotehanrg.cap(1));
+                        setname = true;
+                    }
+                }
+            }
+
+            if (!setname && !indb && settings.isAutoGetUserNameUsePage()) {
+                // user page
+                userManager->getUserName(item, user, true);
+            }
         }
-      } else if (settings.isAutoGetUserNameUsePage() &&
-                 item->text(2) == user) {
-        userManager->getUserName(item, user, true);
-      }
     }
-  }
 
-  // comment command
-  if ( after_open && settings.isCommandCommentChecked() ) {
-    QProcess pr;
+    // comment command
+    if ( after_open && settings.isCommandCommentChecked() ) {
+        QProcess pr;
 
-    QString cmd = settings.getCommandComment();
-    cmd.replace("%userID%",user);
-    cmd.replace("%commentNo%",item->text(0));
-    QString esuser = user;
-    esuser.replace("\"", "\"\"\"");
-    cmd.replace("%userName%",item->text(2) == user?"":item->text(2));
-    QString escmd = comm;
-    escmd.replace("\"", "\"\"\"");
-    cmd.replace("%comment%",escmd);
+        QString cmd = settings.getCommandComment();
+        cmd.replace("%userID%",user);
+        cmd.replace("%commentNo%",item->text(0));
+        QString esuser = user;
+        esuser.replace("\"", "\"\"\"");
+        cmd.replace("%userName%",item->text(2) == user?"":item->text(2));
+        QString escmd = comm;
+        escmd.replace("\"", "\"\"\"");
+        cmd.replace("%comment%",escmd);
 
-    pr.start(cmd);
-    pr.waitForFinished(5000);
-  }
+        pr.start(cmd);
+        pr.waitForFinished(5000);
+    }
 
-  if (after_open && ui->keepTop->isChecked() && isCursorTop) {
-    ui->comment_view->setCurrentItem(item);
-  }
+    if (after_open && ui->keepTop->isChecked() && isCursorTop) {
+        ui->comment_view->setCurrentItem(item);
+    }
 }
 
 int MainWindow::lastCommentNum()
 {
-  QTreeWidgetItem* topitem = ui->comment_view->topLevelItem(0);
-  if(topitem == 0) return 0;
-  return topitem->text(0).toInt();
+    QTreeWidgetItem* topitem = ui->comment_view->topLevelItem(0);
+    if(topitem == 0) return 0;
+    return topitem->text(0).toInt();
 }
 
 void MainWindow::on_receive_clicked()
 {
-  if ( settings.getUserSession().isEmpty() ) {
-    QMessageBox msgBox(this);
-    msgBox.setText(QStringLiteral(u"セッションIDが設定されていません\n設定画面を開きますか？"));
-    msgBox.setStandardButtons(QMessageBox::Cancel | QMessageBox::Ok);
-    msgBox.setDefaultButton(QMessageBox::Ok);
-    if (msgBox.exec() == QMessageBox::Ok) {
-      on_AccountSettings_triggered();
+    if ( settings.getUserSession().isEmpty() ) {
+        QMessageBox msgBox(this);
+        msgBox.setText(QStringLiteral(u"セッションIDが設定されていません\n設定画面を開きますか？"));
+        msgBox.setStandardButtons(QMessageBox::Cancel | QMessageBox::Ok);
+        msgBox.setDefaultButton(QMessageBox::Ok);
+        if (msgBox.exec() == QMessageBox::Ok) {
+            on_AccountSettings_triggered();
+        }
+        return;
     }
-    return;
-  }
 
-  // trim into only broad number
-  const QRegExp broadIDrg("lv(\\d+)");
-  QString broadID = ui->broadID->text();
-  if (broadIDrg.indexIn(broadID) != -1) {
-    broadID = broadIDrg.cap(1);
-  }
-  ui->broadID->setText(broadID);
+    // trim into only broad number
+    const QRegExp broadIDrg("lv(\\d+)");
+    QString broadID = ui->broadID->text();
+    if (broadIDrg.indexIn(broadID) != -1) {
+        broadID = broadIDrg.cap(1);
+    }
+    ui->broadID->setText(broadID);
 
-  nicolivemanager->broadDisconnect();
-  bodyClear();
+    nicolivemanager->broadDisconnect();
+    bodyClear();
 
-  nicolivemanager->nowWaku.setBroadID(broadID);
-  nicolivemanager->broadStart();
+    nicolivemanager->nowWaku.setBroadID(broadID);
+    nicolivemanager->broadStart();
 }
 
 
 void MainWindow::on_disconnect_clicked()
 {
-  nicolivemanager->broadDisconnect(true);
+    nicolivemanager->broadDisconnect(true);
 }
 
 void MainWindow::bodyClear()
 {
-  ui->comment_view->clear();
-  ui->one_comment_view->clear();
+    ui->comment_view->clear();
+    ui->one_comment_view->clear();
 }
 
 void MainWindow::submittedComment()
 {
-  ui->submit_button->setEnabled(true);
+    ui->submit_button->setEnabled(true);
 }
 
 void MainWindow::on_comment_view_currentItemChanged(QTreeWidgetItem *current)
 {
-  if (current == NULL) {
-    isCursorTop = true;
-    return;
-  }
-
-  if (ui->comment_view->currentIndex().row() >= 1) {
-    isCursorTop = false;
-  } else {
-    isCursorTop = true;
-  }
-
-  const bool owner = current->text(7)=="@"?true:false;
-
-  QString comment_view("");
-  comment_view += "<html><head /><body>";
-
-  comment_view += "<table width=\"100%\" border=\"0\"><tr>";
-
-  comment_view += "<td>";
-  if (current->text(6) == "@") {
-    comment_view += current->text(2);
-  } else {
-    comment_view += "<a href=\"http://www.nicovideo.jp/user/"+current->text(5)+"\">"+current->text(2)+"</a>";
-  }
-  comment_view += "</td>";
-
-  comment_view += "<td align=\"right\">";
-  comment_view += current->text(4);
-  comment_view += "</td>";
-
-  comment_view += "</tr></table>";
-
-  QString comme = current->text(3);
-  const QRegExp urlrg("(https?://[\\w/:%#\\$&\\?\\(\\)~\\.=\\+\\-]+)");
-
-  if (!owner) {
-    QString tcomme;
-    int bpos = 0;
-    int pos = 0;
-    while ((pos = urlrg.indexIn(comme, pos)) != -1) {
-      tcomme += comme.mid(bpos,pos-bpos).toHtmlEscaped();
-      tcomme += "<a href=\"" + urlrg.cap(1) + "\">" + urlrg.cap(1).toHtmlEscaped() + "</a>";
-      pos += urlrg.matchedLength();
-      bpos = pos;
+    if (current == NULL) {
+        isCursorTop = true;
+        return;
     }
-    tcomme += comme.mid(bpos).toHtmlEscaped();
-    comme = tcomme;
-  }
-  comme.replace(QChar(8629), "<br>");
 
-  comment_view += "<p>"+comme+"</p>";
+    if (ui->comment_view->currentIndex().row() >= 1) {
+        isCursorTop = false;
+    } else {
+        isCursorTop = true;
+    }
 
-  comment_view += "</body></html>";
+    const bool owner = current->text(7)=="@"?true:false;
 
-  ui->one_comment_view->setHtml( comment_view );
+    QString comment_view("");
+    comment_view += "<html><head /><body>";
+
+    comment_view += "<table width=\"100%\" border=\"0\"><tr>";
+
+    comment_view += "<td>";
+    if (current->text(6) == "@") {
+        comment_view += current->text(2);
+    } else {
+        comment_view += "<a href=\"http://www.nicovideo.jp/user/"+current->text(5)+"\">"+current->text(2)+"</a>";
+    }
+    comment_view += "</td>";
+
+    comment_view += "<td align=\"right\">";
+    comment_view += current->text(4);
+    comment_view += "</td>";
+
+    comment_view += "</tr></table>";
+
+    QString comme = current->text(3);
+    const QRegExp urlrg("(https?://[\\w/:%#\\$&\\?\\(\\)~\\.=\\+\\-]+)");
+
+    if (!owner) {
+        QString tcomme;
+        int bpos = 0;
+        int pos = 0;
+        while ((pos = urlrg.indexIn(comme, pos)) != -1) {
+            tcomme += comme.mid(bpos,pos-bpos).toHtmlEscaped();
+            tcomme += "<a href=\"" + urlrg.cap(1) + "\">" + urlrg.cap(1).toHtmlEscaped() + "</a>";
+            pos += urlrg.matchedLength();
+            bpos = pos;
+        }
+        tcomme += comme.mid(bpos).toHtmlEscaped();
+        comme = tcomme;
+    }
+    comme.replace(QChar(8629), "<br>");
+
+    comment_view += "<p>"+comme+"</p>";
+
+    comment_view += "</body></html>";
+
+    ui->one_comment_view->setHtml( comment_view );
 }
 
 void MainWindow::on_live_waku_list_activated(int index)
 {
-  ui->broadID->setText(nicolivemanager->liveWakuList.at(index)->getBroadID());
-  on_receive_clicked();
+    ui->broadID->setText(nicolivemanager->liveWakuList.at(index)->getBroadID());
+    on_receive_clicked();
 }
 
 void MainWindow::on_setting_triggered()
 {
-  settingsWindow->init();
-  settingsWindow->show();
-  settingsWindow->raise();
-  settingsWindow->activateWindow();
+    settingsWindow->init();
+    settingsWindow->show();
+    settingsWindow->raise();
+    settingsWindow->activateWindow();
 }
 
 void MainWindow::on_AccountSettings_triggered()
 {
-  accountWindow->init();
-  accountWindow->show();
-  accountWindow->raise();
-  accountWindow->activateWindow();
+    accountWindow->init();
+    accountWindow->show();
+    accountWindow->raise();
+    accountWindow->activateWindow();
 }
 
 void MainWindow::on_clear_triggered()
 {
-  bodyClear();
+    bodyClear();
 }
 
 void MainWindow::on_submit_button_clicked()
 {
-  const QString& text = ui->submit_text->text();
-  if (text.isEmpty()) return;
+    const QString& text = ui->submit_text->text();
+    if (text.isEmpty()) return;
 
-  nicolivemanager->nowWaku.sendComment(text);
-  QString bl = "";
-  ui->submit_text->setText(bl);
-  ui->submit_button->setEnabled(false);
+    nicolivemanager->nowWaku.sendComment(text);
+    QString bl = "";
+    ui->submit_text->setText(bl);
+    ui->submit_button->setEnabled(false);
 }
 
 void MainWindow::on_submit_text_returnPressed()
 {
-  if (ui->submit_button->isEnabled())
-    on_submit_button_clicked();
+    if (ui->submit_button->isEnabled())
+        on_submit_button_clicked();
 }
 
 void MainWindow::on_openBrowser_clicked()
 {
-  if (!ui->openBrowser->isEnabled()) return;
+    if (!ui->openBrowser->isEnabled()) return;
 
-  QDesktopServices::openUrl("http://live.nicovideo.jp/watch/lv" + ui->broadID->text());
+    QDesktopServices::openUrl("http://live.nicovideo.jp/watch/lv" + ui->broadID->text());
 }
 
 void MainWindow::on_oneCommentActionSearchByGoogle_triggered()
 {
-  const QString url = "https://www.google.co.jp/search?q=" +
-      ui->one_comment_view->textCursor().selectedText();
-  QDesktopServices::openUrl(url);
+    const QString url = "https://www.google.co.jp/search?q=" +
+            ui->one_comment_view->textCursor().selectedText();
+    QDesktopServices::openUrl(url);
 }
 
 void MainWindow::on_oneCommentActionCopy_triggered()
 {
-  QApplication::clipboard()->setText(ui->one_comment_view->textCursor().selectedText());
+    QApplication::clipboard()->setText(ui->one_comment_view->textCursor().selectedText());
 }
 
 void MainWindow::on_command_test_button_clicked()
 {
-  QProcess pr;
-  QString cmd = ui->command_test->text();
+    QProcess pr;
+    QString cmd = ui->command_test->text();
 
-  cmd.replace("%wakuURL%","http://live.nicovideo.jp/watch/lv" + nicolivemanager->nowWaku.getBroadID());
+    cmd.replace("%wakuURL%","http://live.nicovideo.jp/watch/lv" + nicolivemanager->nowWaku.getBroadID());
 
-  pr.start(cmd);
-  pr.waitForFinished(5000);
+    pr.start(cmd);
+    pr.waitForFinished(5000);
 }
 
 void MainWindow::on_save_1_triggered()
 {
-  settings.saveStatus();
+    settings.saveStatus();
 }
 void MainWindow::on_save_2_triggered()
 {
-  settings.saveStatus(2);
+    settings.saveStatus(2);
 }
 void MainWindow::on_save_3_triggered()
 {
-  settings.saveStatus(3);
+    settings.saveStatus(3);
 }
 void MainWindow::on_save_4_triggered()
 {
-  settings.saveStatus(4);
+    settings.saveStatus(4);
 }
 
 void MainWindow::on_load_1_triggered()
 {
-  settings.loadStatus();
+    settings.loadStatus();
 }
 void MainWindow::on_load_2_triggered()
 {
-  settings.loadStatus(2);
+    settings.loadStatus(2);
 }
 void MainWindow::on_load_3_triggered()
 {
-  settings.loadStatus(3);
+    settings.loadStatus(3);
 }
 void MainWindow::on_load_4_triggered()
 {
-  settings.loadStatus(4);
+    settings.loadStatus(4);
 }
 
 void MainWindow::getNewWakuAPI(int type, QString livenum)
 {
-  nicolivemanager->getNewWakuAPI(type, livenum);
+    nicolivemanager->getNewWakuAPI(type, livenum);
 }
 
 void MainWindow::userSessionDisabled()
 {
-  if (userSessionDisabledDialogAppeared) return;
-  userSessionDisabledDialogAppeared = true;
+    if (userSessionDisabledDialogAppeared) return;
+    userSessionDisabledDialogAppeared = true;
 
-  const UserSessionWay usw = settings.getLoginWay();
-  if (usw == UserSessionWay::Direct) {
-    QMessageBox msgBox(this);
-    msgBox.setText(QStringLiteral(u"ユーザセッションが無効になってる可能性があります\n設定画面を開きますか？"));
-    msgBox.setStandardButtons(QMessageBox::Cancel | QMessageBox::Ok);
-    msgBox.setDefaultButton(QMessageBox::Ok);
-    if (msgBox.exec() == QMessageBox::Ok) {
-      on_AccountSettings_triggered();
+    const UserSessionWay usw = settings.getLoginWay();
+    if (usw == UserSessionWay::Direct) {
+        QMessageBox msgBox(this);
+        msgBox.setText(QStringLiteral(u"ユーザセッションが無効になってる可能性があります\n設定画面を開きますか？"));
+        msgBox.setStandardButtons(QMessageBox::Cancel | QMessageBox::Ok);
+        msgBox.setDefaultButton(QMessageBox::Ok);
+        if (msgBox.exec() == QMessageBox::Ok) {
+            on_AccountSettings_triggered();
+        }
+    } else if (usw == UserSessionWay::Browser ||
+               usw == UserSessionWay::Login) {
+        QMessageBox msgBox(this);
+        msgBox.setText(QStringLiteral(u"ユーザセッションが無効になってる可能性があります\n取得しなおしますか？"));
+        msgBox.setStandardButtons(QMessageBox::Cancel | QMessageBox::Ok);
+        msgBox.setDefaultButton(QMessageBox::Ok);
+        if (msgBox.exec() == QMessageBox::Ok) {
+            accountWindow->init();
+            accountWindow->updateSessionAndSave();
+        }
     }
-  } else if (usw == UserSessionWay::Browser ||
-             usw == UserSessionWay::Login) {
-    QMessageBox msgBox(this);
-    msgBox.setText(QStringLiteral(u"ユーザセッションが無効になってる可能性があります\n取得しなおしますか？"));
-    msgBox.setStandardButtons(QMessageBox::Cancel | QMessageBox::Ok);
-    msgBox.setDefaultButton(QMessageBox::Ok);
-    if (msgBox.exec() == QMessageBox::Ok) {
-      accountWindow->init();
-      accountWindow->updateSessionAndSave();
-    }
-  }
 
-  userSessionDisabledDialogAppeared = false;
-  return;
+    userSessionDisabledDialogAppeared = false;
+    return;
 }
 
 void MainWindow::deleteBroadcastFromList(QString broadID)
 {
-  LiveWaku* listElement(nullptr);
+    LiveWaku* listElement(nullptr);
 
-  foreach (LiveWaku* awaku, nicolivemanager->liveWakuList) {
-    if (awaku->getBroadID() == broadID) {
-      listElement = awaku;
-      break;
+    foreach (LiveWaku* awaku, nicolivemanager->liveWakuList) {
+        if (awaku->getBroadID() == broadID) {
+            listElement = awaku;
+            break;
+        }
     }
-  }
 
-  if (listElement != nullptr) {
-    nicolivemanager->liveWakuList.removeOne(listElement);
-    refleshLiveWaku();
-    listElement->deleteLater();
-  }
+    if (listElement != nullptr) {
+        nicolivemanager->liveWakuList.removeOne(listElement);
+        refleshLiveWaku();
+        listElement->deleteLater();
+    }
 }
 
 void MainWindow::on_autoNewWakuSettings_triggered()
 {
-  newWakuSettingsWindow->show();
-  newWakuSettingsWindow->raise();
-  newWakuSettingsWindow->activateWindow();
-  getNewWakuAPI(1);
+    newWakuSettingsWindow->show();
+    newWakuSettingsWindow->raise();
+    newWakuSettingsWindow->activateWindow();
+    getNewWakuAPI(1);
 }
 
 void MainWindow::on_getNewWakuNow_triggered()
 {
-  nicolivemanager->broadDisconnect();
-  nicolivemanager->nowWaku.setCommunity(newWakuSettingsWindow->getCommunity());
-  getNewWakuAPI(2);
+    nicolivemanager->broadDisconnect();
+    nicolivemanager->nowWaku.setCommunity(newWakuSettingsWindow->getCommunity());
+    getNewWakuAPI(2);
 }
 
 void MainWindow::on_quit_triggered()
 {
-  QApplication::quit();
+    QApplication::quit();
 }
 
 void MainWindow::on_AboutViqo_triggered()
 {
-  QMessageBox::about(this, QStringLiteral(u"About Viqo"),
-         QCoreApplication::applicationName() + " version " +
-         QCoreApplication::applicationVersion() +
-         QStringLiteral(u"<br>\
-            Qt で作成されたマルチプラットフォームコメントビューワです<br>\
-            <a href=\"https://github.com/diginatu/Viqo\">GitHub Viqo repository</a>"));
+    QMessageBox::about(this, QStringLiteral(u"About Viqo"),
+                       QCoreApplication::applicationName() + " version " +
+                       QCoreApplication::applicationVersion() +
+                       QStringLiteral(u"<br>\
+                                      Qt で作成されたマルチプラットフォームコメントビューワです<br>\
+                                      <a href=\"https://github.com/diginatu/Viqo\">GitHub Viqo repository</a>"));
 }
 
 void MainWindow::on_AboutQt_triggered()
 {
-  QMessageBox::aboutQt(this);
+    QMessageBox::aboutQt(this);
 }
 
 void MainWindow::on_comment_view_currentItemChanged(QTreeWidgetItem *current, QTreeWidgetItem *previous)
 {
-  if (!current ^ !previous) {
-    if (current == 0) {
-      ui->CommentViewEditKotehan->setEnabled(false);
-      ui->CommentViewGetKotehan->setEnabled(false);
-      ui->CommentViewRemoveKotehan->setEnabled(false);
-    } else {
-      ui->CommentViewEditKotehan->setEnabled(true);
-      ui->CommentViewGetKotehan->setEnabled(true);
-      ui->CommentViewRemoveKotehan->setEnabled(true);
+    if (!current ^ !previous) {
+        if (current == 0) {
+            ui->CommentViewEditKotehan->setEnabled(false);
+            ui->CommentViewGetKotehan->setEnabled(false);
+            ui->CommentViewRemoveKotehan->setEnabled(false);
+        } else {
+            ui->CommentViewEditKotehan->setEnabled(true);
+            ui->CommentViewGetKotehan->setEnabled(true);
+            ui->CommentViewRemoveKotehan->setEnabled(true);
+        }
     }
-  }
 }
 
 void MainWindow::on_CommentViewEditKotehan_triggered()
 {
-  QTreeWidgetItem* const citem = ui->comment_view->currentItem();
+    QTreeWidgetItem* const citem = ui->comment_view->currentItem();
 
-  QString name = QInputDialog::getText(this, QStringLiteral(u"コテハン編集"),
-                             QStringLiteral(u"コテハン:"), QLineEdit::Normal,
-                             citem->text(2));
+    QString name = QInputDialog::getText(this, QStringLiteral(u"コテハン編集"),
+                                         QStringLiteral(u"コテハン:"), QLineEdit::Normal,
+                                         citem->text(2));
 
-  if (name.isEmpty()) return;
+    if (name.isEmpty()) return;
 
-  userManager->setUserName(citem, name);
+    userManager->setUserName(citem, name);
 }
 
 void MainWindow::on_CommentViewGetKotehan_triggered()
 {
-  QTreeWidgetItem* const citem = ui->comment_view->currentItem();
-  userManager->getUserName(citem, citem->text(5), true, false);
+    QTreeWidgetItem* const citem = ui->comment_view->currentItem();
+    userManager->getUserName(citem, citem->text(5), true, false);
 }
 
 void MainWindow::on_CommentViewRemoveKotehan_triggered()
 {
-  QTreeWidgetItem* const citem = ui->comment_view->currentItem();
-  userManager->removeUser(citem);
+    QTreeWidgetItem* const citem = ui->comment_view->currentItem();
+    userManager->removeUser(citem);
 }
 
 void MainWindow::on_autoGettingUserName_toggled(bool status)
 {
-  ui->autoGetUserNameOverWrite->setEnabled(status);
-  ui->autoGetUserWay->setEnabled(status);
+    ui->autoGetUserNameOverWrite->setEnabled(status);
+    ui->autoGetUserWay->setEnabled(status);
 }
 
 void MainWindow::on_action_triggered()
 {
-  getWakuTimer->init();
-  getWakuTimer->show();
-  getWakuTimer->raise();
-  getWakuTimer->activateWindow();
+    getWakuTimer->init();
+    getWakuTimer->show();
+    getWakuTimer->raise();
+    getWakuTimer->activateWindow();
 }
 
 void MainWindow::on_MatchAndAddBroadcast_triggered()
 {
-  matchAndAddBroadcast->init();
-  matchAndAddBroadcast->show();
-  matchAndAddBroadcast->raise();
-  matchAndAddBroadcast->activateWindow();
+    matchAndAddBroadcast->init();
+    matchAndAddBroadcast->show();
+    matchAndAddBroadcast->raise();
+    matchAndAddBroadcast->activateWindow();
 }
 
 void MainWindow::on_KeepOnTop_triggered(bool checked)
