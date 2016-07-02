@@ -33,6 +33,8 @@ QT += sql
 
 TARGET = viqo
 TEMPLATE = app
+target.path = "/usr/bin"
+INSTALLS += target
 
 
 SOURCES += src/main.cpp\
