@@ -16,10 +16,9 @@
 
 #include <QDebug>
 
-// for Safari
-#ifdef Q_OS_OSX
+// In Qt 5.5, we need to include QDataStream in Linux, Mac.
+//  https://github.com/diginatu/Viqo/issues/28
 #include <QDataStream>
-#endif
 
 // for IE
 #ifdef Q_OS_WIN
