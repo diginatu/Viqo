@@ -6,15 +6,12 @@ Viqo 是跨平台"nico生放"留言查看程序。
 
 Viqo はクロスプラットフォームなニコニコ生放送用 コメントビューア（ニコ生 コメビュ）です。
 
-Ubuntu 14.04, Debian 7.7, OSX Yosemite, Windows 7, 8.1, 10 などで動作確認されています。
-
 
 プロジェクトの移行について
 --------------------------
 
-コメビュの開発は、新しいプロジェクト [Nagome](https://github.com/diginatu/Nagome) に移行します。
-
-ただ、新しいプロジェクトができるまでまだ時間がかかるため、重大なバグフィックスやニコ生の仕様変更への追従は行う可能性があります。
+Viqo の開発はストップしており、新しいプロジェクト [Nagome](https://github.com/diginatu/Nagome) に移行しました。
+公式のクライアントはこちらです。[Nagome Electron](https://github.com/diginatu/nagome-electron)
 
 
 特徴
